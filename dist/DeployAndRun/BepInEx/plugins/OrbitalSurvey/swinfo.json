@@ -4,9 +4,9 @@
   "author": "Falki",
   "name": "Orbital Survey",
   "description": "",
-  "source": "",
+  "source": "https://github.com/Falki-git/OrbitalSurvey",
   "version": "0.1.0",
-  "version_check": "",
+  "version_check": "https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/master/plugin_template/swinfo.json",
   "ksp2_version": {
     "min": "0.1.4",
     "max": "*"

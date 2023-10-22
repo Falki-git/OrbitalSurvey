@@ -6,7 +6,7 @@ namespace OrbitalSurvey
 {
     public static class Utility
     {
-        private static string _importPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string _importPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
 
         public static Texture2D ImportTexture(string filename)
         {

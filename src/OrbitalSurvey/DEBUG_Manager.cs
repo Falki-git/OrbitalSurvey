@@ -27,30 +27,43 @@ namespace OrbitalSurvey
             }
         }        
 
-        public void AddCustPaintedTexOverlay(string body = "Kerbin")
+        public void AddCustPaintedTexOverlay(string colorName, string body = "Kerbin")
         {
             RemoveCustomOverlay(body);
 
-            //var pqs = UnityEngine.GameObject.Find("#PhysicsSpace/#Celestial/6369a949-905c-40fd-a7e6-b5e2e3810bcf/Kerbin").GetComponent<KSP.Rendering.Planets.PQS>();
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
             var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, body);
-            //var kerbin = celestialRoot.transform.Find("Kerbin");
             var pqs = celes.GetComponent<PQS>();
             var scaledMaterial = pqs._scaledMaterial;
             var scaledTexture = scaledMaterial.mainTexture;
             var scaledRenderer = pqs.ScaledRenderer;
 
-            //var newTexture = new Texture2D(scaledTexture.width, scaledTexture.height);
-            //var newTexture = new Texture2D(100, 100);
+            var colorToApply = Color.white;
+
+            switch (colorName.ToLowerInvariant())
+            {
+                case "red": colorToApply = Color.red; break;
+                case "green": colorToApply = Color.green; break;
+                case "blue": colorToApply = Color.blue; break;
+                case "white": colorToApply = Color.white; break;
+                case "black": colorToApply = Color.black; break;
+                case "yellow": colorToApply = Color.yellow; break;
+                case "cyan": colorToApply = Color.cyan; break;
+                case "gray": colorToApply = Color.gray; break;
+                case "magenta": colorToApply = Color.magenta; break;
+                case "clear": colorToApply = Color.clear; break;
+                default: colorToApply = Color.white; break;
+            }
+
             var newTexture = new Texture2D(500, 500, TextureFormat.ARGB32, true);
             for (int y = 0; y < newTexture.height; y++)
             {
                 for (int x = 0; x < newTexture.width; x++)
                 {
-                    newTexture.SetPixel(x, y, Color.red);
+                    newTexture.SetPixel(x, y, colorToApply);
                 }
             }
-            newTexture.Apply(); // Apply changes to the texture.
+            newTexture.Apply();
 
             //var sourceMaterial = scaledRenderer.material;
             var sourceMaterial = pqs.data.materialSettings.surfaceMaterial;
@@ -59,6 +72,7 @@ namespace OrbitalSurvey
             string[] array = new string[shaderKeywords.Length];
             shaderKeywords.CopyTo(array, 0);
             newMaterial.shaderKeywords = array;
+            
             //newMaterial.SetTexture("_MainTex", newTexture);
             //newMaterial.mainTexture = newTexture;
             newMaterial.SetTexture("_AlbedoScaledTex", newTexture);

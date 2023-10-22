@@ -11,12 +11,15 @@ namespace OrbitalSurvey
         public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = true;
 
         private Rect _debugWindowRect = new Rect(1900, 500, 350, 350);
+        private GUIStyle _labelStyle;
         private readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_UI");
-        private string _myCustomTextureFilename = "test.png";
+        private string _myCustomTextureFilename = "kerbinCustom3_black.png";
         private string _textureName = string.Empty;
+        private string _colorName = "red";
         private string _body = "Kerbin";
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
+
 
         private static DEBUG_UI _instance;
         internal static DEBUG_UI Instance
@@ -30,9 +33,16 @@ namespace OrbitalSurvey
             }
         }
 
+        public void InitializeStyles()
+        {
+            _labelStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 };
+        }
+
         public void OnGUI()
         {
-            // Set the UI
+            if (_labelStyle == null)
+                return;
+
             GUI.skin = Skins.ConsoleSkin;
 
             if (IsDebugWindowOpen)
@@ -52,42 +62,42 @@ namespace OrbitalSurvey
         {
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Body:", new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 });
+                GUILayout.Label("Body:", _labelStyle);
                 _body = GUILayout.TextField(_body);
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Imp tex:", new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 });
+                GUILayout.Label("Import texture:", _labelStyle);
                 _myCustomTextureFilename = GUILayout.TextField(_myCustomTextureFilename);
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Apply tex name:", new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 });
+                GUILayout.Label("Apply to tex name:", _labelStyle);
                 _textureName = GUILayout.TextField(_textureName);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("Apply color:", _labelStyle);
+                _colorName = GUILayout.TextField(_colorName);
             }
             GUILayout.EndHorizontal();
 
             GUILayout.Label("--");
 
-            if (GUILayout.Button("AddCustPaintedTexOverlay"))
-            {
-                DEBUG_Manager.Instance.AddCustPaintedTexOverlay(_body);
-            }
-            if (GUILayout.Button("RemoveCustomOverlay"))
-            {
-                DEBUG_Manager.Instance.RemoveCustomOverlay(_body);
-            }
-            if (GUILayout.Button("DrawCustomOverlays"))
-            {
-                DEBUG_Manager.Instance.DrawCustomOverlays(_body);
-            }
             if (GUILayout.Button("LoadMyCustomAssetTexture"))
             {
                 DEBUG_Manager.Instance.LoadMyCustomAssetTexture();
+            }
+
+            if (GUILayout.Button("LoadTextureFromDisk"))
+            {
+                DEBUG_Manager.Instance.LoadTextureFromDisk(_myCustomTextureFilename);
             }
 
             GUILayout.Label("--");
@@ -97,45 +107,49 @@ namespace OrbitalSurvey
                 DEBUG_Manager.Instance.ApplyMyCustomTextureToOverlay(_textureName, _body);
             }
 
-            if (GUILayout.Button("LoadTextureFromDisk"))
+            if (GUILayout.Button("RemoveCustomOverlay"))
             {
-                DEBUG_Manager.Instance.LoadTextureFromDisk(_myCustomTextureFilename);
+                DEBUG_Manager.Instance.RemoveCustomOverlay(_body);
             }
-
-            if (GUILayout.Button("ApplyScaledSpaceMainTextureToOverlay"))
-            {
-                DEBUG_Manager.Instance.ApplyScaledSpaceMainTextureToOverlay(_textureName, _body);
-            }
-
-            GUILayout.Label("--");
-
-            if (GUILayout.Button("ApplyGlobalHeightMap"))
-            {
-                DEBUG_Manager.Instance.ApplyGlobalHeightMap(_body);
-            }
-
-            if (GUILayout.Button("ApplyBiomeMask"))
-            {
-                DEBUG_Manager.Instance.ApplyBiomeMask(_body);
-            }
-
-            GUILayout.Label("--");
-
-            if (GUILayout.Button("LoadMunMaterial"))
-            {
-                DEBUG_Manager.Instance.LoadMunMaterial();
-            }
-
-            if (GUILayout.Button("ApplyTexToCustMaterialToOverlay"))
-            {
-                DEBUG_Manager.Instance.ApplyTexToCustMaterialToOverlay(_textureName, _body);
-            }
-
-            GUILayout.Label("--");
 
             if (GUILayout.Button("BlackOceanSphereMaterial"))
             {
                 DEBUG_Manager.Instance.BlackOceanSphereMaterial(_textureName, _body);
+            }
+
+            if (GUILayout.Button("AddCustPaintedTexOverlay"))
+            {
+                DEBUG_Manager.Instance.AddCustPaintedTexOverlay(_colorName, _body);
+            }            
+
+            GUILayout.Label("--");
+
+            // Doesn't work
+            {
+                if (GUILayout.Button("ApplyScaledSpaceMainTextureToOverlay"))
+                {
+                    DEBUG_Manager.Instance.ApplyScaledSpaceMainTextureToOverlay(_textureName, _body);
+                }
+
+                if (GUILayout.Button("ApplyGlobalHeightMap"))
+                {
+                    DEBUG_Manager.Instance.ApplyGlobalHeightMap(_body);
+                }
+
+                if (GUILayout.Button("ApplyBiomeMask"))
+                {
+                    DEBUG_Manager.Instance.ApplyBiomeMask(_body);
+                }
+
+                if (GUILayout.Button("LoadMunMaterial"))
+                {
+                    DEBUG_Manager.Instance.LoadMunMaterial();
+                }
+
+                if (GUILayout.Button("ApplyTexToCustMaterialToOverlay"))
+                {
+                    DEBUG_Manager.Instance.ApplyTexToCustMaterialToOverlay(_textureName, _body);
+                }
             }
 
             GUILayout.Label("--");
@@ -157,8 +171,6 @@ namespace OrbitalSurvey
 
             if (_showBiomeMask)
             {
-                //GUILayout.Label(_biomeTexture);
-
                 Vector2 scaledSize = new Vector2(300, 300);
                 float scaleWidth = scaledSize.x / _biomeTexture.width;
                 float scaleHeight = scaledSize.y / _biomeTexture.height;
@@ -169,7 +181,7 @@ namespace OrbitalSurvey
                 GUILayout.Label(_biomeTexture, GUILayout.Width(scaledWidth), GUILayout.Height(scaledHeight));
             }
 
-            GUI.DragWindow(new Rect(0, 0, 10000, 500));
+            GUI.DragWindow(new Rect(0, 0, 10000, 10000));
         }
     }
 }

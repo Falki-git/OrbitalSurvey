@@ -47,6 +47,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         );
 
         MessageListener.Instance.SubscribeToMessages();
+        DEBUG_UI.Instance.InitializeStyles();
 
         // Register all Harmony patches in the project
         //Harmony.CreateAndPatchAll(typeof(OrbitalSurveyPlugin).Assembly);
