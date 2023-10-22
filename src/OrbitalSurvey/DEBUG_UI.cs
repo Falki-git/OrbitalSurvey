@@ -1,5 +1,4 @@
 ﻿using SpaceWarp.API.UI;
-using UnityEngine.UI.Extensions;
 using UnityEngine;
 using BepInEx.Logging;
 
@@ -125,6 +124,7 @@ namespace OrbitalSurvey
             GUILayout.Label("--");
 
             // Doesn't work
+            /*
             {
                 if (GUILayout.Button("ApplyScaledSpaceMainTextureToOverlay"))
                 {
@@ -153,6 +153,7 @@ namespace OrbitalSurvey
             }
 
             GUILayout.Label("--");
+            */
 
             if (GUILayout.Button("BuildBiomeMask"))
             {
@@ -180,6 +181,14 @@ namespace OrbitalSurvey
 
                 GUILayout.Label(_biomeTexture, GUILayout.Width(scaledWidth), GUILayout.Height(scaledHeight));
             }
+
+            if (GUILayout.Button("PaintTextureAtCurrentPosition"))
+            {
+                DEBUG_Manager.Instance.PaintTextureAtCurrentPosition();
+            }
+
+            GUILayout.Label($"Lat: {DEBUG_Manager.Instance.CurrentLatitude?.ToString()}");
+            GUILayout.Label($"Lon: {DEBUG_Manager.Instance.CurrentLongitude?.ToString()}");
 
             GUI.DragWindow(new Rect(0, 0, 10000, 10000));
         }

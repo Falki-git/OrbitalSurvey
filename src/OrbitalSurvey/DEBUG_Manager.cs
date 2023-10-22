@@ -1,5 +1,7 @@
 ﻿using BepInEx.Logging;
+using KSP.Game;
 using KSP.Rendering.Planets;
+using KSP.Sim.impl;
 using SpaceWarp.API.Assets;
 using System.Reflection;
 using UnityEngine;
@@ -360,5 +362,43 @@ namespace OrbitalSurvey
             // "myTexture2D" now has the same pixels from "texture" and it's readable
             return myTexture2D;
         }
+
+        public VesselComponent ActiveVessel => GameManager.Instance?.Game?.ViewController?.GetActiveVehicle(true)?.GetSimVessel(true);
+        public double? CurrentLatitude => ActiveVessel?.Latitude; // -90 S to +90 N
+        public double? CurrentLongitude => ActiveVessel?.Longitude; // -180 W to +180E
+
+        public void PaintTextureAtCurrentPosition()
+        {
+            if (CurrentLatitude == null || CurrentLongitude == null) return;
+
+            double widthCoord = GetPixelPercentForGivenLongitude((double)CurrentLongitude);
+            double heightCoord = GetPixelPercentForGivenLatitude((double)CurrentLatitude);
+
+            int widthPixel = (int)(4096f * widthCoord);
+            int heightPixel = (int)(4096f * heightCoord);
+
+            for (int i = widthPixel - 50; i < widthPixel + 50; i++)
+            {
+                for (int j = heightPixel - 50; j < heightPixel + 50; j++)
+                {
+                    MyCustomTexture.SetPixel(i, j, Color.red);
+                }
+            }
+            MyCustomTexture.Apply();
+
+            ApplyMyCustomTextureToOverlay(string.Empty);
+        }
+
+        private double GetPixelPercentForGivenLatitude(double latitude)
+        {
+            return (latitude + 90) / 180f;
+        }
+
+        private double GetPixelPercentForGivenLongitude(double longitude)
+        {
+            return (longitude + 180) / 360f;
+        }
+
+        
     }
 }
