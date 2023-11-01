@@ -113,7 +113,7 @@ namespace OrbitalSurvey
 
             if (GUILayout.Button("BlackOceanSphereMaterial"))
             {
-                DEBUG_Manager.Instance.BlackOceanSphereMaterial(_textureName, _body);
+                DEBUG_Manager.Instance.BlackOceanSphereMaterial(_myCustomTextureFilename, _body, _textureName);
             }
 
             if (GUILayout.Button("AddCustPaintedTexOverlay"))

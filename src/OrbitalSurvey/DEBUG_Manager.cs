@@ -68,13 +68,16 @@ namespace OrbitalSurvey
             newTexture.Apply();
 
             //var sourceMaterial = scaledRenderer.material;
+            //var sourceMaterial = pqs.data.materialSettings.scaledSpaceMaterial;
             var sourceMaterial = pqs.data.materialSettings.surfaceMaterial;
             Material newMaterial = new Material(sourceMaterial);
             string[] shaderKeywords = sourceMaterial.shaderKeywords;
             string[] array = new string[shaderKeywords.Length];
             shaderKeywords.CopyTo(array, 0);
             newMaterial.shaderKeywords = array;
-            
+            //newMaterial.shader = Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local");
+            newMaterial.shader = Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old");
+
             //newMaterial.SetTexture("_MainTex", newTexture);
             //newMaterial.mainTexture = newTexture;
             newMaterial.SetTexture("_AlbedoScaledTex", newTexture);
@@ -136,6 +139,7 @@ namespace OrbitalSurvey
             string[] array = new string[shaderKeywords.Length];
             shaderKeywords.CopyTo(array, 0);
             newMaterial.shaderKeywords = array;
+            newMaterial.shader = Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old");
 
             if (!string.IsNullOrEmpty(applyTextureName))
             {
@@ -174,6 +178,7 @@ namespace OrbitalSurvey
             string[] array = new string[shaderKeywords.Length];
             shaderKeywords.CopyTo(array, 0);
             newMaterial.shaderKeywords = array;
+            newMaterial.shader = Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old");
 
             if (!string.IsNullOrEmpty(applyTextureName))
             {
@@ -255,17 +260,24 @@ namespace OrbitalSurvey
             pqsRenderer.AddOverlay(MyOverlay);
         }
 
-        public void BlackOceanSphereMaterial(string applyTextureName, string body = "Kerbin")
+        public void BlackOceanSphereMaterial(string nameOfTextureToLoad, string body, string nameOfMaterialTextureToOverride)
         {
+            if (string.IsNullOrEmpty(nameOfTextureToLoad))
+                nameOfTextureToLoad = "allblack.png";
+            if (string.IsNullOrEmpty(body))
+                body = "Kerbin";
+            if (string.IsNullOrEmpty(nameOfMaterialTextureToOverride))
+                nameOfMaterialTextureToOverride = "_ShorelineSDFTexture";
+
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
             var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, body);
             var pqsRenderer = celes.GetComponent<PQSRenderer>();
             var oceanMaterial = pqsRenderer._oceanSpereMaterial;
 
-            var tex = Utility.ImportTexture(string.IsNullOrEmpty(applyTextureName) ? "allblack.png" : applyTextureName);
+            var tex = Utility.ImportTexture(nameOfTextureToLoad);
 
-            pqsRenderer._oceanSpereMaterial.SetTexture("_ShorelineSDFTexture", tex);
-            pqsRenderer._oceanMaterial.SetTexture("_ShorelineSDFTexture", tex);
+            pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
+            pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
         }
 
         public void BuildBiomeMask(string body = "Kerbin")
