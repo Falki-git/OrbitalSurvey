@@ -18,4 +18,10 @@
  * 
  * 
  * 
+ * if (GUILayout.Button("QuickSave sound"))
+            {
+                KSPAudioEventManager.onGameQuickSave();
+                KSPAudioEventManager.OnResourceTransfertStart();
+            }
+ * 
  */

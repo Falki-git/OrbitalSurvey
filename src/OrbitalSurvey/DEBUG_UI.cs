@@ -1,6 +1,7 @@
 ﻿using SpaceWarp.API.UI;
 using UnityEngine;
 using BepInEx.Logging;
+using KSP.Audio;
 
 namespace OrbitalSurvey
 {

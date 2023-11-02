@@ -50,7 +50,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         DEBUG_UI.Instance.InitializeStyles();
 
         // Register all Harmony patches in the project
-        //Harmony.CreateAndPatchAll(typeof(OrbitalSurveyPlugin).Assembly);
+        Harmony.CreateAndPatchAll(typeof(SaveLoadPatches));
+        //Harmony.CreateAndPatchAll(typeof(MySerializeGameDataFlowAction));
 
         // Fetch a configuration value or create a default one if it does not exist
         const string defaultValue = "my default value";
