@@ -20,6 +20,9 @@ namespace OrbitalSurvey
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
 
+        public string DataToSave = "default";
+        public string LoadedData;
+
 
         private static DEBUG_UI _instance;
         internal static DEBUG_UI Instance
@@ -89,6 +92,19 @@ namespace OrbitalSurvey
             GUILayout.EndHorizontal();
 
             GUILayout.Label("--");
+
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("DataToSave:", _labelStyle);
+                DataToSave = GUILayout.TextField(DataToSave);
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label($"LoadedData: {LoadedData}", _labelStyle);
+            }
+            GUILayout.EndHorizontal();
 
             if (GUILayout.Button("LoadMyCustomAssetTexture"))
             {

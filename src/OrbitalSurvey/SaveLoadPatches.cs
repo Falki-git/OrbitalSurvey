@@ -1,7 +1,7 @@
 ﻿using BepInEx.Logging;
 using HarmonyLib;
-using KSP.Game.Flow;
 using KSP.Game.Load;
+using KSP.IO;
 using KSP.Sim;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -11,7 +11,7 @@ namespace OrbitalSurvey
     public class SaveLoadPatches
     {
         private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.SaveLoadPatches");
-
+        /*
         [HarmonyPatch(typeof(SequentialFlow), "AddAction"), HarmonyPrefix]
         private static bool SaveOrbitalSurveyData(FlowAction action, SequentialFlow __instance)
         {
@@ -24,7 +24,9 @@ namespace OrbitalSurvey
 
             return true;
         }
+        */
 
+        /*
         [HarmonyPatch(typeof(SerializeGameDataFlowAction), "DoAction"), HarmonyPrefix]
         private static bool SaveOrbitalSurveyData2(Action resolve, Action<string> reject, SerializeGameDataFlowAction __instance)
         {
@@ -32,25 +34,89 @@ namespace OrbitalSurvey
 
             return true;
         }
+        */
 
         [HarmonyPatch(typeof(SerializeGameDataFlowAction), MethodType.Constructor), HarmonyPostfix]
         [HarmonyPatch(new Type[] { typeof(string), typeof(LoadGameData) })]
         private static void InjectCustomLoadGameData(string filename, LoadGameData data, SerializeGameDataFlowAction __instance)
         {
-            _logger.LogDebug("SerializeGameDataFlowAction contructor postfix triggered");
+            _logger.LogDebug("SerializeGameDataFlowAction constructor postfix triggered");
 
             MySerializedSavedGame myData = MySerializedSavedGame.CreateDerivedInstanceFromBase(data.SavedGame);
-            myData.MyValue = "Hello World";
+            myData.MyValue = DEBUG_UI.Instance.DataToSave;
 
             data.SavedGame = myData;
         }
+
+        //////////////////  LOADING //////////////////
+        /*
+        [HarmonyPatch(typeof(SaveLoadManager), "PrivateLoadCommon"), HarmonyPrefix]
+        private static bool LoadTest_prefix(
+            LoadOrSaveCampaignTicket loadOrSaveCampaignTicket,
+            LoadGameData loadGameData,
+            SequentialFlow loadingFlow,
+            OnLoadOrSaveCampaignFinishedCallback onLoadOrSaveCampaignFinishedCallback,
+            SaveLoadManager __instance)
+        {
+            _logger.LogDebug("SaveLoadManager.PrivateLoadCommon prefix triggered.");
+
+            loadGameData.SavedGame = new MySerializedSavedGame();
+
+            return true;
+        }
+        */
+
+        /*
+        [HarmonyPatch(typeof(SaveLoadManager), "PrivateLoadCommon"), HarmonyPostfix]
+        private static void LoadTest_Postfix(
+            LoadOrSaveCampaignTicket loadOrSaveCampaignTicket,
+            LoadGameData loadGameData,
+            SequentialFlow loadingFlow,
+            OnLoadOrSaveCampaignFinishedCallback onLoadOrSaveCampaignFinishedCallback,
+            SaveLoadManager __instance)
+        {
+            _logger.LogDebug("SaveLoadManager.PrivateLoadCommon postfix triggered.");
+        }
+        */
+
+        [HarmonyPatch(typeof(DeserializeContentsFlowAction), "DoAction"), HarmonyPrefix]
+        private static bool MyDeserialization(Action resolve, Action<string> reject, DeserializeContentsFlowAction __instance)
+        {
+            __instance._game.UI.SetLoadingBarText(__instance.Description);
+            try
+            {
+                MySerializedSavedGame serializedSavedGame = null;
+                IOProvider.FromJsonFile<MySerializedSavedGame>(__instance._filename, out serializedSavedGame);
+                __instance._data.SavedGame = serializedSavedGame;
+                __instance._data.DataLength = IOProvider.GetFileSize(__instance._filename);
+
+                // Load all saved data mods registered (TODO)
+                DEBUG_UI.Instance.LoadedData = serializedSavedGame.MyValue;
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogException(ex);
+                reject(ex.Message);
+            }
+            resolve();
+
+            return false;
+        }
+
+    }
+
+    public class PatchTest
+    {
+        private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PatchTest");
+
+        // EMPTY ON PURPOSE
     }
 
     [Serializable]
     public class MySerializedSavedGame : SerializedSavedGame
     {
         [JsonProperty("MySaveGameField")]
-        public string MyValue = "my value";
+        public string MyValue = "MyDefaultValue";
 
         public static MySerializedSavedGame CreateDerivedInstanceFromBase<T>(T baseInstance) where T : SerializedSavedGame
         {
