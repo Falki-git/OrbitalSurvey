@@ -95,14 +95,15 @@ namespace OrbitalSurvey
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("DataToSave:", _labelStyle);
-                DataToSave = GUILayout.TextField(DataToSave);
+                GUILayout.Label("Save - TestSave:", _labelStyle);
+                OrbitalSurveyPlugin.Instance.MySaveData.TestString = GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.TestString);
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label($"LoadedData: {LoadedData}", _labelStyle);
+                GUILayout.Label("Save - TestInt:", _labelStyle);
+                OrbitalSurveyPlugin.Instance.MySaveData.TestInt = int.Parse(GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.TestInt.ToString()));
             }
             GUILayout.EndHorizontal();
 

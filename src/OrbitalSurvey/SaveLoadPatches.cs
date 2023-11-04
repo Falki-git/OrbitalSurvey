@@ -41,22 +41,23 @@ namespace OrbitalSurvey
 
         [HarmonyPatch(typeof(SerializeGameDataFlowAction), MethodType.Constructor), HarmonyPostfix]
         [HarmonyPatch(new Type[] { typeof(string), typeof(LoadGameData) })]
-        private static void InjectCustomLoadGameData(string filename, LoadGameData data, SerializeGameDataFlowAction __instance)
+        private static void InjectPluginSaveGameData(string filename, LoadGameData data, SerializeGameDataFlowAction __instance)
         {
             _logger.LogDebug("SerializeGameDataFlowAction constructor postfix triggered");
 
-            //MySerializedSavedGame myData = MySerializedSavedGame.CreateDerivedInstanceFromBase(data.SavedGame);
-            //myData.MyValue = DEBUG_UI.Instance.DataToSave;
-            //data.SavedGame = myData;
+            if (ModSaves.PluginSaveData.Count == 0)
+                return;
 
             SpaceWarpSerializedSavedGame modSaveData = new();
-            modSaveData.CopyBaseData(data.SavedGame);
-
+            Utility.CopyFieldAndPropertyDataFromSourceToTargetObject(data.SavedGame, modSaveData);
             modSaveData.PluginSaveData = ModSaves.PluginSaveData;
-
-            //modSaveData.PluginSaveData.Add(new PluginSaveData { ModGuid = "modGuidTest", SaveData = new List<int> { 1, 2, 3 } });
-
             data.SavedGame = modSaveData;
+
+            // Initiate save callbacks
+            foreach (var plugin in ModSaves.PluginSaveData)
+            {
+                plugin.SaveEventCallback(plugin.SaveData);
+            }
         }
 
         //////////////////  LOADING //////////////////
@@ -94,31 +95,41 @@ namespace OrbitalSurvey
         #endregion
 
         [HarmonyPatch(typeof(DeserializeContentsFlowAction), "DoAction"), HarmonyPrefix]
-        private static bool MyDeserialization(Action resolve, Action<string> reject, DeserializeContentsFlowAction __instance)
+        private static bool DeserializeLoadedPluginData(Action resolve, Action<string> reject, DeserializeContentsFlowAction __instance)
         {
+            // Skip plugin deserialization if there are no mods that have registered for save/load actions
+            if (ModSaves.PluginSaveData.Count == 0)
+                return true;
+
             __instance._game.UI.SetLoadingBarText(__instance.Description);
             try
             {
-                //MySerializedSavedGame serializedSavedGame = null;
                 SpaceWarpSerializedSavedGame serializedSavedGame = new();
                 IOProvider.FromJsonFile<SpaceWarpSerializedSavedGame>(__instance._filename, out serializedSavedGame);
                 __instance._data.SavedGame = serializedSavedGame;
                 __instance._data.DataLength = IOProvider.GetFileSize(__instance._filename);
 
-                // Load all saved data mods registered (TODO)
-                //DEBUG_UI.Instance.LoadedData = serializedSavedGame?.PluginSaveData?.FirstOrDefault()?.ModGuid;
+                // Perform plugin load data if plugin data is found in the save file
+                if (serializedSavedGame.PluginSaveData.Count > 0)
+                {
+                    // Iterate through each plugin
+                    foreach (var loadedData in serializedSavedGame.PluginSaveData)
+                    {
+                        // Match registered plugin GUID with the GUID found in the save file
+                        var existingData = ModSaves.PluginSaveData.Find(p => p.ModGuid == loadedData.ModGuid);                        
+                        if (existingData == null)
+                        {
+                            _logger.LogWarning($"Saved data for plugin '{loadedData.ModGuid}' found during a load event, however that plugin isn't registered for save/load events. Skipping load for this plugin.");
+                            continue;
+                        }
 
-                var loadedData = serializedSavedGame.PluginSaveData[0];
+                        // Perform a callback if plugin specified a callback function
+                        existingData.LoadEventCallback(loadedData.SaveData);
 
-                var existingData = ModSaves.PluginSaveData[0];
-
-                existingData.SaveData = loadedData.SaveData;
-                existingData.CallBackFunction(existingData.SaveData);
-                //(existingData.SaveData as MyTestSaveData).TestBool = (loadedData.SaveData as MyTestSaveData).TestBool;
-                //(existingData.SaveData as MyTestSaveData).TestInt = (loadedData.SaveData as MyTestSaveData).TestInt;
-                //(existingData.SaveData as MyTestSaveData).TestString = (loadedData.SaveData as MyTestSaveData).TestString;
-                //existingData.CallBackFunction(loadedData.SaveData as MyTestSaveData);
-
+                        // Copy loaded data to the SaveData object plugin registered
+                        Utility.CopyFieldAndPropertyDataFromSourceToTargetObject(loadedData.SaveData, existingData.SaveData);
+                    }
+                }
             }
             catch (Exception ex)
             {

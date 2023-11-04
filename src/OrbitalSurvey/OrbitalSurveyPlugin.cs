@@ -60,23 +60,36 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         // Log the config value into <KSP2 Root>/BepInEx/LogOutput.log
         Logger.LogInfo($"Option 1: {configValue.Value}");
 
-        
-        
-        
-        
-        _mySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
-        ModSaves.RegisterSaveLoadGameData("falki.orbital_survey", ref _mySaveData, (loadedData) =>
-        {
-            int i = loadedData.TestInt;
-            string s = loadedData.TestString;
-            bool b = loadedData.TestBool;
-        });
+        MySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
+        ModSaves.RegisterSaveLoadGameData(
+            "falki.orbital_survey",
+            MySaveData,
+            (savedData) =>
+            {
+                // This function will be called when a SAVE event is triggered.
+                // If you don't need to do anything on save events, pass null instead of this function.
+
+                bool b = savedData.TestBool;
+                int i = savedData.TestInt;
+                string s = savedData.TestString;
+                
+            },
+            (loadedData) =>
+            {
+                // This function will be called when a LOAD event is triggered and BEFORE data is loaded to your saveData object.
+                // If you don't need to do anything on load events, pass null instead of this function.
+
+                bool b = loadedData.TestBool;
+                int i = loadedData.TestInt;
+                string s = loadedData.TestString;
+            }
+            );
 
         //OrbitalSurvey.OrbitalSurveyPlugin.Instance._mySaveData.TestInt
 
     }
 
-    private MyTestSaveData _mySaveData;
+    public MyTestSaveData MySaveData;
 
     private void OnGUI() => DEBUG_UI.Instance.OnGUI();
 

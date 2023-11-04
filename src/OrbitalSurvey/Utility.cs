@@ -36,5 +36,26 @@ namespace OrbitalSurvey
 
             return null; // Return null if the object was not found in the hierarchy
         }
+
+        public static void CopyFieldAndPropertyDataFromSourceToTargetObject(object source, object target)
+        {
+            foreach (FieldInfo field in source.GetType().GetFields())
+            {
+                object value = field.GetValue(source);
+
+                try
+                {
+                    field.SetValue(target, value);
+                }
+                catch (FieldAccessException)
+                { /* some fields are constants */ }
+            }
+
+            foreach (PropertyInfo property in source.GetType().GetProperties())
+            {
+                object value = property.GetValue(source);
+                property.SetValue(target, value);
+            }
+        }
     }
 }

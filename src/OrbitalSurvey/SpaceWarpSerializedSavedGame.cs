@@ -1,72 +1,51 @@
 ﻿using KSP.Sim;
-using Newtonsoft.Json;
-using System.Reflection;
 
 namespace OrbitalSurvey
 {
     [Serializable]
     public class SpaceWarpSerializedSavedGame : SerializedSavedGame
     {
-        public List<PluginSaveData<object>> PluginSaveData = new();
-
-        public void CopyBaseData(SerializedSavedGame source)
-        {
-            foreach (FieldInfo field in source.GetType().GetFields())
-            {
-                object value = field.GetValue(source);
-
-                try
-                {
-                    field.SetValue(this, value);
-                }
-                catch (FieldAccessException)
-                { /* some fields are constants */ }
-            }
-        }
-
-        /*
-        void temp()
-        {
-            Appbar.RegisterAppButton(
-            ModName,
-            ToolbarFlightButtonID,
-            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            isOpen =>
-            {
-                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
-                GameObject.Find(ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
-            }
-            );
-        }
-        */
+        public List<PluginSaveData> PluginSaveData = new();
     }
 
-    public delegate void CallbackFunctionDelegate(object data);
+    public delegate void SaveGameCallbackFunctionDelegate(object data);
 
     [Serializable]
     public class PluginSaveData
-    {        
+    {
         public string ModGuid {get; set; }
         public object SaveData { get; set; }
-        public CallbackFunctionDelegate CallBackFunction { get; set; }
+
+        [NonSerialized]
+        public SaveGameCallbackFunctionDelegate SaveEventCallback;
+        [NonSerialized]
+        public SaveGameCallbackFunctionDelegate LoadEventCallback;
     }
 
     public static class ModSaves
     {
         public static List<PluginSaveData> PluginSaveData = new();
 
-        public static void RegisterSaveLoadGameData<T>(string modGuid, ref T saveData, Action<T> function)
+        public static void RegisterSaveLoadGameData<T>(string modGuid, T saveData, Action<T> saveEventCallback, Action<T> loadEventCallback)
         {
-            // Create an adapter function to convert Action<T> to CallbackFunctionDelegate
-            CallbackFunctionDelegate callbackAdapter = (object data) =>
+            // Create adapter functions to convert Action<T> to CallbackFunctionDelegate
+            SaveGameCallbackFunctionDelegate saveCallbackAdapter = (object saveData) =>
             {
-                if (data is T typedData)
+                if (saveEventCallback != null && saveData is T data)
                 {
-                    function(typedData);
+                    saveEventCallback(data);
                 }
             };
 
-            PluginSaveData.Add(new PluginSaveData { ModGuid = modGuid, SaveData = saveData, CallBackFunction = callbackAdapter });
+            SaveGameCallbackFunctionDelegate loadCallbackAdapter = (object saveData) =>
+            {
+                if (loadEventCallback != null && saveData is T data)
+                {
+                    loadEventCallback(data);
+                }
+            };
+
+            PluginSaveData.Add(new PluginSaveData { ModGuid = modGuid, SaveData = saveData, SaveEventCallback = saveCallbackAdapter, LoadEventCallback = loadCallbackAdapter });
         }
     }
 }
