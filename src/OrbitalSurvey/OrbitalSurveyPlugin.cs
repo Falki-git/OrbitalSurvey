@@ -59,7 +59,24 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
         // Log the config value into <KSP2 Root>/BepInEx/LogOutput.log
         Logger.LogInfo($"Option 1: {configValue.Value}");
+
+        
+        
+        
+        
+        _mySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
+        ModSaves.RegisterSaveLoadGameData("falki.orbital_survey", ref _mySaveData, (loadedData) =>
+        {
+            int i = loadedData.TestInt;
+            string s = loadedData.TestString;
+            bool b = loadedData.TestBool;
+        });
+
+        //OrbitalSurvey.OrbitalSurveyPlugin.Instance._mySaveData.TestInt
+
     }
+
+    private MyTestSaveData _mySaveData;
 
     private void OnGUI() => DEBUG_UI.Instance.OnGUI();
 
