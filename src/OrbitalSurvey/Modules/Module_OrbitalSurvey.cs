@@ -50,7 +50,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void TestAction()
     {
-        _logger.LogDebug("Hello World");
+        _logger.LogDebug("Hello World"); //test
     }
 
     // This triggers always
