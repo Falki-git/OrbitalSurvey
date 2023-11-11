@@ -95,17 +95,88 @@ namespace OrbitalSurvey
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Save - TestSave:", _labelStyle);
-                OrbitalSurveyPlugin.Instance.MySaveData.TestString = GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.TestString);
+                GUILayout.Label("Save - Width:", _labelStyle);
+                OrbitalSurveyPlugin.Instance.MySaveData.Width = int.Parse(GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.Width.ToString()));
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Save - TestInt:", _labelStyle);
-                OrbitalSurveyPlugin.Instance.MySaveData.TestInt = int.Parse(GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.TestInt.ToString()));
+                GUILayout.Label("Save - Height:", _labelStyle);
+                OrbitalSurveyPlugin.Instance.MySaveData.Height = int.Parse(GUILayout.TextField(OrbitalSurveyPlugin.Instance.MySaveData.Height.ToString()));
             }
             GUILayout.EndHorizontal();
+            
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Create texture in save file"))
+                {
+                    //OrbitalSurveyPlugin.Instance.MySaveData.TestBoolArray = new bool[OrbitalSurveyPlugin.Instance.MySaveData.Width, OrbitalSurveyPlugin.Instance.MySaveData.Height];
+                    OrbitalSurveyPlugin.Instance.MySaveData.TestColorArray = new Color32[300, 300];
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Color test array"))
+                {
+                    for (int i = 0; i < 100; i++)
+                        for (int j = 0; j < 300; j++)
+                            OrbitalSurveyPlugin.Instance.MySaveData.TestColorArray[i, j] = Color.red;
+
+                    for (int i = 101; i < 200; i++)
+                        for (int j = 0; j < 300; j++)
+                            OrbitalSurveyPlugin.Instance.MySaveData.TestColorArray[i, j] = Color.yellow;
+
+                    for (int i = 201; i < 300; i++)
+                        for (int j = 0; j < 300; j++)
+                            OrbitalSurveyPlugin.Instance.MySaveData.TestColorArray[i, j] = Color.magenta;
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Unregister for saving"))
+                {
+                    SpaceWarp.API.SaveGameManager.ModSaves.UnRegisterSaveLoadGameData("falki.orbital_survey");
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            {
+                if (GUILayout.Button("Reregister"))
+                {
+                    SpaceWarp.API.SaveGameManager.ModSaves.ReregisterSaveLoadGameData(
+                        "falki.orbital_survey",
+                        (savedData) =>
+                        {
+                            // This function will be called when a SAVE event is triggered.
+                            // If you don't need to do anything on save events, pass null instead of this function.
+
+                            bool b = savedData.TestBool;
+                            int i = savedData.TestInt;
+                            string s = savedData.TestString;
+
+                        },
+                        (loadedData) =>
+                        {
+                            // This function will be called when a LOAD event is triggered and BEFORE data is loaded to your saveData object.
+                            // If you don't need to do anything on load events, pass null instead of this function.
+
+                            bool b = loadedData.TestBool;
+                            int i = loadedData.TestInt;
+                            string s = loadedData.TestString;
+                        },
+                        OrbitalSurveyPlugin.Instance.MySaveData
+                    );
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label("--");
 
             if (GUILayout.Button("LoadMyCustomAssetTexture"))
             {
