@@ -1,0 +1,15 @@
+:parts {
+    .Module_DataTransmitter {
+        +Module_OrbitalSurvey {
+            +Data_OrbitalSurvey {
+                //+MyData {
+                //    MyString: "my test string";
+                //    MyInt: 5;
+                //    MyBool: true;
+                //}
+                MyStateString: "my state string test";
+                MyDefinitionString: "my definition string test";
+            }
+        }
+    }
+}
