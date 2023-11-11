@@ -5,7 +5,7 @@ namespace OrbitalSurvey
     [Serializable]
     public class SpaceWarpSerializedSavedGame : SerializedSavedGame
     {
-        public List<PluginSaveData> PluginSaveData = new();
+        public List<PluginSaveData> SerializedPluginSaveData = new();
     }
 
     public delegate void SaveGameCallbackFunctionDelegate(object data);
@@ -24,7 +24,7 @@ namespace OrbitalSurvey
 
     public static class ModSaves
     {
-        public static List<PluginSaveData> PluginSaveData = new();
+        internal static List<PluginSaveData> InternalPluginSaveData = new();
 
         public static void RegisterSaveLoadGameData<T>(string modGuid, T saveData, Action<T> saveEventCallback, Action<T> loadEventCallback)
         {
@@ -45,7 +45,7 @@ namespace OrbitalSurvey
                 }
             };
 
-            PluginSaveData.Add(new PluginSaveData { ModGuid = modGuid, SaveData = saveData, SaveEventCallback = saveCallbackAdapter, LoadEventCallback = loadCallbackAdapter });
+            InternalPluginSaveData.Add(new PluginSaveData { ModGuid = modGuid, SaveData = saveData, SaveEventCallback = saveCallbackAdapter, LoadEventCallback = loadCallbackAdapter });
         }
     }
 }

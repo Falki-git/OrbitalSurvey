@@ -50,7 +50,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         DEBUG_UI.Instance.InitializeStyles();
 
         // Register all Harmony patches in the project
-        Harmony.CreateAndPatchAll(typeof(SaveLoadPatches));
+        //Harmony.CreateAndPatchAll(typeof(SaveLoadPatches));
         Harmony.CreateAndPatchAll(typeof(PatchTest));
 
         // Fetch a configuration value or create a default one if it does not exist
@@ -60,10 +60,9 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         // Log the config value into <KSP2 Root>/BepInEx/LogOutput.log
         Logger.LogInfo($"Option 1: {configValue.Value}");
 
-        MySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
-        ModSaves.RegisterSaveLoadGameData(
+        //MySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
+        MySaveData = SpaceWarp.API.SaveGameManager.ModSaves.RegisterSaveLoadGameData<MyTestSaveData>(
             "falki.orbital_survey",
-            MySaveData,
             (savedData) =>
             {
                 // This function will be called when a SAVE event is triggered.
@@ -72,21 +71,22 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
                 bool b = savedData.TestBool;
                 int i = savedData.TestInt;
                 string s = savedData.TestString;
-                
+
             },
             (loadedData) =>
             {
                 // This function will be called when a LOAD event is triggered and BEFORE data is loaded to your saveData object.
+                // You don't need to manually update your data. It will be updated after this function.
                 // If you don't need to do anything on load events, pass null instead of this function.
 
                 bool b = loadedData.TestBool;
                 int i = loadedData.TestInt;
                 string s = loadedData.TestString;
-            }
-            );
+            }//,
+            //MySaveData
+        );
 
-        //OrbitalSurvey.OrbitalSurveyPlugin.Instance._mySaveData.TestInt
-
+        int i = 0;
     }
 
     public MyTestSaveData MySaveData;

@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using HarmonyLib;
+using KSP.Game;
 using KSP.Game.Load;
 using KSP.IO;
 using KSP.Sim;
@@ -45,16 +46,16 @@ namespace OrbitalSurvey
         {
             _logger.LogDebug("SerializeGameDataFlowAction constructor postfix triggered");
 
-            if (ModSaves.PluginSaveData.Count == 0)
+            if (ModSaves.InternalPluginSaveData.Count == 0)
                 return;
 
             SpaceWarpSerializedSavedGame modSaveData = new();
             Utility.CopyFieldAndPropertyDataFromSourceToTargetObject(data.SavedGame, modSaveData);
-            modSaveData.PluginSaveData = ModSaves.PluginSaveData;
+            modSaveData.SerializedPluginSaveData = ModSaves.InternalPluginSaveData;
             data.SavedGame = modSaveData;
 
             // Initiate save callbacks
-            foreach (var plugin in ModSaves.PluginSaveData)
+            foreach (var plugin in ModSaves.InternalPluginSaveData)
             {
                 plugin.SaveEventCallback(plugin.SaveData);
             }
@@ -98,7 +99,7 @@ namespace OrbitalSurvey
         private static bool DeserializeLoadedPluginData(Action resolve, Action<string> reject, DeserializeContentsFlowAction __instance)
         {
             // Skip plugin deserialization if there are no mods that have registered for save/load actions
-            if (ModSaves.PluginSaveData.Count == 0)
+            if (ModSaves.InternalPluginSaveData.Count == 0)
                 return true;
 
             __instance._game.UI.SetLoadingBarText(__instance.Description);
@@ -110,13 +111,13 @@ namespace OrbitalSurvey
                 __instance._data.DataLength = IOProvider.GetFileSize(__instance._filename);
 
                 // Perform plugin load data if plugin data is found in the save file
-                if (serializedSavedGame.PluginSaveData.Count > 0)
+                if (serializedSavedGame.SerializedPluginSaveData.Count > 0)
                 {
                     // Iterate through each plugin
-                    foreach (var loadedData in serializedSavedGame.PluginSaveData)
+                    foreach (var loadedData in serializedSavedGame.SerializedPluginSaveData)
                     {
                         // Match registered plugin GUID with the GUID found in the save file
-                        var existingData = ModSaves.PluginSaveData.Find(p => p.ModGuid == loadedData.ModGuid);                        
+                        var existingData = ModSaves.InternalPluginSaveData.Find(p => p.ModGuid == loadedData.ModGuid);                        
                         if (existingData == null)
                         {
                             _logger.LogWarning($"Saved data for plugin '{loadedData.ModGuid}' found during a load event, however that plugin isn't registered for save/load events. Skipping load for this plugin.");
@@ -147,7 +148,15 @@ namespace OrbitalSurvey
     {
         private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PatchTest");
 
-        // EMPTY ON PURPOSE
+        [HarmonyPatch(typeof(CampaignLoadMenu), "LoadSelectedFile"), HarmonyPrefix]
+        private static bool MyTest(CampaignLoadMenu __instance)
+        {
+            int i = 0;
+
+            return true; ;
+        }
+
+
     }
 
     [Serializable]
