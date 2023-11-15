@@ -1,15 +1,33 @@
+$minCommRange: 1000000000;
+
 :parts {
-    .Module_DataTransmitter {
-        +Module_OrbitalSurvey {
-            +Data_OrbitalSurvey {
-                //+MyData {
-                //    MyString: "my test string";
-                //    MyInt: 5;
-                //    MyBool: true;
-                //}
-                MyStateString: "my state string test";
-                MyDefinitionString: "my definition string test";
+    .Module_DataTransmitter:[$commRange: $$CommunicationRange;] {
+        @if $commRange > $minCommRange {
+            +Module_OrbitalSurvey {
+                +Data_OrbitalSurvey {
+                    //+MyData {
+                    //    MyString: "my test string";
+                    //    MyInt: 5;
+                    //    MyBool: true;
+                    //}
+                    MyStateStringProperty: "initial value of the property";
+                    MyDefinitionStringProperty: "initial value of the property";
+                }
             }
+            PAMModuleVisualsOverride: +[
+                {
+                    PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+                    ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+                    ShowHeader: true,
+                    ShowFooter: true
+                }
+            ];
+            //PAMModuleSortOverride: +[
+            //    {
+            //        PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            //        sortIndex: 40
+            //    }
+            //];
         }
     }
 }
