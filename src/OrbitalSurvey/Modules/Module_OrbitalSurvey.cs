@@ -50,13 +50,13 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void TestAction()
     {
-        _logger.LogDebug("Hello World"); //test
+        _logger.LogDebug("Hello World");
     }
 
     // This triggers always
     public override void OnUpdate(float deltaTime)
     {
-        _logger.LogDebug("OnUpdate triggered.");
+        //_logger.LogDebug("OnUpdate triggered.");
     }
 
     // -
@@ -74,13 +74,13 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
-        _logger.LogDebug("OnModuleFixedUpdate triggered.");
+        //_logger.LogDebug("OnModuleFixedUpdate triggered.");
     }
 
     // This triggers in OAB
     public override void OnModuleOABFixedUpdate(float deltaTime)
     {
-        _logger.LogDebug("OnModuleOABFixedUpdate triggered.");
+        //_logger.LogDebug("OnModuleOABFixedUpdate triggered.");
     }
 
     public void OnFixedUpdate(float deltaTime) // -
@@ -92,7 +92,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // And it also triggers in OAB when part is added to the assembly? 
     protected void OnEnable()
     {
-        _logger.LogDebug("OnEnable triggered.");
+        //_logger.LogDebug("OnEnable triggered.");
     }
     
     // This... also triggers when Flight scene is loaded? (why?)

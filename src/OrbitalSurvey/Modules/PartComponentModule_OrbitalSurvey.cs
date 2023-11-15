@@ -19,7 +19,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     // Keeps triggering in every scene once it's in Flight 
     public override void OnUpdate(double universalTime, double deltaUniversalTime)
     {
-        _logger.LogDebug("OnUpdate triggered.");
+        //_logger.LogDebug("OnUpdate triggered.");
     }
 
     public override void OnShutdown()

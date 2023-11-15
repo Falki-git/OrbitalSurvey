@@ -1,6 +1,7 @@
 ﻿using KSP.Sim;
 using KSP.Sim.Definitions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace OrbitalSurvey.Modules;
 
@@ -9,9 +10,9 @@ public class Data_OrbitalSurvey : ModuleData
 {
     public override Type ModuleType => typeof(Module_OrbitalSurvey);
 
-    //[KSPDefinition]
-    [Tooltip("Some tooltip")]
-    public MyData MyData;
+    [KSPState]
+    [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
+    public MyComplexClassProperty myComplexClassProperty;
 
     [KSPState]
     [Tooltip("Some state string value tooltip")]

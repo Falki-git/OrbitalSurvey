@@ -1,7 +1,7 @@
 ﻿namespace OrbitalSurvey.Modules;
 
 [Serializable]
-public class MyData
+public class MyComplexClassProperty
 {
     public string MyString;
     public int MyInt;
