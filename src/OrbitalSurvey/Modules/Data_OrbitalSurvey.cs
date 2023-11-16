@@ -1,15 +1,45 @@
 ﻿using KSP.Sim;
 using KSP.Sim.Definitions;
+using KSP.UI.Binding;
+using OrbitalSurvey.Models;
 using UnityEngine;
 using UnityEngine.Serialization;
+// ReSharper disable HeapView.BoxingAllocation
 
 namespace OrbitalSurvey.Modules;
 
 [Serializable]
 public class Data_OrbitalSurvey : ModuleData
 {
+    // this.SetVisible = sets a property visible on PAM?
+    
     public override Type ModuleType => typeof(Module_OrbitalSurvey);
 
+    [KSPState]
+    [LocalizedField("PartModules/OrbitalSurvey/Enabled")]
+    [PAMDisplayControl(SortIndex = 1)]
+    public ModuleProperty<bool> EnabledToggle = new ModuleProperty<bool>(false);
+    
+    [KSPState]
+    [LocalizedField("PartModules/OrbitalSurvey/Mode")]
+    [PAMDisplayControl(SortIndex = 3)]  
+    public ModuleProperty<string> Mode = new ModuleProperty<string>("");
+
+    public override void OnPartBehaviourModuleInit()
+    {
+        var scanningModesDropdown = new DropdownItemList();
+
+        foreach (MapType mapType in Enum.GetValues(typeof(MapType)))
+        {
+            scanningModesDropdown.Add(
+                mapType.ToString(), new DropdownItem() {key = mapType.ToString(), text = mapType.ToString()});
+        }
+        
+        SetDropdownData(Mode, scanningModesDropdown);
+    }
+    
+    
+    
     [KSPState]
     [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
     public MyComplexClassProperty myComplexClassProperty;

@@ -5,11 +5,11 @@ namespace OrbitalSurvey.Modules;
 
 public class PartComponentModule_OrbitalSurvey : PartComponentModule
 {
-    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PartComponentModule_OrbitalSurvey");
+    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     
     public override Type PartBehaviourModuleType => typeof(Module_OrbitalSurvey);
 
-    // This triggers when Flight scene is loaded (TODO check if it triggers for already active vessels)
+    // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
     {
         _logger.LogDebug("OnStart triggered.");

@@ -1,13 +1,14 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace OrbitalSurvey.Modules;
 
 [DisallowMultipleComponent]
 public class Module_OrbitalSurvey : PartBehaviourModule
 {
-    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.Module_Orbital");
+    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.Module");
     
     public override Type PartComponentModuleType => typeof(PartComponentModule_OrbitalSurvey);
     
@@ -24,25 +25,36 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     public override void OnInitialize()
     {
         base.OnInitialize();
-        //if (PartBackingMode == PartBackingModes.Flight) moduleIsEnabled = true;
-        moduleIsEnabled = true;
+
+        _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
+
+        if (PartBackingMode == PartBackingModes.Flight)
+        {
+            moduleIsEnabled = true;
+            _dataOrbitalSurvey.EnabledToggle.OnChangedValue += OnToggleChangedValue;
+        }
         
-        _testAction = new ModuleAction(TestAction);
-        _dataOrbitalSurvey.AddAction("Enable Orbital Survey", _testAction);
-        var isVisible = base.part != null;
+        UpdatePAMVisibility(_dataOrbitalSurvey.EnabledToggle.GetValue());
+            
+        
+        
+        
+        // _testAction = new ModuleAction(TestAction);
+        // _dataOrbitalSurvey.AddAction("Enable Orbital Survey", _testAction);
+        // var isVisible = base.part != null;
         //_dataOrbitalSurvey.SetVisible(_testAction, isVisible);
 
         //_dataOrbitalSurvey.MyModulePropertyTest.SetValue("setting some value");
         //_dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MyModulePropertyTest, true);
-        _dataOrbitalSurvey.SetLabel(_dataOrbitalSurvey.MyModulePropertyTest, "new label");
-        _dataOrbitalSurvey.MyModulePropertyTest.SetValue("new value");
+        // _dataOrbitalSurvey.SetLabel(_dataOrbitalSurvey.MyModulePropertyTest, "new label");
+        // _dataOrbitalSurvey.MyModulePropertyTest.SetValue("new value");
 
         // _moduleProperty = new ModuleProperty<string>("Hello World!");
         // _dataOrbitalSurvey.AddProperty("MyModulePropertyTest", _moduleProperty);
         // _dataOrbitalSurvey.SetVisible(_moduleProperty, true);
         // _dataOrbitalSurvey.MyModulePropertyTest.SetValue(());
     }
-
+    
     public override string GetModuleDisplayName() => "This is GetModuleDisplayName()";
     
     private ModuleAction _testAction;
@@ -92,19 +104,38 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // And it also triggers in OAB when part is added to the assembly? 
     protected void OnEnable()
     {
-        //_logger.LogDebug("OnEnable triggered.");
+        _logger.LogDebug("OnEnable triggered.");
     }
     
     // This... also triggers when Flight scene is loaded? (why?)
+    // It triggers when exiting the game also.
     public override void OnShutdown()
     {
         _logger.LogDebug("OnShutdown triggered.");
+        _dataOrbitalSurvey.Mode.OnChangedValue -= OnModeChanged;
+        _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
     }
-
+    
     [ContextMenu("Extend")]
     protected virtual bool Extend()
     {
         _logger.LogDebug("Extend triggered.");
         return true;
+    }
+
+    private void OnModeChanged(string newMode)
+    {
+        _logger.LogDebug(($"Mode.OnChangedValue triggered. New value is {newMode}"));
+    }
+
+    private void OnToggleChangedValue(bool newValue)
+    {
+        _logger.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
+        UpdatePAMVisibility(newValue);
+    }
+
+    private void UpdatePAMVisibility(bool state)
+    {
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
     }
 }

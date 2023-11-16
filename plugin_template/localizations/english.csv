@@ -1,3 +1,5 @@
 Key,Type,Desc,English
 
 PartModules/OrbitalSurvey/Name,Text,,Orbital Survey
+PartModules/OrbitalSurvey/Enabled,Text,,Enabled
+PartModules/OrbitalSurvey/Mode,Text,,Mode
