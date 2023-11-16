@@ -16,9 +16,11 @@ public class MapData
         {
             for (int j = y - radius; j < y + radius; j++)
             {
-                // Handle edge cases: if x or y are near the edges of the texture we need to paint other sides too   
+                // Handle edge cases: if x is near the edges of the texture we need to paint other sides too   
                 var xPixel = i < 0 ? CurrentMap.width + i : i > CurrentMap.width-1 ? i - CurrentMap.width : i;
-                var yPixel = j < 0 ? CurrentMap.height + j : j > CurrentMap.height-1 ? j - CurrentMap.height : j;
+
+                // TODO handle out of bounds for Y better 
+                var yPixel = j < 0 ? j = 0 : j > CurrentMap.height ? j = CurrentMap.height : j = j;
                 
                 // Mark pixels as discovered
                 DiscoveredPixels[xPixel, yPixel] = true; // TODO optimize with lower resolution of the array
