@@ -1,4 +1,5 @@
-﻿using KSP.Sim;
+﻿using KSP.Api;
+using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.UI.Binding;
 using OrbitalSurvey.Models;
@@ -22,11 +23,18 @@ public class Data_OrbitalSurvey : ModuleData
     
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/Mode")]
-    [PAMDisplayControl(SortIndex = 3)]  
+    [PAMDisplayControl(SortIndex = 2)]  
     public ModuleProperty<string> Mode = new ModuleProperty<string>("");
+
+    [KSPState]
+    [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
+    [PAMDisplayControl(SortIndex = 3)]
+    [SteppedRange(1f, 45f, 1f)]
+    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(10f, false, new ToStringDelegate((val) => $"{val.ToString()}°" ));
 
     public override void OnPartBehaviourModuleInit()
     {
+        // Initialize Mode dropdown values
         var scanningModesDropdown = new DropdownItemList();
 
         foreach (MapType mapType in Enum.GetValues(typeof(MapType)))
@@ -39,6 +47,9 @@ public class Data_OrbitalSurvey : ModuleData
     }
     
     
+    
+    
+    // TEMPORARY STUFF
     
     [KSPState]
     [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
