@@ -5,7 +5,7 @@ namespace OrbitalSurvey.Modules;
 
 public class PartComponentModule_OrbitalSurvey : PartComponentModule
 {
-    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
+    private static readonly ManualLogSource _logger = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     
     public override Type PartBehaviourModuleType => typeof(Module_OrbitalSurvey);
 
