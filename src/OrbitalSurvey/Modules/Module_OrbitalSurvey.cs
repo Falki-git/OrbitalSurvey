@@ -137,5 +137,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private void UpdatePAMVisibility(bool state)
     {
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, state);
     }
 }
