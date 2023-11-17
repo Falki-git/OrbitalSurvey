@@ -8,7 +8,7 @@ namespace OrbitalSurvey
     internal class DEBUG_UI
     {        
         public bool IsDebugWindowOpen;
-        public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = true;
+        public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
 
         private Rect _debugWindowRect = new Rect(1900, 500, 350, 350);
         private GUIStyle _labelStyle;

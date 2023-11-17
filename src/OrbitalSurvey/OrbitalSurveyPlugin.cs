@@ -21,6 +21,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
     // AppBar button IDs
     private const string ToolbarFlightButtonID = "BTN-OrbitalOverlayFlight";
+    private const string ToolbarOABButtonID = "BTN-OrbitalOverlayOAB";
+    private const string ToolbarKSCButtonID = "BTN-OrbitalOverlayKSC";
 
     // Singleton instance of the plugin class
     public static OrbitalSurveyPlugin Instance { get; set; }
@@ -43,6 +45,28 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             {
                 DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
                 GameObject.Find(ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        Appbar.RegisterOABAppButton(
+            ModName,
+            ToolbarOABButtonID,
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            isOpen =>
+            {
+                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
+                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        Appbar.RegisterKSCAppButton(
+            ModName,
+            ToolbarKSCButtonID,
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            () =>
+            {
+                DEBUG_UI.Instance.IsDebugWindowOpen = !DEBUG_UI.Instance.IsDebugWindowOpen;
+                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(DEBUG_UI.Instance.IsDebugWindowOpen);
             }
         );
 
