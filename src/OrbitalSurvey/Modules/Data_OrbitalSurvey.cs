@@ -51,23 +51,23 @@ public class Data_OrbitalSurvey : ModuleData
     
     // TEMPORARY STUFF
     
-    [KSPState]
-    [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
-    public MyComplexClassProperty myComplexClassProperty;
-
-    [KSPState]
-    [Tooltip("Some state string value tooltip")]
-    public string MyStateString = "Some state string value";
+    // [KSPState]
+    // [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
+    // public MyComplexClassProperty myComplexClassProperty;
     
-    [KSPDefinition]
-    [Tooltip("Some definition string value tooltip")]
-    public string MyDefinitionString = "Some definition string value";
+    // [KSPState]
+    // [Tooltip("Some state string value tooltip")]
+    // public string MyStateString = "Some state string value";
+    
+    // [KSPDefinition]
+    // [Tooltip("Some definition string value tooltip")]
+    // public string MyDefinitionString = "Some definition string value";
 
-    public int someIntField;
+    //public int someIntField;
 
-    public string AddPropertyTest;
+    //public string AddPropertyTest;
 
-    [KSPDefinition]
-    public ModuleProperty<string> MyModulePropertyTest = new("initial value");
+    //[KSPDefinition]
+    //public ModuleProperty<string> MyModulePropertyTest = new("initial value");
 
 }
