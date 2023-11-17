@@ -30,7 +30,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
         if (PartBackingMode == PartBackingModes.Flight)
         {
-            moduleIsEnabled = true;
+            moduleIsEnabled = true; // this doesn't appear to have any purpose...
             _dataOrbitalSurvey.EnabledToggle.OnChangedValue += OnToggleChangedValue;
         }
         

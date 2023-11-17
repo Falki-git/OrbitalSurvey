@@ -30,7 +30,7 @@ public class Data_OrbitalSurvey : ModuleData
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
     [PAMDisplayControl(SortIndex = 3)]
     [SteppedRange(1f, 45f, 1f)]
-    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(10f, false, new ToStringDelegate((val) => $"{val.ToString()}°" ));
+    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(10f, false, new ToStringDelegate((val) => $"{((float)val):F0}°" ));
 
     public override void OnPartBehaviourModuleInit()
     {
