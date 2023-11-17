@@ -11,6 +11,7 @@
  * - minimum and maximum altitude for mapping 
  * - transmitting scans
  * - buffer scans until transmitted
+ * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
  * 
  * 
  * 
