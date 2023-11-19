@@ -27,8 +27,28 @@ public class AssetUtility : MonoBehaviour
         { "Pol", "Assets/Environments/systems/kerbol/pol/scaledspace/pol_scaled_d.png"},
         { "Eeloo", "Assets/Environments/systems/kerbol/eeloo/scaledspace/eeloo_scaled_d.png"}
     };
+    
+    public readonly Dictionary<string, string> BiomeBundleAssetAddresses = new()
+    {
+        { "Moho", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/moho_biome.png"},
+        { "Eve", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eve_biome.png"},
+        { "Gilly", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/gilly_biome.png"},
+        { "Kerbin", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/kerbin_biome.png"},
+        { "Mun", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/mun_biome.png"},
+        { "Minmus", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/minmus_biome.png"},
+        { "Duna", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/duna_biome.png"},
+        { "Ike", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/ike_biome.png"},
+        { "Dres", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/dres_biome.png"},
+        { "Jool", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/jool_biome.png"},
+        { "Laythe", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/laythe_biome.png"},
+        { "Vall", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/vall_biome.png"},
+        { "Tylo", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/tylo_biome.png"},
+        { "Bop", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome.png"},
+        { "Pol", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome.png"},
+        { "Eeloo", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome.png"}
+    };
 
-    private readonly Dictionary<string, Texture2D> _scaledVisualTextures = new();
+    public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
     
     private static readonly ManualLogSource _LOGGER = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.AssetUtility");
 
@@ -40,7 +60,7 @@ public class AssetUtility : MonoBehaviour
     private IEnumerator LoadVisualTextures()
     {
         var assetCallbacks = 0;
-        _scaledVisualTextures.Clear();
+        ScaledVisualTextures.Clear();
         
         _LOGGER.LogInfo(
             $"Start loading visual map textures. Textures to load: {_scaledVisualAddressableAddresses.Count}.");
@@ -58,7 +78,7 @@ public class AssetUtility : MonoBehaviour
                                              $"No asset with address {body.Value}.");
                             return;
                         }
-                        _scaledVisualTextures.Add(body.Key, tex);
+                        ScaledVisualTextures.Add(body.Key, tex);
                         _LOGGER.LogInfo($"Loaded visual map for {body.Key} ({assetCallbacks}).");
                     }
             );
@@ -68,8 +88,9 @@ public class AssetUtility : MonoBehaviour
         while (assetCallbacks < _scaledVisualAddressableAddresses.Count)
             yield return null;
             
-        _LOGGER.LogInfo($"Finished loading {_scaledVisualTextures.Count} visual textures.");
-        Core.Instance.InitializeCelestialData(_scaledVisualTextures);
+        _LOGGER.LogInfo($"Finished loading {ScaledVisualTextures.Count} visual textures.");
+        //Core.Instance.InitializeCelestialData(_scaledVisualTextures);
+        Core.Instance.InitializeCelestialData(this);
     }
 
     public static Texture2D GenerateHiddenMap()

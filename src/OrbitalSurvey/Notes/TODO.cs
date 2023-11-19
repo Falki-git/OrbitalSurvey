@@ -34,5 +34,11 @@
  * - minimum altitude
  * - maximum altitude
  * - ideal altitude (do we need this?)
+ *
+ *
+ *
+ * ATTRIBUTION:
+ * - icon by flaticon.com - <a href="https://www.flaticon.com/free-icons/satellite" title="satellite icons">Satellite icons created by mattbadal - Flaticon</a>
+ * 
  * 
  */

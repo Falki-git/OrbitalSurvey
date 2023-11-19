@@ -16,11 +16,11 @@ using UnityEngine.Serialization;
 
 namespace OrbitalSurvey;
 
-[BepInPlugin("falki.orbital_survey", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+[BepInPlugin(ModGuid, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
 public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 {
-    [PublicAPI] public const string ModGuid = MyPluginInfo.PLUGIN_GUID;
+    [PublicAPI] public const string ModGuid = "falki.orbital_survey";
     [PublicAPI] public const string ModName = MyPluginInfo.PLUGIN_NAME;
     [PublicAPI] public const string ModVer = MyPluginInfo.PLUGIN_VERSION;
 

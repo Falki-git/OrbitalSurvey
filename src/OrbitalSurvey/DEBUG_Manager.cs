@@ -280,8 +280,16 @@ namespace OrbitalSurvey
             pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
         }
 
-        public void BuildBiomeMask(string body = "Kerbin")
+        public void BuildBiomeMask(string body, Color? biome0, Color? biome1, Color? biome2, Color? biome3)
         {
+            if (string.IsNullOrEmpty(body))
+                body = "Kerbin";
+            
+            Color bio0 = biome0 ?? Color.green;
+            Color bio1 = biome1 ?? new Color(194f / 255f, 178 / 255f, 128 / 255f, 255);
+            Color bio2 = biome2 ?? Color.white;
+            Color bio3 = biome3 ?? new Color(133f / 255f, 94f / 255f, 66f / 255f);
+            
             BiomeMask = new Texture2D(4096, 4096, TextureFormat.ARGB32, true);
 
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
@@ -298,10 +306,10 @@ namespace OrbitalSurvey
 
                     switch (biomeIndex)
                     {
-                        case 0: pixelColor = Color.green; break; // red channel - grasslands
-                        case 1: pixelColor = new Color(194f / 255f, 178 / 255f, 128 / 255f, 255); break; // green channel - sand OR ocean
-                        case 2: pixelColor = Color.white; break; // blue channel - snow
-                        case 3: pixelColor = new Color(133f / 255f, 94f / 255f, 66f / 255f); break; // alpha channel - mountains
+                        case 0: pixelColor = bio0; break; // red channel - grasslands
+                        case 1: pixelColor = bio1; break; // green channel - sand OR ocean
+                        case 2: pixelColor = bio2; break; // blue channel - snow
+                        case 3: pixelColor = bio3; break; // alpha channel - mountains
                         default: pixelColor = Color.black; break;
                     }
                     BiomeMask.SetPixel(i, j, pixelColor);

@@ -1,7 +1,9 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
+using KSP.Map.impl;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
+using SpaceWarp.API.Assets;
 using UnityEngine;
 using Logger = BepInEx.Logging.Logger;
 
@@ -20,8 +22,8 @@ public class Core : MonoBehaviour
     public CelestialDataDictionary CelestialDataDictionary { get; set; }
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Core");
-
-    public void InitializeCelestialData(Dictionary<string, Texture2D> scaledVisualTextures)
+    
+    public void InitializeCelestialData(AssetUtility assetUtility)
     {
         var celestialBodies = GameManager.Instance.Game?.UniverseModel?.GetAllCelestialBodies();
         if (celestialBodies == null)
@@ -36,19 +38,44 @@ public class Core : MonoBehaviour
         {
             var key = body.Name;
             
-            // Visual map
-            var mapData = new MapData()
-            {
-                ScannedMap = scaledVisualTextures[key],
-                HiddenMap = AssetUtility.GenerateHiddenMap(),
-                CurrentMap = AssetUtility.GenerateHiddenMap()
-            };
-
             var celesData = new CelestialData
             {
                 Body = body
             };
-            celesData.Maps.Add(MapType.Visual, mapData);
+
+            MapData mapData;
+            
+            // Visual map
+            try
+            {
+                mapData = new MapData()
+                {
+                    ScannedMap = assetUtility.ScaledVisualTextures[key],
+                    HiddenMap = AssetUtility.GenerateHiddenMap(),
+                    CurrentMap = AssetUtility.GenerateHiddenMap()
+                };
+                celesData.Maps.Add(MapType.Visual, mapData);
+            }
+            catch (Exception ex)
+            {
+                _LOGGER.LogError($"Error loading visual map for {key}.\n" + ex);
+            }
+            
+            // Biome map
+            try
+            {
+                mapData = new MapData()
+                {
+                    ScannedMap = AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]),
+                    HiddenMap = AssetUtility.GenerateHiddenMap(),
+                    CurrentMap = AssetUtility.GenerateHiddenMap()
+                };
+                celesData.Maps.Add(MapType.Biome, mapData);
+            }
+            catch (Exception ex)
+            {
+                _LOGGER.LogError($"Error loading biome map for {key}.\n" + ex);
+            }
             
             CelestialDataDictionary.Add(key, celesData);
             _LOGGER.LogInfo($"Initialized CelestialDataDictionary for {key}.");
