@@ -42,6 +42,6 @@ public class MessageListener
         if (!Core.Instance.MapsInitialized) 
             OrbitalSurveyPlugin.Instance.assetUtility.InitializeVisualTextures();
         
-        DEBUG_UI.Instance.IsDebugWindowOpen = DEBUG_UI.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
+        DEBUG_UI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
     }
 }
