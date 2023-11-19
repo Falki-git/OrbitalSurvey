@@ -2,6 +2,8 @@
 using UnityEngine;
 using BepInEx.Logging;
 using KSP.Audio;
+using OrbitalSurvey.Managers;
+using OrbitalSurvey.Models;
 
 namespace OrbitalSurvey
 {
@@ -19,6 +21,10 @@ namespace OrbitalSurvey
         private string _body = "Kerbin";
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
+        
+        private string _visualMapBody = "Kerbin";
+        private bool _showVisualMap;
+        private Texture2D _visualMapTexture;
 
         public string DataToSave = "default";
         public string LoadedData;
@@ -91,6 +97,7 @@ namespace OrbitalSurvey
             }
             GUILayout.EndHorizontal();
 
+            /*
             GUILayout.Label("--");
 
             GUILayout.BeginHorizontal();
@@ -177,6 +184,7 @@ namespace OrbitalSurvey
             GUILayout.EndHorizontal();
 
             GUILayout.Label("--");
+            */
 
             if (GUILayout.Button("LoadMyCustomAssetTexture"))
             {
@@ -278,6 +286,41 @@ namespace OrbitalSurvey
 
             GUILayout.Label($"Lat: {DEBUG_Manager.Instance.CurrentLatitude?.ToString()}");
             GUILayout.Label($"Lon: {DEBUG_Manager.Instance.CurrentLongitude?.ToString()}");
+            
+            GUILayout.Label("--");
+            
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("Visual map for:",  _labelStyle);
+                _visualMapBody = GUILayout.TextField(_visualMapBody);
+            }
+            GUILayout.EndHorizontal();
+            
+            if (GUILayout.Button(_showVisualMap ? "Hide visual map" : "Show visual map"))
+            {
+                if (!_showVisualMap)
+                {
+                    _visualMapTexture = Core.Instance.CelestialDataDictionary[_visualMapBody].Maps[MapType.Visual].ScannedMap;
+                }
+                else
+                {
+                    _visualMapTexture = null;
+                }
+
+                _showVisualMap = !_showVisualMap;
+            }
+            
+            if (_showVisualMap)
+            {
+                Vector2 scaledSize = new Vector2(320, 320);
+                float scaleWidth = scaledSize.x / _visualMapTexture.width;
+                float scaleHeight = scaledSize.y / _visualMapTexture.height;
+
+                int scaledWidth = (int)(_visualMapTexture.width * scaleWidth);
+                int scaledHeight = (int)(_visualMapTexture.height * scaleHeight);
+
+                GUILayout.Label(_visualMapTexture, GUILayout.Width(scaledWidth), GUILayout.Height(scaledHeight));
+            }
 
             GUI.DragWindow(new Rect(0, 0, 10000, 10000));
         }

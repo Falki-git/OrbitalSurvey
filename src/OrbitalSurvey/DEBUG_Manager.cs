@@ -411,6 +411,9 @@ namespace OrbitalSurvey
             return (longitude + 180) / 360f;
         }
 
-        
+        public void AssetTest()
+        {
+            
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using OrbitalSurvey.Utilities;
 
 namespace OrbitalSurvey.Models;
 
@@ -7,7 +8,7 @@ public class MapData
     public Texture2D ScannedMap { get; set; }
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
-    public bool[,] DiscoveredPixels { get; set; }
+    public bool[,] DiscoveredPixels { get; set; } = new bool[Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2];
 
     public void MarkAsScanned(int x, int y, int radius)
     {

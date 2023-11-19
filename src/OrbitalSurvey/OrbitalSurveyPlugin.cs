@@ -8,6 +8,11 @@ using SpaceWarp.API.Mods;
 using SpaceWarp.API.UI.Appbar;
 using UnityEngine;
 using KSP.Rendering.Planets;
+using KSP.Game;
+using KSP.Sim.impl;
+using OrbitalSurvey.Managers;
+using OrbitalSurvey.Utilities;
+using UnityEngine.Serialization;
 
 namespace OrbitalSurvey;
 
@@ -26,6 +31,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
     // Singleton instance of the plugin class
     public static OrbitalSurveyPlugin Instance { get; set; }
+
+    [FormerlySerializedAs("AssetsUtility")] public AssetUtility assetUtility;
 
     /// <summary>
     /// Runs when the mod is first initialized.
@@ -77,13 +84,6 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         //Harmony.CreateAndPatchAll(typeof(SaveLoadPatches));
         Harmony.CreateAndPatchAll(typeof(PatchTest));
 
-        // Fetch a configuration value or create a default one if it does not exist
-        const string defaultValue = "my default value";
-        var configValue = Config.Bind<string>("Settings section", "Option 1", defaultValue, "Option description");
-
-        // Log the config value into <KSP2 Root>/BepInEx/LogOutput.log
-        Logger.LogInfo($"Option 1: {configValue.Value}");
-
         //MySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
         MySaveData = SpaceWarp.API.SaveGameManager.ModSaves.RegisterSaveLoadGameData<MyTestSaveData>(
             "falki.orbital_survey",
@@ -109,9 +109,21 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             }//,
             //MySaveData
         );
+        
+        // var isLoaded = true;
+        // var key = "Assets/Environments/systems/kerbol/duna/scaledspace/duna_scaled_d.png";
+        // GameManager.Instance.Assets.Load<Texture2D>(key, LoadTexture, isLoaded);
 
         int i = 0;
+
+        assetUtility = gameObject.AddComponent<AssetUtility>();
     }
+
+    // private void LoadTexture(Texture2D tex)
+    // {
+    //     Logger.LogDebug($"LogTexture triggered.");
+    //     Logger.LogDebug($"Tex name it {tex.name}");
+    // }
 
     public MyTestSaveData MySaveData;
 
@@ -119,7 +131,17 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
     private void Update()
     {
-        int i = 0;
+        try
+        {
+            var gm = GameManager.Instance;
+            var duna = GameObject.Find("Celestial.Duna.Scaled");
+            List<CelestialBodyComponent> cel = GameManager.Instance.Game.UniverseModel.GetAllCelestialBodies();
+            //var duna2 = GameManager.Instance.Assets.Get<GameObject>("Celestial.Duna.Scaled.prefab");
+            
+            int i = 0;
+        }
+        catch (Exception ex)
+        {  }
     }
 
     private void TestBed()
