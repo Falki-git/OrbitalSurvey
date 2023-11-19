@@ -10,7 +10,6 @@ namespace OrbitalSurvey
     internal class DEBUG_UI
     {        
         public bool IsDebugWindowOpen;
-        public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
 
         private Rect _debugWindowRect = new Rect(1900, 500, 350, 350);
         private GUIStyle _labelStyle;
@@ -25,6 +24,7 @@ namespace OrbitalSurvey
         private string _visualMapBody = "Kerbin";
         private bool _showVisualMap;
         private Texture2D _visualMapTexture;
+        private int _mapDataIndex;
 
         public string DataToSave = "default";
         public string LoadedData;
@@ -291,8 +291,27 @@ namespace OrbitalSurvey
             
             GUILayout.BeginHorizontal();
             {
-                GUILayout.Label("Visual map for:",  _labelStyle);
+                switch (_mapDataIndex)
+                {
+                    case 0:
+                        GUILayout.Label("[Scanned] visual:", _labelStyle);
+                        break;
+                    case 1:
+                        GUILayout.Label("[Hidden] visual:", _labelStyle);
+                        break;
+                    case 2:
+                        GUILayout.Label("[Current] visual:", _labelStyle);
+                        break;
+                }
+                
                 _visualMapBody = GUILayout.TextField(_visualMapBody);
+                if (GUILayout.Button("<"))
+                    if (_mapDataIndex > 0)
+                        _mapDataIndex--;
+                
+                if (GUILayout.Button(">"))
+                    if (_mapDataIndex < 2)
+                        _mapDataIndex++;
             }
             GUILayout.EndHorizontal();
             
@@ -300,7 +319,18 @@ namespace OrbitalSurvey
             {
                 if (!_showVisualMap)
                 {
-                    _visualMapTexture = Core.Instance.CelestialDataDictionary[_visualMapBody].Maps[MapType.Visual].ScannedMap;
+                    switch (_mapDataIndex)
+                    {
+                        case 0:
+                            _visualMapTexture = Core.Instance.CelestialDataDictionary[_visualMapBody].Maps[MapType.Visual].ScannedMap;
+                            break;
+                        case 1:
+                            _visualMapTexture = Core.Instance.CelestialDataDictionary[_visualMapBody].Maps[MapType.Visual].HiddenMap;
+                            break;
+                        case 2:
+                            _visualMapTexture = Core.Instance.CelestialDataDictionary[_visualMapBody].Maps[MapType.Visual].CurrentMap;
+                            break;
+                    }
                 }
                 else
                 {
