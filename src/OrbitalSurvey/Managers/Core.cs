@@ -1,6 +1,5 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
-using KSP.Map.impl;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
@@ -37,24 +36,13 @@ public class Core : MonoBehaviour
         foreach (var body in celestialBodies.Where(celes => !celes.IsStar))
         {
             var key = body.Name;
-            
-            var celesData = new CelestialData
-            {
-                Body = body
-            };
+            var celesData = new CelestialData();
+            celesData.Body = body;
 
-            MapData mapData;
-            
             // Visual map
             try
             {
-                mapData = new MapData()
-                {
-                    ScannedMap = assetUtility.ScaledVisualTextures[key],
-                    HiddenMap = AssetUtility.GenerateHiddenMap(),
-                    CurrentMap = AssetUtility.GenerateHiddenMap()
-                };
-                celesData.Maps.Add(MapType.Visual, mapData);
+                celesData.Maps[MapType.Visual].ScannedMap = assetUtility.ScaledVisualTextures[key];
             }
             catch (Exception ex)
             {
@@ -64,13 +52,8 @@ public class Core : MonoBehaviour
             // Biome map
             try
             {
-                mapData = new MapData()
-                {
-                    ScannedMap = AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]),
-                    HiddenMap = AssetUtility.GenerateHiddenMap(),
-                    CurrentMap = AssetUtility.GenerateHiddenMap()
-                };
-                celesData.Maps.Add(MapType.Biome, mapData);
+                celesData.Maps[MapType.Biome].ScannedMap =
+                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]);
             }
             catch (Exception ex)
             {

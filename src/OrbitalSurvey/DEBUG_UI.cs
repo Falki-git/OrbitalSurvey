@@ -16,7 +16,7 @@ namespace OrbitalSurvey
         private GUIStyle _normalButton;
         private GUIStyle _toggledButton;
         private readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_UI");
-        private string _myCustomTextureFilename = "kerbinCustom3_black.png";
+        private string _myCustomTextureFilename = "allblack.png";
         private string _textureName = string.Empty;
         private string _colorName = "red";
         private string _body = "Kerbin";

@@ -5,10 +5,18 @@ namespace OrbitalSurvey.Models;
 
 public class MapData
 {
+    public MapData()
+    {
+        ScannedMap = AssetUtility.GenerateHiddenMap();
+        HiddenMap = AssetUtility.GenerateHiddenMap();
+        CurrentMap = AssetUtility.GenerateHiddenMap();
+        DiscoveredPixels = new bool[Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2];
+    }
+    
     public Texture2D ScannedMap { get; set; }
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
-    public bool[,] DiscoveredPixels { get; set; } = new bool[Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2];
+    public bool[,] DiscoveredPixels { get; set; }
 
     public void MarkAsScanned(int x, int y, int radius)
     {

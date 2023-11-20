@@ -5,8 +5,15 @@ namespace OrbitalSurvey.Models;
 
 public class CelestialData
 {
+    public CelestialData()
+    {
+        Maps = new();
+        Maps.Add(MapType.Visual, new MapData());
+        Maps.Add(MapType.Biome, new MapData());
+    }
+    
     public CelestialBodyComponent Body { get; set;  }
-    public Dictionary<MapType, MapData> Maps { get; set; } = new();
+    public Dictionary<MapType, MapData> Maps { get; set; }
     
     public string Name => Body.Name;
     public string DisplayName => Body.DisplayName;
