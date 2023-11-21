@@ -10,8 +10,6 @@ namespace OrbitalSurvey.Managers;
 
 public class Core : MonoBehaviour
 {
-    public bool MapsInitialized { get; set; }
-
     private Core()
     {
         CelestialDataDictionary = new();
@@ -19,6 +17,7 @@ public class Core : MonoBehaviour
     
     public static Core Instance { get; } = new();
     public CelestialDataDictionary CelestialDataDictionary { get; set; }
+    public bool MapsInitialized { get; set; }
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Core");
     
@@ -53,7 +52,9 @@ public class Core : MonoBehaviour
             try
             {
                 celesData.Maps[MapType.Biome].ScannedMap =
-                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]);
+                    ScanUtility.ConvertToReadableTexture(
+                        AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key])
+                        );
             }
             catch (Exception ex)
             {
@@ -66,6 +67,23 @@ public class Core : MonoBehaviour
         
         MapsInitialized = true;
         _LOGGER.LogInfo($"Finished CelestialDataDictionary initialization with {CelestialDataDictionary.Count} entries.");
+    }
+
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, double scanningCone)
+    {
+        var celestialData = CelestialDataDictionary[body];
+        if (celestialData == null)
+        {
+            _LOGGER.LogError($"Error retrieving CelestialData while executing scan, for body {body}.");
+            return;
+        }
+        
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone);
+    }
+
+    public void ClearMap(string body, MapType mapType)
+    {
+        CelestialDataDictionary[body].ClearMap(mapType);
     }
 }
 

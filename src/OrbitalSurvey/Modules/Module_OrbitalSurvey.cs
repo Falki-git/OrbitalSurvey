@@ -69,6 +69,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     public override void OnUpdate(float deltaTime)
     {
         //_logger.LogDebug("OnUpdate triggered.");
+        int i = 0;
     }
 
     // -

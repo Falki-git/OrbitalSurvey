@@ -4,6 +4,8 @@ using KSP.Rendering.Planets;
 using KSP.Sim.impl;
 using SpaceWarp.API.Assets;
 using System.Reflection;
+using OrbitalSurvey.Managers;
+using OrbitalSurvey.Models;
 using UnityEngine;
 
 namespace OrbitalSurvey
@@ -419,9 +421,43 @@ namespace OrbitalSurvey
             return (longitude + 180) / 360f;
         }
 
-        public void AssetTest()
+        public void AddCurrentMapOverlay(string mapBody, MapType mapType, string applyTextureName)
         {
+            RemoveCustomOverlay(mapBody);
+
+            var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
+            var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, mapBody);
+            var pqs = celes.GetComponent<PQS>();
+
+            var sourceMaterial = pqs.data.materialSettings.surfaceMaterial;
+            Material newMaterial = new Material(sourceMaterial);
+            string[] shaderKeywords = sourceMaterial.shaderKeywords;
+            string[] array = new string[shaderKeywords.Length];
+            shaderKeywords.CopyTo(array, 0);
+            newMaterial.shaderKeywords = array;
+            newMaterial.shader = Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old");
+
+            var mapTexture = Core.Instance.CelestialDataDictionary[mapBody].Maps[mapType].CurrentMap;
             
+            if (!string.IsNullOrEmpty(applyTextureName))
+            {
+                // _AlbedoScaledTex
+                newMaterial.SetTexture(applyTextureName, mapTexture);
+            }
+            else
+            {
+                newMaterial.SetTexture("_AlbedoScaledTex", mapTexture);
+                //newMaterial.SetTexture("_MainTex", MyCustomTexture);
+            }
+
+            PQSRenderer pqsRenderer = celes.GetComponent<PQSRenderer>();
+            MyOverlay = new MyIPQS { OverlayMaterial = newMaterial };
+            pqsRenderer.AddOverlay(MyOverlay);
+        }
+
+        public void ClearMap(string mapBody, MapType mapType)
+        {
+            Core.Instance.ClearMap(mapBody, mapType);
         }
     }
 }

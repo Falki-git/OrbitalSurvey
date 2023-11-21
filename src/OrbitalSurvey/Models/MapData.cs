@@ -38,5 +38,20 @@ public class MapData
                 CurrentMap.SetPixel(xPixel, yPixel, ScannedMap.GetPixel(xPixel, yPixel));
             }
         }
+
+        CurrentMap.Apply();
+    }
+
+    public void ClearMap()
+    {
+        for (int i = 0; i < CurrentMap.width; i++)
+        {
+            for (int j = 0; j < CurrentMap.height; j++)
+            {
+                DiscoveredPixels[i, j] = false;
+                CurrentMap.SetPixel(i, j, Color.clear);
+            }
+        }
+        CurrentMap.Apply();
     }
 }

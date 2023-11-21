@@ -14,7 +14,8 @@ namespace OrbitalSurvey
         private GUIStyle _labelStyle;
         private GUIStyle _labelStyleShort;
         private GUIStyle _normalButton;
-        private GUIStyle _toggledButton;
+        private GUIStyle _normalSectionButton;
+        private GUIStyle _toggledSectionButton;
         private readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_UI");
         private string _myCustomTextureFilename = "allblack.png";
         private string _textureName = string.Empty;
@@ -73,8 +74,10 @@ namespace OrbitalSurvey
             _labelStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 };
             _labelStyleShort = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 10 };
             _normalButton = new GUIStyle(Skins.ConsoleSkin.button);
-            _toggledButton = new GUIStyle(Skins.ConsoleSkin.button);
-            _toggledButton.normal.textColor = Color.gray;
+            _normalSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
+            _normalSectionButton.normal.textColor = new Color(120f/255f, 100f/255f, 255f/255f, 1f);
+            _toggledSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
+            _toggledSectionButton.normal.textColor = Color.gray;
         }
 
         public void OnGUI()
@@ -131,7 +134,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
-            if (GUILayout.Button(_showSavePersistenceSection ? "Hide Save Persistence Section" : "Show Save Persistence Section", _showSavePersistenceSection ? _toggledButton : _normalButton))
+            if (GUILayout.Button(_showSavePersistenceSection ? "Hide Save Persistence Section" : "Show Save Persistence Section", _showSavePersistenceSection ? _toggledSectionButton : _normalSectionButton))
                 _showSavePersistenceSection = !_showSavePersistenceSection;
             
             if(_showSavePersistenceSection)
@@ -226,7 +229,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
-            if (GUILayout.Button(_showOverlaySection ? "Hide Overlay Section" : "Show Overlay Section", _showOverlaySection ? _toggledButton : _normalButton))
+            if (GUILayout.Button(_showOverlaySection ? "Hide Overlay Section" : "Show Overlay Section", _showOverlaySection ? _toggledSectionButton : _normalSectionButton))
                 _showOverlaySection = !_showOverlaySection;
 
             if (_showOverlaySection)
@@ -261,6 +264,11 @@ namespace OrbitalSurvey
                 if (GUILayout.Button("AddCustPaintedTexOverlay"))
                 {
                     DEBUG_Manager.Instance.AddCustPaintedTexOverlay(_colorName, _body);
+                }
+                
+                if (GUILayout.Button("AddCurrentMapOverlay"))
+                {
+                    DEBUG_Manager.Instance.AddCurrentMapOverlay(_mapBody, _mapTypeIndex == 0 ? MapType.Visual : MapType.Biome, _textureName);
                 }
                 
                 GUILayout.Label("--");
@@ -300,7 +308,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
-            if (GUILayout.Button(_showBuildBiomeSection ? "Hide Build Biome Section" : "Show Build Biome Section", _showBuildBiomeSection ? _toggledButton : _normalButton))
+            if (GUILayout.Button(_showBuildBiomeSection ? "Hide Build Biome Section" : "Show Build Biome Section", _showBuildBiomeSection ? _toggledSectionButton : _normalSectionButton))
                 _showBuildBiomeSection = !_showBuildBiomeSection;
 
             if (_showBuildBiomeSection)
@@ -412,7 +420,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
-            if (GUILayout.Button(_showPaintTextureSection ? "Hide Paint Texture Section" : "Show Paint Texture Section", _showPaintTextureSection ? _toggledButton : _normalButton))
+            if (GUILayout.Button(_showPaintTextureSection ? "Hide Paint Texture Section" : "Show Paint Texture Section", _showPaintTextureSection ? _toggledSectionButton : _normalSectionButton))
                 _showPaintTextureSection = !_showPaintTextureSection;
 
             if (_showPaintTextureSection)
@@ -432,7 +440,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
-            if (GUILayout.Button(_showDisplayMapVisualsSection ? "Hide Display Maps Section" : "Show Display Maps Section", _showDisplayMapVisualsSection ? _toggledButton : _normalButton))
+            if (GUILayout.Button(_showDisplayMapVisualsSection ? "Hide Display Maps Section" : "Show Display Maps Section", _showDisplayMapVisualsSection ? _toggledSectionButton : _normalSectionButton))
                 _showDisplayMapVisualsSection = !_showDisplayMapVisualsSection;
 
             if (_showDisplayMapVisualsSection)
@@ -547,6 +555,11 @@ namespace OrbitalSurvey
                     int scaledHeight = (int)(_MapTexture.height * scaleHeight);
 
                     GUILayout.Label(_MapTexture, GUILayout.Width(scaledWidth), GUILayout.Height(scaledHeight));
+                }
+
+                if (GUILayout.Button("Clear map"))
+                {
+                    DEBUG_Manager.Instance.ClearMap(_mapBody, _mapTypeIndex == 0 ? MapType.Visual : MapType.Biome);
                 }
                 
                 GUILayout.Label("--");

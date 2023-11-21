@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
+using OrbitalSurvey.Models;
 using UnityEngine;
 using Logger = BepInEx.Logging.Logger;
 using OrbitalSurvey.Utilities;
@@ -9,13 +10,14 @@ namespace OrbitalSurvey.Modules;
 
 public class PartComponentModule_OrbitalSurvey : PartComponentModule
 {
+    public override Type PartBehaviourModuleType => typeof(Module_OrbitalSurvey);
+    
     private static readonly ManualLogSource _logger = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     private Data_OrbitalSurvey _dataOrbitalSurvey;
-
-    private float _lastScanTime = Time.time;
-    private float _timeSinceLastScan => Time.time - _lastScanTime;
+    private double _lastScanTime;
+    private double _timeSinceLastScan => ScanUtility.UT - _lastScanTime;
     
-    public override Type PartBehaviourModuleType => typeof(Module_OrbitalSurvey);
+    
 
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
@@ -35,13 +37,23 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     // Keeps triggering in every scene once it's in Flight 
     public override void OnUpdate(double universalTime, double deltaUniversalTime)
     {
-        if (_dataOrbitalSurvey.EnabledToggle.GetValue() && _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
+        int i = 0;
+        if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
+            _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
-            _logger.LogDebug($"Scanning is enabled. Time since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
-            
-            // TODO do scan here
+            _logger.LogDebug($"Scanning is enabled. Last scan: {_lastScanTime}.\nTime since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
 
-            _lastScanTime = Time.time;
+            var vessel = base.Part.PartOwner.SimulationObject.Vessel;
+            var altitude = vessel.AltitudeFromRadius;
+            var longitude = vessel.Longitude;
+            var latitude = vessel.Latitude;
+            var body = vessel.mainBody.Name;
+            var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+            var scanningCone = _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
+            
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+
+            _lastScanTime = universalTime;
         }
     }
 

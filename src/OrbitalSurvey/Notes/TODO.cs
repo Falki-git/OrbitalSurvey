@@ -14,7 +14,7 @@
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
  * 
  * 
- * 
+ * - EXPORT BIOME TEXTURES THAT AREA READABLE!!!
  * 
  * 
  * 

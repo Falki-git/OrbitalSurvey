@@ -24,13 +24,13 @@ public class Data_OrbitalSurvey : ModuleData
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/Mode")]
     [PAMDisplayControl(SortIndex = 2)]  
-    public ModuleProperty<string> Mode = new ModuleProperty<string>("");
+    public ModuleProperty<string> Mode = new ModuleProperty<string>("Visual");
 
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
     [PAMDisplayControl(SortIndex = 3)]
     [SteppedRange(1f, 45f, 1f)]
-    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(10f, false, new ToStringDelegate((val) => $"{((float)val):F0}°" ));
+    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(1f, false, new ToStringDelegate((val) => $"{((float)val):F0}°" ));
 
     public override void OnPartBehaviourModuleInit()
     {

@@ -78,7 +78,9 @@ public class AssetUtility : MonoBehaviour
                                              $"No asset with address {body.Value}.");
                             return;
                         }
-                        ScaledVisualTextures.Add(body.Key, tex);
+
+                        var readableTexture = ScanUtility.ConvertToReadableTexture(tex);
+                        ScaledVisualTextures.Add(body.Key, readableTexture);
                         _LOGGER.LogInfo($"Loaded visual map for {body.Key} ({assetCallbacks}).");
                     }
             );

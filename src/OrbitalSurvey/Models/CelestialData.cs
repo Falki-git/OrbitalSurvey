@@ -25,12 +25,22 @@ public class CelestialData
     
     public void DoScan(MapType mapType, double longitude, double latitude, double altitude, double scanningCone)
     {
+        // calculate what the scanning radius is given the altitude and the field of view of the scanner
         var scanningRadius = ScanUtility.GetScanRadius(Radius, altitude, scanningCone);
+
+        // need to adjust the scanning radius to take into account the resolution of the texture
+        var scanningRadiusForTexture = ScanUtility.ConvertRealScanningRadiusToTextureScanningRadius(scanningRadius, Radius);
 
         var (textureX, textureY) = ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(longitude, latitude, 4096, 4096);
 
         var map = Maps[mapType];
         
-        map.MarkAsScanned(textureX, textureY, scanningRadius);
+        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture);
+    }
+
+    public void ClearMap(MapType mapType)
+    {
+        var map = Maps[mapType];
+        map.ClearMap();
     }
 }
