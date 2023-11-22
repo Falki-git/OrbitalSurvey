@@ -41,9 +41,11 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
             _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
-            _logger.LogDebug($"Scanning is enabled. Last scan: {_lastScanTime}.\nTime since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
-
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
+            
+            _logger.LogDebug($"'{vessel.Name}' scanning enabled. Last scan: {_lastScanTime}.\n" + 
+                    "Time since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
+            
             var altitude = vessel.AltitudeFromRadius;
             var longitude = vessel.Longitude;
             var latitude = vessel.Latitude;

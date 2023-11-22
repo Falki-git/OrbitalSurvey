@@ -1,5 +1,4 @@
 ﻿using KSP.Game;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace OrbitalSurvey.Utilities;
@@ -91,5 +90,15 @@ public static class ScanUtility
         // "myTexture2D" now has the same pixels from "texture" and it's readable
         return myTexture2D;
     }
-    
+
+    public static double GetMercatorWidthCorrectionFactor(double latitude)
+    {
+        return MathF.Cos((float)latitude * Mathf.Deg2Rad);
+    }
+
+    public static double TextureYToLatitude(int y, int textureHeight)
+    {
+        // inverse of GetTextureCoordinatesFromGeographicCoordinates
+        return ((180f * (double)y) / (double)textureHeight) - 90f;
+    }
 }

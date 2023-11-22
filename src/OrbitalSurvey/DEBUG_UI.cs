@@ -10,7 +10,7 @@ namespace OrbitalSurvey
     {        
         public bool IsDebugWindowOpen;
 
-        private Rect _debugWindowRect = new Rect(1900, 500, 350, 350);
+        private Rect _debugWindowRect = new Rect(/*1900*/ 115, /*500*/ 54, 350, 350);
         private GUIStyle _labelStyle;
         private GUIStyle _labelStyleShort;
         private GUIStyle _normalButton;
@@ -23,10 +23,10 @@ namespace OrbitalSurvey
         private string _body = "Kerbin";
 
         private bool _showSavePersistenceSection;
-        private bool _showOverlaySection;
+        private bool _showOverlaySection = true;
         private bool _showBuildBiomeSection;
         private bool _showPaintTextureSection;
-        private bool _showDisplayMapVisualsSection;
+        private bool _showDisplayMapVisualsSection = true;
         
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
@@ -50,8 +50,8 @@ namespace OrbitalSurvey
         private string _mapBody = "Kerbin";
         private bool _showMapDisplay;
         private Texture2D _MapTexture;
-        private int _mapTypeIndex;
-        private int _mapDataIndex;
+        private int _mapTypeIndex = 1;
+        private int _mapDataIndex = 2;
 
         public string DataToSave = "default";
         public string LoadedData;
@@ -75,7 +75,7 @@ namespace OrbitalSurvey
             _labelStyleShort = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 10 };
             _normalButton = new GUIStyle(Skins.ConsoleSkin.button);
             _normalSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
-            _normalSectionButton.normal.textColor = new Color(120f/255f, 100f/255f, 255f/255f, 1f);
+            _normalSectionButton.normal.textColor = new Color(120f/255f, 150f/255f, 255f/255f, 1f);
             _toggledSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
             _toggledSectionButton.normal.textColor = Color.gray;
         }
@@ -256,14 +256,14 @@ namespace OrbitalSurvey
                     DEBUG_Manager.Instance.RemoveCustomOverlay(_body);
                 }
 
-                if (GUILayout.Button("BlackOceanSphereMaterial"))
-                {
-                    DEBUG_Manager.Instance.BlackOceanSphereMaterial(_myCustomTextureFilename, _body, _textureName);
-                }
-
                 if (GUILayout.Button("AddCustPaintedTexOverlay"))
                 {
                     DEBUG_Manager.Instance.AddCustPaintedTexOverlay(_colorName, _body);
+                }
+                
+                if (GUILayout.Button("BlackOceanSphereMaterial"))
+                {
+                    DEBUG_Manager.Instance.BlackOceanSphereMaterial(_myCustomTextureFilename, _body, _textureName);
                 }
                 
                 if (GUILayout.Button("AddCurrentMapOverlay"))
@@ -431,9 +431,6 @@ namespace OrbitalSurvey
                 {
                     DEBUG_Manager.Instance.PaintTextureAtCurrentPosition();
                 }
-
-                GUILayout.Label($"Lat: {DEBUG_Manager.Instance.CurrentLatitude?.ToString()}");
-                GUILayout.Label($"Lon: {DEBUG_Manager.Instance.CurrentLongitude?.ToString()}");
                 
                 GUILayout.Label("--");
             }
@@ -556,6 +553,9 @@ namespace OrbitalSurvey
 
                     GUILayout.Label(_MapTexture, GUILayout.Width(scaledWidth), GUILayout.Height(scaledHeight));
                 }
+                
+                GUILayout.Label($"Lat: {DEBUG_Manager.Instance.CurrentLatitude?.ToString()}");
+                GUILayout.Label($"Lon: {DEBUG_Manager.Instance.CurrentLongitude?.ToString()}");
 
                 if (GUILayout.Button("Clear map"))
                 {

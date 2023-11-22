@@ -42,6 +42,7 @@ public class Core : MonoBehaviour
             try
             {
                 celesData.Maps[MapType.Visual].ScannedMap = assetUtility.ScaledVisualTextures[key];
+                _LOGGER.LogInfo($"Visual map for {key} successfully initialized.");
             }
             catch (Exception ex)
             {
@@ -52,9 +53,9 @@ public class Core : MonoBehaviour
             try
             {
                 celesData.Maps[MapType.Biome].ScannedMap =
-                    ScanUtility.ConvertToReadableTexture(
-                        AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key])
-                        );
+                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]);
+                
+                _LOGGER.LogInfo($"Biome map for {key} successfully initialized.");
             }
             catch (Exception ex)
             {
@@ -71,6 +72,10 @@ public class Core : MonoBehaviour
 
     public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, double scanningCone)
     {
+        // Sometimes, load data can be done before the textures are initialized
+        if (!MapsInitialized)
+            return;
+        
         var celestialData = CelestialDataDictionary[body];
         if (celestialData == null)
         {
