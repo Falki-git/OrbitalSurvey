@@ -3,6 +3,7 @@
  * - optimize with lower resolution textures and/or lower resolution discoveredpixels bool array
  * - save/load persistance of mapping data (POC done)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
+ * - add OAB part descriptions
  * - analytic gathering of data while timewarping - retroactive maping for higher warp factors
  * - minimum and maximum altitude for mapping 
  * - buffering and transmitting scans
