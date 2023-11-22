@@ -1,21 +1,19 @@
-﻿
-/*
- * 
- * - determine texture pixels to reveal depending on vessel longitude and latitude
- * - save/load persistance of mapping data
- * - scanning module on antennas
- * - add OrbitalSurvey module to all antennas with Patch Manager
- * 
- * - nonactive vessel mapping 
- * - analytic gathering of data while timewarping
+﻿/*
+ * TODO: 
+ * - optimize with lower resolution textures and/or lower resolution discoveredpixels bool array
+ * - save/load persistance of mapping data (POC done)
+ * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
+ * - analytic gathering of data while timewarping - retroactive maping for higher warp factors
  * - minimum and maximum altitude for mapping 
- * - transmitting scans
+ * - buffering and transmitting scans
+ * - add EC usage
  * - buffer scans until transmitted
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
+ * - UITK UI
+ * - mark 95% as complete
  * 
- * 
- * - EXPORT BIOME TEXTURES THAT AREA READABLE!!!
- * 
+ * TODO MAYBE:
+ * - visual textures are bad/broken... export and bundle them in unity? 
  * 
  * 
  * 
@@ -25,8 +23,6 @@
                 KSPAudioEventManager.onGameQuickSave();
                 KSPAudioEventManager.OnResourceTransfertStart();
             }
- *
- *
  *
  *
  * OAB part description:
