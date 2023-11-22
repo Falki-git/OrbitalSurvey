@@ -225,6 +225,15 @@ namespace OrbitalSurvey
                 }
                 GUILayout.EndHorizontal();
                 
+                GUILayout.BeginHorizontal();
+                {
+                    if (GUILayout.Button("Export Current Overlay Texture"))
+                    {
+                        DEBUG_Manager.Instance.ExportCurrentOverlayTexture(_body, _textureName);
+                    }
+                }
+                GUILayout.EndHorizontal();
+                
                 GUILayout.Label("--");
             }
             
@@ -269,6 +278,11 @@ namespace OrbitalSurvey
                 if (GUILayout.Button("BlackOceanSphereMaterial"))
                 {
                     DEBUG_Manager.Instance.BlackOceanSphereMaterial(_myCustomTextureFilename, _body, _textureName);
+                }
+                
+                if (GUILayout.Button("RevertOceanSphereMaterial"))
+                {
+                    DEBUG_Manager.Instance.RevertOceanSphereMaterial(_body, _textureName);
                 }
                 
                 if (GUILayout.Button("AddCurrentMapOverlay"))

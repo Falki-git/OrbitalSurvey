@@ -16,6 +16,7 @@ namespace OrbitalSurvey
         public Texture2D MyCustomTexture;
         public Material MyCustomMaterial;
         public Texture2D BiomeMask;
+        public Texture SavedTexture;
 
         private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_Manager");
 
@@ -274,12 +275,28 @@ namespace OrbitalSurvey
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
             var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, body);
             var pqsRenderer = celes.GetComponent<PQSRenderer>();
-            var oceanMaterial = pqsRenderer._oceanSpereMaterial;
 
             var tex = Utility.ImportTexture(nameOfTextureToLoad);
 
+            SavedTexture = pqsRenderer._oceanMaterial.GetTexture(nameOfMaterialTextureToOverride);
+            
             pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
             pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
+        }
+
+        public void RevertOceanSphereMaterial(string body, string nameOfMaterialTextureToOverride)
+        {
+            if (string.IsNullOrEmpty(body))
+                body = "Kerbin";
+            if (string.IsNullOrEmpty(nameOfMaterialTextureToOverride))
+                nameOfMaterialTextureToOverride = "_ShorelineSDFTexture";
+            
+            var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
+            var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, body);
+            var pqsRenderer = celes.GetComponent<PQSRenderer>();
+            
+            //pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
+            pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
         }
 
         public void BuildBiomeMask(string body, Color? biome0, Color? biome1, Color? biome2, Color? biome3)
@@ -458,6 +475,24 @@ namespace OrbitalSurvey
         public void ClearMap(string mapBody, MapType mapType)
         {
             Core.Instance.ClearMap(mapBody, mapType);
+        }
+
+        public void ExportCurrentOverlayTexture(string body, string textureNameToExport)
+        {
+            var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
+            var celes = Utility.FindObjectByNameRecursively(celestialRoot.transform, body);
+            
+            PQSRenderer pqsRenderer = celes.GetComponent<PQSRenderer>();
+            
+            Texture2D textureToExport = (Texture2D)pqsRenderer._overlays[0].OverlayMaterial.GetTexture(
+                string.IsNullOrEmpty(textureNameToExport) ? "_AlbedoScaledTex" : textureNameToExport);
+            
+            
+            
+            byte[] bytes = textureToExport.EncodeToPNG();
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            path = Path.Combine(path, "ExportedTexture.png");
+            File.WriteAllBytes(path, bytes);
         }
     }
 }
