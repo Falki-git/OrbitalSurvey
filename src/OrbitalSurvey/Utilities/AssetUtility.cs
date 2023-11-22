@@ -91,12 +91,28 @@ public class AssetUtility : MonoBehaviour
             yield return null;
             
         _LOGGER.LogInfo($"Finished loading {ScaledVisualTextures.Count} visual textures.");
-        //Core.Instance.InitializeCelestialData(_scaledVisualTextures);
+        
         Core.Instance.InitializeCelestialData(this);
     }
 
     public static Texture2D GenerateHiddenMap()
     {
-        return new Texture2D(Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2);
+        var fillColor = new Color(0.2f, 0.2f, 0.2f);
+        
+        Texture2D texture = new Texture2D(Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2);
+        
+        Color[] pixels = new Color[Settings.MAP_RESOLUTION.Item1 * Settings.MAP_RESOLUTION.Item2];
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = fillColor;
+        }
+        
+        texture.SetPixels(pixels);
+        
+        texture.Apply();
+
+        return texture;
+
+        // return new Texture2D(Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2);
     }
 }
