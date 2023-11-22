@@ -42,14 +42,15 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
+            var body = vessel.mainBody.Name;
             
-            _logger.LogDebug($"'{vessel.Name}' scanning enabled. Last scan: {_lastScanTime}.\n" + 
+            _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {_lastScanTime}.\n" + 
                     "Time since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
             
             var altitude = vessel.AltitudeFromRadius;
             var longitude = vessel.Longitude;
             var latitude = vessel.Latitude;
-            var body = vessel.mainBody.Name;
+            
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
             var scanningCone = _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
             
