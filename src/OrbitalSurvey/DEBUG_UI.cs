@@ -134,6 +134,7 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
+            #region Save Persistence Section
             if (GUILayout.Button(_showSavePersistenceSection ? "Hide Save Persistence Section" : "Show Save Persistence Section", _showSavePersistenceSection ? _toggledSectionButton : _normalSectionButton))
                 _showSavePersistenceSection = !_showSavePersistenceSection;
             
@@ -227,7 +228,11 @@ namespace OrbitalSurvey
                 GUILayout.Label("--");
             }
             
+            #endregion
+            
             //////////////////////////////////////////////////////////////////////////////////////////
+            
+            #region Overlay Section
             
             if (GUILayout.Button(_showOverlaySection ? "Hide Overlay Section" : "Show Overlay Section", _showOverlaySection ? _toggledSectionButton : _normalSectionButton))
                 _showOverlaySection = !_showOverlaySection;
@@ -306,7 +311,11 @@ namespace OrbitalSurvey
             GUILayout.Label("--");
             */
             
+            #endregion
+            
             //////////////////////////////////////////////////////////////////////////////////////////
+            
+            #region Build Biome Section
             
             if (GUILayout.Button(_showBuildBiomeSection ? "Hide Build Biome Section" : "Show Build Biome Section", _showBuildBiomeSection ? _toggledSectionButton : _normalSectionButton))
                 _showBuildBiomeSection = !_showBuildBiomeSection;
@@ -418,7 +427,11 @@ namespace OrbitalSurvey
                 GUILayout.Label("--");
             }
             
+            #endregion
+            
             //////////////////////////////////////////////////////////////////////////////////////////
+            
+            #region Paint Texture Section
             
             if (GUILayout.Button(_showPaintTextureSection ? "Hide Paint Texture Section" : "Show Paint Texture Section", _showPaintTextureSection ? _toggledSectionButton : _normalSectionButton))
                 _showPaintTextureSection = !_showPaintTextureSection;
@@ -435,7 +448,11 @@ namespace OrbitalSurvey
                 GUILayout.Label("--");
             }
             
+            #endregion
+            
             //////////////////////////////////////////////////////////////////////////////////////////
+            
+            #region Display Maps Section
             
             if (GUILayout.Button(_showDisplayMapVisualsSection ? "Hide Display Maps Section" : "Show Display Maps Section", _showDisplayMapVisualsSection ? _toggledSectionButton : _normalSectionButton))
                 _showDisplayMapVisualsSection = !_showDisplayMapVisualsSection;
@@ -565,6 +582,7 @@ namespace OrbitalSurvey
                 GUILayout.Label("--");
             }
             
+            #endregion
 
             GUI.DragWindow(new Rect(0, 0, 10000, 10000));
         }
