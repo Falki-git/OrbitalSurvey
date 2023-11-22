@@ -2,6 +2,7 @@
 using BepInEx.Logging;
 using KSP.Game;
 using OrbitalSurvey.Managers;
+using SpaceWarp.API.Assets;
 using UnityEngine;
 
 namespace OrbitalSurvey.Utilities;
@@ -46,6 +47,11 @@ public class AssetUtility : MonoBehaviour
         { "Bop", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome.png"},
         { "Pol", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome.png"},
         { "Eeloo", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome.png"}
+    };
+    
+    public static readonly Dictionary<string, string> OtherAssetsAddresses = new()
+    {
+        { "HiddenMap", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_other/orbitalsurvey/other/hiddenmap.png"}
     };
 
     public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
@@ -97,22 +103,10 @@ public class AssetUtility : MonoBehaviour
 
     public static Texture2D GenerateHiddenMap()
     {
-        var fillColor = new Color(0.2f, 0.2f, 0.2f);
-        
-        Texture2D texture = new Texture2D(Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2);
-        
-        Color[] pixels = new Color[Settings.MAP_RESOLUTION.Item1 * Settings.MAP_RESOLUTION.Item2];
-        for (int i = 0; i < pixels.Length; i++)
-        {
-            pixels[i] = fillColor;
-        }
-        
-        texture.SetPixels(pixels);
-        
-        texture.Apply();
-
-        return texture;
-
-        // return new Texture2D(Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2);
+        var source = AssetManager.GetAsset<Texture2D>(OtherAssetsAddresses["HiddenMap"]);
+        var target = new Texture2D(source.width, source.height, source.format, source.mipmapCount > 1);
+        Graphics.CopyTexture(source, target);
+        target.Apply();
+        return target; 
     }
 }
