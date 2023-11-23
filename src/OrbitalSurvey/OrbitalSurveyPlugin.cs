@@ -32,7 +32,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     // Singleton instance of the plugin class
     public static OrbitalSurveyPlugin Instance { get; set; }
 
-    [FormerlySerializedAs("AssetsUtility")] public AssetUtility assetUtility;
+    public AssetUtility AssetUtility;
 
     /// <summary>
     /// Runs when the mod is first initialized.
@@ -114,9 +114,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         // var key = "Assets/Environments/systems/kerbol/duna/scaledspace/duna_scaled_d.png";
         // GameManager.Instance.Assets.Load<Texture2D>(key, LoadTexture, isLoaded);
 
-        int i = 0;
-
-        assetUtility = gameObject.AddComponent<AssetUtility>();
+        AssetUtility = gameObject.AddComponent<AssetUtility>();
     }
 
     // private void LoadTexture(Texture2D tex)

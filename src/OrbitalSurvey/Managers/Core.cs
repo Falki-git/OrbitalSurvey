@@ -21,7 +21,7 @@ public class Core : MonoBehaviour
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Core");
     
-    public void InitializeCelestialData(AssetUtility assetUtility)
+    public void InitializeCelestialData()
     {
         var celestialBodies = GameManager.Instance.Game?.UniverseModel?.GetAllCelestialBodies();
         if (celestialBodies == null)
@@ -41,7 +41,13 @@ public class Core : MonoBehaviour
             // Visual map
             try
             {
-                celesData.Maps[MapType.Visual].ScannedMap = assetUtility.ScaledVisualTextures[key];
+                //celesData.Maps[MapType.Visual].ScannedMap = assetUtility.ScaledVisualTextures[key];
+                
+                celesData.Maps[MapType.Visual].ScannedMap =
+                    AssetManager.GetAsset<Texture2D>(
+                        OrbitalSurveyPlugin.Instance.AssetUtility.VisualBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
+                        );
+                
                 _LOGGER.LogInfo($"Visual map for {key} successfully initialized.");
             }
             catch (Exception ex)
@@ -53,7 +59,9 @@ public class Core : MonoBehaviour
             try
             {
                 celesData.Maps[MapType.Biome].ScannedMap =
-                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]);
+                    AssetManager.GetAsset<Texture2D>(
+                        OrbitalSurveyPlugin.Instance.AssetUtility.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
+                        );
                 
                 _LOGGER.LogInfo($"Biome map for {key} successfully initialized.");
             }

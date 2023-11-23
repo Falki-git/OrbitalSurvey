@@ -38,9 +38,12 @@ public class MessageListener
     private void OnGameLoadFinishedMessage(MessageCenterMessage message)
     {
         _logger.LogDebug("GameLoadFinishedMessage triggered.");
-        
-        if (!Core.Instance.MapsInitialized) 
-            OrbitalSurveyPlugin.Instance.assetUtility.InitializeVisualTextures();
+
+        if (!Core.Instance.MapsInitialized)
+        { 
+            // OrbitalSurveyPlugin.Instance.assetUtility.InitializeVisualTextures();
+            Core.Instance.InitializeCelestialData();
+        }
         
         DEBUG_UI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
     }
