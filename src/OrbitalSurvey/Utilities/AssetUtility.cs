@@ -31,27 +31,61 @@ public class AssetUtility : MonoBehaviour
     
     public readonly Dictionary<string, string> BiomeBundleAssetAddresses = new()
     {
-        { "Moho", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/moho_biome.png"},
-        { "Eve", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eve_biome.png"},
-        { "Gilly", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/gilly_biome.png"},
-        { "Kerbin", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/kerbin_biome.png"},
-        { "Mun", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/mun_biome.png"},
-        { "Minmus", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/minmus_biome.png"},
-        { "Duna", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/duna_biome.png"},
-        { "Ike", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/ike_biome.png"},
-        { "Dres", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/dres_biome.png"},
-        { "Jool", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/jool_biome.png"},
-        { "Laythe", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/laythe_biome.png"},
-        { "Vall", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/vall_biome.png"},
-        { "Tylo", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/tylo_biome.png"},
-        { "Bop", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome.png"},
-        { "Pol", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome.png"},
-        { "Eeloo", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome.png"}
+        { "Moho_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/moho_biome_1024.png"},
+        { "Moho_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/moho_biome_2048.png"},
+        { "Moho_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/moho_biome_4096.png"},
+        { "Eve_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eve_biome_1024.png"},
+        { "Eve_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eve_biome_2048.png"},
+        { "Eve_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eve_biome_4096.png"},
+        { "Gilly_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/gilly_biome_1024.png"},
+        { "Gilly_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/gilly_biome_2048.png"},
+        { "Gilly_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/gilly_biome_4096.png"},
+        { "Kerbin_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/kerbin_biome_1024.png"},
+        { "Kerbin_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/kerbin_biome_2048.png"},
+        { "Kerbin_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/kerbin_biome_4096.png"},
+        { "Mun_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/mun_biome_1024.png"},
+        { "Mun_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/mun_biome_2048.png"},
+        { "Mun_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/mun_biome_4096.png"},
+        { "Minmus_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/minmus_biome_1024.png"},
+        { "Minmus_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/minmus_biome_2048.png"},
+        { "Minmus_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/minmus_biome_4096.png"},
+        { "Duna_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/duna_biome_1024.png"},
+        { "Duna_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/duna_biome_2048.png"},
+        { "Duna_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/duna_biome_4096.png"},
+        { "Ike_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/ike_biome_1024.png"},
+        { "Ike_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/ike_biome_2048.png"},
+        { "Ike_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/ike_biome_4096.png"},
+        { "Dres_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/dres_biome_1024.png"},
+        { "Dres_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/dres_biome_2048.png"},
+        { "Dres_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/dres_biome_4096.png"},
+        { "Jool_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/jool_biome_1024.png"},
+        { "Jool_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/jool_biome_2048.png"},
+        { "Jool_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/jool_biome_4096.png"},
+        { "Laythe_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/laythe_biome_1024.png"},
+        { "Laythe_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/laythe_biome_2048.png"},
+        { "Laythe_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/laythe_biome_4096.png"},
+        { "Vall_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/vall_biome_1024.png"},
+        { "Vall_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/vall_biome_2048.png"},
+        { "Vall_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/vall_biome_4096.png"},
+        { "Tylo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/tylo_biome_1024.png"},
+        { "Tylo_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/tylo_biome_2048.png"},
+        { "Tylo_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/tylo_biome_4096.png"},
+        { "Bop_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome_1024.png"},
+        { "Bop_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome_2048.png"},
+        { "Bop_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/bop_biome_4096.png"},
+        { "Pol_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome_1024.png"},
+        { "Pol_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome_2048.png"},
+        { "Pol_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/pol_biome_4096.png"},
+        { "Eeloo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome_1024.png"},
+        { "Eeloo_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome_2048.png"},
+        { "Eeloo_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_biomes/orbitalsurvey/biomemaps/eeloo_biome_4096.png"}
     };
     
     public static readonly Dictionary<string, string> OtherAssetsAddresses = new()
     {
-        { "HiddenMap", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_other/orbitalsurvey/other/hiddenmap.png"}
+        { "HiddenMap_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_other/orbitalsurvey/other/hiddenmap_1024.png"},
+        { "HiddenMap_2048", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_other/orbitalsurvey/other/hiddenmap_2048.png"},
+        { "HiddenMap_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_other/orbitalsurvey/other/hiddenmap_4096.png"}
     };
 
     public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
@@ -103,7 +137,7 @@ public class AssetUtility : MonoBehaviour
 
     public static Texture2D GenerateHiddenMap()
     {
-        var source = AssetManager.GetAsset<Texture2D>(OtherAssetsAddresses["HiddenMap"]);
+        var source = AssetManager.GetAsset<Texture2D>(OtherAssetsAddresses[$"HiddenMap_{Settings.ActiveResolution}"]);
         var target = new Texture2D(source.width, source.height, source.format, source.mipmapCount > 1);
         Graphics.CopyTexture(source, target);
         target.Apply();

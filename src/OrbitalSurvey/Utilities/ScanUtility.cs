@@ -42,7 +42,7 @@ public static class ScanUtility
 
     public static double ConvertRealScanningRadiusToTextureScanningRadius(double realScanningRadius, double bodyRadius)
     {
-        return (realScanningRadius / (2 * bodyRadius * Math.PI)) * Settings.MAP_RESOLUTION.Item1;
+        return (realScanningRadius / (2 * bodyRadius * Math.PI)) * Settings.ActiveResolution;
     }
 
     public static double RadiansToDegrees(double radians)

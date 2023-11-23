@@ -53,7 +53,7 @@ public class Core : MonoBehaviour
             try
             {
                 celesData.Maps[MapType.Biome].ScannedMap =
-                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[key]);
+                    AssetManager.GetAsset<Texture2D>(assetUtility.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]);
                 
                 _LOGGER.LogInfo($"Biome map for {key} successfully initialized.");
             }

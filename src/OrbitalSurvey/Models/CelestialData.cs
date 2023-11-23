@@ -33,7 +33,7 @@ public class CelestialData
             ScanUtility.ConvertRealScanningRadiusToTextureScanningRadius(scanningRadius, Radius);
 
         var (textureX, textureY) =
-            ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(longitude, latitude, 4096, 4096);
+            ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(longitude, latitude,  Settings.ActiveResolution, Settings.ActiveResolution);
 
         var map = Maps[mapType];
         

@@ -10,7 +10,7 @@ public class MapData
         ScannedMap = AssetUtility.GenerateHiddenMap();
         HiddenMap = AssetUtility.GenerateHiddenMap();
         CurrentMap = AssetUtility.GenerateHiddenMap();
-        DiscoveredPixels = new bool[Settings.MAP_RESOLUTION.Item1, Settings.MAP_RESOLUTION.Item2];
+        DiscoveredPixels = new bool[Settings.ActiveResolution, Settings.ActiveResolution];
     }
     
     public Texture2D ScannedMap { get; set; }
@@ -31,11 +31,11 @@ public class MapData
             var trueWidthRadius = (int)((scanningRadius / 2f));
             
             // due to mercator projection, area towards the poles gets distorted, so we need to apply a correction
-            var latitudeOfYPixel= ScanUtility.TextureYToLatitude(j, Settings.MAP_RESOLUTION.Item2);
+            var latitudeOfYPixel= ScanUtility.TextureYToLatitude(j, Settings.ActiveResolution);
             trueWidthRadius = (int)(trueWidthRadius / ScanUtility.GetMercatorWidthCorrectionFactor(latitudeOfYPixel));
 
             // clamp the width's scanning radius to a maximum of half the width of the texture (diameter = entire body)
-            var halfOfTextureWidth = Settings.MAP_RESOLUTION.Item1 / 2;
+            var halfOfTextureWidth = Settings.ActiveResolution / 2;
             if(trueWidthRadius > halfOfTextureWidth) 
                 trueWidthRadius = halfOfTextureWidth;
             

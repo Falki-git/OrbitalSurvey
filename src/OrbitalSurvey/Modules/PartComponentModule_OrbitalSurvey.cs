@@ -30,14 +30,18 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             return;
         }
 
-        _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
+        if (string.IsNullOrEmpty(_dataOrbitalSurvey.Mode.GetValue()))
+        {
+            _dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
+        }
+
+        //_dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
     }
 
     // This starts triggering when vessel is placed in Flight. Does not trigger in OAB.
     // Keeps triggering in every scene once it's in Flight 
     public override void OnUpdate(double universalTime, double deltaUniversalTime)
     {
-        int i = 0;
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
             _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
@@ -69,10 +73,5 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     public override void OnFinalizeCreation(double universalTime)
     {
         _logger.LogDebug("OnFinalizeCreation triggered.");
-    }
-    
-    private void OnModeChanged(string mode)
-    {
-        // TODO check if we need this
     }
 }
