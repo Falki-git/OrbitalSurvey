@@ -1,10 +1,10 @@
 ﻿/*
  * TODO: 
  * - optimize with lower resolution textures and/or lower resolution discoveredpixels bool array
- * - save/load persistance of mapping data (POC done)
+ * - save/load persistence of mapping data (POC done)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - add OAB part descriptions
- * - analytic gathering of data while timewarping - retroactive maping for higher warp factors
+ * - analytic gathering of data while timewarping - retroactive mapping for higher warp factors
  * - minimum and maximum altitude for mapping 
  * - buffering and transmitting scans
  * - add EC usage
@@ -16,14 +16,26 @@
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
  * 
- * 
- * 
+ * TODO LONG-TERM:
+ * - Map scene overlay
+ * - scanning rectangle in Map scene when active
+ * - altimeter data?
+ * - scanning parts
+ *
+ * TODO SCIENCE:
+ * - transmit to get science
+ * - scanning mode progression
+ * - larger FOV progression
+ *
+ *
+ *
+ * MISC:
  * 
  * if (GUILayout.Button("QuickSave sound"))
-            {
-                KSPAudioEventManager.onGameQuickSave();
-                KSPAudioEventManager.OnResourceTransfertStart();
-            }
+ * {
+ *      KSPAudioEventManager.onGameQuickSave();
+ *      KSPAudioEventManager.OnResourceTransfertStart();
+ * }
  *
  *
  * OAB part description:
