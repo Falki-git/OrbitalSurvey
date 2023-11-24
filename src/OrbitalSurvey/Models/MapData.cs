@@ -23,7 +23,7 @@ public class MapData
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
         for (int j = y - scanningRadius; j < y + scanningRadius; j++)
         {
-            // if pixel is out of bounds of the texture, don't paint it
+            // if pixel is out of bounds of the texture, don't paint it. Could be done better, but good enough for now
             if (j < 0 || j > CurrentMap.height)
                 continue;
          
@@ -45,7 +45,7 @@ public class MapData
                 var xPixel = i < 0 ? CurrentMap.width + i : i > CurrentMap.width-1 ? i - CurrentMap.width : i;
                 
                 // Mark pixels as discovered
-                //DiscoveredPixels[xPixel, yPixel] = true; // TODO optimize with lower resolution of the array
+                DiscoveredPixels[xPixel, j] = true;
                 
                 // Update the current map with discovered pixels
                 CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));

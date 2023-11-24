@@ -1,6 +1,5 @@
 ﻿/*
  * TODO: 
- * - optimize with lower resolution textures and/or lower resolution discoveredpixels bool array
  * - save/load persistence of mapping data (POC done)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - add OAB part descriptions
