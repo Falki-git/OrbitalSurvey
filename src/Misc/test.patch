@@ -5,6 +5,13 @@ $minCommRange: 1000000000;
         @if $commRange > $minCommRange {
             +Module_OrbitalSurvey {
                 +Data_OrbitalSurvey {
+                    //+MyData {
+                    //    MyString: "my test string";
+                    //    MyInt: 5;
+                    //    MyBool: true;
+                    //}
+                    MyStateStringProperty: "initial value of the property";
+                    MyDefinitionStringProperty: "initial value of the property";
                 }
             }
             PAMModuleVisualsOverride: +[

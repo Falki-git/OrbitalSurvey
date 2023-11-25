@@ -45,6 +45,12 @@ public class CelestialData
     
     public void DoScan(MapType mapType, double longitude, double latitude, double altitude, double scanningCone)
     {
+        var map = Maps[mapType];
+
+        // if map is fully scanned, don't do anything
+        if (map.IsFullyScanned)
+            return;
+        
         // calculate what the scanning radius is given the altitude and the field of view of the scanner
         var scanningRadius = ScanUtility.GetScanRadius(Radius, altitude, scanningCone);
 
@@ -54,10 +60,8 @@ public class CelestialData
 
         var (textureX, textureY) =
             ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(longitude, latitude,  Settings.ActiveResolution, Settings.ActiveResolution);
-
-        var map = Maps[mapType];
         
-        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture, latitude);
+        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture);
     }
 
     public void ClearMap(MapType mapType)

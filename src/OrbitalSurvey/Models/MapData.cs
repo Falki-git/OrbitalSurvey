@@ -43,7 +43,7 @@ public class MapData
         }
     }
     
-    public void MarkAsScanned(int x, int y, int scanningRadius, double latitude)
+    public void MarkAsScanned(int x, int y, int scanningRadius)
     {
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
         for (int j = y - scanningRadius; j < y + scanningRadius; j++)
@@ -84,12 +84,32 @@ public class MapData
     {
         Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
         UpdateCurrentMapAsPerDiscoveredPixels();
+        IsFullyScanned = false;
     }
 
-    public void UpdateDiscoveredPixels(bool[,] loadedPixels)
+    public void UpdateDiscoveredPixels(bool[,] loadedPixels, bool loadedDataIsFullyScanned = false)
     {
-        DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels);
-        UpdateCurrentMapAsPerDiscoveredPixels();
+        // check if loaded data says that map is fully scanned
+        if (loadedDataIsFullyScanned)
+        {
+            if (this.IsFullyScanned)
+            {
+                // local map is already fully revealed, do nothing
+            }
+            else
+            {
+                // loaded data indicates that map is fully scanned, but local map isn't fully revealed yet.
+                // set the local map to fully scanned and update the texture to fully revealed 
+                SetAsFullyScanned();
+            }
+        }
+        else
+        {
+            // map is partially scanned, update the map accordingly
+            this.IsFullyScanned = false;
+            DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels);
+            UpdateCurrentMapAsPerDiscoveredPixels();    
+        }
     }
 
     public void UpdateCurrentMapAsPerDiscoveredPixels()
@@ -104,6 +124,43 @@ public class MapData
             }
         }
         
+        CurrentMap.Apply();
+    }
+
+    public bool CheckIfMapIsFullyScannedNow()
+    {
+        var truePixels = 0;
+        var allPixelCount = DiscoveredPixels.GetLength(0) * DiscoveredPixels.GetLength(1);
+        
+        for (int i = 0; i < DiscoveredPixels.GetLength(0); i++)
+        {
+            for (int j = 0; j < DiscoveredPixels.GetLength(1); j++)
+            {
+                // check if pixel is discovered
+                if (DiscoveredPixels[i, j])
+                {
+                    // pixel is discovered. Increase discovered pixel count and move to the next pixel.
+                    truePixels++;
+                }
+            }
+        }
+        
+        if ((float)truePixels / (float)allPixelCount >= 0.95f)
+        {
+            // more than 95% is discovered
+            // we'll reward the extra 5% for free and mark this as fully discovered
+            SetAsFullyScanned();
+            return true;
+        }
+
+        // less than 95% is discovered
+        return false;
+    }
+
+    private void SetAsFullyScanned()
+    {
+        this.IsFullyScanned = true;
+        Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();
     }
 }

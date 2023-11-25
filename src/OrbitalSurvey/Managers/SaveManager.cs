@@ -46,12 +46,14 @@ public class SaveManager
                     continue;
 
                 var mapsAdapter = new SaveDataAdapter.MapsAdapter();
-                if (mapData.Value.IsFullyScanned)
+                if (mapData.Value.IsFullyScanned || mapData.Value.CheckIfMapIsFullyScannedNow())
                 {
                     mapsAdapter.IsFullyScanned = true;
+                    mapsAdapter.DiscoveredPixels = string.Empty;
                 }
                 else
                 {
+                    mapsAdapter.IsFullyScanned = false;
                     mapsAdapter.DiscoveredPixels = SaveUtility.CompressData(mapData.Value.DiscoveredPixels);
                 }
 
@@ -107,10 +109,16 @@ public class SaveManager
                     else
                     {
                         // this map holds data. Need to update the map.
-                        var loadedPixels =
-                            SaveUtility.DecompressData(celesAdapter.Maps[map.Key].DiscoveredPixels);
-                        
-                        map.Value.UpdateDiscoveredPixels(loadedPixels);
+                        if (celesAdapter.Maps[map.Key].IsFullyScanned)
+                        {
+                            map.Value.UpdateDiscoveredPixels(null, true);
+                        }
+                        else
+                        {
+                            var loadedPixels =
+                                SaveUtility.DecompressData(celesAdapter.Maps[map.Key].DiscoveredPixels);
+                            map.Value.UpdateDiscoveredPixels(loadedPixels);
+                        }
                     }
                 }
             }
