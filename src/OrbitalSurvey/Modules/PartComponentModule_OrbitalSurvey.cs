@@ -49,7 +49,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var body = vessel.mainBody.Name;
             
             _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {_lastScanTime}.\n" + 
-                    "Time since last scan: {_timeSinceLastScan}. UT: {universalTime}. DeltaUT: {deltaUniversalTime}");
+                    $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
             
             var altitude = vessel.AltitudeFromRadius;
             var longitude = vessel.Longitude;
