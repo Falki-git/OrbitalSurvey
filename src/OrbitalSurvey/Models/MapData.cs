@@ -12,12 +12,37 @@ public class MapData
         CurrentMap = AssetUtility.GenerateHiddenMap();
         DiscoveredPixels = new bool[Settings.ActiveResolution, Settings.ActiveResolution];
     }
-    
+
     public Texture2D ScannedMap { get; set; }
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
+    public bool IsFullyScanned { get; set; }
 
+    public bool HasData
+    {
+        get
+        {
+            var trueFound = false;
+
+            for (int i = 0; i < DiscoveredPixels.GetLength(0); i++)
+            {
+                for (int j = 0; j < DiscoveredPixels.GetLength(1); j++)
+                {
+                    if (DiscoveredPixels[i, j])
+                    {
+                        trueFound = true;
+                        break;
+                    }
+                }
+
+                if (trueFound) break;
+            }
+
+            return trueFound;
+        }
+    }
+    
     public void MarkAsScanned(int x, int y, int scanningRadius, double latitude)
     {
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
@@ -57,14 +82,28 @@ public class MapData
 
     public void ClearMap()
     {
+        Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
+        UpdateCurrentMapAsPerDiscoveredPixels();
+    }
+
+    public void UpdateDiscoveredPixels(bool[,] loadedPixels)
+    {
+        DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels);
+        UpdateCurrentMapAsPerDiscoveredPixels();
+    }
+
+    public void UpdateCurrentMapAsPerDiscoveredPixels()
+    {
+        Color emptyPixel = HiddenMap.GetPixel(0, 0);
         for (int i = 0; i < CurrentMap.width; i++)
         {
             for (int j = 0; j < CurrentMap.height; j++)
             {
-                DiscoveredPixels[i, j] = false;
-                CurrentMap.SetPixel(i, j, Color.clear);
+                Color pixelColor = DiscoveredPixels[i, j] ? ScannedMap.GetPixel(i, j) : emptyPixel;
+                CurrentMap.SetPixel(i, j, pixelColor);
             }
         }
+        
         CurrentMap.Apply();
     }
 }

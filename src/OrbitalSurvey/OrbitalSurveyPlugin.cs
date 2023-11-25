@@ -85,6 +85,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         Harmony.CreateAndPatchAll(typeof(PatchTest));
 
         //MySaveData = new MyTestSaveData { TestBool = true, TestString = "test string", TestInt = 1 };
+        
+        /*
         MySaveData = SpaceWarp.API.SaveGameManager.ModSaves.RegisterSaveLoadGameData<MyTestSaveData>(
             "falki.orbital_survey",
             (savedData) =>
@@ -109,12 +111,15 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             }//,
             //MySaveData
         );
+        */
         
         // var isLoaded = true;
         // var key = "Assets/Environments/systems/kerbol/duna/scaledspace/duna_scaled_d.png";
         // GameManager.Instance.Assets.Load<Texture2D>(key, LoadTexture, isLoaded);
 
         AssetUtility = gameObject.AddComponent<AssetUtility>();
+        
+        SaveManager.Instance.Register();
     }
 
     // private void LoadTexture(Texture2D tex)
@@ -131,12 +136,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     {
         try
         {
-            var gm = GameManager.Instance;
-            var duna = GameObject.Find("Celestial.Duna.Scaled");
-            List<CelestialBodyComponent> cel = GameManager.Instance.Game.UniverseModel.GetAllCelestialBodies();
-            //var duna2 = GameManager.Instance.Assets.Get<GameObject>("Celestial.Duna.Scaled.prefab");
-            
-            int i = 0;
+            var gamemanager = GameManager.Instance;
         }
         catch (Exception ex)
         {  }

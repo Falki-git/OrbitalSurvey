@@ -1,6 +1,6 @@
 ﻿using KSP.Sim;
 
-namespace OrbitalSurvey
+namespace OrbitalSurvey.Obsolete
 {
     [Serializable]
     public class SpaceWarpSerializedSavedGame : SerializedSavedGame

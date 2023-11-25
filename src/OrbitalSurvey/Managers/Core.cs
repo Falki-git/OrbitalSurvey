@@ -76,6 +76,9 @@ public class Core : MonoBehaviour
         
         MapsInitialized = true;
         _LOGGER.LogInfo($"Finished CelestialDataDictionary initialization with {CelestialDataDictionary.Count} entries.");
+        
+        if (SaveManager.Instance.HasBufferedLoadData)
+            SaveManager.Instance.LoadData();
     }
 
     public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, double scanningCone)

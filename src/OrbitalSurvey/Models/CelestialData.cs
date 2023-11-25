@@ -11,9 +11,29 @@ public class CelestialData
         Maps.Add(MapType.Visual, new MapData());
         Maps.Add(MapType.Biome, new MapData());
     }
-    
-    public CelestialBodyComponent Body { get; set;  }
+
+    public CelestialBodyComponent Body { get; set; }
     public Dictionary<MapType, MapData> Maps { get; set; }
+
+    public bool ContainsData
+    {
+        get
+        {
+            var trueFound = false;
+            
+            foreach (var map in Maps.Values)
+            {
+                if (trueFound) break;
+
+                if (map.HasData)
+                {
+                    trueFound = true;
+                }
+            }
+
+            return trueFound;
+        }
+    }
     
     public string Name => Body.Name;
     public string DisplayName => Body.DisplayName;
