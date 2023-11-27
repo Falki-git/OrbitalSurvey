@@ -1,0 +1,107 @@
+Scaled shader:
+KSP2/Environment/CelestialBody/CelestialBody_Scaled
+
+Shader for pqs.data.materialSettings.surfaceMaterial:
+KSP2/Environment/CelestialBody/CelestialBody_Local
+
+PQS -> data (PQSData) -> heightMapInfo (PQSData.HeightMapInfo)	-> globalHeightMap (Texture2D) "mun_scaled_h
+																-> mask (Texture2D) "mun_scaled_mask"
+
+HEIGHTMAP: PQS -> data (PQSData) -> heightMapInfo (PQSData.HeightMapInfo)	-> globalHeightMap (Texture2D) "kerbin_scaled_h"
+
+BIOMEMASK: PQS -> data (PQSData) -> materialSettings (PQSData.MaterialSettings)	-> surfaceMaterial (Material) "_BiomeMaskTex", "_SubzoneMaskTex"
+
+
+Biomes:
+Grass = RGBA(1, 0, 0, 1)
+Dirt = RGBA(1, 0.212, 0.212, 1)
+Rock
+Ocean
+Snow
+Sand
+
+Texture2D texture2D = this.data.materialSettings.surfaceMaterial.GetTexture("_BiomeMaskTex") as Texture2D;
+
+TODO check
+
+PQSRenderer -> this._biomeInfoBuffer
+
+PQSRendererHelper -> private static PerBiomeInfo BiomeInfoFromMaterial(
+
+PerBiomeInfo.cs
+PerBiomeInfo_Subzones.cs
+PerBiomeSmallScaleTextureConfig
+
+GlobalEscapeMenu -> public void MissionControl()
+    {
+      if (!GameManager.Instance.GameModeManager.IsGameModeFeatureEnabled("ExplorationMissions"))
+        return;
+
+
+PQSRenderer
+Material _materialCopyOld;
+Material _depthOnlyMaterial
+
+
+#########################
+
+As a quick starter on modules: Modules are the things that add functionality to the game's parts, they are split into 3 files:
+- Data_ModuleName: stores the data for the module, the ones marked KSPDefinition are the ones that define the characteristics of the part, the ones marked KSPState are the things that are stored in the save file
+- Module_ModuleName: the main logic for the module, handles what happens on game ticks for loaded parts & parts in the VAB
+- PartComponentModule_ModuleName: mostly used for the background update logic (the controversial one right now)
+
+Data_Transmitter : ModuleData
+    ModuleType = Module_DataTransmitter
+
+Module_DataTransmitter : PartBehaviourModule
+    PartComponentModuleType = PartComponentModule_DataTransmitter
+    
+PartComponentModule_DataTransmitter : PartComponentModule
+
+
+//* > serializedPartModules > [$$Name]
+
+#PartComponentModule_DataTransmitter
+
+* > serializedPartModules > $$Name: "PartComponentModule_DataTransmitter"
+* > serializedPartModules > $$Name = "PartComponentModule_DataTransmitter"
+serializedPartModules > #PartComponentModule_DataTransmitter
+Module_DataTransmitter
+.Module_DataTransmitter   -> OVO RADI
+PartComponentModule_DataTransmitter
+.PartComponentModule_DataTransmitter
+
+
+***
+
+CelestialBodyComponent[index]
+-> API.AtmosphereDepth.GetValue() -> 70000
+-> API.Radius.GetValue() -> 600000
+ 
+-> API.Orbiter.SimulationObject.Components[0].assetKeyScaled -> "Celestial.Kerbin.Scaled.prefab", "Celestial.Eve.Scaled.prefab"
+                                             .assetKeySimulation -> "Celestial.Kerbin.Simulation.prefab", "Celestial.Eve.Simulation.prefab"
+
+-> SurfaceProvider
+    -> CelestialBodyData
+        -> Data
+            -> assetKeyScaled -> "Celestial.Kerbin.Scaled.prefab"
+            -> assetKeySimulation -> "Celestial.Kerbin.Simulation.prefab"
+    -> PqsController
+        -> data
+            -> materialSettings
+                -> surfaceMaterial
+                
+                
+GameObject -> (no parent) -> Celestial.Duna.Scaled -> MeshRenderer -> material
+
+
+TO CHECK:
+Map3D(Clone)
+
+***
+
+MAP TEXTURE:
+var x = Map3D(Clone)/Map-Kerbin/Celestial.Kerbin.Scaled(Clone)
+x.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", myTexture)
+
+
