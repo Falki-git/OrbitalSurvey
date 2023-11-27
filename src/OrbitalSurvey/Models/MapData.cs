@@ -69,11 +69,19 @@ public class MapData
                 // handle edge case: if x is near the edge of the texture we need to paint the other side too   
                 var xPixel = i < 0 ? CurrentMap.width + i : i > CurrentMap.width-1 ? i - CurrentMap.width : i;
                 
+                /*
                 // Mark pixels as discovered
                 DiscoveredPixels[xPixel, j] = true;
                 
-                // Update the current map with discovered pixels
+                // Update the current map with discovered pixels, but only if it's NOT a retroactive scan
                 CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
+                */
+
+                if (DiscoveredPixels[xPixel, j] == false)
+                {
+                    CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
+                    DiscoveredPixels[xPixel, j] = true;
+                }
             }
         }
 

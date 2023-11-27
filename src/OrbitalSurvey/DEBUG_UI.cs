@@ -21,7 +21,9 @@ namespace OrbitalSurvey
         private string _textureName = string.Empty;
         private string _colorName = "red";
         private string _body = "Kerbin";
+        public string UT;
 
+        private bool _showAnalyticsScanningSection;
         private bool _showSavePersistenceSection;
         private bool _showOverlaySection = true;
         private bool _showBuildBiomeSection;
@@ -55,6 +57,8 @@ namespace OrbitalSurvey
 
         public string DataToSave = "default";
         public string LoadedData;
+
+        public bool BufferAnalyticsScan;
 
 
         private static DEBUG_UI _instance;
@@ -134,8 +138,36 @@ namespace OrbitalSurvey
             
             //////////////////////////////////////////////////////////////////////////////////////////
             
+            #region Analytics Scanning
+            
+            if (GUILayout.Button(_showAnalyticsScanningSection ? "Hide Analytics Scanning Section" : "Show Analytics Scanning Section", _showAnalyticsScanningSection ? _toggledSectionButton : _normalSectionButton))
+                _showAnalyticsScanningSection = !_showAnalyticsScanningSection;
+
+            if (_showAnalyticsScanningSection)
+            {
+                GUILayout.Label("--");
+                
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Universal Time:", _labelStyle);
+                    UT = GUILayout.TextField(UT);
+                }
+                GUILayout.EndHorizontal();
+
+                if (GUILayout.Button("BufferAnalyticsScan"))
+                {
+                    BufferAnalyticsScan = true;
+                }
+                
+                GUILayout.Label("--");
+            }
+            
+            #endregion
+            
+            //////////////////////////////////////////////////////////////////////////////////////////
+            
             #region Save Persistence Section
-            if (GUILayout.Button(_showSavePersistenceSection ? "Hide Save Persistence Section" : "Show Save Persistence Section", _showSavePersistenceSection ? _toggledSectionButton : _normalSectionButton))
+            if (false /*GUILayout.Button(_showSavePersistenceSection ? "Hide Save Persistence Section" : "Show Save Persistence Section", _showSavePersistenceSection ? _toggledSectionButton : _normalSectionButton)*/)
                 _showSavePersistenceSection = !_showSavePersistenceSection;
             
             if(_showSavePersistenceSection)

@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
+using OrbitalSurvey.Utilities;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -132,6 +133,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private void OnToggleChangedValue(bool newValue)
     {
         _logger.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
+        ((PartComponentModule_OrbitalSurvey)ComponentModule).LastScanTime = ScanUtility.UT;
         UpdatePAMVisibility(newValue);
     }
 

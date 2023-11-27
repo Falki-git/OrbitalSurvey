@@ -1,5 +1,5 @@
 ﻿/*
- * TODO: * 
+ * TODO:
  * - analytic gathering of data while timewarping - retroactive mapping for higher warp factors 
  * - minimum and maximum altitude for mapping
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
