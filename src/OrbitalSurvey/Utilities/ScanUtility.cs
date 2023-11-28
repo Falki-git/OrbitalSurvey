@@ -1,5 +1,8 @@
-﻿using KSP.Game;
+﻿using BepInEx.Logging;
+using KSP.Game;
+using OrbitalSurvey.Models;
 using UnityEngine;
+using Logger = BepInEx.Logging.Logger;
 
 namespace OrbitalSurvey.Utilities;
 
@@ -7,7 +10,9 @@ public static class ScanUtility
 {
     public static double UT => GameManager.Instance.Game.UniverseModel.UniverseTime;
     
-    public static double GetScanRadius(double bodyRadius, double altitude, double scanningCone)
+    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ScanUtility");
+    
+    public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, double scanningCone)
     {
         // TODO introduce the concept of maximum altitude - scanning efficiency linearly drops while approaching the max
         
@@ -28,6 +33,13 @@ public static class ScanUtility
         // radius from the point on the surface closest to the orbiting vessel
         var radiusOfScanningCone = (gamma * 2f * r * Math.PI) / DegreesToRadians(360);
 
+        // apply a reduction factor if vessel is not at ideal altitude
+        
+        var factor = GetMinMaxReductionFactor(mapType, altitude);
+        _LOGGER.LogDebug($"Radius: {radiusOfScanningCone}. Factor: {factor}. Radius /w factor: {radiusOfScanningCone * factor}");
+        radiusOfScanningCone *= factor;
+        //radiusOfScanningCone *= GetMinMaxReductionFactor(mapType, altitude);
+        
         return radiusOfScanningCone;
     }
 
@@ -100,5 +112,44 @@ public static class ScanUtility
     {
         // inverse of GetTextureCoordinatesFromGeographicCoordinates
         return ((180f * (double)y) / (double)textureHeight) - 90f;
+    }
+
+    private static double GetMinMaxReductionFactor(MapType mapType, double altitude)
+    {
+        double minAlt, maxAlt, idealAlt, factor, totalRange;
+
+        switch (mapType)
+        {
+            case MapType.Visual:
+                minAlt = Settings.VisualMinAltitude;
+                idealAlt = Settings.VisualIdealAltitude;
+                maxAlt = Settings.VisualMaxAltitude;
+                break;
+            case MapType.Biome:
+                minAlt = Settings.BiomeMinAltitude;
+                idealAlt = Settings.BiomeIdealAltitude;
+                maxAlt = Settings.BiomeMaxAltitude;
+                break;
+            default:
+                minAlt = 5000;
+                idealAlt = 500000;
+                maxAlt = 2000000;
+                break;
+        }
+
+        var currentAltDif = Math.Abs(idealAlt - altitude);
+        
+        if (altitude < idealAlt)
+        {
+            totalRange = Math.Abs(idealAlt - minAlt);
+        }
+        else
+        {
+            totalRange = Math.Abs(maxAlt - idealAlt);
+        }
+        
+        factor = Math.Clamp(1 - (currentAltDif / totalRange), 0, 1);
+
+        return factor;
     }
 }

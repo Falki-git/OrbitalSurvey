@@ -104,4 +104,19 @@ MAP TEXTURE:
 var x = Map3D(Clone)/Map-Kerbin/Celestial.Kerbin.Scaled(Clone)
 x.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", myTexture)
 
+*** min max
+RADAR Altimetry (LOW): min 5 km, max 500 km, FOV 5°, 0.1 EC/s
+RADAR SAR (HI): min 5 km, best 750 km, max 800 km, FOV 2°, 1 EC/s
+Multispectral radar, biome: min 5 km, best 250 km, max 500 km, FOV 4°, 1.5 EC/s
+Anomaly: max 2 km, FOV 1°, 0.1 EC/s
+
+Part	                    Scan Type	    FOV	Altitude (Min)	(Ideal)	(Max)
+RADAR Altimetry Sensor      RadarLo / Slope 5	5000 m	5000 m	500 km
+[SAR Altimetry Sensor][5b]	RadarHi	        2	5000 m	750 km	800 km
+[Multispectral Sensor][5c]	Biome ANOM	    4	5000 m	250 km	500 km
+[Been There Done That®][5d]	Anomaly	        1	0 m	    0 m	    2 km
+[MapTraq® (deprecated)][5e]	None	        N/A	N/A	    N/A	    N/A
+
+
+
 

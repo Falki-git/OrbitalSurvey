@@ -13,7 +13,6 @@ public static class OrbitUtility
     public static void GetOrbitalParametersAtUT(VesselComponent vessel, double UT, out double latitude, out double longitude, out double altitude)
     {
         var position = new Position(vessel.Orbit.ReferenceFrame, vessel.Orbit.GetRelativePositionAtUT(UT));
-        
         vessel.Orbit.referenceBody.GetLatLonAltFromRadius(position, out latitude, out longitude, out altitude);
         longitude += GetLongitudeOffsetDueToRotationForAGivenUT(vessel.Orbit.referenceBody, UT);
 
@@ -24,7 +23,7 @@ public static class OrbitUtility
     public static double GetLongitudeOffsetDueToRotationForAGivenUT(CelestialBodyComponent body, double UT)
     {
         // C (circumference) = 2rπ
-        // length of day = time it takes for a 1 full rotation, i.e. C)
+        // length of day = time it takes for 1 full rotation, i.e. C)
         // dt = delta T from now to the given UT
         // latitude difference = (horizontal distance / radius of the planet) * (180 / π)
         

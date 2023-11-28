@@ -52,7 +52,7 @@ public class CelestialData
             return;
         
         // calculate what the scanning radius is given the altitude and the field of view of the scanner
-        var scanningRadius = ScanUtility.GetScanRadius(Radius, altitude, scanningCone);
+        var scanningRadius = ScanUtility.GetScanRadius(mapType, Radius, altitude, scanningCone);
 
         // need to adjust the scanning radius to take into account the resolution of the texture
         var scanningRadiusForTexture =
