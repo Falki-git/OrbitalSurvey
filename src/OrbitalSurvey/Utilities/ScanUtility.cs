@@ -14,8 +14,6 @@ public static class ScanUtility
     
     public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, double scanningCone)
     {
-        // TODO introduce the concept of maximum altitude - scanning efficiency linearly drops while approaching the max
-        
         var r = bodyRadius;
         var h = altitude;
         var alpha = DegreesToRadians((scanningCone / 2f));
@@ -26,6 +24,11 @@ public static class ScanUtility
         // gamma = angle at the center of the celestial body from the point on the surface closest to the orbiting
         // vessel to the point on surface where the scanning cone finishes 
         var gamma = DegreesToRadians(180f) - alpha - beta;
+
+        // gamma can be NaN in case the scanning cone exceeds the radius of the planet. In that case we set the angle
+        // to 90° (half the sphere)
+        if (double.IsNaN(gamma))
+            gamma = DegreesToRadians(90);
         
         // clamp the angle to a maximum of 90° since that's the maximum that an orbiting vessel can see (half the sphere) 
         gamma = Math.Clamp(gamma, 0f, DegreesToRadians(90f));
@@ -151,5 +154,16 @@ public static class ScanUtility
         factor = Math.Clamp(1 - (currentAltDif / totalRange), 0, 1);
 
         return factor;
+    }
+
+    public static double GetRetroactiveTimeBetweenScans(double timeSinceLastScan)
+    {
+        if (timeSinceLastScan > 1000)
+            return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_HIGH;
+        
+        if (timeSinceLastScan > 100)
+            return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_MID;
+
+        return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_LOW;
     }
 }

@@ -35,6 +35,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             _dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
         }
 
+        LastScanTime = ScanUtility.UT;
+
         //_dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
     }
 
@@ -53,24 +55,12 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
                     $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
             
-            double latitude, longitude, altitude;
-
-            // for large time warp factors time between updates will be a lot larger, so we need to do a bit of catching up
-            // we'll iterate through each "time between scans" from the last scan time until we're caught up to the present
-            while (_timeSinceLastScan > Settings.TIME_BETWEEN_RETROACTIVE_SCANS)
-            {
-                
-                OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + Settings.TIME_BETWEEN_RETROACTIVE_SCANS,
-                    out latitude, out longitude, out altitude);
-        
-                Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
-                LastScanTime += Settings.TIME_BETWEEN_RETROACTIVE_SCANS;
-            }
+            PerformRetroactiveScanningIfNeeded(vessel, body, mapType, scanningCone);
             
             // proceed with a normal scan
-            altitude = vessel.AltitudeFromRadius;
-            longitude = vessel.Longitude;
-            latitude = vessel.Latitude;
+            var altitude = vessel.AltitudeFromRadius;
+            var longitude = vessel.Longitude;
+            var latitude = vessel.Latitude;
             
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
 
@@ -79,13 +69,33 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             // FOR DEBUGGING PURPOSES
             if (DEBUG_UI.Instance.BufferAnalyticsScan)
             {
-                RetroactiveScanning(double.Parse(DEBUG_UI.Instance.UT));
+                DebuggingRetroactiveScanning(double.Parse(DEBUG_UI.Instance.UT));
                 DEBUG_UI.Instance.BufferAnalyticsScan = false;
             }
         }
     }
 
-    private void RetroactiveScanning(double ut)
+    private void PerformRetroactiveScanningIfNeeded(VesselComponent vessel, string body, MapType mapType, float scanningCone)
+    {
+        double latitude, longitude, altitude;
+        
+        // if time since last scan begins to rise up (due to low performance), reduce the frequency of scans 
+        var retroactiveTimeBetweenScans = ScanUtility.GetRetroactiveTimeBetweenScans(_timeSinceLastScan);
+
+        // for large time warp factors time between updates will be a lot larger, so we need to do a bit of catching up
+        // we'll iterate through each "time between scans" from the last scan time until we're caught up to the present
+        while (_timeSinceLastScan > retroactiveTimeBetweenScans)
+        {
+                
+            OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + retroactiveTimeBetweenScans,
+                out latitude, out longitude, out altitude);
+        
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            LastScanTime += retroactiveTimeBetweenScans;
+        }
+    }
+
+    private void DebuggingRetroactiveScanning(double ut)
     {
         var vessel = base.Part.PartOwner.SimulationObject.Vessel;
         var body = vessel.mainBody.Name;

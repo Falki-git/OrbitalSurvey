@@ -16,8 +16,11 @@ public static class OrbitUtility
         vessel.Orbit.referenceBody.GetLatLonAltFromRadius(position, out latitude, out longitude, out altitude);
         longitude += GetLongitudeOffsetDueToRotationForAGivenUT(vessel.Orbit.referenceBody, UT);
 
-        if (longitude < -180f)
+        // correct longitude if it dropped below -180°
+        while (longitude < -180f)
+        {
             longitude += 360f;
+        }
     }
 
     public static double GetLongitudeOffsetDueToRotationForAGivenUT(CelestialBodyComponent body, double UT)
