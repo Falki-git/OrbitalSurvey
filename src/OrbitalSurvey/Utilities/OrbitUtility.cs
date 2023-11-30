@@ -28,7 +28,7 @@ public static class OrbitUtility
         // C (circumference) = 2rπ
         // length of day = time it takes for 1 full rotation, i.e. C)
         // dt = delta T from now to the given UT
-        // latitude difference = (horizontal distance / radius of the planet) * (180 / π)
+        // longitude difference = (horizontal distance / radius of the planet) * (180 / π)
         
         var circumference = 2 * body.radius * Math.PI;
         var lengthOfDay = body.rotationPeriod;
