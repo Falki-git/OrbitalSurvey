@@ -3,6 +3,7 @@
  * TODO: 
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - add OAB part descriptions
+ * - larger FOV for larger commstrength
  * - add EC usage 
  * - UITK UI 
  * 
@@ -11,7 +12,7 @@
  * 
  * TODO LONG-TERM:
  * - Map scene overlay
- * - scanning rectangle in Map scene when active
+ * - scanning triangle in Map scene when active
  * - altimeter data?
  * - scanning parts
  * - buffering and transmitting scans
@@ -29,25 +30,7 @@
  * - minimum and maximum altitude for mapping
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
  *
- * MISC:
  * 
- * if (GUILayout.Button("QuickSave sound"))
- * {
- *      KSPAudioEventManager.onGameQuickSave();
- *      KSPAudioEventManager.OnResourceTransfertStart();
- * }
- *
- *
- * OAB part description:
- * - scanning cone
- * - minimum altitude
- * - maximum altitude
- * - ideal altitude (do we need this?)
- *
- *
- *
- * ATTRIBUTION:
- * - icon by flaticon.com - <a href="https://www.flaticon.com/free-icons/satellite" title="satellite icons">Satellite icons created by mattbadal - Flaticon</a>
  * 
  * 
  */
