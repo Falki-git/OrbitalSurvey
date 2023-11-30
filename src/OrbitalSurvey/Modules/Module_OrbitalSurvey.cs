@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
+using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -36,7 +37,15 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         }
         
         UpdatePAMVisibility(_dataOrbitalSurvey.EnabledToggle.GetValue());
-            
+        
+        UpdateValues(_dataOrbitalSurvey.Mode.GetValue());
+        
+        // colors that work: red, yellow, grey, white, blue, black, green, lightblue
+        // _dataOrbitalSurvey.Status.SetValue("Scanning...");
+        _dataOrbitalSurvey.Status.SetValue(StatusStrings.Status["Scanning"]);
+        
+        //_dataOrbitalSurvey.State.SetValue("<color=yellow>Below ideal alt \u26a0</color>");
+        _dataOrbitalSurvey.State.SetValue(StatusStrings.State["AboveMax"]);
         
         
         
@@ -72,19 +81,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         //_logger.LogDebug("OnUpdate triggered.");
         int i = 0;
     }
-
-    // -
-    public override void OnModuleUpdate(float deltaTime)
-    {
-        _logger.LogDebug("OnModuleUpdate triggered.");
-    }
-
-    // -
-    public override void OnModuleOABUpdate(float deltaTime)
-    {
-        _logger.LogDebug("OnModuleOABUpdate triggered.");
-    }
-
+    
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
@@ -95,11 +92,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     public override void OnModuleOABFixedUpdate(float deltaTime)
     {
         //_logger.LogDebug("OnModuleOABFixedUpdate triggered.");
-    }
-
-    public void OnFixedUpdate(float deltaTime) // -
-    {
-        _logger.LogDebug("OnFixedUpdate triggered.");
     }
     
     // This triggers when Flight scene is loaded
@@ -117,17 +109,11 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.Mode.OnChangedValue -= OnModeChanged;
         _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
     }
-    
-    [ContextMenu("Extend")]
-    protected virtual bool Extend()
-    {
-        _logger.LogDebug("Extend triggered.");
-        return true;
-    }
 
     private void OnModeChanged(string newMode)
     {
         _logger.LogDebug(($"Mode.OnChangedValue triggered. New value is {newMode}"));
+        UpdateValues(newMode);
     }
 
     private void OnToggleChangedValue(bool newValue)
@@ -140,6 +126,67 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private void UpdatePAMVisibility(bool state)
     {
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
+    }
+    
+    private void UpdateValues(string newMode)
+    {
+        var mapType = Enum.Parse<MapType>(newMode);
+        
+        switch (mapType)
+        {
+            case MapType.Visual:
+                _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.VisualMinAltitude / 1000).ToString());
+                _dataOrbitalSurvey.IdealAltitude.SetValue((Settings.VisualIdealAltitude / 1000).ToString());
+                _dataOrbitalSurvey.MaximumAltitude.SetValue((Settings.VisualMaxAltitude / 1000).ToString());
+                // _dataOrbitalSurvey.Altitudes.SetValue(
+                //     (Settings.VisualMinAltitude / 1000) + " km\n" +
+                //     (Settings.VisualIdealAltitude / 1000) + " km\n" +
+                //     (Settings.VisualMaxAltitude / 1000) + " km"
+                //     );
+                _dataOrbitalSurvey.PercentComplete.SetValue("69");
+                break;
+            case MapType.Biome:
+                _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.BiomeMinAltitude / 1000).ToString());
+                _dataOrbitalSurvey.IdealAltitude.SetValue((Settings.BiomeIdealAltitude / 1000).ToString());
+                _dataOrbitalSurvey.MaximumAltitude.SetValue((Settings.BiomeMaxAltitude / 1000).ToString());
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+    
+    
+    // METHODS THAT DON'T TRIGGER
+    
+    // -
+    public override void OnModuleUpdate(float deltaTime)
+    {
+        _logger.LogDebug("OnModuleUpdate triggered.");
+    }
+
+    // -
+    public override void OnModuleOABUpdate(float deltaTime)
+    {
+        _logger.LogDebug("OnModuleOABUpdate triggered.");
+    }
+    
+    // -
+    public void OnFixedUpdate(float deltaTime)
+    {
+        _logger.LogDebug("OnFixedUpdate triggered.");
+    }
+    
+    // What does this do?
+    [ContextMenu("Extend")]
+    protected virtual bool Extend()
+    {
+        _logger.LogDebug("Extend triggered.");
+        return true;
     }
 }

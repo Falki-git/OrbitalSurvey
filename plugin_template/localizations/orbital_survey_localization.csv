@@ -1,0 +1,23 @@
+Key,Type,Desc,English
+
+PartModules/OrbitalSurvey/Name,Text,,Orbital Survey
+PartModules/OrbitalSurvey/Status,Text,,Status
+PartModules/OrbitalSurvey/Enabled,Text,,Enabled
+PartModules/OrbitalSurvey/Mode,Text,,Mode
+PartModules/OrbitalSurvey/State,Text,,State
+PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View
+PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude
+PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude
+PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
+PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete
+
+OrbitalSurvey/Status/Idle,Text,,Idle
+OrbitalSurvey/Status/Scanning,Text,,Scanning...
+OrbitalSurvey/Status/Disabled,Text,,Disabled
+OrbitalSurvey/Status/NoPower,Text,,No Power
+
+OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>
+OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
+OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>
+OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>
+OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>

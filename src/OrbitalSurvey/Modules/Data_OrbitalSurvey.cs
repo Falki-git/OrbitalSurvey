@@ -16,21 +16,45 @@ public class Data_OrbitalSurvey : ModuleData
     
     public override Type ModuleType => typeof(Module_OrbitalSurvey);
 
+    [LocalizedField("PartModules/OrbitalSurvey/Status")]
+    [PAMDisplayControl(SortIndex = 1)]  
+    public ModuleProperty<string> Status = new ("Idle");
+    
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/Enabled")]
-    [PAMDisplayControl(SortIndex = 1)]
+    [PAMDisplayControl(SortIndex = 2)]
     public ModuleProperty<bool> EnabledToggle = new ModuleProperty<bool>(false);
     
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/Mode")]
-    [PAMDisplayControl(SortIndex = 2)]  
+    [PAMDisplayControl(SortIndex = 3)]  
     public ModuleProperty<string> Mode = new ModuleProperty<string>("Visual");
+    
+    [LocalizedField("PartModules/OrbitalSurvey/State")]
+    [PAMDisplayControl(SortIndex = 4)]  
+    public ModuleProperty<string> State = new ("");
 
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
-    [PAMDisplayControl(SortIndex = 3)]
+    [PAMDisplayControl(SortIndex = 5)]
     [SteppedRange(1f, 45f, 1f)]
     public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(1f, false, new ToStringDelegate((val) => $"{((float)val):F0}°" ));
+    
+    [LocalizedField("PartModules/OrbitalSurvey/MinAltitude")]
+    [PAMDisplayControl(SortIndex = 6)]
+    public ModuleProperty<string> MinimumAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    
+    [LocalizedField("PartModules/OrbitalSurvey/IdealAltitude")]
+    [PAMDisplayControl(SortIndex = 7)]
+    public ModuleProperty<string> IdealAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    
+    [LocalizedField("PartModules/OrbitalSurvey/MaxAltitude")]
+    [PAMDisplayControl(SortIndex = 8)]
+    public ModuleProperty<string> MaximumAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    
+    [LocalizedField("PartModules/OrbitalSurvey/PercentComplete")]
+    [PAMDisplayControl(SortIndex = 9)]
+    public ModuleProperty<string> PercentComplete = new ("", new ToStringDelegate((val) => $"{(val):N0} %" ));
 
     public override void OnPartBehaviourModuleInit()
     {
