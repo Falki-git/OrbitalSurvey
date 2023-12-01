@@ -39,9 +39,8 @@ public static class ScanUtility
         // apply a reduction factor if vessel is not at ideal altitude
         
         var factor = GetMinMaxReductionFactor(mapType, altitude);
-        _LOGGER.LogDebug($"Radius: {radiusOfScanningCone}. Factor: {factor}. Radius /w factor: {radiusOfScanningCone * factor}");
+        //_LOGGER.LogDebug($"Radius: {radiusOfScanningCone}. Factor: {factor}. Radius /w factor: {radiusOfScanningCone * factor}");
         radiusOfScanningCone *= factor;
-        //radiusOfScanningCone *= GetMinMaxReductionFactor(mapType, altitude);
         
         return radiusOfScanningCone;
     }
@@ -116,11 +115,10 @@ public static class ScanUtility
         // inverse of GetTextureCoordinatesFromGeographicCoordinates
         return ((180f * (double)y) / (double)textureHeight) - 90f;
     }
-
-    private static double GetMinMaxReductionFactor(MapType mapType, double altitude)
+    
+    private static void GetMinMaxIdealAltitudes(
+        MapType mapType, out double minAlt, out double idealAlt, out double maxAlt)
     {
-        double minAlt, maxAlt, idealAlt, factor, totalRange;
-
         switch (mapType)
         {
             case MapType.Visual:
@@ -134,11 +132,15 @@ public static class ScanUtility
                 maxAlt = Settings.BiomeMaxAltitude;
                 break;
             default:
-                minAlt = 5000;
-                idealAlt = 500000;
-                maxAlt = 2000000;
-                break;
+                throw new ArgumentOutOfRangeException($"Unknown MapType {mapType}");
         }
+    }
+
+    private static double GetMinMaxReductionFactor(MapType mapType, double altitude)
+    {
+        double minAlt, idealAlt, maxAlt, factor, totalRange;
+
+        GetMinMaxIdealAltitudes(mapType, out minAlt, out idealAlt, out maxAlt);
 
         var currentAltDif = Math.Abs(idealAlt - altitude);
         
@@ -165,5 +167,37 @@ public static class ScanUtility
             return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_MID;
 
         return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_LOW;
+    }
+
+    /// <summary>
+    /// Returns the state of the vessel in terms of its relation to ideal scanning altitude
+    /// </summary>
+    public static State GetAltitudeState(MapType mapType, double altitude)
+    {
+        double minAlt, idealAlt, maxAlt;
+        
+        GetMinMaxIdealAltitudes(mapType, out minAlt, out idealAlt, out maxAlt);
+
+        if (altitude < idealAlt * 0.95f)
+        {
+            if (altitude < minAlt)
+            {
+                return State.BelowMin;
+            }
+            
+            return State.BelowIdeal;
+        }
+
+        if (altitude > idealAlt * 1.05f)
+        {
+            if (altitude > maxAlt)
+            {
+                return State.AboveMax;
+            }
+            
+            return State.AboveIdeal;
+        }
+
+        return State.Ideal;
     }
 }

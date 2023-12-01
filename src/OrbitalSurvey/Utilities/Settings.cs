@@ -2,7 +2,7 @@
 
 public static class Settings
 {
-    public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = true;
+    public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public const double TIME_BETWEEN_SCANS = 1f;
     public const double TIME_BETWEEN_RETROACTIVE_SCANS_LOW = 8f;
     public const double TIME_BETWEEN_RETROACTIVE_SCANS_MID = 20f;

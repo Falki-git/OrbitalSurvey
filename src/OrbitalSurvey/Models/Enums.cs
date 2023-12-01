@@ -5,3 +5,21 @@ public enum MapType
     Visual,
     Biome
 }
+
+public enum Status
+{ 
+    Disabled,
+    Scanning,
+    Idle,
+    Complete,
+    NoPower
+}
+
+public enum State
+{
+    BelowMin,
+    BelowIdeal,
+    Ideal,
+    AboveIdeal,
+    AboveMax,
+}

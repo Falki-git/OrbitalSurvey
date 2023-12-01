@@ -4,22 +4,21 @@ namespace OrbitalSurvey.Models;
 
 public static class StatusStrings
 {
-    public static readonly LocalizedString test = "PartModules/OrbitalSurvey/ScanningFOV";
-    
-    public static readonly Dictionary<string, LocalizedString> Status = new()
+    public static readonly Dictionary<Status, LocalizedString> STATUS = new()
     {
-        { "Idle", "OrbitalSurvey/Status/Idle" },
-        { "Scanning", "OrbitalSurvey/Status/Scanning" },
-        { "Disabled", "OrbitalSurvey/Status/Disabled" },
-        { "NoPower", "OrbitalSurvey/Status/NoPower" },
+        { Status.Disabled, "OrbitalSurvey/Status/Disabled" },
+        { Status.Scanning, "OrbitalSurvey/Status/Scanning" },
+        { Status.Idle, "OrbitalSurvey/Status/Idle" },
+        { Status.Complete, "OrbitalSurvey/Status/Complete" },
+        { Status.NoPower, "OrbitalSurvey/Status/NoPower" },
     };
     
-    public static readonly Dictionary<string, LocalizedString> State = new()
+    public static readonly Dictionary<State, LocalizedString> STATE = new()
     {
-        { "BelowMin", "OrbitalSurvey/State/BelowMin" },
-        { "BelowIdeal", "OrbitalSurvey/State/BelowIdeal" },
-        { "Ideal", "OrbitalSurvey/State/Ideal" },
-        { "AboveIdeal", "OrbitalSurvey/State/AboveIdeal" },
-        { "AboveMax", "OrbitalSurvey/State/AboveMax" },
+        { State.BelowMin, "OrbitalSurvey/State/BelowMin" },
+        { State.BelowIdeal, "OrbitalSurvey/State/BelowIdeal" },
+        { State.Ideal, "OrbitalSurvey/State/Ideal" },
+        { State.AboveIdeal, "OrbitalSurvey/State/AboveIdeal" },
+        { State.AboveMax, "OrbitalSurvey/State/AboveMax" },
     };
 }

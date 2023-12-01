@@ -52,8 +52,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
             var scanningCone = _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
             
-            _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
-                    $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
+            // _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
+            //         $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
             
             PerformRetroactiveScanningIfNeeded(vessel, body, mapType, scanningCone);
             
