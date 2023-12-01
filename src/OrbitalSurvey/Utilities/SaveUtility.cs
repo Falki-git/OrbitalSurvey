@@ -63,9 +63,10 @@ public static class SaveUtility
         }
     }
 
-    public static bool[,] CopyArrayData(bool[,] sourceArray)
+    public static bool[,] CopyArrayData(bool[,] sourceArray, out int truePixels)
     {
-        bool[,] destinationArray = new bool[sourceArray.GetLength(0), sourceArray.GetLength(1)]; 
+        bool[,] destinationArray = new bool[sourceArray.GetLength(0), sourceArray.GetLength(1)];
+        truePixels = 0;
         
         int rows = sourceArray.GetLength(0);
         int columns = sourceArray.GetLength(1);
@@ -79,6 +80,9 @@ public static class SaveUtility
             for (int j = 0; j < columns; j++)
             {
                 flattenedSource[i * columns + j] = sourceArray[i, j];
+                
+                if (sourceArray[i, j])
+                    truePixels++;
             }
         }
 

@@ -19,6 +19,11 @@ public class MapData
     public bool[,] DiscoveredPixels { get; set; }
     public bool IsFullyScanned { get; set; }
 
+    public int DiscoveredPixelsCount;
+    public int TotalPixelCount => Settings.ActiveResolution * Settings.ActiveResolution;
+    public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
+    
+
     public bool HasData
     {
         get
@@ -81,6 +86,10 @@ public class MapData
                 {
                     CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
                     DiscoveredPixels[xPixel, j] = true;
+                    DiscoveredPixelsCount++;
+                    
+                    if (PercentDiscovered >= 0.95f)
+                        SetAsFullyScanned();
                 }
             }
         }
@@ -115,7 +124,7 @@ public class MapData
         {
             // map is partially scanned, update the map accordingly
             this.IsFullyScanned = false;
-            DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels);
+            DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels, out DiscoveredPixelsCount);
             UpdateCurrentMapAsPerDiscoveredPixels();    
         }
     }
@@ -135,6 +144,7 @@ public class MapData
         CurrentMap.Apply();
     }
 
+    [Obsolete]
     public bool CheckIfMapIsFullyScannedNow()
     {
         var truePixels = 0;
@@ -153,7 +163,7 @@ public class MapData
             }
         }
         
-        if ((float)truePixels / (float)allPixelCount >= 0.95f)
+        if ((float)truePixels / allPixelCount >= 0.95f)
         {
             // more than 95% is discovered
             // we'll reward the extra 5% for free and mark this as fully discovered
@@ -168,6 +178,7 @@ public class MapData
     private void SetAsFullyScanned()
     {
         this.IsFullyScanned = true;
+        this.DiscoveredPixelsCount = TotalPixelCount;
         Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();
     }

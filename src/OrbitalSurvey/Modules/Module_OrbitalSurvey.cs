@@ -1,9 +1,9 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
+using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace OrbitalSurvey.Modules;
 
@@ -85,7 +85,14 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
-        //_logger.LogDebug("OnModuleFixedUpdate triggered.");
+        if (!Core.Instance.MapsInitialized)
+            return;
+        
+        var mode = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        var body = vessel.Model.mainBody.Name;
+        var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];
+        var percentDiscovered = (float)map.DiscoveredPixelsCount / map.TotalPixelCount;
+        _dataOrbitalSurvey.PercentComplete.SetValue(percentDiscovered.ToString());
     }
 
     // This triggers in OAB
@@ -144,12 +151,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
                 _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.VisualMinAltitude / 1000).ToString());
                 _dataOrbitalSurvey.IdealAltitude.SetValue((Settings.VisualIdealAltitude / 1000).ToString());
                 _dataOrbitalSurvey.MaximumAltitude.SetValue((Settings.VisualMaxAltitude / 1000).ToString());
-                // _dataOrbitalSurvey.Altitudes.SetValue(
-                //     (Settings.VisualMinAltitude / 1000) + " km\n" +
-                //     (Settings.VisualIdealAltitude / 1000) + " km\n" +
-                //     (Settings.VisualMaxAltitude / 1000) + " km"
-                //     );
-                _dataOrbitalSurvey.PercentComplete.SetValue("69");
                 break;
             case MapType.Biome:
                 _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.BiomeMinAltitude / 1000).ToString());

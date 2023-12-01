@@ -21,6 +21,5 @@ public static class StatusStrings
         { "Ideal", "OrbitalSurvey/State/Ideal" },
         { "AboveIdeal", "OrbitalSurvey/State/AboveIdeal" },
         { "AboveMax", "OrbitalSurvey/State/AboveMax" },
-        
     };
 }

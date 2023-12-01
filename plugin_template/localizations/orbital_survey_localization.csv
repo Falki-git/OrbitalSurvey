@@ -12,7 +12,7 @@ PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
 PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete
 
 OrbitalSurvey/Status/Idle,Text,,Idle
-OrbitalSurvey/Status/Scanning,Text,,Scanning...
+OrbitalSurvey/Status/Scanning,Text,,Scanning
 OrbitalSurvey/Status/Disabled,Text,,Disabled
 OrbitalSurvey/Status/NoPower,Text,,No Power
 

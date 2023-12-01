@@ -38,23 +38,23 @@ public class Data_OrbitalSurvey : ModuleData
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
     [PAMDisplayControl(SortIndex = 5)]
     [SteppedRange(1f, 45f, 1f)]
-    public ModuleProperty<float> ScanningFieldOfView = new ModuleProperty<float>(1f, false, new ToStringDelegate((val) => $"{((float)val):F0}°" ));
+    public ModuleProperty<float> ScanningFieldOfView = new (1f, false, val => $"{((float)val):F0}°");
     
     [LocalizedField("PartModules/OrbitalSurvey/MinAltitude")]
     [PAMDisplayControl(SortIndex = 6)]
-    public ModuleProperty<string> MinimumAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    public ModuleProperty<string> MinimumAltitude = new ("", val => $"{val:N0} km");
     
     [LocalizedField("PartModules/OrbitalSurvey/IdealAltitude")]
     [PAMDisplayControl(SortIndex = 7)]
-    public ModuleProperty<string> IdealAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    public ModuleProperty<string> IdealAltitude = new ("", val => $"{val:N0} km" );
     
     [LocalizedField("PartModules/OrbitalSurvey/MaxAltitude")]
     [PAMDisplayControl(SortIndex = 8)]
-    public ModuleProperty<string> MaximumAltitude = new ("", new ToStringDelegate((val) => $"{(val):N0} km" ));
+    public ModuleProperty<string> MaximumAltitude = new ("", val => $"{val:N0} km");
     
     [LocalizedField("PartModules/OrbitalSurvey/PercentComplete")]
     [PAMDisplayControl(SortIndex = 9)]
-    public ModuleProperty<string> PercentComplete = new ("", new ToStringDelegate((val) => $"{(val):N0} %" ));
+    public ModuleProperty<string> PercentComplete = new ("", val => $"{double.Parse(val.ToString()):P0}");
 
     public override void OnPartBehaviourModuleInit()
     {

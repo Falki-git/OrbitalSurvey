@@ -46,7 +46,7 @@ public class SaveManager
                     continue;
 
                 var mapsAdapter = new SaveDataAdapter.MapsAdapter();
-                if (mapData.Value.IsFullyScanned || mapData.Value.CheckIfMapIsFullyScannedNow())
+                if (mapData.Value.IsFullyScanned)
                 {
                     mapsAdapter.IsFullyScanned = true;
                     mapsAdapter.DiscoveredPixels = string.Empty;
