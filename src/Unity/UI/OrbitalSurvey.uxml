@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/OrbitalSurvey/UI/OrbitalSurvey.uss?fileID=7433441132597879392&amp;guid=7ab10ae500eddad4e86b510fff1be17a&amp;type=3#OrbitalSurvey" />
+    <ui:VisualElement name="root" class="root main-gui">
+        <ui:VisualElement name="header" class="header">
+            <ui:VisualElement name="title__container" class="title__container">
+                <ui:VisualElement name="icon" class="icon" />
+                <ui:Label tabindex="-1" text="ORBITAL SURVEY" display-tooltip-when-elided="true" name="title-text" class="title-text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
+                <ui:DropdownField label="Body" index="-1" choices="Kerbin, Mun, Minmus" name="body-dropdown" class="body__dropdown" />
+                <ui:DropdownField label="Map" index="-1" choices="Visual, Biome" name="map-type-dropdown" class="map-type__dropdown" />
+                <ui:Label tabindex="-1" text="69%" display-tooltip-when-elided="true" name="PercentComplete" style="width: 40px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="close-button__container" class="close-button__container">
+                <ui:Button name="close-button" class="close-button">
+                    <ui:VisualElement name="close-button__background" class="close-button__background" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="body" class="body">
+            <ui:VisualElement name="map__container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="footer" class="footer">
+            <ui:Toggle text="Body overlay" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
