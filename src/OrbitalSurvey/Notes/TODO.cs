@@ -1,16 +1,16 @@
 ﻿/*
  * 
  * TODO: 
- * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
+ * - change to fixed FOV, keep adjustable for debugging
+ * - UITK UI
  * - add OAB part descriptions
- * - larger FOV for larger commstrength
- * - add EC usage 
- * - UITK UI 
  * 
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
  * 
  * TODO LONG-TERM:
+ * - larger FOV for larger commstrength
+ * - add EC usage
  * - Map scene overlay
  * - scanning triangle in Map scene when active
  * - altimeter data?
@@ -29,7 +29,7 @@
  * - analytic gathering of data while timewarping - retroactive mapping for higher warp factors
  * - minimum and maximum altitude for mapping
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
- *
+ * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * 
  * 
  * 
