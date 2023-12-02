@@ -11,10 +11,12 @@
         <PackageReference Include="BepInEx.Core" Version="5.*" />
         <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
         <PackageReference Include="HarmonyX" Version="2.10.1" />
+        <PackageReference Include="UitkForKsp2" Version="2.1.0" />
         <PackageReference Include="KerbalSpaceProgram2.GameLibs" Version="0.1.5" PrivateAssets="all" />
         <!--<PackageReference Include="SpaceWarp" Version="1.5.2" />-->
         <PackageReference Include="UnityEngine.Modules" Version="2020.3.33.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="UnityEngine.UITK" Version="2020.3.33.1" Publicize="true" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />        
     </ItemGroup>
     <ItemGroup>
       <Reference Include="SpaceWarp">

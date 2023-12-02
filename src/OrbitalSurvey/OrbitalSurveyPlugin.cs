@@ -11,6 +11,7 @@ using KSP.Rendering.Planets;
 using KSP.Game;
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
+using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
 using UnityEngine.Serialization;
 
@@ -45,35 +46,47 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
         // Register Flight AppBar button
         Appbar.RegisterAppButton(
+            "Orbital Survey DEBUG",
+            ToolbarFlightButtonID+"DEBUG",
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            isOpen =>
+            {
+                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
+                GameObject.Find(ToolbarFlightButtonID+"DEBUG")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        Appbar.RegisterOABAppButton(
+            "Orbital Survey DEBUG",
+            ToolbarOABButtonID+"DEBUG",
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            isOpen =>
+            {
+                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
+                GameObject.Find(ToolbarOABButtonID+"DEBUG")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        Appbar.RegisterKSCAppButton(
+            "Orbital Survey DEBUG",
+            ToolbarKSCButtonID+"DEBUG",
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            () =>
+            {
+                DEBUG_UI.Instance.IsDebugWindowOpen = !DEBUG_UI.Instance.IsDebugWindowOpen;
+                GameObject.Find(ToolbarOABButtonID+"DEBUG")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(DEBUG_UI.Instance.IsDebugWindowOpen);
+            }
+        );
+        
+        // Register Flight AppBar button
+        Appbar.RegisterAppButton(
             ModName,
             ToolbarFlightButtonID,
             AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
             isOpen =>
             {
-                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
+                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
                 GameObject.Find(ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
-            }
-        );
-        
-        Appbar.RegisterOABAppButton(
-            ModName,
-            ToolbarOABButtonID,
-            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            isOpen =>
-            {
-                DEBUG_UI.Instance.IsDebugWindowOpen = isOpen;
-                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
-            }
-        );
-        
-        Appbar.RegisterKSCAppButton(
-            ModName,
-            ToolbarKSCButtonID,
-            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            () =>
-            {
-                DEBUG_UI.Instance.IsDebugWindowOpen = !DEBUG_UI.Instance.IsDebugWindowOpen;
-                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(DEBUG_UI.Instance.IsDebugWindowOpen);
             }
         );
 
