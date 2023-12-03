@@ -7,9 +7,9 @@
                 <ui:Label tabindex="-1" text="ORBITAL SURVEY" display-tooltip-when-elided="true" name="title-text" class="title-text" />
             </ui:VisualElement>
             <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
-                <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body-dropdown" class="body__dropdown" />
-                <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type-dropdown" class="map-type__dropdown" />
-                <ui:Label tabindex="-1" text="42%" display-tooltip-when-elided="true" name="PercentComplete" class="percent-complete" />
+                <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body__dropdown" class="body__dropdown" />
+                <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type__dropdown" class="map-type__dropdown" />
+                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="percent-complete" class="percent-complete" style="-unity-text-align: upper-center;" />
             </ui:VisualElement>
             <ui:VisualElement name="close-button__container" class="close-button__container">
                 <ui:Button name="close-button" class="close-button">

@@ -22,7 +22,10 @@ public class MapData
     public int DiscoveredPixelsCount;
     public int TotalPixelCount => Settings.ActiveResolution * Settings.ActiveResolution;
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
-    
+
+    public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
+
+    public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
 
     public bool HasData
     {
@@ -50,6 +53,7 @@ public class MapData
     
     public void MarkAsScanned(int x, int y, int scanningRadius)
     {
+        int newlyDiscoveredPixelCount = 0;
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
         for (int j = y - scanningRadius; j < y + scanningRadius; j++)
         {
@@ -86,12 +90,22 @@ public class MapData
                 {
                     CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
                     DiscoveredPixels[xPixel, j] = true;
-                    DiscoveredPixelsCount++;
-                    
+                    newlyDiscoveredPixelCount++;
+
                     if (PercentDiscovered >= 0.95f)
+                    {
                         SetAsFullyScanned();
+                        OnDiscoveredPixelCountChanged.Invoke(PercentDiscovered);
+                        return;
+                    }
                 }
             }
+        }
+
+        if (newlyDiscoveredPixelCount > 0)
+        {
+            DiscoveredPixelsCount += newlyDiscoveredPixelCount;
+            OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
         }
 
         CurrentMap.Apply();

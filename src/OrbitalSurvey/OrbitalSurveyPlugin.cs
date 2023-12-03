@@ -9,11 +9,9 @@ using SpaceWarp.API.UI.Appbar;
 using UnityEngine;
 using KSP.Rendering.Planets;
 using KSP.Game;
-using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
-using UnityEngine.Serialization;
 
 namespace OrbitalSurvey;
 
@@ -26,9 +24,9 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     [PublicAPI] public const string ModVer = MyPluginInfo.PLUGIN_VERSION;
 
     // AppBar button IDs
-    private const string ToolbarFlightButtonID = "BTN-OrbitalOverlayFlight";
-    private const string ToolbarOABButtonID = "BTN-OrbitalOverlayOAB";
-    private const string ToolbarKSCButtonID = "BTN-OrbitalOverlayKSC";
+    public const string ToolbarFlightButtonID = "BTN-OrbitalOverlayFlight";
+    public const string ToolbarOABButtonID = "BTN-OrbitalOverlayOAB";
+    public const string ToolbarKSCButtonID = "BTN-OrbitalOverlayKSC";
 
     // Singleton instance of the plugin class
     public static OrbitalSurveyPlugin Instance { get; set; }

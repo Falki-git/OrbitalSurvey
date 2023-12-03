@@ -22,3 +22,5 @@ OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
 OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>
 OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>
+
+OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>

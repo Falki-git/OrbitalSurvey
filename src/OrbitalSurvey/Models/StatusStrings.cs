@@ -21,4 +21,6 @@ public static class StatusStrings
         { State.AboveIdeal, "OrbitalSurvey/State/AboveIdeal" },
         { State.AboveMax, "OrbitalSurvey/State/AboveMax" },
     };
+
+    public static readonly LocalizedString COMPLETE = "OrbitalSurvey/UI/Complete";
 }

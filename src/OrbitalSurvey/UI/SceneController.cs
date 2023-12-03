@@ -1,4 +1,5 @@
-﻿using OrbitalSurvey.Utilities;
+﻿using OrbitalSurvey.Models;
+using OrbitalSurvey.Utilities;
 using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,8 +9,11 @@ namespace OrbitalSurvey.UI;
 public class SceneController
 {
     public static SceneController Instance { get; } = new();
-    
     public UIDocument MainGui { get; set; }
+
+    public string SelectedBody;
+    public MapType SelectedMapType;
+    public Vector3? WindowPosition;
     
     private bool _showMainGui;
     public bool ShowMainGui
@@ -17,7 +21,6 @@ public class SceneController
         get => _showMainGui;
         set
         {
-
             _showMainGui = value;
             MainGui = RebuildUi(MainGui, value, Uxmls.Instance.MainGui, "MainGui", typeof(MainGuiController));
         }
@@ -44,7 +47,8 @@ public class SceneController
         uiDocument = Window.CreateFromUxml(visualTree, windowId, null, true);
         uiDocument.gameObject.AddComponent(controllerType);
 
-        uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
+        if (WindowPosition == null)
+            uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
 
         return uiDocument;
     }
