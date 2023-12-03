@@ -74,7 +74,6 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             () =>
             {
                 DEBUG_UI.Instance.IsDebugWindowOpen = !DEBUG_UI.Instance.IsDebugWindowOpen;
-                GameObject.Find(ToolbarOABButtonID+"DEBUG")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(DEBUG_UI.Instance.IsDebugWindowOpen);
             }
         );
         
@@ -87,6 +86,29 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             {
                 SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
                 GameObject.Find(ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        // Register OAB AppBar button
+        Appbar.RegisterOABAppButton(
+            ModName,
+            ToolbarOABButtonID,
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            isOpen =>
+            {
+                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
+                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
+            }
+        );
+        
+        // Register KSC AppBar button
+        Appbar.RegisterKSCAppButton(
+            ModName,
+            ToolbarKSCButtonID,
+            AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
+            () =>
+            {
+                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
             }
         );
 
