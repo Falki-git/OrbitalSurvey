@@ -47,8 +47,8 @@ public class SceneController
         uiDocument = Window.CreateFromUxml(visualTree, windowId, null, true);
         uiDocument.gameObject.AddComponent(controllerType);
 
-        if (WindowPosition == null)
-            uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
+        // if (WindowPosition == null)
+        //     uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
 
         return uiDocument;
     }

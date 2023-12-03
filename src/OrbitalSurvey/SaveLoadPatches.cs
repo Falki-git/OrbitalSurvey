@@ -7,6 +7,7 @@ using KSP.Sim;
 using Newtonsoft.Json;
 using System.Reflection;
 using OrbitalSurvey.Obsolete;
+using OrbitalSurvey.Utilities;
 
 namespace OrbitalSurvey
 {

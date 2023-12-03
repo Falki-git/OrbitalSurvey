@@ -71,7 +71,9 @@ public class AssetUtility : MonoBehaviour
     
     public static readonly Dictionary<string, string> OtherAssetsAddresses = new()
     {
-        { "HiddenMap_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/other/hiddenmap_1024.png"}
+        { "HiddenMap_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/other/hiddenmap_1024.png"},
+        { "AllBlack_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/other/allblack_4096.png"},
+        { "StaticBackground", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_ui/ui/orbital_survey/static_background.jpeg"}
     };
 
     public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
