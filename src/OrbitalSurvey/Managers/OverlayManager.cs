@@ -96,17 +96,27 @@ public class OverlayManager
     {
         var pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
 
-        _oceanTextureBackup = pqsRenderer._oceanMaterial.GetTexture(_BLACK_OCEAN_TEXTURE_NAME);
-            
+        _oceanTextureBackup = pqsRenderer._oceanMaterial?.GetTexture(_BLACK_OCEAN_TEXTURE_NAME);
+
+        if (_oceanTextureBackup == null)
+        {
+            // body doesn't have an ocean; just return
+            return;
+        }
+        
         pqsRenderer._oceanSpereMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
         pqsRenderer._oceanMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
     }
     
     private void RevertOceanSphereMaterial()
     {
+        if (_oceanTextureBackup == null)
+            return;
+        
         var pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
             
         //pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
         pqsRenderer._oceanMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _oceanTextureBackup);
+        _oceanTextureBackup = null;
     }
 }
