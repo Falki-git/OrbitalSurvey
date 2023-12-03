@@ -7,9 +7,9 @@
                 <ui:Label tabindex="-1" text="ORBITAL SURVEY" display-tooltip-when-elided="true" name="title-text" class="title-text" />
             </ui:VisualElement>
             <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
-                <ui:DropdownField label="Body" index="-1" choices="Kerbin, Mun, Minmus" name="body-dropdown" class="body__dropdown" />
-                <ui:DropdownField label="Map" index="-1" choices="Visual, Biome" name="map-type-dropdown" class="map-type__dropdown" />
-                <ui:Label tabindex="-1" text="69%" display-tooltip-when-elided="true" name="PercentComplete" style="width: 40px;" />
+                <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body-dropdown" class="body__dropdown" />
+                <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type-dropdown" class="map-type__dropdown" />
+                <ui:Label tabindex="-1" text="42%" display-tooltip-when-elided="true" name="PercentComplete" class="percent-complete" />
             </ui:VisualElement>
             <ui:VisualElement name="close-button__container" class="close-button__container">
                 <ui:Button name="close-button" class="close-button">
@@ -21,7 +21,7 @@
             <ui:VisualElement name="map__container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="footer" class="footer">
-            <ui:Toggle text="Body overlay" />
+            <ui:Toggle text="Planetary overlay" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
