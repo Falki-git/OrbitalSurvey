@@ -1,5 +1,4 @@
 ﻿using KSP.Game;
-using KSP.UI.Binding;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
@@ -124,7 +123,17 @@ public class MainGuiController : MonoBehaviour
 
         _selectedMap = Core.Instance.CelestialDataDictionary[body].Maps[mapType];
 
-        MapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+        if (_selectedMap.PercentDiscovered == 0f)
+        {
+            MapContainer.Clear();
+            MapContainer.Add(new Label("Awaiting scanning data..."));
+            MapContainer.style.backgroundImage = null;
+            _selectedMap.OnDiscoveredPixelCountChanged += SetMap;
+        }
+        else
+        {
+            SetMap(0);    
+        }
 
         _selectedMap.OnDiscoveredPixelCountChanged += UpdatePercentageComplete;
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
@@ -139,6 +148,13 @@ public class MainGuiController : MonoBehaviour
             PercentComplete.text = StatusStrings.COMPLETE;
         else 
             PercentComplete.text = percent.ToString("P0");
+    }
+    
+    private void SetMap(float _)
+    {
+        MapContainer.Clear();
+        MapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+        _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
     }
     
     private void ToggleOverlay(ChangeEvent<bool> evt)
