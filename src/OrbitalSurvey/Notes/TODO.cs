@@ -1,13 +1,6 @@
 ﻿/*
  * 
- * TODO: 
- * - handle scene changes (remove overlay, maybe close window?)
- *      - remove overlay when:
- *              - changing scenes from flight to any other except for flight
- *              - changing vessels
- *              - load initiated?
- *
- *                  
+ * TODO:            
  * - change to fixed FOV, keep adjustable for debugging
  * - add OAB part descriptions
  * 
@@ -37,6 +30,6 @@
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - UITK UI 
- * 
+ * - handle scene changes (remove overlay, maybe close window?) 
  * 
  */
