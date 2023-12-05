@@ -1,8 +1,7 @@
 ﻿/*
  * 
  * TODO:            
- * - add OAB part descriptions
- * - PAM button for opening GUI
+ * - add OAB part descriptions 
  * 
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
@@ -32,5 +31,6 @@
  * - UITK UI 
  * - handle scene changes (remove overlay, maybe close window?)
  * - change to fixed FOV, keep adjustable for debugging
+ * - PAM button for opening GUI
  * 
  */
