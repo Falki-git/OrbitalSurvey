@@ -2,7 +2,6 @@
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
-using UnityEngine;
 using Logger = BepInEx.Logging.Logger;
 using OrbitalSurvey.Utilities;
 
@@ -50,7 +49,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-            var scanningCone = _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
+            var scanningCone = DEBUG_UI.Instance.DebugFovEnabled ?
+                _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue() : _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
             
             // _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
             //         $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
@@ -100,7 +100,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         var vessel = base.Part.PartOwner.SimulationObject.Vessel;
         var body = vessel.mainBody.Name;
         var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-        var scanningCone = _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
+        var scanningCone = _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue();
         
         double latitude, longitude, altitude;
         OrbitUtility.GetOrbitalParametersAtUT(vessel, ut, out latitude, out longitude, out altitude);

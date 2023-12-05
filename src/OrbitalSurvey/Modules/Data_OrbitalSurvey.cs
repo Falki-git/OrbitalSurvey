@@ -1,10 +1,7 @@
-﻿using KSP.Api;
-using KSP.Sim;
+﻿using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.UI.Binding;
 using OrbitalSurvey.Models;
-using UnityEngine;
-using UnityEngine.Serialization;
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace OrbitalSurvey.Modules;
@@ -42,7 +39,6 @@ public class Data_OrbitalSurvey : ModuleData
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
     [PAMDisplayControl(SortIndex = 6)]
-    //[SteppedRange(1f, 45f, 1f)]
     public ModuleProperty<float> ScanningFieldOfView = new (1f, true, val => $"{val:N0}°");
     
     [KSPState]
@@ -61,6 +57,11 @@ public class Data_OrbitalSurvey : ModuleData
     public ModuleProperty<float> MaximumAltitude = new (0f, true, val => $"{val:N0} km");
     
     
+    
+    [LocalizedField("PartModules/OrbitalSurvey/ScanningFOVDebug")]
+    [PAMDisplayControl(SortIndex = 6)]
+    [SteppedRange(1f, 45f, 1f)]
+    public ModuleProperty<float> ScanningFieldOfViewDebug = new (1f, false, val => $"{val:N0}°");
 
     public override void OnPartBehaviourModuleInit()
     {

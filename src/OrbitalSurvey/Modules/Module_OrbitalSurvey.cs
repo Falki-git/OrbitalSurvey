@@ -17,6 +17,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     [SerializeField]
     protected Data_OrbitalSurvey _dataOrbitalSurvey;
 
+    private bool _isDebugFovEnabled;
+
     public override void AddDataModules()
     {
         base.AddDataModules();
@@ -86,8 +88,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         
         // Update PercentComplete
         _dataOrbitalSurvey.PercentComplete.SetValue(map.PercentDiscovered);
+
+        PerformDebugChecks();
     }
-    
+
     // This... also triggers when Flight scene is loaded? (why?)
     // It triggers when exiting the game also.
     public override void OnShutdown()
@@ -124,6 +128,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
     }
 
     private void UpdateOabPAMVisibility()
@@ -136,6 +141,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
     }
     
     private void UpdateValues(string newMode)
@@ -147,7 +153,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
             case MapType.Visual:
                 _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.VisualFOV);
                 _dataOrbitalSurvey.MinimumAltitude.SetValue((int)(Settings.VisualMinAltitude / 1000));
-                //_dataOrbitalSurvey.MinimumAltitude = new ((float)(Settings.VisualMinAltitude / 1000), true, val => $"{(val):F0} km");
                 _dataOrbitalSurvey.IdealAltitude.SetValue((float)Settings.VisualIdealAltitude / 1000);
                 _dataOrbitalSurvey.MaximumAltitude.SetValue((float)Settings.VisualMaxAltitude / 1000);
                 break;
@@ -160,10 +165,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
-        // TODO set static FOV here as well
-        // Visual to 10°
-        // Biome to 5°
     }
     
     // This triggers always
@@ -185,6 +186,20 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _logger.LogDebug($"OnEnable triggered.");
     }
     
+    private void PerformDebugChecks()
+    {
+        if (DEBUG_UI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
+        {
+            _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, true);
+            _isDebugFovEnabled = true;
+        }
+        
+        if (!DEBUG_UI.Instance.DebugFovEnabled && _isDebugFovEnabled)
+        {
+            _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
+            _isDebugFovEnabled = false;
+        }
+    }
     
     #region NOT USED
     

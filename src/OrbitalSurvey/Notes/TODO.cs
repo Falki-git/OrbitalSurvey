@@ -1,7 +1,6 @@
 ﻿/*
  * 
  * TODO:            
- * - change to fixed FOV, keep adjustable for debugging
  * - add OAB part descriptions
  * - PAM button for opening GUI
  * 
@@ -31,6 +30,7 @@
  * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - UITK UI 
- * - handle scene changes (remove overlay, maybe close window?) 
+ * - handle scene changes (remove overlay, maybe close window?)
+ * - change to fixed FOV, keep adjustable for debugging
  * 
  */

@@ -6,6 +6,7 @@ PartModules/OrbitalSurvey/Enabled,Text,,Enabled
 PartModules/OrbitalSurvey/Mode,Text,,Mode
 PartModules/OrbitalSurvey/State,Text,,State
 PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View
+PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug)
 PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude
 PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude
 PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
