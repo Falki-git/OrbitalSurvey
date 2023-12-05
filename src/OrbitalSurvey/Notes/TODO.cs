@@ -3,6 +3,7 @@
  * TODO:            
  * - change to fixed FOV, keep adjustable for debugging
  * - add OAB part descriptions
+ * - PAM button for opening GUI
  * 
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
