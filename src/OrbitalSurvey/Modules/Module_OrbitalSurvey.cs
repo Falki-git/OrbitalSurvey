@@ -2,6 +2,7 @@
 using KSP.Sim.Definitions;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     [SerializeField]
     protected Data_OrbitalSurvey _dataOrbitalSurvey;
 
+    private ModuleAction _actionOpenGui;
+
     private bool _isDebugFovEnabled;
 
     public override void AddDataModules()
@@ -30,6 +33,9 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     {
         _logger.LogDebug("OnInitialized triggered.");
         base.OnInitialize();
+        
+        _actionOpenGui = new ModuleAction(() => SceneController.Instance.ShowMainGui = true);
+        _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
 
         _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
 
@@ -129,6 +135,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
+        _dataOrbitalSurvey.SetVisible(_actionOpenGui, state);
     }
 
     private void UpdateOabPAMVisibility()
@@ -142,6 +149,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, false);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
+        _dataOrbitalSurvey.SetVisible(_actionOpenGui, false);
     }
     
     private void UpdateValues(string newMode)

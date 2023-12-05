@@ -11,6 +11,7 @@ PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude
 PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude
 PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
 PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete
+PartModules/OrbitalSurvey/OpenGui,Text,,Open Map
 
 OrbitalSurvey/Status/Disabled,Text,,Disabled
 OrbitalSurvey/Status/Scanning,Text,,Scanning
