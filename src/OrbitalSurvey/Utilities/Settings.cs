@@ -16,4 +16,7 @@ public static class Settings
     public static double BiomeMinAltitude = 300000;
     public static double BiomeIdealAltitude = 750000;
     public static double BiomeMaxAltitude = 900000;
+
+    public static int VisualFOV = 10;
+    public static int BiomeFOV = 5;
 }

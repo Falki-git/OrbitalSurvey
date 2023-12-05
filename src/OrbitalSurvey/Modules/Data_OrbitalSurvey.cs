@@ -34,27 +34,31 @@ public class Data_OrbitalSurvey : ModuleData
     [PAMDisplayControl(SortIndex = 4)]  
     public ModuleProperty<string> State = new ("");
 
+    [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/PercentComplete")]
     [PAMDisplayControl(SortIndex = 5)]
-    public ModuleProperty<string> PercentComplete = new ("0", val => $"{double.Parse(val.ToString()):P0}");
+    public ModuleProperty<float> PercentComplete = new (0f, true, val => $"{val:P0}");
     
     [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
     [PAMDisplayControl(SortIndex = 6)]
-    [SteppedRange(1f, 45f, 1f)]
-    public ModuleProperty<float> ScanningFieldOfView = new (1f, false, val => $"{((float)val):F0}°");
+    //[SteppedRange(1f, 45f, 1f)]
+    public ModuleProperty<float> ScanningFieldOfView = new (1f, true, val => $"{val:N0}°");
     
+    [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/MinAltitude")]
     [PAMDisplayControl(SortIndex = 7)]
-    public ModuleProperty<string> MinimumAltitude = new ("", val => $"{val:N0} km");
+    public ModuleProperty<float> MinimumAltitude = new (1f, true, val => $"{val:N0} km");
     
+    [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/IdealAltitude")]
     [PAMDisplayControl(SortIndex = 8)]
-    public ModuleProperty<string> IdealAltitude = new ("", val => $"{val:N0} km" );
+    public ModuleProperty<float> IdealAltitude = new (0f, true, val => $"{val:N0} km" );
     
+    [KSPState]
     [LocalizedField("PartModules/OrbitalSurvey/MaxAltitude")]
     [PAMDisplayControl(SortIndex = 9)]
-    public ModuleProperty<string> MaximumAltitude = new ("", val => $"{val:N0} km");
+    public ModuleProperty<float> MaximumAltitude = new (0f, true, val => $"{val:N0} km");
     
     
 

@@ -85,7 +85,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.State.SetValue(StatusStrings.STATE[state]);
         
         // Update PercentComplete
-        _dataOrbitalSurvey.PercentComplete.SetValue(map.PercentDiscovered.ToString());
+        _dataOrbitalSurvey.PercentComplete.SetValue(map.PercentDiscovered);
     }
     
     // This... also triggers when Flight scene is loaded? (why?)
@@ -145,14 +145,17 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         switch (mapType)
         {
             case MapType.Visual:
-                _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.VisualMinAltitude / 1000).ToString());
-                _dataOrbitalSurvey.IdealAltitude.SetValue((Settings.VisualIdealAltitude / 1000).ToString());
-                _dataOrbitalSurvey.MaximumAltitude.SetValue((Settings.VisualMaxAltitude / 1000).ToString());
+                _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.VisualFOV);
+                _dataOrbitalSurvey.MinimumAltitude.SetValue((int)(Settings.VisualMinAltitude / 1000));
+                //_dataOrbitalSurvey.MinimumAltitude = new ((float)(Settings.VisualMinAltitude / 1000), true, val => $"{(val):F0} km");
+                _dataOrbitalSurvey.IdealAltitude.SetValue((float)Settings.VisualIdealAltitude / 1000);
+                _dataOrbitalSurvey.MaximumAltitude.SetValue((float)Settings.VisualMaxAltitude / 1000);
                 break;
             case MapType.Biome:
-                _dataOrbitalSurvey.MinimumAltitude.SetValue((Settings.BiomeMinAltitude / 1000).ToString());
-                _dataOrbitalSurvey.IdealAltitude.SetValue((Settings.BiomeIdealAltitude / 1000).ToString());
-                _dataOrbitalSurvey.MaximumAltitude.SetValue((Settings.BiomeMaxAltitude / 1000).ToString());
+                _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.BiomeFOV);
+                _dataOrbitalSurvey.MinimumAltitude.SetValue((int)(Settings.BiomeMinAltitude / 1000));
+                _dataOrbitalSurvey.IdealAltitude.SetValue((float)Settings.BiomeIdealAltitude / 1000);
+                _dataOrbitalSurvey.MaximumAltitude.SetValue((float)Settings.BiomeMaxAltitude / 1000);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
