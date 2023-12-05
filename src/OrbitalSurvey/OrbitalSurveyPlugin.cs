@@ -160,9 +160,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     //     Logger.LogDebug($"LogTexture triggered.");
     //     Logger.LogDebug($"Tex name it {tex.name}");
     // }
-
-    public MyTestSaveData MySaveData;
-
+    
     private void OnGUI() => DEBUG_UI.Instance.OnGUI();
 
     private void Update()
