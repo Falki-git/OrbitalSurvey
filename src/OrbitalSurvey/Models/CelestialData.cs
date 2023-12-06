@@ -43,7 +43,7 @@ public class CelestialData
     public double MinimumScanningAltitude => AtmosphereDepth; // TODO
     public double MaximumScanningAltitude => Body.sphereOfInfluence; // TODO
     
-    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, double scanningCone)
+    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, float scanningCone)
     {
         var map = Maps[mapType];
 

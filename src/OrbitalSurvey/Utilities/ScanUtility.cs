@@ -12,7 +12,7 @@ public static class ScanUtility
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ScanUtility");
     
-    public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, double scanningCone)
+    public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, float scanningCone)
     {
         var r = bodyRadius;
         var h = altitude;
@@ -119,21 +119,25 @@ public static class ScanUtility
     private static void GetMinMaxIdealAltitudes(
         MapType mapType, out double minAlt, out double idealAlt, out double maxAlt)
     {
-        switch (mapType)
-        {
-            case MapType.Visual:
-                minAlt = Settings.VisualMinAltitude;
-                idealAlt = Settings.VisualIdealAltitude;
-                maxAlt = Settings.VisualMaxAltitude;
-                break;
-            case MapType.Biome:
-                minAlt = Settings.BiomeMinAltitude;
-                idealAlt = Settings.BiomeIdealAltitude;
-                maxAlt = Settings.BiomeMaxAltitude;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException($"Unknown MapType {mapType}");
-        }
+        minAlt = Settings.ModeScanningStats[mapType].MinAltitude;
+        idealAlt = Settings.ModeScanningStats[mapType].IdealAltitude;
+        maxAlt = Settings.ModeScanningStats[mapType].MaxAltitude;
+        
+        // switch (mapType)
+        // {
+        //     case MapType.Visual:
+        //         minAlt = Settings.VisualMinAltitude;
+        //         idealAlt = Settings.VisualIdealAltitude;
+        //         maxAlt = Settings.VisualMaxAltitude;
+        //         break;
+        //     case MapType.Biome:
+        //         minAlt = Settings.BiomeMinAltitude;
+        //         idealAlt = Settings.BiomeIdealAltitude;
+        //         maxAlt = Settings.BiomeMaxAltitude;
+        //         break;
+        //     default:
+        //         throw new ArgumentOutOfRangeException($"Unknown MapType {mapType}");
+        // }
     }
 
     private static double GetMinMaxReductionFactor(MapType mapType, double altitude)

@@ -2,6 +2,8 @@
 using KSP.Sim.Definitions;
 using KSP.UI.Binding;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.Utilities;
+
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace OrbitalSurvey.Modules;
@@ -9,8 +11,6 @@ namespace OrbitalSurvey.Modules;
 [Serializable]
 public class Data_OrbitalSurvey : ModuleData
 {
-    // this.SetVisible = sets a property visible on PAM?
-    
     public override Type ModuleType => typeof(Module_OrbitalSurvey);
 
     [LocalizedField("PartModules/OrbitalSurvey/Status")]
@@ -76,8 +76,50 @@ public class Data_OrbitalSurvey : ModuleData
         
         SetDropdownData(Mode, scanningModesDropdown);
     }
-    
-    
+
+    /// <summary>
+    /// Add OAB module description on all eligible parts
+    /// </summary>
+    public override List<OABPartData.PartInfoModuleEntry> GetPartInfoEntries(Type partBehaviourModuleType,
+        List<OABPartData.PartInfoModuleEntry> delegateList)
+    {
+        if (partBehaviourModuleType == ModuleType)
+        {
+            // add module description
+            delegateList.Add(new OABPartData.PartInfoModuleEntry("", (_) => LocalizationStrings.OAB_DESCRIPTION));
+
+            foreach (MapType mapType in Enum.GetValues(typeof(MapType)))
+            {
+                // MapType header
+                var entry = new OABPartData.PartInfoModuleEntry(mapType.ToString(),
+                    _ =>
+                    {
+                        // stats for each MapType
+                        var subEntries = new List<OABPartData.PartInfoModuleSubEntry>();
+                        subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["ScanningFOV"],
+                            $"{Settings.ModeScanningStats[mapType].FieldOfView:N0}°"
+                        ));
+                        subEntries.Add( new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["MinAltitude"],
+                            $"{(Settings.ModeScanningStats[mapType].MinAltitude / 1000):N0} km"
+                        ));
+                        subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["IdealAltitude"],
+                            $"{(Settings.ModeScanningStats[mapType].IdealAltitude / 1000):N0} km"
+                        ));
+                        subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["MaxAltitude"],
+                            $"{(Settings.ModeScanningStats[mapType].MaxAltitude / 1000):N0} km"
+                        ));
+                        return subEntries;
+                    });
+                delegateList.Add(entry);
+            }
+        }
+
+        return delegateList;
+    }
     
     
     // TEMPORARY STUFF

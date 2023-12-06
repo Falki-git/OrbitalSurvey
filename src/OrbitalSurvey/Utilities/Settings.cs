@@ -1,4 +1,6 @@
-﻿namespace OrbitalSurvey.Utilities;
+﻿using OrbitalSurvey.Models;
+
+namespace OrbitalSurvey.Utilities;
 
 public static class Settings
 {
@@ -10,13 +12,36 @@ public static class Settings
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
 
-    public static double VisualMinAltitude = 100000;
-    public static double VisualIdealAltitude = 500000;
-    public static double VisualMaxAltitude = 1000000;
-    public static double BiomeMinAltitude = 300000;
-    public static double BiomeIdealAltitude = 750000;
-    public static double BiomeMaxAltitude = 900000;
+    public static Dictionary<MapType, ScanningStats> ModeScanningStats = new()
+    {
+        {
+            MapType.Visual,
+            new ScanningStats
+            {
+                FieldOfView = 10,
+                MinAltitude = 100000,
+                IdealAltitude = 500000,
+                MaxAltitude = 1000000
+            }
+        },
+        {
+            MapType.Biome,
+            new ScanningStats
+            {
+                FieldOfView = 5,
+                MinAltitude = 300000,
+                IdealAltitude = 750000,
+                MaxAltitude = 900000
+            }
+        }
+    };
 
-    public static int VisualFOV = 10;
-    public static int BiomeFOV = 5;
+    public struct ScanningStats
+    {
+        public int FieldOfView;
+        public float MinAltitude;
+        public float IdealAltitude;
+        public float MaxAltitude;
+    }
+    
 }

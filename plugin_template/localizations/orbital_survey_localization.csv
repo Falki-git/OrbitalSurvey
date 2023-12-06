@@ -26,3 +26,5 @@ OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>
 
 OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>
+
+OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit

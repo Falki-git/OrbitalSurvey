@@ -145,7 +145,7 @@ public class MainGuiController : MonoBehaviour
     private void UpdatePercentageComplete(float percent)
     {
         if (percent == 1f)
-            PercentComplete.text = StatusStrings.COMPLETE;
+            PercentComplete.text = LocalizationStrings.COMPLETE;
         else 
             PercentComplete.text = percent.ToString("P0");
     }
