@@ -8,6 +8,7 @@
  * 
  * TODO LONG-TERM:
  * - make Settings adjustable in mod settings
+ * - adjust FOV for large bodies
  * - larger FOV for larger commstrength
  * - add EC usage
  * - Map scene overlay
