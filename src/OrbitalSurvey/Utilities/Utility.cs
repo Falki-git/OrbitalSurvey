@@ -8,11 +8,11 @@ public static class Utility
 {
     public static GameStateConfiguration GameState => GameManager.Instance?.Game?.GlobalGameState?.GetGameState();
     
-    private static string _importPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
+    private static readonly string _IMPORT_PATH = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
 
     public static Texture2D ImportTexture(string filename)
     {
-        var importedData = File.ReadAllBytes(Path.Combine(_importPath, filename));
+        var importedData = File.ReadAllBytes(Path.Combine(_IMPORT_PATH, filename));
         var toReturn = new Texture2D(1, 1);
         toReturn.LoadImage(importedData);
         return toReturn;

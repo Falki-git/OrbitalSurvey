@@ -122,29 +122,13 @@ public static class ScanUtility
         minAlt = Settings.ModeScanningStats[mapType].MinAltitude;
         idealAlt = Settings.ModeScanningStats[mapType].IdealAltitude;
         maxAlt = Settings.ModeScanningStats[mapType].MaxAltitude;
-        
-        // switch (mapType)
-        // {
-        //     case MapType.Visual:
-        //         minAlt = Settings.VisualMinAltitude;
-        //         idealAlt = Settings.VisualIdealAltitude;
-        //         maxAlt = Settings.VisualMaxAltitude;
-        //         break;
-        //     case MapType.Biome:
-        //         minAlt = Settings.BiomeMinAltitude;
-        //         idealAlt = Settings.BiomeIdealAltitude;
-        //         maxAlt = Settings.BiomeMaxAltitude;
-        //         break;
-        //     default:
-        //         throw new ArgumentOutOfRangeException($"Unknown MapType {mapType}");
-        // }
     }
 
     private static double GetMinMaxReductionFactor(MapType mapType, double altitude)
     {
-        double minAlt, idealAlt, maxAlt, factor, totalRange;
+        double totalRange;
 
-        GetMinMaxIdealAltitudes(mapType, out minAlt, out idealAlt, out maxAlt);
+        GetMinMaxIdealAltitudes(mapType, out var minAlt, out var idealAlt, out var maxAlt);
 
         var currentAltDif = Math.Abs(idealAlt - altitude);
         
@@ -157,7 +141,7 @@ public static class ScanUtility
             totalRange = Math.Abs(maxAlt - idealAlt);
         }
         
-        factor = Math.Clamp(1 - (currentAltDif / totalRange), 0, 1);
+        var factor = Math.Clamp(1 - (currentAltDif / totalRange), 0, 1);
 
         return factor;
     }
@@ -178,9 +162,7 @@ public static class ScanUtility
     /// </summary>
     public static State GetAltitudeState(MapType mapType, double altitude)
     {
-        double minAlt, idealAlt, maxAlt;
-        
-        GetMinMaxIdealAltitudes(mapType, out minAlt, out idealAlt, out maxAlt);
+        GetMinMaxIdealAltitudes(mapType, out var minAlt, out var idealAlt, out var maxAlt);
 
         if (altitude < idealAlt * 0.95f)
         {

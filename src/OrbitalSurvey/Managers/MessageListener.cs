@@ -11,7 +11,6 @@ public class MessageListener
     private ManualLogSource _logger = Logger.CreateLogSource("OrbitalSurvey.MessageListener");
     private static MessageListener _instance;
     public MessageCenter MessageCenter => GameManager.Instance.Game.Messages;
-    //public GameStateConfiguration GameState => GameManager.Instance.Game.GlobalGameState.GetGameState();
 
     private MessageListener()
     { }

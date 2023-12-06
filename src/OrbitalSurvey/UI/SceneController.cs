@@ -46,6 +46,7 @@ public class SceneController
         uiDocument = Window.CreateFromUxml(visualTree, windowId, null, true);
         uiDocument.gameObject.AddComponent(controllerType);
 
+        // this can center the window, but we're not using it
         // if (WindowPosition == null)
         //     uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
 

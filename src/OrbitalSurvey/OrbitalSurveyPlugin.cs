@@ -7,8 +7,6 @@ using SpaceWarp.API.Assets;
 using SpaceWarp.API.Mods;
 using SpaceWarp.API.UI.Appbar;
 using UnityEngine;
-using KSP.Rendering.Planets;
-using KSP.Game;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
@@ -83,6 +81,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
         AssetUtility = gameObject.AddComponent<AssetUtility>();
         
+        // register for save/load events 
         SaveManager.Instance.Register();
     }
 

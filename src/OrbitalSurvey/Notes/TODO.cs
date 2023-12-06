@@ -7,6 +7,7 @@
  * - visual textures are bad/broken... export and bundle them in unity? 
  * 
  * TODO LONG-TERM:
+ * - make Settings adjustable in mod settings
  * - larger FOV for larger commstrength
  * - add EC usage
  * - Map scene overlay

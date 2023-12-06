@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using BepInEx.Logging;
 using KSP.Game;
-using OrbitalSurvey.Managers;
 using SpaceWarp.API.Assets;
 using UnityEngine;
 

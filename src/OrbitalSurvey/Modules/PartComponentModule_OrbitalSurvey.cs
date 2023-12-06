@@ -12,7 +12,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     public override Type PartBehaviourModuleType => typeof(Module_OrbitalSurvey);
     public double LastScanTime;
     
-    private static readonly ManualLogSource _logger = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
+    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     private Data_OrbitalSurvey _dataOrbitalSurvey;
     private double _timeSinceLastScan => ScanUtility.UT - LastScanTime;
     
@@ -21,11 +21,11 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
     {
-        _logger.LogDebug("OnStart triggered.");
+        //_LOGGER.LogDebug("OnStart triggered.");
 
         if (!DataModules.TryGetByType<Data_OrbitalSurvey>(out _dataOrbitalSurvey))
         {
-            _logger.LogError("Unable to find a Data_OrbitalSurvey in the PartComponentModule for " + base.Part.PartName);
+            _LOGGER.LogError("Unable to find a Data_OrbitalSurvey in the PartComponentModule for " + base.Part.PartName);
             return;
         }
 
@@ -35,8 +35,6 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
 
         LastScanTime = ScanUtility.UT;
-
-        //_dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
     }
 
     // This starts triggering when vessel is placed in Flight. Does not trigger in OAB.
@@ -112,12 +110,12 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
 
     public override void OnShutdown()
     {
-        _logger.LogDebug("OnShutdown triggered.");
+        _LOGGER.LogDebug("OnShutdown triggered.");
     }
 
     // -
     public override void OnFinalizeCreation(double universalTime)
     {
-        _logger.LogDebug("OnFinalizeCreation triggered.");
+        _LOGGER.LogDebug("OnFinalizeCreation triggered.");
     }
 }

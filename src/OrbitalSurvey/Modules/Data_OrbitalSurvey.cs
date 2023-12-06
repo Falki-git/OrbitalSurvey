@@ -55,8 +55,6 @@ public class Data_OrbitalSurvey : ModuleData
     [PAMDisplayControl(SortIndex = 10)]
     public ModuleProperty<float> MaximumAltitude = new (0f, true, val => $"{val:N0} km");
     
-    
-    
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOVDebug")]
     [PAMDisplayControl(SortIndex = 7)]
     [SteppedRange(1f, 45f, 1f)]
@@ -119,27 +117,4 @@ public class Data_OrbitalSurvey : ModuleData
 
         return delegateList;
     }
-    
-    
-    // TEMPORARY STUFF
-    
-    // [KSPState]
-    // [FormerlySerializedAs("MyData")] [Tooltip("Some tooltip")]
-    // public MyComplexClassProperty myComplexClassProperty;
-    
-    // [KSPState]
-    // [Tooltip("Some state string value tooltip")]
-    // public string MyStateString = "Some state string value";
-    
-    // [KSPDefinition]
-    // [Tooltip("Some definition string value tooltip")]
-    // public string MyDefinitionString = "Some definition string value";
-
-    //public int someIntField;
-
-    //public string AddPropertyTest;
-
-    //[KSPDefinition]
-    //public ModuleProperty<string> MyModulePropertyTest = new("initial value");
-
 }

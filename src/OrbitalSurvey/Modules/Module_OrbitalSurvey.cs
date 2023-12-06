@@ -11,7 +11,7 @@ namespace OrbitalSurvey.Modules;
 [DisallowMultipleComponent]
 public class Module_OrbitalSurvey : PartBehaviourModule
 {
-    private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.Module");
+    private static readonly ManualLogSource _LOGGER = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.Module");
     
     public override Type PartComponentModuleType => typeof(PartComponentModule_OrbitalSurvey);
     
@@ -31,7 +31,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
     public override void OnInitialize()
     {
-        _logger.LogDebug("OnInitialized triggered.");
         base.OnInitialize();
         
         _actionOpenGui = new ModuleAction(OnOpenMapClicked);
@@ -102,20 +101,20 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // It triggers when exiting the game also.
     public override void OnShutdown()
     {
-        _logger.LogDebug($"OnShutdown triggered.");
+        _LOGGER.LogDebug($"OnShutdown triggered.");
         _dataOrbitalSurvey.Mode.OnChangedValue -= OnModeChanged;
         _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
     }
 
     private void OnModeChanged(string newMode)
     {
-        _logger.LogDebug(($"Mode.OnChangedValue triggered. New value is {newMode}"));
+        _LOGGER.LogDebug(($"Mode.OnChangedValue triggered. New value is {newMode}"));
         UpdateValues(newMode);
     }
 
     private void OnToggleChangedValue(bool newValue)
     {
-        _logger.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
+        _LOGGER.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
         ((PartComponentModule_OrbitalSurvey)ComponentModule).LastScanTime = ScanUtility.UT;
         
         UpdateFlightPAMVisibility(newValue);
@@ -188,7 +187,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // And it also triggers in OAB when part is added to the assembly? 
     protected void OnEnable()
     {
-        _logger.LogDebug($"OnEnable triggered.");
+        //_LOGGER.LogDebug($"OnEnable triggered.");
     }
     
     private void PerformDebugChecks()
@@ -213,26 +212,26 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // -
     public override void OnModuleUpdate(float deltaTime)
     {
-        _logger.LogDebug("OnModuleUpdate triggered.");
+        _LOGGER.LogDebug("OnModuleUpdate triggered.");
     }
 
     // -
     public override void OnModuleOABUpdate(float deltaTime)
     {
-        _logger.LogDebug("OnModuleOABUpdate triggered.");
+        _LOGGER.LogDebug("OnModuleOABUpdate triggered.");
     }
     
     // -
     public void OnFixedUpdate(float deltaTime)
     {
-        _logger.LogDebug("OnFixedUpdate triggered.");
+        _LOGGER.LogDebug("OnFixedUpdate triggered.");
     }
     
     // What does this do?
     [ContextMenu("Extend")]
     protected virtual bool Extend()
     {
-        _logger.LogDebug("Extend triggered.");
+        _LOGGER.LogDebug("Extend triggered.");
         return true;
     }
 
@@ -268,7 +267,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void TestAction()
     {
-        _logger.LogDebug("Hello World");
+        _LOGGER.LogDebug("Hello World");
     }
     
     #endregion
