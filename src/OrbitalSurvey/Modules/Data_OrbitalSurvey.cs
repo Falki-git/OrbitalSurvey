@@ -3,7 +3,6 @@ using KSP.Sim.Definitions;
 using KSP.UI.Binding;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
-
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace OrbitalSurvey.Modules;

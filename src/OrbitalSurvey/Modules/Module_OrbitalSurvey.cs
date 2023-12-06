@@ -34,7 +34,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _logger.LogDebug("OnInitialized triggered.");
         base.OnInitialize();
         
-        _actionOpenGui = new ModuleAction(() => SceneController.Instance.ShowMainGui = true);
+        _actionOpenGui = new ModuleAction(OnOpenMapClicked);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
 
         _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
@@ -124,6 +124,16 @@ public class Module_OrbitalSurvey : PartBehaviourModule
             newValue ? LocalizationStrings.STATUS[Status.Scanning] : LocalizationStrings.STATUS[Status.Disabled]);
     }
 
+    private void OnOpenMapClicked()
+    {
+        var mode = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        var body = vessel.Model.mainBody.Name;
+
+        SceneController.Instance.SelectedMapType = mode;
+        SceneController.Instance.SelectedBody = body;
+        SceneController.Instance.ShowMainGui = true;
+    }
+
     private void UpdateFlightPAMVisibility(bool state)
     {
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
@@ -160,24 +170,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.MinimumAltitude.SetValue(Settings.ModeScanningStats[mapType].MinAltitude / 1000);
         _dataOrbitalSurvey.IdealAltitude.SetValue(Settings.ModeScanningStats[mapType].IdealAltitude / 1000);
         _dataOrbitalSurvey.MaximumAltitude.SetValue(Settings.ModeScanningStats[mapType].MaxAltitude / 1000);
-        
-        // switch (mapType)
-        // {
-        //     case MapType.Visual:
-        //         _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.VisualFOV);
-        //         _dataOrbitalSurvey.MinimumAltitude.SetValue((int)(Settings.VisualMinAltitude / 1000));
-        //         _dataOrbitalSurvey.IdealAltitude.SetValue((float)Settings.VisualIdealAltitude / 1000);
-        //         _dataOrbitalSurvey.MaximumAltitude.SetValue((float)Settings.VisualMaxAltitude / 1000);
-        //         break;
-        //     case MapType.Biome:
-        //         _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.BiomeFOV);
-        //         _dataOrbitalSurvey.MinimumAltitude.SetValue((int)(Settings.BiomeMinAltitude / 1000));
-        //         _dataOrbitalSurvey.IdealAltitude.SetValue((float)Settings.BiomeIdealAltitude / 1000);
-        //         _dataOrbitalSurvey.MaximumAltitude.SetValue((float)Settings.BiomeMaxAltitude / 1000);
-        //         break;
-        //     default:
-        //         throw new ArgumentOutOfRangeException();
-        // }
     }
     
     // This triggers always

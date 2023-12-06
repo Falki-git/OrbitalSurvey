@@ -14,11 +14,6 @@
  * }
  *
  *
- * OAB part description:
- * - scanning cone
- * - minimum altitude
- * - maximum altitude
- * - ideal altitude (do we need this?)
  *
  *
  *
