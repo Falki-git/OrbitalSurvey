@@ -114,6 +114,7 @@ public class MapData
     public void ClearMap()
     {
         Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
+        DiscoveredPixelsCount = 0;
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
     }
