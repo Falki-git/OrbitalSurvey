@@ -11,7 +11,7 @@ public class SaveManager
     
     public static SaveManager Instance { get; } = new();
     
-    public Dictionary<string, SaveDataAdapter> bufferedLoadData;
+    public SaveDataAdapter bufferedLoadData;
     public bool HasBufferedLoadData;
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.SaveManager");
@@ -20,25 +20,26 @@ public class SaveManager
 
     public void Register()
     {
-        ModSaves.RegisterSaveLoadGameData<Dictionary<string, SaveDataAdapter>>(
+        ModSaves.RegisterSaveLoadGameData<SaveDataAdapter>(
             OrbitalSurveyPlugin.ModGuid,
             OnSave,
             OnLoad
         );
     }
 
-    public void OnSave(Dictionary<string, SaveDataAdapter> dataToSave)
+    public void OnSave(SaveDataAdapter dataToSave)
     {
         _LOGGER.LogDebug("OnSave triggered.");
-        
-        dataToSave.Clear();
+
+        dataToSave.SessionGuidString = Utility.SessionGuidString;
+        dataToSave.Bodies.Clear();
 
         foreach (var celestialData in Core.Instance.CelestialDataDictionary)
         {
             if (!celestialData.Value.ContainsData)
                 continue;
             
-            var celesAdapter = new SaveDataAdapter(); 
+            var mapsDataAdapter = new Dictionary<MapType, SaveDataAdapter.MapsAdapter>();
             
             foreach (var mapData in celestialData.Value.Maps) 
             { 
@@ -56,17 +57,17 @@ public class SaveManager
                     mapsAdapter.IsFullyScanned = false;
                     mapsAdapter.DiscoveredPixels = SaveUtility.CompressData(mapData.Value.DiscoveredPixels);
                 }
-
-                celesAdapter.Maps.Add(mapData.Key, mapsAdapter);
+                
+                mapsDataAdapter.Add(mapData.Key, mapsAdapter);
             }
             
-            dataToSave.Add(celestialData.Key, celesAdapter);
+            dataToSave.Bodies.Add(celestialData.Key, mapsDataAdapter);
             
             _LOGGER.LogDebug($"{celestialData.Key} prepared for saving.");
         }
     }
 
-    public void OnLoad(Dictionary<string, SaveDataAdapter> dataToLoad)
+    public void OnLoad(SaveDataAdapter dataToLoad)
     {
         _LOGGER.LogDebug("OnLoad triggered.");
 
@@ -84,7 +85,7 @@ public class SaveManager
     {
         foreach (var celestialData in Core.Instance.CelestialDataDictionary)
         {
-            if (!bufferedLoadData.ContainsKey(celestialData.Key))
+            if (!bufferedLoadData.Bodies.ContainsKey(celestialData.Key))
             {
                 // this body is not in saved data. Need to reset all data.
                 foreach (var map in celestialData.Value.Maps)
@@ -98,9 +99,9 @@ public class SaveManager
                 // this body has discovered pixels in saved data
                 foreach (var map in celestialData.Value.Maps)
                 {
-                    var celesAdapter = bufferedLoadData[celestialData.Key];
+                    var mapsDataAdapter = bufferedLoadData.Bodies[celestialData.Key];
                     
-                    if (!celesAdapter.Maps.ContainsKey(map.Key))
+                    if (!mapsDataAdapter.ContainsKey(map.Key))
                     {
                         // this specific map isn't in saved data. Need to reset all data
                         if (map.Value.HasData)
@@ -109,20 +110,22 @@ public class SaveManager
                     else
                     {
                         // this map holds data. Need to update the map.
-                        if (celesAdapter.Maps[map.Key].IsFullyScanned)
+                        if (mapsDataAdapter[map.Key].IsFullyScanned)
                         {
                             map.Value.UpdateDiscoveredPixels(null, true);
                         }
                         else
                         {
                             var loadedPixels =
-                                SaveUtility.DecompressData(celesAdapter.Maps[map.Key].DiscoveredPixels);
+                                SaveUtility.DecompressData(mapsDataAdapter[map.Key].DiscoveredPixels);
                             map.Value.UpdateDiscoveredPixels(loadedPixels);
                         }
                     }
                 }
             }
         }
+        
+        Core.Instance.SessionGuidString = bufferedLoadData.SessionGuidString;
 
         bufferedLoadData = null;
         HasBufferedLoadData = false;

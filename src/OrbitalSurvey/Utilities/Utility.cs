@@ -59,4 +59,6 @@ public static class Utility
             property.SetValue(target, value);
         }
     }
+    
+    public static string SessionGuidString => GameManager.Instance?.Game?.SessionGuidString;
 }

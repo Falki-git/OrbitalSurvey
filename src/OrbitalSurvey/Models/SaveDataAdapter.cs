@@ -2,7 +2,8 @@
 
 public class SaveDataAdapter
 {
-    public Dictionary<MapType, MapsAdapter> Maps = new();
+    public string SessionGuidString;
+    public Dictionary<string, Dictionary<MapType, MapsAdapter>> Bodies = new();
 
     public struct MapsAdapter
     {

@@ -17,7 +17,9 @@ public class Core : MonoBehaviour
     
     public static Core Instance { get; } = new();
     public CelestialDataDictionary CelestialDataDictionary { get; set; }
+    
     public bool MapsInitialized { get; set; }
+    public string SessionGuidString;
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Core");
     

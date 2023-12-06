@@ -8,7 +8,7 @@ namespace OrbitalSurvey.Managers;
 
 public class MessageListener
 {
-    private ManualLogSource _logger = Logger.CreateLogSource("OrbitalSurvey.MessageListener");
+    private readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MessageListener");
     private static MessageListener _instance;
     public MessageCenter MessageCenter => GameManager.Instance.Game.Messages;
 
@@ -32,18 +32,25 @@ public class MessageListener
         await Task.Delay(100);
 
         MessageCenter.PersistentSubscribe<GameLoadFinishedMessage>(OnGameLoadFinishedMessage);
-        _logger.LogInfo("Subscribed to GameLoadFinishedMessage.");
+        _LOGGER.LogInfo("Subscribed to GameLoadFinishedMessage.");
         MessageCenter.PersistentSubscribe<GameStateChangedMessage>(OnGameStateChangedMessage);
-        _logger.LogInfo("Subscribed to GameStateChangedMessage.");
+        _LOGGER.LogInfo("Subscribed to GameStateChangedMessage.");
     }
     
     private void OnGameLoadFinishedMessage(MessageCenterMessage message)
     {
-        _logger.LogDebug("GameLoadFinishedMessage triggered.");
+        _LOGGER.LogDebug("GameLoadFinishedMessage triggered.");
 
         if (!Core.Instance.MapsInitialized)
         { 
             // OrbitalSurveyPlugin.Instance.assetUtility.InitializeVisualTextures();
+            Core.Instance.InitializeCelestialData();
+        }
+
+        // if another session's data is loaded, need to reinitialize data
+        if (Core.Instance.SessionGuidString != Utility.SessionGuidString)
+        {
+            _LOGGER.LogInfo("New SessionGuidString detected. Resetting data.");
             Core.Instance.InitializeCelestialData();
         }
         
