@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - fix UI dropdowns occupying large space than they should 
+ * n/a
  * 
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
@@ -33,6 +33,7 @@
  * - change to fixed FOV, keep adjustable for debugging
  * - PAM button for opening GUI
  * - add OAB part descriptions
- * - open exact map from PAM  
+ * - open exact map from PAM
+ * - fix UI dropdowns occupying large space than they should
  * 
  */
