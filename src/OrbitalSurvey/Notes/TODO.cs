@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - change EVE visual texture to the mesh variant
  * 
  * TODO MAYBE:
  * - visual textures are bad/broken... export and bundle them in unity? 
