@@ -1,7 +1,6 @@
 ﻿/*
  * 
  * TODO:
- * - change EVE visual texture to the mesh variant
  * - add EC usage
  * - Map scene overlay
  * 
@@ -16,8 +15,8 @@
  * - scanning parts
  * - buffering and transmitting scans
  * - buffer scans until transmitted
- * - see if clouds can be removed
- * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned 
+ * - see if clouds can be removed (requested by The Space Peacock)
+ * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man) 
  *
  * TODO SCIENCE:
  * - transmit to get science
@@ -37,6 +36,7 @@
  * - PAM button for opening GUI
  * - add OAB part descriptions
  * - open exact map from PAM
- * - fix UI dropdowns occupying large space than they should
+ * - fix UI dropdowns occupying larger space than they should
+ * - change EVE visual texture to the mesh variant
  * 
  */
