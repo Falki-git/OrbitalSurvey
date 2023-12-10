@@ -74,8 +74,8 @@ public class MessageListener
             return;
         }
 
-        if(SceneController.Instance.ShowMainGui)
-            SceneController.Instance.ShowMainGui = false;
+        if (SceneController.Instance.ShowMainGui)
+            SceneController.Instance.ToggleUI(false);
         
         OverlayManager.Instance.RemoveOverlay();
     }

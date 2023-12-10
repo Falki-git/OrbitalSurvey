@@ -1,4 +1,5 @@
-﻿using OrbitalSurvey.Models;
+﻿using KSP.UI.Binding;
+using OrbitalSurvey.Models;
 using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,4 +53,14 @@ public class SceneController
 
         return uiDocument;
     }
+
+    public void ToggleUI(bool state)
+    {
+        ShowMainGui = state;
+        
+        GameObject.Find(OrbitalSurveyPlugin.ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(state);
+        GameObject.Find(OrbitalSurveyPlugin.ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(state);
+    }
+
+    public void ToggleUI() => ToggleUI(!ShowMainGui);
 }

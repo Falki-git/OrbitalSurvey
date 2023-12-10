@@ -130,7 +130,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
         SceneController.Instance.SelectedMapType = mode;
         SceneController.Instance.SelectedBody = body;
-        SceneController.Instance.ShowMainGui = true;
+        SceneController.Instance.ToggleUI(true);
     }
 
     private void UpdateFlightPAMVisibility(bool state)

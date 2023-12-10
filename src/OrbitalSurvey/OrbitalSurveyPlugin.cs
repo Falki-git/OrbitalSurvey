@@ -45,11 +45,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             ModName,
             ToolbarFlightButtonID,
             AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            isOpen =>
-            {
-                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
-                GameObject.Find(ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
-            }
+            SceneController.Instance.ToggleUI
         );
         
         // Register OAB AppBar button
@@ -57,11 +53,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             ModName,
             ToolbarOABButtonID,
             AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            isOpen =>
-            {
-                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
-                GameObject.Find(ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(isOpen);
-            }
+            SceneController.Instance.ToggleUI
         );
         
         // Register KSC AppBar button
@@ -69,10 +61,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             ModName,
             ToolbarKSCButtonID,
             AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
-            () =>
-            {
-                SceneController.Instance.ShowMainGui = !SceneController.Instance.ShowMainGui; 
-            }
+            SceneController.Instance.ToggleUI
         );
 
         MessageListener.Instance.SubscribeToMessages();
