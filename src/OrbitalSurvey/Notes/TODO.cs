@@ -2,21 +2,22 @@
  * 
  * TODO:
  * - change EVE visual texture to the mesh variant
+ * - add EC usage
+ * - Map scene overlay
  * 
- * TODO MAYBE:
- * - visual textures are bad/broken... export and bundle them in unity? 
  * 
  * TODO LONG-TERM:
  * - make Settings adjustable in mod settings
  * - adjust FOV for large bodies
- * - larger FOV for larger commstrength
- * - add EC usage
- * - Map scene overlay
+ * - larger FOV for larger commstrength 
+ * - live position indicators and next/previous orbit
  * - scanning triangle in Map scene when active
  * - altimeter data?
  * - scanning parts
  * - buffering and transmitting scans
  * - buffer scans until transmitted
+ * - see if clouds can be removed
+ * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned 
  *
  * TODO SCIENCE:
  * - transmit to get science
