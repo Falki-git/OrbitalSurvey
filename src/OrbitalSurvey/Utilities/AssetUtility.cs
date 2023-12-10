@@ -31,7 +31,7 @@ public class AssetUtility : MonoBehaviour
     public readonly Dictionary<string, string> VisualBundleAssetAddresses = new()
     {
         { "Moho_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/moho_scaled_d_1024.png"},
-        { "Eve_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/eve_scaled_d_1024.png"},
+        { "Eve_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/eve_scaled_mesh_d_1024.png"},
         { "Gilly_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/gilly_scaled_d_1024.png"},
         { "Kerbin_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/kerbin_scaled_d_1024.png"},
         { "Mun_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/visualmaps/mun_scaled_d_1024.png"},
