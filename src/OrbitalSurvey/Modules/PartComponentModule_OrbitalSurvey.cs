@@ -1,5 +1,7 @@
 ﻿using BepInEx.Logging;
+using KSP.Game;
 using KSP.Sim.impl;
+using KSP.Sim.ResourceSystem;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using Logger = BepInEx.Logging.Logger;
@@ -16,7 +18,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     private Data_OrbitalSurvey _dataOrbitalSurvey;
     private double _timeSinceLastScan => ScanUtility.UT - LastScanTime;
     
-    
+    private FlowRequestResolutionState _returnedRequestResolutionState;
+    private bool _hasOutstandingRequest;
 
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
@@ -33,6 +36,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         {
             _dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
         }
+        
+        _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
 
         LastScanTime = ScanUtility.UT;
     }
@@ -41,9 +46,21 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     // Keeps triggering in every scene once it's in Flight 
     public override void OnUpdate(double universalTime, double deltaUniversalTime)
     {
+        ResourceConsumptionUpdate(deltaUniversalTime);
+        DoScan(universalTime);
+    }
+
+    private void DoScan(double universalTime)
+    {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
             _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
+            LastScanTime = universalTime;
+            
+            // if EC is spent, skip scanning
+            if (!_dataOrbitalSurvey.HasResourcesToOperate)
+                return;
+            
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
@@ -61,8 +78,6 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var latitude = vessel.Latitude;
             
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
-
-            LastScanTime = universalTime;
 
             // FOR DEBUGGING PURPOSES
             if (DEBUG_UI.Instance.BufferAnalyticsScan)
@@ -106,6 +121,52 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
         
         Core.Instance.CelestialDataDictionary[body].Maps[mapType].UpdateCurrentMapAsPerDiscoveredPixels();
+    }
+    
+    // Handles EC consumption
+    private void ResourceConsumptionUpdate(double deltaTime)
+    {
+        if (_dataOrbitalSurvey.UseResources)
+        {
+            if (GameManager.Instance.Game.SessionManager.IsDifficultyOptionEnabled("InfinitePower"))
+            {
+                _dataOrbitalSurvey.HasResourcesToOperate = true;
+                if (base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestHandle))
+                {
+                    base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestHandle);
+                    return;
+                }
+            }
+            else
+            {
+                if (this._hasOutstandingRequest)
+                {
+                    this._returnedRequestResolutionState = base.resourceFlowRequestBroker.GetRequestState(_dataOrbitalSurvey.RequestHandle);
+                    _dataOrbitalSurvey.HasResourcesToOperate = this._returnedRequestResolutionState.WasLastTickDeliveryAccepted;
+                }
+                this._hasOutstandingRequest = false;
+                if (!_dataOrbitalSurvey.EnabledToggle.GetValue() && base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestHandle))
+                {
+                    base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestHandle);
+                    _dataOrbitalSurvey.HasResourcesToOperate = false;
+                }
+                else if (_dataOrbitalSurvey.EnabledToggle.GetValue() && base.resourceFlowRequestBroker.IsRequestInactive(_dataOrbitalSurvey.RequestHandle))
+                {
+                    base.resourceFlowRequestBroker.SetRequestActive(_dataOrbitalSurvey.RequestHandle);
+                }
+                if (_dataOrbitalSurvey.EnabledToggle.GetValue())
+                {
+                    _dataOrbitalSurvey.RequestConfig.FlowUnits = (double)_dataOrbitalSurvey.RequiredResource.Rate;
+                    base.resourceFlowRequestBroker.SetCommands(_dataOrbitalSurvey.RequestHandle, 1.0, new ResourceFlowRequestCommandConfig[] { _dataOrbitalSurvey.RequestConfig });
+                    this._hasOutstandingRequest = true;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            _dataOrbitalSurvey.HasResourcesToOperate = true;
+        }
     }
 
     public override void OnShutdown()

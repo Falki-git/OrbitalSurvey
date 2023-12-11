@@ -44,4 +44,9 @@ public static class Settings
         public float MaxAltitude;
     }
     
+    public static Dictionary<MapType, float> EcConsumptionRate = new()
+    {
+        { MapType.Visual, 1.0f },
+        { MapType.Biome, 2.0f }
+    };
 }

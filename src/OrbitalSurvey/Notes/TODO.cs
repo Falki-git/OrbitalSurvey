@@ -1,8 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - add EC usage
- * - Map scene overlay
+ * - Map scene overlay 
  * 
  * 
  * TODO LONG-TERM:
@@ -38,5 +37,7 @@
  * - open exact map from PAM
  * - fix UI dropdowns occupying larger space than they should
  * - change EVE visual texture to the mesh variant
+ * - add EC usage
+ * - update name: "I Hope You Brought Batteries"
  * 
  */

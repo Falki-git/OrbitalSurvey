@@ -17,7 +17,7 @@ OrbitalSurvey/Status/Disabled,Text,,Disabled
 OrbitalSurvey/Status/Scanning,Text,,Scanning
 OrbitalSurvey/Status/Idle,Text,,Idle
 OrbitalSurvey/Status/Complete,Text,,Survey Complete
-OrbitalSurvey/Status/NoPower,Text,,No Power
+OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>
 
 OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>
 OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
@@ -28,3 +28,5 @@ OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>
 OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>
 
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit
+OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
+OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge

@@ -79,6 +79,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         {
             _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Complete]);
         }
+        else if (!_dataOrbitalSurvey.HasResourcesToOperate)
+        {
+            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.NoPower]);
+        }
         else if (state is State.BelowMin or State.AboveMax)
         {
             _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
@@ -169,6 +173,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.MinimumAltitude.SetValue(Settings.ModeScanningStats[mapType].MinAltitude / 1000);
         _dataOrbitalSurvey.IdealAltitude.SetValue(Settings.ModeScanningStats[mapType].IdealAltitude / 1000);
         _dataOrbitalSurvey.MaximumAltitude.SetValue(Settings.ModeScanningStats[mapType].MaxAltitude / 1000);
+
+        _dataOrbitalSurvey.RequiredResource.Rate = Settings.EcConsumptionRate[mapType];
     }
     
     // This triggers always
