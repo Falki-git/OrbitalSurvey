@@ -185,9 +185,6 @@ public class MainGuiController : MonoBehaviour
     
     private void OnCloseButton(ClickEvent evt)
     {
-        SceneController.Instance.ShowMainGui = false;
-        // GameObject.Find(OrbitalSurveyPlugin.ToolbarFlightButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);
-        // GameObject.Find(OrbitalSurveyPlugin.ToolbarOABButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);
-        // GameObject.Find(OrbitalSurveyPlugin.ToolbarKSCButtonID)?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false);
+        SceneController.Instance.ToggleUI(false);
     }
 }

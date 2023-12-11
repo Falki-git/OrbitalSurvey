@@ -1,8 +1,13 @@
-﻿using KSP.Sim;
+﻿using BepInEx.Logging;
+using KSP.Game;
+using KSP.Sim;
 using KSP.Sim.Definitions;
+using KSP.Sim.ResourceSystem;
 using KSP.UI.Binding;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
+using UnityEngine;
+using Logger = BepInEx.Logging.Logger;
 // ReSharper disable HeapView.BoxingAllocation
 
 namespace OrbitalSurvey.Modules;
@@ -10,6 +15,8 @@ namespace OrbitalSurvey.Modules;
 [Serializable]
 public class Data_OrbitalSurvey : ModuleData
 {
+    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Data_OrbitalSurvey");
+    
     public override Type ModuleType => typeof(Module_OrbitalSurvey);
 
     [LocalizedField("PartModules/OrbitalSurvey/Status")]
@@ -83,7 +90,7 @@ public class Data_OrbitalSurvey : ModuleData
         if (partBehaviourModuleType == ModuleType)
         {
             // add module description
-            delegateList.Add(new OABPartData.PartInfoModuleEntry("", (_) => LocalizationStrings.OAB_DESCRIPTION));
+            delegateList.Add(new OABPartData.PartInfoModuleEntry("", (_) => LocalizationStrings.OAB_DESCRIPTION["ModuleDescription"]));
 
             foreach (MapType mapType in Enum.GetValues(typeof(MapType)))
             {
@@ -109,6 +116,15 @@ public class Data_OrbitalSurvey : ModuleData
                             LocalizationStrings.PARTMODULES["MaxAltitude"],
                             $"{(Settings.ModeScanningStats[mapType].MaxAltitude / 1000):N0} km"
                         ));
+
+                        if (UseResources)
+                        {
+                            subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                                LocalizationStrings.OAB_DESCRIPTION["ElectricCharge"],
+                                $"{(Settings.EcConsumptionRate[mapType]):N3} /s"
+                            ));                            
+                        }
+                        
                         return subEntries;
                     });
                 delegateList.Add(entry);
@@ -117,4 +133,35 @@ public class Data_OrbitalSurvey : ModuleData
 
         return delegateList;
     }
+
+    public override void SetupResourceRequest(ResourceFlowRequestBroker resourceFlowRequestBroker)
+    {
+        if (UseResources)
+        {
+            ResourceDefinitionID resourceIDFromName = GameManager.Instance.Game.ResourceDefinitionDatabase.GetResourceIDFromName(this.RequiredResource.ResourceName);
+            if (resourceIDFromName == ResourceDefinitionID.InvalidID)
+            {
+                _LOGGER.LogError($"[ModuleLight]: There are no resources with name {this.RequiredResource.ResourceName}");
+                return;
+            }
+            RequestConfig = new ResourceFlowRequestCommandConfig();
+            RequestConfig.FlowResource = resourceIDFromName;
+            RequestConfig.FlowDirection = FlowDirection.FLOW_OUTBOUND;
+            RequestConfig.FlowUnits = 0.0;
+            RequestHandle = resourceFlowRequestBroker.AllocateOrGetRequest("ModuleOrbitalSurvey", default(ResourceFlowRequestHandle));
+            resourceFlowRequestBroker.SetCommands(this.RequestHandle, 1.0, new ResourceFlowRequestCommandConfig[] { this.RequestConfig });
+        }
+    }
+
+    [KSPDefinition]
+    [Tooltip("Whether the module consumes resources")]
+    public bool UseResources = true;
+    
+    public bool HasResourcesToOperate = true;
+    
+    [KSPDefinition]
+    [Tooltip("Resource required to operate this module if it consumes resources")]
+    public PartModuleResourceSetting RequiredResource;
+
+    public ResourceFlowRequestCommandConfig RequestConfig;
 }

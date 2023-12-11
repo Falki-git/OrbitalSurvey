@@ -24,7 +24,12 @@ public static class LocalizationStrings
 
     public static readonly LocalizedString COMPLETE = "OrbitalSurvey/UI/Complete";
 
-    public static readonly LocalizedString OAB_DESCRIPTION = "OrbitalSurvey/OAB/Description";
+    public static readonly Dictionary<string, LocalizedString> OAB_DESCRIPTION = new()
+    {
+        { "ModuleDescription", "OrbitalSurvey/OAB/Description" },
+        { "ResourcesRequired", "OrbitalSurvey/OAB/ResourcesRequiredTitle" },
+        { "ElectricCharge", "OrbitalSurvey/OAB/ResourcesRequiredEntry" }
+    };
 
     public static readonly Dictionary<string, LocalizedString> PARTMODULES = new()
     {
@@ -41,5 +46,4 @@ public static class LocalizationStrings
         {"PercentComplete", "PartModules/OrbitalSurvey/PercentComplete"},
         {"OpenGui", "PartModules/OrbitalSurvey/OpenGui"},
     };
-
 }

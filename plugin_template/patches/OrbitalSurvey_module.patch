@@ -5,6 +5,11 @@ $minCommRange: 1000000000;
         @if $commRange > $minCommRange {
             +Module_OrbitalSurvey {
                 +Data_OrbitalSurvey {
+                    RequiredResource: {
+                        Rate: 0.0, // set dynamically through settings
+                        ResourceName: "ElectricCharge",
+                        AcceptanceThreshold: 0.1
+                    };
                 }
             }
             PAMModuleVisualsOverride: +[
