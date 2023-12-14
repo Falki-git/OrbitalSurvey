@@ -2,9 +2,11 @@
  * 
  * TODO:
  * - Map scene overlay 
- * 
+ * - clean up warnings
+ * - hide bodies with no data from the dropdown
  * 
  * TODO LONG-TERM:
+ * - persist window position in save game data
  * - make Settings adjustable in mod settings
  * - adjust FOV for large bodies
  * - larger FOV for larger commstrength 
