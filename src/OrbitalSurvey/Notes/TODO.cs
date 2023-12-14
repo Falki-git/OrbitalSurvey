@@ -5,8 +5,7 @@
  * - clean up warnings
  * - hide bodies with no data from the dropdown
  * 
- * TODO LONG-TERM:
- * - persist window position in save game data
+ * TODO LONG-TERM: 
  * - make Settings adjustable in mod settings
  * - adjust FOV for large bodies
  * - larger FOV for larger commstrength 
@@ -41,5 +40,6 @@
  * - change EVE visual texture to the mesh variant
  * - add EC usage
  * - update name: "I Hope You Brought Batteries"
+ * - persist window position in save game data
  * 
  */
