@@ -23,7 +23,7 @@ public class SceneController
     };
         
     public string SelectedBody;
-    public MapType SelectedMapType;
+    public MapType? SelectedMapType;
     public Vector3? WindowPosition;
     
     private bool _showMainGui;

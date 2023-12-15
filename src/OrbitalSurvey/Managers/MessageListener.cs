@@ -35,8 +35,10 @@ public class MessageListener
         _LOGGER.LogInfo("Subscribed to GameLoadFinishedMessage.");
         MessageCenter.PersistentSubscribe<GameStateChangedMessage>(OnGameStateChangedMessage);
         _LOGGER.LogInfo("Subscribed to GameStateChangedMessage.");
+        MessageCenter.PersistentSubscribe<MapCelestialBodyAddedMessage>(OnMapCelestialBodyAddedMessage);
+        _LOGGER.LogInfo("Subscribed to MapCelestialBodyAddedMessage.");
     }
-    
+
     private void OnGameLoadFinishedMessage(MessageCenterMessage message)
     {
         _LOGGER.LogDebug("GameLoadFinishedMessage triggered.");
@@ -78,5 +80,11 @@ public class MessageListener
             SceneController.Instance.ToggleUI(false);
         
         OverlayManager.Instance.RemoveOverlay();
+    }
+    
+    private void OnMapCelestialBodyAddedMessage(MessageCenterMessage obj)
+    {
+        string bodyName = (obj as MapCelestialBodyAddedMessage).bodyData.Data.bodyName;
+        OverlayManager.Instance.DrawMap3dOverlayOnMapCelestialBodyAddedMessage(bodyName);
     }
 }

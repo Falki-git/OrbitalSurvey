@@ -55,7 +55,8 @@ public class MainGuiController : MonoBehaviour
         
         // footer controls
         PlanetaryOverlay = Root.Q<Toggle>("planetary-overlay");
-        PlanetaryOverlay.RegisterValueChangedCallback(ToggleOverlay);
+        PlanetaryOverlay.RegisterValueChangedCallback((evt) => ToggleOverlay(evt.newValue));
+        PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
         
         BuildBodyDropdown();
         BuildMapTypeDropdown();
@@ -68,10 +69,13 @@ public class MainGuiController : MonoBehaviour
         PlanetaryOverlay.SetEnabled(false);
         
         // check if a map was previously selected and restore it (window was previously closed and now opened again)
-        if (!String.IsNullOrEmpty(SceneController.Instance.SelectedBody) &&
-            SceneController.Instance.SelectedMapType != null)
+        if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
         {
             BodyDropdown.value = SceneController.Instance.SelectedBody;
+        }
+        
+        if (SceneController.Instance.SelectedMapType != null)
+        {
             MapTypeDropdown.value = SceneController.Instance.SelectedMapType.ToString();
             OnSelectionChanged(null);
         }
@@ -106,12 +110,15 @@ public class MainGuiController : MonoBehaviour
             return;
         
         var mapType = Enum.Parse<MapType>(MapTypeDropdown.value);
+        SceneController.Instance.SelectedMapType = mapType;
 
         // Planetary Overlay
         PlanetaryOverlay.SetEnabled(_isOverlayEligible);
         // if Planetary Overlay is already toggled, change the map type
         if (PlanetaryOverlay.value)
+        {
             OverlayManager.Instance.DrawOverlay(mapType);
+        }
         
         if (BodyDropdown.value == _BODY_INITIAL_VALUE)
             return;
@@ -139,7 +146,6 @@ public class MainGuiController : MonoBehaviour
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
 
         SceneController.Instance.SelectedBody = body;
-        SceneController.Instance.SelectedMapType = mapType;
     }
 
     private void UpdatePercentageComplete(float percent)
@@ -157,15 +163,16 @@ public class MainGuiController : MonoBehaviour
         _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
     }
     
-    private void ToggleOverlay(ChangeEvent<bool> evt)
+    private void ToggleOverlay(bool newState)
     {
         if (MapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
         
         bool isSuccessful;
-        if (evt.newValue)
+        if (newState)
         {
-            isSuccessful = OverlayManager.Instance.DrawOverlay(Enum.Parse<MapType>(MapTypeDropdown.value));
+            var mapType = Enum.Parse<MapType>(MapTypeDropdown.value);
+            isSuccessful = OverlayManager.Instance.DrawOverlay(mapType);
         }
         else
         {
@@ -174,7 +181,7 @@ public class MainGuiController : MonoBehaviour
 
         if (!isSuccessful)
         {
-            PlanetaryOverlay.SetValueWithoutNotify(evt.previousValue);
+            PlanetaryOverlay.SetValueWithoutNotify(!newState);
         }
     }
     
