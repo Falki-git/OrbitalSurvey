@@ -1,7 +1,6 @@
 ﻿/*
  * 
- * TODO:
- * - Map scene overlay 
+ * TODO: 
  * - clean up warnings
  * - hide bodies with no data from the dropdown
  * 
@@ -41,5 +40,6 @@
  * - add EC usage
  * - update name: "I Hope You Brought Batteries"
  * - persist window position in save game data
+ * - Map scene overlay 
  * 
  */
