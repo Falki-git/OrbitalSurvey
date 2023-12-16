@@ -59,6 +59,7 @@ public class MainGuiController : MonoBehaviour
         PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
         
         BuildBodyDropdown();
+        Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
         BuildMapTypeDropdown();
 
         var staticBackground = AssetManager.GetAsset<Texture2D>(
@@ -93,8 +94,13 @@ public class MainGuiController : MonoBehaviour
     private void BuildBodyDropdown()
     {
         BodyDropdown.value = _BODY_INITIAL_VALUE;
-        BodyDropdown.choices = Core.Instance.CelestialDataDictionary.Keys.ToList();
+        PopulateBodyChoices(Core.Instance.GetBodiesContainingData());
         BodyDropdown.RegisterValueChangedCallback(OnSelectionChanged);
+    }
+
+    private void PopulateBodyChoices(IEnumerable<string> bodiesWithData)
+    {
+        BodyDropdown.choices = bodiesWithData.ToList();
     }
 
     private void BuildMapTypeDropdown()

@@ -1,8 +1,7 @@
 ﻿/*
  * 
- * TODO: 
- * - clean up warnings
- * - hide bodies with no data from the dropdown
+ * TODO:
+ * - optimize analytic scanning further
  * 
  * TODO LONG-TERM: 
  * - make Settings adjustable in mod settings
@@ -41,5 +40,7 @@
  * - update name: "I Hope You Brought Batteries"
  * - persist window position in save game data
  * - Map scene overlay 
+ * - clean up warnings
+ * - hide bodies with no data from the dropdown
  * 
  */

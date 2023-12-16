@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OrbitalSurvey.Managers;
+using UnityEngine;
 using OrbitalSurvey.Utilities;
 
 namespace OrbitalSurvey.Models;
@@ -24,33 +25,23 @@ public class MapData
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
 
     public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
-
     public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
 
     public bool HasData
     {
-        get
+        get => _hasData;
+        set
         {
-            var trueFound = false;
-
-            for (int i = 0; i < DiscoveredPixels.GetLength(0); i++)
+            if (value != _hasData)
             {
-                for (int j = 0; j < DiscoveredPixels.GetLength(1); j++)
-                {
-                    if (DiscoveredPixels[i, j])
-                    {
-                        trueFound = true;
-                        break;
-                    }
-                }
-
-                if (trueFound) break;
+                _hasData = value;
+                Core.Instance.InvokeOnMapHasDataValueChanged();
             }
-
-            return trueFound;
         }
     }
     
+    private bool _hasData;
+
     public void MarkAsScanned(int x, int y, int scanningRadius)
     {
         int newlyDiscoveredPixelCount = 0;
@@ -105,6 +96,7 @@ public class MapData
         if (newlyDiscoveredPixelCount > 0)
         {
             DiscoveredPixelsCount += newlyDiscoveredPixelCount;
+            HasData = true;
             OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
         }
 
@@ -115,6 +107,7 @@ public class MapData
     {
         Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
         DiscoveredPixelsCount = 0;
+        HasData = false;
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
     }
@@ -139,6 +132,7 @@ public class MapData
         {
             // map is partially scanned, update the map accordingly
             this.IsFullyScanned = false;
+            this.HasData = true;
             DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels, out DiscoveredPixelsCount);
             UpdateCurrentMapAsPerDiscoveredPixels();    
         }
@@ -193,6 +187,7 @@ public class MapData
     private void SetAsFullyScanned()
     {
         this.IsFullyScanned = true;
+        this.HasData = true;
         this.DiscoveredPixelsCount = TotalPixelCount;
         Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();

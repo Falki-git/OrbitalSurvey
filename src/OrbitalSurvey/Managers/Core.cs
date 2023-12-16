@@ -103,5 +103,25 @@ public class Core : MonoBehaviour
     {
         CelestialDataDictionary[body].ClearMap(mapType);
     }
+
+    public IEnumerable<string> GetBodiesContainingData()
+    {
+        return CelestialDataDictionary
+            .Where(entry => entry.Value.ContainsData)
+            .Select(entry => entry.Key);
+    }
+    
+    
+    public delegate void MapHasDataValueChanged(IEnumerable<string> bodiesWithData);
+    public event MapHasDataValueChanged OnMapHasDataValueChanged;
+
+    /// <summary>
+    /// OnMapHasDataValueChanged is triggered when 'HasData' property of a map is changed.
+    /// I.e. when a previously unexplored Body/Map now receives data after scanning begins.
+    /// </summary>
+    public void InvokeOnMapHasDataValueChanged()
+    {
+        OnMapHasDataValueChanged?.Invoke(GetBodiesContainingData());
+    }
 }
 

@@ -5,7 +5,5 @@ namespace OrbitalSurvey.Models;
 
 public class OrbitalSurveyOverlay : IPQSOverlay
 {
-    
     public Material OverlayMaterial { get; set; }
-    
 }
