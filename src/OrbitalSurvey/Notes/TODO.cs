@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - optimize analytic scanning further
+ * - add configurable settings
  * 
  * TODO LONG-TERM: 
  * - make Settings adjustable in mod settings
@@ -42,5 +42,6 @@
  * - Map scene overlay 
  * - clean up warnings
  * - hide bodies with no data from the dropdown
+ * - optimize analytic scanning further
  * 
  */
