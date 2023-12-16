@@ -31,7 +31,6 @@ public class OverlayManager
     private Transform _celestialBody;
     private Texture2D _allBlack;
     private Texture _oceanTextureBackup;
-    private GameObject _map3dBody;
     
     // original Map3d textures are stored here for when overlays will be turned off
     private Dictionary<string, Texture> _textureBackup = new();

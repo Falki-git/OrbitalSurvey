@@ -2,6 +2,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using KSP.UI.Binding;
+using OrbitalSurvey.Debug;
 using SpaceWarp;
 using SpaceWarp.API.Assets;
 using SpaceWarp.API.Mods;
@@ -66,7 +67,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
 
         MessageListener.Instance.SubscribeToMessages();
         
-        DEBUG_UI.Instance.InitializeStyles();
+        DebugUI.Instance.InitializeStyles();
 
         AssetUtility = gameObject.AddComponent<AssetUtility>();
         
@@ -77,8 +78,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     private void Update()
     {
         if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.O))
-            DEBUG_UI.Instance.IsDebugWindowOpen = !DEBUG_UI.Instance.IsDebugWindowOpen;
+            DebugUI.Instance.IsDebugWindowOpen = !DebugUI.Instance.IsDebugWindowOpen;
     }
     
-    private void OnGUI() => DEBUG_UI.Instance.OnGUI();
+    private void OnGUI() => DebugUI.Instance.OnGUI();
 }

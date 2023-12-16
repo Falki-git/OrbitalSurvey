@@ -1,14 +1,16 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
 using KSP.Messages;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 namespace OrbitalSurvey.Managers;
 
 public class MessageListener
 {
-    private readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MessageListener");
+    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MessageListener");
     private static MessageListener _instance;
     public MessageCenter MessageCenter => GameManager.Instance.Game.Messages;
 
@@ -56,7 +58,7 @@ public class MessageListener
             Core.Instance.InitializeCelestialData();
         }
         
-        DEBUG_UI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
+        DebugUI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
     }
     
     private void OnGameStateChangedMessage(MessageCenterMessage obj)
@@ -84,7 +86,7 @@ public class MessageListener
     
     private void OnMapCelestialBodyAddedMessage(MessageCenterMessage obj)
     {
-        string bodyName = (obj as MapCelestialBodyAddedMessage).bodyData.Data.bodyName;
+        var bodyName = ((MapCelestialBodyAddedMessage)obj).bodyData.Data.bodyName;
         OverlayManager.Instance.DrawMap3dOverlayOnMapCelestialBodyAddedMessage(bodyName);
     }
 }

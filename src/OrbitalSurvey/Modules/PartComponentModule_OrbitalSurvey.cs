@@ -2,6 +2,7 @@
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.ResourceSystem;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using Logger = BepInEx.Logging.Logger;
@@ -64,7 +65,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-            var scanningCone = DEBUG_UI.Instance.DebugFovEnabled ?
+            var scanningCone = DebugUI.Instance.DebugFovEnabled ?
                 _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue() : _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
             
             // _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
@@ -80,10 +81,10 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
 
             // FOR DEBUGGING PURPOSES
-            if (DEBUG_UI.Instance.BufferAnalyticsScan)
+            if (DebugUI.Instance.BufferAnalyticsScan)
             {
-                DebuggingRetroactiveScanning(double.Parse(DEBUG_UI.Instance.UT));
-                DEBUG_UI.Instance.BufferAnalyticsScan = false;
+                DebuggingRetroactiveScanning(double.Parse(DebugUI.Instance.UT));
+                DebugUI.Instance.BufferAnalyticsScan = false;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI;
@@ -198,13 +199,13 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void PerformDebugChecks()
     {
-        if (DEBUG_UI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
+        if (DebugUI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
         {
             _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, true);
             _isDebugFovEnabled = true;
         }
         
-        if (!DEBUG_UI.Instance.DebugFovEnabled && _isDebugFovEnabled)
+        if (!DebugUI.Instance.DebugFovEnabled && _isDebugFovEnabled)
         {
             _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
             _isDebugFovEnabled = false;
@@ -228,7 +229,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     }
     
     // -
-    public void OnFixedUpdate(float deltaTime)
+    public new void OnFixedUpdate(float deltaTime)
     {
         _LOGGER.LogDebug("OnFixedUpdate triggered.");
     }
@@ -268,8 +269,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     public override string GetModuleDisplayName() => "This is GetModuleDisplayName()";
     
+    /*
     private ModuleAction _testAction;
     private ModuleProperty<string> _moduleProperty;
+    */
     
     private void TestAction()
     {
