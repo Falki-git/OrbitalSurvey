@@ -90,11 +90,6 @@ public class Core : MonoBehaviour
             return;
         
         var celestialData = CelestialDataDictionary[body];
-        if (celestialData == null)
-        {
-            _LOGGER.LogError($"Error retrieving CelestialData while executing scan, for body {body}.");
-            return;
-        }
         
         celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone);
     }
