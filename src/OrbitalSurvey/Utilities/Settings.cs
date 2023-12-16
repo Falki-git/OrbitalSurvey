@@ -6,9 +6,9 @@ public static class Settings
 {
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public const double TIME_BETWEEN_SCANS = 1f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_LOW = 8f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_MID = 20f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_HIGH = 50f;
+    public const double TIME_BETWEEN_RETROACTIVE_SCANS_LOW = 2f; //8f;
+    public const double TIME_BETWEEN_RETROACTIVE_SCANS_MID = 3f; //20f;
+    public const double TIME_BETWEEN_RETROACTIVE_SCANS_HIGH = 4f; //50f;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
 

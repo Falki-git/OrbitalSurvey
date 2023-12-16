@@ -18,6 +18,7 @@ public class MapData
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
+    public List<(int, int)> BufferedDiscoveredPixels = new();
     public bool IsFullyScanned { get; set; }
 
     public int DiscoveredPixelsCount;
@@ -42,7 +43,7 @@ public class MapData
     
     private bool _hasData;
 
-    public void MarkAsScanned(int x, int y, int scanningRadius)
+    public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning)
     {
         int newlyDiscoveredPixelCount = 0;
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
@@ -79,7 +80,18 @@ public class MapData
 
                 if (DiscoveredPixels[xPixel, j] == false)
                 {
-                    CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
+                    // If it's retroactive scanning, we'll buffer the newly discovered pixels until a full 
+                    // retroactive scan is complete. Only then we'll update the texture.
+                    // This is done to increase performance
+                    if (isRetroActiveScanning)
+                    {
+                        BufferedDiscoveredPixels.Add((xPixel, j));
+                    }
+                    else
+                    {
+                        CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));    
+                    }
+                    
                     DiscoveredPixels[xPixel, j] = true;
                     newlyDiscoveredPixelCount++;
 
@@ -100,7 +112,23 @@ public class MapData
             OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
         }
 
-        CurrentMap.Apply();
+        // Skip applying new pixels if it's a retroactive scan (will be applied later)
+        if (!isRetroActiveScanning)
+        {
+            // If there are buffered pixels after retroactive scanning, paint them now
+            if (BufferedDiscoveredPixels.Count > 0)
+            {
+                foreach (var pixel in BufferedDiscoveredPixels)
+                {
+                    CurrentMap.SetPixel(pixel.Item1, pixel.Item2,
+                        ScannedMap.GetPixel(pixel.Item1, pixel.Item2));
+                }
+                
+                BufferedDiscoveredPixels.Clear();
+            }
+            
+            CurrentMap.Apply();
+        }
     }
 
     public void ClearMap()

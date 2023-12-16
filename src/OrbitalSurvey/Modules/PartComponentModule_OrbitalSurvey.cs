@@ -56,11 +56,12 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
             _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
         {
-            LastScanTime = universalTime;
-            
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
+            {
+                LastScanTime = universalTime;
                 return;
+            }
             
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
@@ -79,6 +80,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var latitude = vessel.Latitude;
             
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            
+            LastScanTime = universalTime;
 
             // FOR DEBUGGING PURPOSES
             if (DebugUI.Instance.BufferAnalyticsScan)
@@ -100,11 +103,10 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         // we'll iterate through each "time between scans" from the last scan time until we're caught up to the present
         while (_timeSinceLastScan > retroactiveTimeBetweenScans)
         {
-                
             OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + retroactiveTimeBetweenScans,
                 out latitude, out longitude, out altitude);
         
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone, true);
             LastScanTime += retroactiveTimeBetweenScans;
         }
     }

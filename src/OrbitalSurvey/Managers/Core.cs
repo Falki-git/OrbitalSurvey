@@ -83,7 +83,7 @@ public class Core : MonoBehaviour
             SaveManager.Instance.LoadData();
     }
 
-    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone)
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning = false)
     {
         // Sometimes, load data can be done before the textures are initialized
         if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
@@ -91,7 +91,7 @@ public class Core : MonoBehaviour
         
         var celestialData = CelestialDataDictionary[body];
         
-        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone);
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone, isRetroActiveScanning);
     }
 
     public void ClearMap(string body, MapType mapType)
@@ -105,7 +105,6 @@ public class Core : MonoBehaviour
             .Where(entry => entry.Value.ContainsData)
             .Select(entry => entry.Key);
     }
-    
     
     public delegate void MapHasDataValueChanged(IEnumerable<string> bodiesWithData);
     public event MapHasDataValueChanged OnMapHasDataValueChanged;

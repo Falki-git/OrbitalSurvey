@@ -43,7 +43,7 @@ public class CelestialData
     public double MinimumScanningAltitude => AtmosphereDepth; // TODO
     public double MaximumScanningAltitude => Body.sphereOfInfluence; // TODO
     
-    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, float scanningCone)
+    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning)
     {
         var map = Maps[mapType];
 
@@ -61,7 +61,7 @@ public class CelestialData
         var (textureX, textureY) =
             ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(longitude, latitude,  Settings.ActiveResolution, Settings.ActiveResolution);
         
-        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture);
+        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture, isRetroActiveScanning);
     }
 
     public void ClearMap(MapType mapType)
