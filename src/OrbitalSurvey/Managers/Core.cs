@@ -86,7 +86,7 @@ public class Core : MonoBehaviour
     public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone)
     {
         // Sometimes, load data can be done before the textures are initialized
-        if (!MapsInitialized)
+        if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
             return;
         
         var celestialData = CelestialDataDictionary[body];
