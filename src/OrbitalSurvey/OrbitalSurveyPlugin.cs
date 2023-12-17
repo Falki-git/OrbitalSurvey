@@ -64,6 +64,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             AssetManager.GetAsset<Texture2D>($"{Info.Metadata.GUID}/images/icon.png"),
             SceneController.Instance.ToggleUI
         );
+        
+        Settings.Initialize();
 
         MessageListener.Instance.SubscribeToMessages();
         
