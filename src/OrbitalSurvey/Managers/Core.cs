@@ -101,9 +101,22 @@ public class Core : MonoBehaviour
 
     public IEnumerable<string> GetBodiesContainingData()
     {
-        return CelestialDataDictionary
+        var toReturn = CelestialDataDictionary
             .Where(entry => entry.Value.ContainsData)
-            .Select(entry => entry.Key);
+            .Select(entry => entry.Key)
+            .ToList();
+
+        // If nothing has been discovered so far, return the HomeWorld (Kerbin)
+        if (!toReturn.Any())
+        {
+            var homeWorld = GameManager.Instance.Game?.UniverseModel?
+                .GetAllCelestialBodies()
+                .Find(b => b.isHomeWorld).Name;
+
+            toReturn.Add(homeWorld);
+        }
+
+        return toReturn;
     }
     
     public delegate void MapHasDataValueChanged(IEnumerable<string> bodiesWithData);
