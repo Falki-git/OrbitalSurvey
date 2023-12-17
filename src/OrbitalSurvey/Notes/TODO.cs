@@ -1,10 +1,9 @@
 ﻿/*
  * 
  * TODO:
- * - add configurable settings
+ * n/a
  * 
  * TODO LONG-TERM: 
- * - make Settings adjustable in mod settings
  * - adjust FOV for large bodies
  * - larger FOV for larger commstrength 
  * - live position indicators and next/previous orbit
@@ -43,5 +42,6 @@
  * - clean up warnings
  * - hide bodies with no data from the dropdown
  * - optimize analytic scanning further
+ * - add configurable settings
  * 
  */
