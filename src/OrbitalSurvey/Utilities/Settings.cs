@@ -1,14 +1,19 @@
-﻿using OrbitalSurvey.Models;
+﻿using BepInEx.Configuration;
+using OrbitalSurvey.Models;
 
 namespace OrbitalSurvey.Utilities;
 
 public static class Settings
 {
+    public static OrbitalSurveyPlugin Plugin => OrbitalSurveyPlugin.Instance;
+
+    public static ConfigEntry<float> TimeBetweenScans;
+    public static ConfigEntry<int> TimeBetweenRetroactiveScansHigh;
+    public static ConfigEntry<int> TimeBetweenRetroactiveScansMid;
+    public static ConfigEntry<int> TimeBetweenRetroactiveScansLow;
+    public static ConfigEntry<Difficulty> Difficulty; // Not used
+    
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
-    public const double TIME_BETWEEN_SCANS = 1f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_LOW = 8f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_MID = 20f;
-    public const double TIME_BETWEEN_RETROACTIVE_SCANS_HIGH = 50f;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
 
@@ -49,4 +54,51 @@ public static class Settings
         { MapType.Visual, 1.0f },
         { MapType.Biome, 2.0f }
     };
+    
+    public static void Initialize()
+    {
+        TimeBetweenScans = Plugin.Config.Bind(
+            "General",
+            "Time between scans (in sec)",
+            1f,
+            new ConfigDescription(
+                "Time between scans.\n\n"
+                + "Increase the value for better performance, but at a cost for possibility of spotty scans.",
+                new AcceptableValueRange<float>(0.5f, 5f)
+            )
+        );
+        
+        TimeBetweenRetroactiveScansHigh = Plugin.Config.Bind(
+            "Time between retroactive scans during high warp",
+            "When performance is high (in sec)",
+            2,
+            new ConfigDescription(
+                "Time between scans when analytics scanning kicks in during high warp factors.\n\n"
+                + "Increase the value for better performance, but at a cost for possibility of spotty scans.",
+                new AcceptableValueRange<int>(2, 20)
+            )
+        );
+        
+        TimeBetweenRetroactiveScansMid = Plugin.Config.Bind(
+            "Time between retroactive scans during high warp",
+            "When performance is medium (in sec)",
+            5,
+            new ConfigDescription(
+                "Time between scans when analytics scanning kicks in during high warp factors.\n\n"
+                + "Increase the value for better performance, but at a cost for possibility of spotty scans.",
+                new AcceptableValueRange<int>(3, 50)
+            )
+        );
+        
+        TimeBetweenRetroactiveScansLow = Plugin.Config.Bind(
+            "Time between retroactive scans during high warp",
+            "When performance is low (in sec)",
+            10,
+            new ConfigDescription(
+                "Time between scans when analytics scanning kicks in during high warp factors.\n\n"
+                + "Increase the value for better performance, but at a cost for possibility of spotty scans.",
+                new AcceptableValueRange<int>(4, 80)
+            )
+        );
+    }
 }

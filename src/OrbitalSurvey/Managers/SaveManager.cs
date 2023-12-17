@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.SaveGameManager;
 
@@ -16,8 +17,6 @@ public class SaveManager
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.SaveManager");
 
-    
-
     public void Register()
     {
         ModSaves.RegisterSaveLoadGameData<SaveDataAdapter>(
@@ -31,6 +30,7 @@ public class SaveManager
     {
         _LOGGER.LogDebug("OnSave triggered.");
 
+        dataToSave.WindowPosition = SceneController.Instance.WindowPosition;
         dataToSave.SessionGuidString = Utility.SessionGuidString;
         dataToSave.Bodies.Clear();
 
@@ -124,7 +124,8 @@ public class SaveManager
                 }
             }
         }
-        
+
+        SceneController.Instance.WindowPosition = bufferedLoadData.WindowPosition;
         Core.Instance.SessionGuidString = bufferedLoadData.SessionGuidString;
 
         bufferedLoadData = null;

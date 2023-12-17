@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Sim.Definitions;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI;
@@ -61,15 +62,21 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
-        if (!Core.Instance.MapsInitialized)
-            return;
-        
-        if (!_dataOrbitalSurvey.EnabledToggle.GetValue())
+        if (!Core.Instance.MapsInitialized || !_dataOrbitalSurvey.EnabledToggle.GetValue())
             return;
         
         var mode = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
         var body = vessel.Model.mainBody.Name;
-        var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];
+        
+        // If Body doesn't exist in the dictionary (e.g. Kerbol), set to Idle and return;
+        if (!Core.Instance.CelestialDataDictionary.ContainsKey(body))
+        {
+            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
+            _dataOrbitalSurvey.PercentComplete.SetValue(0f);
+            return;
+        }
+        
+        var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];_dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
         
         var altitude = vessel.Model.AltitudeFromRadius;
         var state = ScanUtility.GetAltitudeState(mode, altitude);
@@ -198,13 +205,13 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void PerformDebugChecks()
     {
-        if (DEBUG_UI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
+        if (DebugUI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
         {
             _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, true);
             _isDebugFovEnabled = true;
         }
         
-        if (!DEBUG_UI.Instance.DebugFovEnabled && _isDebugFovEnabled)
+        if (!DebugUI.Instance.DebugFovEnabled && _isDebugFovEnabled)
         {
             _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
             _isDebugFovEnabled = false;
@@ -228,7 +235,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     }
     
     // -
-    public void OnFixedUpdate(float deltaTime)
+    public new void OnFixedUpdate(float deltaTime)
     {
         _LOGGER.LogDebug("OnFixedUpdate triggered.");
     }
@@ -268,8 +275,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     public override string GetModuleDisplayName() => "This is GetModuleDisplayName()";
     
+    /*
     private ModuleAction _testAction;
     private ModuleProperty<string> _moduleProperty;
+    */
     
     private void TestAction()
     {

@@ -104,6 +104,15 @@ MAP TEXTURE:
 var x = Map3D(Clone)/Map-Kerbin/Celestial.Kerbin.Scaled(Clone)
 x.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", myTexture)
 
+-> Fluffy Clouds(Scaled) -> MeshRenderer -> enable = false
+-> Atmoshpere.Inner -> MeshRenderer -> enable = false
+-> Atmoshpere.Outer -> MeshRenderer -> enable = false
+-> Wispy Clouds(Scaled) -> MeshRenderer -> enable = false
+-> Thick Cumulus Clouds(Scaled) -> MeshRenderer -> enable = false
+-> Cloud(Scaled) -> MeshRenderer -> enable = false
+
+
+
 *** min max
 RADAR Altimetry (LOW): min 5 km, max 500 km, FOV 5°, 0.1 EC/s
 RADAR SAR (HI): min 5 km, best 750 km, max 800 km, FOV 2°, 1 EC/s

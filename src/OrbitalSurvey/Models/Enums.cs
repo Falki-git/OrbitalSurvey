@@ -23,3 +23,10 @@ public enum State
     AboveIdeal,
     AboveMax,
 }
+
+public enum Difficulty
+{
+    EASY,
+    NORMAL,
+    HARD
+}

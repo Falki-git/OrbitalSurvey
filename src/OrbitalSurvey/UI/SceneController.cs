@@ -11,8 +11,19 @@ public class SceneController
     public static SceneController Instance { get; } = new();
     public UIDocument MainGui { get; set; }
 
+    private readonly WindowOptions _windowOptions = new()
+    {
+        WindowId = "MainGui",
+        IsHidingEnabled = true,
+        MoveOptions = new MoveOptions
+        {
+            IsMovingEnabled = true,
+            CheckScreenBounds = true
+        }
+    };
+        
     public string SelectedBody;
-    public MapType SelectedMapType;
+    public MapType? SelectedMapType;
     public Vector3? WindowPosition;
     
     private bool _showMainGui;
@@ -22,15 +33,15 @@ public class SceneController
         set
         {
             _showMainGui = value;
-            MainGui = RebuildUi(MainGui, value, Uxmls.Instance.MainGui, "MainGui", typeof(MainGuiController));
+            MainGui = RebuildUi(MainGui, value, Uxmls.Instance.MainGui, typeof(MainGuiController));
         }
     }
     
-    private UIDocument RebuildUi(UIDocument uidocument, bool showWindow, VisualTreeAsset visualTree, string windowId, Type controllerType)
+    private UIDocument RebuildUi(UIDocument uidocument, bool showWindow, VisualTreeAsset visualTree, Type controllerType)
     {
         DestroyObject(uidocument);
         if (showWindow)
-            return BuildUi(visualTree, windowId, uidocument, controllerType);
+            return BuildUi(visualTree, uidocument, controllerType);
         else
             return null;
     }
@@ -42,9 +53,9 @@ public class SceneController
         GameObject.Destroy(document);
     }
 
-    private UIDocument BuildUi(VisualTreeAsset visualTree, string windowId, UIDocument uiDocument, Type controllerType)
+    private UIDocument BuildUi(VisualTreeAsset visualTree, UIDocument uiDocument, Type controllerType)
     {
-        uiDocument = Window.CreateFromUxml(visualTree, windowId, null, true);
+        uiDocument = Window.Create(_windowOptions, visualTree);
         uiDocument.gameObject.AddComponent(controllerType);
 
         // this can center the window, but we're not using it

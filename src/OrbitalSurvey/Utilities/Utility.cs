@@ -18,27 +18,6 @@ public static class Utility
         return toReturn;
     }
 
-    // Define a recursive function to search for an object by name
-    public static Transform FindObjectByNameRecursively(Transform parent, string name)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child;
-            }
-
-            // Recursively search in the child's children
-            Transform found = FindObjectByNameRecursively(child, name);
-            if (found != null)
-            {
-                return found;
-            }
-        }
-
-        return null; // Return null if the object was not found in the hierarchy
-    }
-
     public static void CopyFieldAndPropertyDataFromSourceToTargetObject(object source, object target)
     {
         foreach (FieldInfo field in source.GetType().GetFields())

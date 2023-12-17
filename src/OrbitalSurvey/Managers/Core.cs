@@ -83,25 +83,52 @@ public class Core : MonoBehaviour
             SaveManager.Instance.LoadData();
     }
 
-    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone)
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning = false)
     {
         // Sometimes, load data can be done before the textures are initialized
-        if (!MapsInitialized)
+        if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
             return;
         
         var celestialData = CelestialDataDictionary[body];
-        if (celestialData == null)
-        {
-            _LOGGER.LogError($"Error retrieving CelestialData while executing scan, for body {body}.");
-            return;
-        }
         
-        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone);
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone, isRetroActiveScanning);
     }
 
     public void ClearMap(string body, MapType mapType)
     {
         CelestialDataDictionary[body].ClearMap(mapType);
+    }
+
+    public IEnumerable<string> GetBodiesContainingData()
+    {
+        var toReturn = CelestialDataDictionary
+            .Where(entry => entry.Value.ContainsData)
+            .Select(entry => entry.Key)
+            .ToList();
+
+        // If nothing has been discovered so far, return the HomeWorld (Kerbin)
+        if (!toReturn.Any())
+        {
+            var homeWorld = GameManager.Instance.Game?.UniverseModel?
+                .GetAllCelestialBodies()
+                .Find(b => b.isHomeWorld).Name;
+
+            toReturn.Add(homeWorld);
+        }
+
+        return toReturn;
+    }
+    
+    public delegate void MapHasDataValueChanged(IEnumerable<string> bodiesWithData);
+    public event MapHasDataValueChanged OnMapHasDataValueChanged;
+
+    /// <summary>
+    /// OnMapHasDataValueChanged is triggered when 'HasData' property of a map is changed.
+    /// I.e. when a previously unexplored Body/Map now receives data after scanning begins.
+    /// </summary>
+    public void InvokeOnMapHasDataValueChanged()
+    {
+        OnMapHasDataValueChanged?.Invoke(GetBodiesContainingData());
     }
 }
 

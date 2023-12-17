@@ -2,6 +2,7 @@
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.ResourceSystem;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using Logger = BepInEx.Logging.Logger;
@@ -53,18 +54,19 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     private void DoScan(double universalTime)
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-            _timeSinceLastScan >= Settings.TIME_BETWEEN_SCANS)
+            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value)
         {
-            LastScanTime = universalTime;
-            
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
+            {
+                LastScanTime = universalTime;
                 return;
+            }
             
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-            var scanningCone = DEBUG_UI.Instance.DebugFovEnabled ?
+            var scanningCone = DebugUI.Instance.DebugFovEnabled ?
                 _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue() : _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
             
             // _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
@@ -78,12 +80,14 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var latitude = vessel.Latitude;
             
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            
+            LastScanTime = universalTime;
 
             // FOR DEBUGGING PURPOSES
-            if (DEBUG_UI.Instance.BufferAnalyticsScan)
+            if (DebugUI.Instance.BufferAnalyticsScan)
             {
-                DebuggingRetroactiveScanning(double.Parse(DEBUG_UI.Instance.UT));
-                DEBUG_UI.Instance.BufferAnalyticsScan = false;
+                DebuggingRetroactiveScanning(double.Parse(DebugUI.Instance.UT));
+                DebugUI.Instance.BufferAnalyticsScan = false;
             }
         }
     }
@@ -99,11 +103,10 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         // we'll iterate through each "time between scans" from the last scan time until we're caught up to the present
         while (_timeSinceLastScan > retroactiveTimeBetweenScans)
         {
-                
             OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + retroactiveTimeBetweenScans,
                 out latitude, out longitude, out altitude);
         
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone, true);
             LastScanTime += retroactiveTimeBetweenScans;
         }
     }

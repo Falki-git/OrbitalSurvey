@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OrbitalSurvey.Managers;
+using UnityEngine;
 using OrbitalSurvey.Utilities;
 
 namespace OrbitalSurvey.Models;
@@ -17,6 +18,7 @@ public class MapData
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
+    public List<(int, int)> BufferedDiscoveredPixels = new();
     public bool IsFullyScanned { get; set; }
 
     public int DiscoveredPixelsCount;
@@ -24,34 +26,24 @@ public class MapData
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
 
     public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
-
     public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
 
     public bool HasData
     {
-        get
+        get => _hasData;
+        set
         {
-            var trueFound = false;
-
-            for (int i = 0; i < DiscoveredPixels.GetLength(0); i++)
+            if (value != _hasData)
             {
-                for (int j = 0; j < DiscoveredPixels.GetLength(1); j++)
-                {
-                    if (DiscoveredPixels[i, j])
-                    {
-                        trueFound = true;
-                        break;
-                    }
-                }
-
-                if (trueFound) break;
+                _hasData = value;
+                Core.Instance.InvokeOnMapHasDataValueChanged();
             }
-
-            return trueFound;
         }
     }
     
-    public void MarkAsScanned(int x, int y, int scanningRadius)
+    private bool _hasData;
+
+    public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning)
     {
         int newlyDiscoveredPixelCount = 0;
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
@@ -88,7 +80,18 @@ public class MapData
 
                 if (DiscoveredPixels[xPixel, j] == false)
                 {
-                    CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));
+                    // If it's retroactive scanning, we'll buffer the newly discovered pixels until a full 
+                    // retroactive scan is complete. Only then we'll update the texture.
+                    // This is done to increase performance
+                    if (isRetroActiveScanning)
+                    {
+                        BufferedDiscoveredPixels.Add((xPixel, j));
+                    }
+                    else
+                    {
+                        CurrentMap.SetPixel(xPixel, j, ScannedMap.GetPixel(xPixel, j));    
+                    }
+                    
                     DiscoveredPixels[xPixel, j] = true;
                     newlyDiscoveredPixelCount++;
 
@@ -105,16 +108,34 @@ public class MapData
         if (newlyDiscoveredPixelCount > 0)
         {
             DiscoveredPixelsCount += newlyDiscoveredPixelCount;
+            HasData = true;
             OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
         }
 
-        CurrentMap.Apply();
+        // Skip applying new pixels if it's a retroactive scan (will be applied later)
+        if (!isRetroActiveScanning)
+        {
+            // If there are buffered pixels after retroactive scanning, paint them now
+            if (BufferedDiscoveredPixels.Count > 0)
+            {
+                foreach (var pixel in BufferedDiscoveredPixels)
+                {
+                    CurrentMap.SetPixel(pixel.Item1, pixel.Item2,
+                        ScannedMap.GetPixel(pixel.Item1, pixel.Item2));
+                }
+                
+                BufferedDiscoveredPixels.Clear();
+            }
+            
+            CurrentMap.Apply();
+        }
     }
 
     public void ClearMap()
     {
         Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
         DiscoveredPixelsCount = 0;
+        HasData = false;
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
     }
@@ -139,6 +160,7 @@ public class MapData
         {
             // map is partially scanned, update the map accordingly
             this.IsFullyScanned = false;
+            this.HasData = true;
             DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels, out DiscoveredPixelsCount);
             UpdateCurrentMapAsPerDiscoveredPixels();    
         }
@@ -193,6 +215,7 @@ public class MapData
     private void SetAsFullyScanned()
     {
         this.IsFullyScanned = true;
+        this.HasData = true;
         this.DiscoveredPixelsCount = TotalPixelCount;
         Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();

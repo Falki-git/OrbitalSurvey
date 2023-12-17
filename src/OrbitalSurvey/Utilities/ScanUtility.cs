@@ -149,12 +149,12 @@ public static class ScanUtility
     public static double GetRetroactiveTimeBetweenScans(double timeSinceLastScan)
     {
         if (timeSinceLastScan > 1000)
-            return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_HIGH;
+            return (double)Settings.TimeBetweenRetroactiveScansLow.Value;
         
         if (timeSinceLastScan > 100)
-            return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_MID;
+            return (double)Settings.TimeBetweenRetroactiveScansMid.Value;
 
-        return Settings.TIME_BETWEEN_RETROACTIVE_SCANS_LOW;
+        return (double)Settings.TimeBetweenRetroactiveScansHigh.Value;
     }
 
     /// <summary>

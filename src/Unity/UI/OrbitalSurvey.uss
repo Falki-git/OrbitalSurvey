@@ -141,11 +141,12 @@
 }
 
 .body__dropdown {
-    width: 35%;
+    width: 30%;
 }
 
 .map-type__dropdown {
-    width: 35%;
+    width: 30%;
+    margin-left: 20px;
 }
 
 .unity-popup-field__label {
@@ -188,12 +189,8 @@
     border-right-color: var(--yellowish-translucent);
     border-top-color: var(--yellowish-translucent);
     border-bottom-color: var(--yellowish-translucent);
-    width: 155px;
+    width: 100%;
     height: 100%;
-    max-height: 20px;
-    min-height: 20px;
-    max-width: 100px;
-    min-width: 100px;
     font-size: 12px;
 }
 
@@ -216,6 +213,7 @@
 .percent-complete {
     width: 40px;
     font-size: 12px;
+    margin-left: 20px;
 }
 
 .close-button__container {

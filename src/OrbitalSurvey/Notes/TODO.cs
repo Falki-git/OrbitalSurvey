@@ -1,11 +1,9 @@
 ﻿/*
  * 
  * TODO:
- * - Map scene overlay 
+ * n/a
  * 
- * 
- * TODO LONG-TERM:
- * - make Settings adjustable in mod settings
+ * TODO LONG-TERM: 
  * - adjust FOV for large bodies
  * - larger FOV for larger commstrength 
  * - live position indicators and next/previous orbit
@@ -39,5 +37,11 @@
  * - change EVE visual texture to the mesh variant
  * - add EC usage
  * - update name: "I Hope You Brought Batteries"
+ * - persist window position in save game data
+ * - Map scene overlay 
+ * - clean up warnings
+ * - hide bodies with no data from the dropdown
+ * - optimize analytic scanning further
+ * - add configurable settings
  * 
  */
