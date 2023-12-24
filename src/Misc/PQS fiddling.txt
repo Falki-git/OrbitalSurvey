@@ -125,7 +125,3 @@ RADAR Altimetry Sensor      RadarLo / Slope 5	5000 m	5000 m	500 km
 [Multispectral Sensor][5c]	Biome ANOM	    4	5000 m	250 km	500 km
 [Been There Done That®][5d]	Anomaly	        1	0 m	    0 m	    2 km
 [MapTraq® (deprecated)][5e]	None	        N/A	N/A	    N/A	    N/A
-
-
-
-
