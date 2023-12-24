@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using JetBrains.Annotations;
+using KSP.Game;
 using KSP.UI.Binding;
 using OrbitalSurvey.Debug;
 using SpaceWarp;
@@ -75,6 +76,10 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         
         // register for save/load events 
         SaveManager.Instance.Register();
+        
+        // register for EC background processing
+        SpaceWarp.API.Parts.PartComponentModuleOverride
+            .RegisterModuleForBackgroundResourceProcessing<OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
     }
 
     private void Update()
