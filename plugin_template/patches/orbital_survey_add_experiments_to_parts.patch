@@ -1,0 +1,43 @@
+:parts #antenna* {
+    +Module_ScienceExperiment {
+        +Data_ScienceExperiment {
+            ExperimentsStandings: [];
+            LastKnownValidSituation: {
+                CelestialBodyScalar: 0.0,
+                ScienceRegionScalar: 0.0,
+                SituationScalar: 0.0,
+                ResearchLocation: null
+            };
+            Experiments: [
+                {
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping",
+                    CrewRequired: 0,
+                    TimeToComplete: 30.0,
+                    ContextualExperiment: true,
+                    ResourcesCost: [
+                        //{
+                        //    Rate: 1.0,
+                        //    ResourceName: "ElectricCharge",
+                        //    AcceptanceThreshold: 30.0
+                        //}
+                    ],
+                    DenyInterruption: false,
+                    ExperimentUsesResources: false, //true
+                    DeployedBoolAnimatorParamName: "",
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                }
+            ];
+            NotifyOnCompletion: false;
+            ResourceThresholdMultiplier: 0.25;            
+        }
+    }
+    PAMModuleVisualsOverride: +[
+        {
+            PartComponentModuleName: "PartComponentModule_ScienceExperiment",
+            ModuleDisplayName: "OrbitalSurvey/VisualMapping/DisplayName",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}

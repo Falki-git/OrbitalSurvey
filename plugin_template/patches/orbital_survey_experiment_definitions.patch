@@ -1,0 +1,28 @@
+@new("orbital_survey_visual_mapping")
+:experiments {
+    DisplayName: "OrbitalSurvey/VisualMapping/DisplayName";
+    DisplayRequirements: "OrbitalSurvey/VisualMapping/DisplayRequirements";
+    ExperimentType: "Both";
+    //DataFlavorDescriptions: "Data flavor descriptions text";
+    //SampleFlavorDescriptions: "Sample flavor descriptions text";
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName";
+    SampleReportDisplayName: "OrbitalSurvey/VisualMapping/SampleReportDisplayName";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        },
+        {
+            BodyName: "",
+            ScienceSituation: "LowOrbit",
+            RequiresRegion: true,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    SampleValue: 14;
+    TransmissionSize: 150;
+    RequiresEVA: false;
+}

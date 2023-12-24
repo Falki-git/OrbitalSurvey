@@ -30,3 +30,8 @@ OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
+
+OrbitalSurvey/VisualMapping/DisplayName,Text,,Visual Mapping
+OrbitalSurvey/VisualMapping/DisplayRequirements,Text,,Display requirements text
+OrbitalSurvey/VisualMapping/DataReportDisplayName,Text,,Data Report Display Name text
+OrbitalSurvey/VisualMapping/SampleReportDisplayName,Text,,Sample Report Display Name text
