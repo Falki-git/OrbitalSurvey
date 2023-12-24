@@ -75,6 +75,13 @@ public class AssetUtility : MonoBehaviour
         { "StaticBackground", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_ui/ui/orbital_survey/static_background.jpeg"}
     };
 
+    public readonly Dictionary<string, string> UndiscoveredMapsAddresses = new()
+    {
+        { "Kerbin_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/hiddenmaps/kerbin_undiscovered_1024.png" },
+        { "Mun_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/hiddenmaps/mun_undiscovered_1024.png" },
+        { "Minmus_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/hiddenmaps/minmus_undiscovered_1024.png" }
+    };
+
     public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
     
     private static readonly ManualLogSource _LOGGER = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.AssetUtility");

@@ -206,8 +206,8 @@ public class OverlayManager
     /// </summary>
     public async Task DrawMap3dOverlayOnMapCelestialBodyAddedMessage(string bodyName)
     {
-        if (!OverlayActive)
-            return;
+        // if (!OverlayActive)
+        //     return;
         
         if (!Core.Instance.CelestialDataDictionary.ContainsKey(bodyName))
         {
@@ -215,8 +215,9 @@ public class OverlayManager
             return;
         }
 
-        var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName].Maps[OverlayType].CurrentMap;
-
+        //var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName].Maps[OverlayType].CurrentMap;
+        var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName].Maps[MapType.Visual].UndiscoveredMapSceneMap;
+        
         // wait for the Map3d to receive its clouds and atmosphere 
         await Task.Delay(100);
         

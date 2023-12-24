@@ -72,6 +72,21 @@ public class Core : MonoBehaviour
                 _LOGGER.LogError($"Error loading biome map for {key}.\n" + ex);
             }
             
+            // Undiscovered Map scene map
+            try
+            {
+                celesData.Maps[MapType.Visual].UndiscoveredMapSceneMap =
+                    AssetManager.GetAsset<Texture2D>(
+                        OrbitalSurveyPlugin.Instance.AssetUtility.UndiscoveredMapsAddresses[$"{key}_{Settings.ActiveResolution}"]
+                    );
+                
+                _LOGGER.LogInfo($"Undiscovered Map scene map for {key} successfully initialized.");
+            }
+            catch (Exception ex)
+            {
+                _LOGGER.LogError($"Error loading undiscovered Map scene map for {key}.\n" + ex);
+            }
+            
             CelestialDataDictionary.Add(key, celesData);
             _LOGGER.LogInfo($"Initialized CelestialDataDictionary for {key}.");
         }

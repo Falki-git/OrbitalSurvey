@@ -17,6 +17,7 @@ public class MapData
     public Texture2D ScannedMap { get; set; }
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
+    public Texture2D UndiscoveredMapSceneMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
     public List<(int, int)> BufferedDiscoveredPixels = new();
     public bool IsFullyScanned { get; set; }
