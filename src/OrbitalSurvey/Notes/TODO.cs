@@ -1,7 +1,15 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - figure out how to remove PAM entries
+ *
+ * TODO NEAR-TERM:
+ * - Experiments for all map types, 25%, 50%, 75%, 100%
+ * - Region Map
+ * - Altimetry Map
+ * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
+ * - live position indicators
+ * - parts by -StanWildin
  * 
  * TODO LONG-TERM: 
  * - adjust FOV for large bodies
@@ -10,10 +18,13 @@
  * - scanning triangle in Map scene when active
  * - altimeter data?
  * - scanning parts
+ * - next/previous orbits
  * - buffering and transmitting scans
  * - buffer scans until transmitted
  * - see if clouds can be removed (requested by The Space Peacock)
- * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man) 
+ * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
+ * - adding waypoints
+ * - support for custom planet packs (packs will register their maps)
  *
  * TODO SCIENCE:
  * - transmit to get science
