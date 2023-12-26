@@ -10,7 +10,7 @@
             };
             Experiments: [
                 {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping",
+                    ExperimentDefinitionID: orbital_survey_visual_mapping,
                     CrewRequired: 0,
                     TimeToComplete: 30.0,
                     ContextualExperiment: true,
@@ -24,17 +24,17 @@
                     DenyInterruption: false,
                     ExperimentUsesResources: false, //true
                     DeployedBoolAnimatorParamName: "",
-                    CFXName: "fx_science",
-                    SFXEvent: "Invalid"
+                    CFXName: fx_science,
+                    SFXEvent: Invalid
                 }
             ];
             NotifyOnCompletion: false;
             ResourceThresholdMultiplier: 0.25;            
         }
     }
-    PAMModuleVisualsOverride: +[
+    PAMModuleVisualsOverride +: [
         {
-            PartComponentModuleName: "PartComponentModule_ScienceExperiment",
+            PartComponentModuleName: PartComponentModule_ScienceExperiment,
             ModuleDisplayName: "OrbitalSurvey/VisualMapping/DisplayName",
             ShowHeader: true,
             ShowFooter: true
