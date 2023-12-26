@@ -12,7 +12,7 @@ $minCommRange: 1000000000;
                     };
                 }
             }
-            PAMModuleVisualsOverride: +[
+            PAMModuleVisualsOverride +: [
                 {
                     PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
                     ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
