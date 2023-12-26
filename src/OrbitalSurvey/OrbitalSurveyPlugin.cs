@@ -80,6 +80,8 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         // register for EC background processing
         SpaceWarp.API.Parts.PartComponentModuleOverride
             .RegisterModuleForBackgroundResourceProcessing<OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
+        
+        Harmony.CreateAndPatchAll(typeof(Patches));
     }
 
     private void Update()
