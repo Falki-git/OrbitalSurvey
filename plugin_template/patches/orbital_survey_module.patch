@@ -7,14 +7,14 @@ $minCommRange: 1000000000;
                 +Data_OrbitalSurvey {
                     RequiredResource: {
                         Rate: 0.0, // set dynamically through settings
-                        ResourceName: "ElectricCharge",
+                        ResourceName: ElectricCharge,
                         AcceptanceThreshold: 0.1
                     };
                 }
             }
-            PAMModuleVisualsOverride: +[
+            PAMModuleVisualsOverride +: [
                 {
-                    PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+                    PartComponentModuleName: PartComponentModule_OrbitalSurvey,
                     ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
                     ShowHeader: true,
                     ShowFooter: true
