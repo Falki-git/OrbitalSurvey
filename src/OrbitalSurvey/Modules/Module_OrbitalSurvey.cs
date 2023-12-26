@@ -1,5 +1,7 @@
 ﻿using BepInEx.Logging;
+using KSP.Modules;
 using KSP.Sim.Definitions;
+using KSP.Sim.impl;
 using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
@@ -20,6 +22,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     protected Data_OrbitalSurvey _dataOrbitalSurvey;
 
     private ModuleAction _actionOpenGui;
+    private ModuleAction _triggerExperiment;
 
     private bool _isDebugFovEnabled;
 
@@ -35,7 +38,9 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         base.OnInitialize();
         
         _actionOpenGui = new ModuleAction(OnOpenMapClicked);
+        _triggerExperiment = new ModuleAction(OnTriggerExperiment);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
+        _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/TriggerExperiment", _triggerExperiment, 7);
 
         _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
 
@@ -47,9 +52,13 @@ public class Module_OrbitalSurvey : PartBehaviourModule
             var isEnabled = _dataOrbitalSurvey.EnabledToggle.GetValue();
         
             UpdateFlightPAMVisibility(isEnabled);
-        
+
             if (!isEnabled)
+            {
                 _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Disabled]);
+            }
+            
+            HideScienceExperimentPamProperties();    
         }
         else if (PartBackingMode == PartBackingModes.OAB)
         {
@@ -57,8 +66,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         }
         
         UpdateValues(_dataOrbitalSurvey.Mode.GetValue());
+
+        
     }
-    
+
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
@@ -144,6 +155,19 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         SceneController.Instance.ToggleUI(true);
     }
 
+    private void OnTriggerExperiment()
+    {
+        ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
+        PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
+
+        var experiment =
+            module.dataScienceExperiment.ExperimentStandings.Find(
+                e => e.ExperimentID.StartsWith("orbital_survey_visual_mapping"));
+        
+        experiment.CurrentExperimentState = ExperimentState.RUNNING;
+        experiment.ConditionMet = true;
+    }
+
     private void UpdateFlightPAMVisibility(bool state)
     {
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
@@ -156,6 +180,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
         _dataOrbitalSurvey.SetVisible(_actionOpenGui, state);
+        _dataOrbitalSurvey.SetVisible(_triggerExperiment, state);
     }
 
     private void UpdateOabPAMVisibility()
@@ -216,6 +241,17 @@ public class Module_OrbitalSurvey : PartBehaviourModule
             _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
             _isDebugFovEnabled = false;
         }
+    }
+    
+    private void HideScienceExperimentPamProperties()
+    {
+        ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
+        PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
+        
+        //_dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, true);
+
+        var data = module.dataScienceExperiment;
+        data.SetVisible(data.Location, false);
     }
     
     #region NOT USED

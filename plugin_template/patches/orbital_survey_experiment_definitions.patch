@@ -1,28 +1,191 @@
-@new("orbital_survey_visual_mapping")
+@new("orbital_survey_visual_mapping_low_25")
 :experiments {
-    DisplayName: "OrbitalSurvey/VisualMapping/DisplayName";
-    DisplayRequirements: "OrbitalSurvey/VisualMapping/DisplayRequirements";
-    ExperimentType: "Both";
-    //DataFlavorDescriptions: "Data flavor descriptions text";
-    //SampleFlavorDescriptions: "Sample flavor descriptions text";
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName";
-    SampleReportDisplayName: "OrbitalSurvey/VisualMapping/SampleReportDisplayName";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/25"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/25";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "LowOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_25")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/25"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/25";
     ValidLocations: [
         {
             BodyName: "",
             ScienceSituation: "HighOrbit",
             RequiresRegion: false,
             ScienceRegion: ""
-        },
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_low_50")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/50"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/50";
+    ValidLocations: [
         {
             BodyName: "",
             ScienceSituation: "LowOrbit",
-            RequiresRegion: true,
+            RequiresRegion: false,
             ScienceRegion: ""
         }
     ];
     DataValue: 6;
-    SampleValue: 14;
-    TransmissionSize: 150;
-    RequiresEVA: false;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_50")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/50"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/50";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_low_75")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/75"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/75";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "LowOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_75")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/75"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/75";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_low_100")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/100"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/100";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "LowOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 12;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_100")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    ExperimentType: "DataType";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/100"
+        }
+    ];
+    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/100";
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    TransmissionSize: 100;
 }
