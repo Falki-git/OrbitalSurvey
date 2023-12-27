@@ -48,7 +48,7 @@ OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%
 OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Biome Mapping
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Biome Mapping
 
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface
