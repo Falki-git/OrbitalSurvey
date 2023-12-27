@@ -30,3 +30,12 @@ public enum Difficulty
     NORMAL,
     HARD
 }
+
+public enum ExperimentLevel
+{
+    None,
+    Quarter,
+    Half,
+    ThreeQuarters,
+    Full
+}

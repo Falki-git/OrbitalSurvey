@@ -69,4 +69,10 @@ public class CelestialData
         var map = Maps[mapType];
         map.ClearMap();
     }
+
+    public ExperimentLevel CheckIfExperimentNeedsToTrigger(MapType mapType)
+    {
+        var map = Maps[mapType];
+        return map.CheckIfExperimentNeedsToBeTriggered();
+    }
 }

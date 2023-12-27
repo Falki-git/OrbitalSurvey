@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
+using KSP.Modules;
 using KSP.Sim.impl;
 using KSP.Sim.ResourceSystem;
 using OrbitalSurvey.Debug;
@@ -21,6 +22,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
+    private Data_ScienceExperiment _dataScienceExperiment; 
 
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
@@ -39,6 +41,10 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
         
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
+        
+        Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
+        var scienceModule = m as PartComponentModule_ScienceExperiment;
+        _dataScienceExperiment = scienceModule?.dataScienceExperiment;
 
         LastScanTime = ScanUtility.UT;
     }
@@ -80,6 +86,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var latitude = vessel.Latitude;
             
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            
+            // check is experiment needs to trigger and if so, trigger it
+            Core.Instance.CheckIfExperimentNeedsToTrigger(_dataScienceExperiment, body, mapType);
             
             LastScanTime = universalTime;
 

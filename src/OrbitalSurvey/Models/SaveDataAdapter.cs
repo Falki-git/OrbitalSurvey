@@ -12,5 +12,6 @@ public class SaveDataAdapter
     {
         public string DiscoveredPixels;
         public bool IsFullyScanned;
+        public ExperimentLevel ExperimentLevel;
     }
 }

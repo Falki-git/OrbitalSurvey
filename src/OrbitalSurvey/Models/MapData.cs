@@ -18,12 +18,14 @@ public class MapData
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
-    public List<(int, int)> BufferedDiscoveredPixels = new();
+    private readonly List<(int, int)> _bufferedDiscoveredPixels = new();
     public bool IsFullyScanned { get; set; }
 
     public int DiscoveredPixelsCount;
     public int TotalPixelCount => Settings.ActiveResolution * Settings.ActiveResolution;
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
+
+    public ExperimentLevel ExperimentLevel;
 
     public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
     public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
@@ -85,7 +87,7 @@ public class MapData
                     // This is done to increase performance
                     if (isRetroActiveScanning)
                     {
-                        BufferedDiscoveredPixels.Add((xPixel, j));
+                        _bufferedDiscoveredPixels.Add((xPixel, j));
                     }
                     else
                     {
@@ -116,15 +118,15 @@ public class MapData
         if (!isRetroActiveScanning)
         {
             // If there are buffered pixels after retroactive scanning, paint them now
-            if (BufferedDiscoveredPixels.Count > 0)
+            if (_bufferedDiscoveredPixels.Count > 0)
             {
-                foreach (var pixel in BufferedDiscoveredPixels)
+                foreach (var pixel in _bufferedDiscoveredPixels)
                 {
                     CurrentMap.SetPixel(pixel.Item1, pixel.Item2,
                         ScannedMap.GetPixel(pixel.Item1, pixel.Item2));
                 }
                 
-                BufferedDiscoveredPixels.Clear();
+                _bufferedDiscoveredPixels.Clear();
             }
             
             CurrentMap.Apply();
@@ -138,6 +140,7 @@ public class MapData
         HasData = false;
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
+        ExperimentLevel = ExperimentLevel.None;
     }
 
     public void UpdateDiscoveredPixels(bool[,] loadedPixels, bool loadedDataIsFullyScanned = false)
@@ -219,5 +222,47 @@ public class MapData
         this.DiscoveredPixelsCount = TotalPixelCount;
         Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();
+    }
+
+    public ExperimentLevel CheckIfExperimentNeedsToBeTriggered()
+    {
+        var mapPercentage = PercentDiscovered;
+        bool levelChanged = false;
+        
+        switch (ExperimentLevel)
+        {
+            case ExperimentLevel.Full: return ExperimentLevel.None;
+            
+            case ExperimentLevel.ThreeQuarters:
+                if (IsFullyScanned)
+                {
+                    ExperimentLevel = ExperimentLevel.Full;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.Half:
+                if (mapPercentage >= 0.75f)
+                {
+                    ExperimentLevel = ExperimentLevel.ThreeQuarters;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.Quarter:
+                if (mapPercentage >= 0.50f)
+                {
+                    ExperimentLevel = ExperimentLevel.Half;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.None:
+                if (mapPercentage >= 0.25f)
+                {
+                    ExperimentLevel = ExperimentLevel.Quarter;
+                    levelChanged = true;
+                }
+                break;
+        }
+
+        return levelChanged ? ExperimentLevel : ExperimentLevel.None; 
     }
 }

@@ -57,6 +57,8 @@ public class SaveManager
                     mapsAdapter.IsFullyScanned = false;
                     mapsAdapter.DiscoveredPixels = SaveUtility.CompressData(mapData.Value.DiscoveredPixels);
                 }
+
+                mapsAdapter.ExperimentLevel = mapData.Value.ExperimentLevel;
                 
                 mapsDataAdapter.Add(mapData.Key, mapsAdapter);
             }
@@ -120,6 +122,8 @@ public class SaveManager
                                 SaveUtility.DecompressData(mapsDataAdapter[map.Key].DiscoveredPixels);
                             map.Value.UpdateDiscoveredPixels(loadedPixels);
                         }
+
+                        map.Value.ExperimentLevel = mapsDataAdapter[map.Key].ExperimentLevel;
                     }
                 }
             }
