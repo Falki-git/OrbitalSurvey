@@ -1,13 +1,13 @@
 :parts #antenna* {
     +Module_ScienceExperiment {
         +Data_ScienceExperiment {
-            ExperimentsStandings: [];
-            LastKnownValidSituation: {
-                CelestialBodyScalar: 0.0,
-                ScienceRegionScalar: 0.0,
-                SituationScalar: 0.0,
-                ResearchLocation: null
-            };
+            //ExperimentsStandings: [];
+            //LastKnownValidSituation: {
+            //    CelestialBodyScalar: 0.0,
+            //    ScienceRegionScalar: 0.0,
+            //    SituationScalar: 0.0,
+            //    ResearchLocation: null
+            //};
             Experiments: [
                 /*
                 {
@@ -31,7 +31,7 @@
                 */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_25",
-                    //ContextualExperiment: true,
+                    ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
                     CFXName: "fx_science",
@@ -49,7 +49,7 @@
                 */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_50",
-                    //ContextualExperiment: true,
+                    ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
                     CFXName: "fx_science",
@@ -67,7 +67,7 @@
                 */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_75",
-                    //ContextualExperiment: true,
+                    ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
                     CFXName: "fx_science",
@@ -85,7 +85,7 @@
                 */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_100",
-                    //ContextualExperiment: true,
+                    ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
                     CFXName: "fx_science",
@@ -96,15 +96,6 @@
             ResourceThresholdMultiplier: 0.25;            
         }
     }
-
-    PAMModuleVisualsOverride +: [
-        {
-            PartComponentModuleName: "PartComponentModule_ScienceExperiment",
-            ModuleDisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping",
-            ShowHeader: true,
-            ShowFooter: false
-        }
-    ];
 }
 
 

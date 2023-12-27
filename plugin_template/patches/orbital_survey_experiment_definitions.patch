@@ -42,7 +42,7 @@
             ScienceSituation: "HighOrbit",
             RequiresRegion: false,
             ScienceRegion: ""
-        },m
+        },
     ];
     DataValue: 3;
     TransmissionSize: 100;
