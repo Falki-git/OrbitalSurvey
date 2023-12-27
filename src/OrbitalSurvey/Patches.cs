@@ -6,6 +6,10 @@ namespace OrbitalSurvey;
 
 public class Patches
 { 
+    /// <summary>
+    /// This removes PAM entries in Flight scene for all experiments.
+    /// We don't need those as experiments are triggered automatically when certain map percentages are discovered 
+    /// </summary>
     [HarmonyPatch(typeof(Module_ScienceExperiment), "InitializePAMItems"), HarmonyPrefix]
     private static bool RemovePamItemsForExperiments_Initialize(Module_ScienceExperiment __instance)
     {
@@ -20,6 +24,9 @@ public class Patches
         return true;
     }
     
+    /// <summary>
+    /// Also used to remove experiments from PAM
+    /// </summary>
     [HarmonyPatch(typeof(Module_ScienceExperiment), "UpdatePAM"), HarmonyPrefix]
     private static bool RemovePamItemsForExperiments_Update(Module_ScienceExperiment __instance)
     {
@@ -34,43 +41,35 @@ public class Patches
         return true;
     }
     
+    /// <summary>
+    /// This removes experiment descriptions on parts in OAB
+    /// Since there are experiments for 25%, 50%, 75% and 100% and then for High and Low orbits, there would be too much
+    /// spam to show them all.
+    /// First experiment that is found is skipped, following experiments are deleted.  
+    /// </summary>
     [HarmonyPatch(typeof(Data_ScienceExperiment), "GetPartInfoEntries"), HarmonyPostfix]
     private static void RemoveOabExperimentDescriptions(List<OABPartData.PartInfoModuleEntry> __result, Data_ScienceExperiment __instance)
     {
-        bool genericExperimentOverriden = false;
-        LocalizedString nameToOverride = "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
+        bool firstExperimentFound = false;
+        LocalizedString experimentName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
         
         for (int i = 0; i < __result.Count; i++)
         {
-            // go through the list of entries and look for experiments to override their text or to delete their entries
-            while (i < __result.Count && __result[i].DisplayName.Contains(nameToOverride))
+            // go through the list of entries and look for experiments to delete
+            while (i < __result.Count && __result[i].DisplayName.Contains(experimentName))
             {
                 // Orbital Survey experiment found
                 
-                // check if the generic experiment has been defined yet, if not then perform needed overrides
-                if (!genericExperimentOverriden)
+                // check if this is the first experiment; if it it we leave it intact
+                if (!firstExperimentFound)
                 {
-                    // override with generic experiment description didn't happen yet, so we do it here
-                    LocalizedString newDisplayName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/OverrideWith";
-                    LocalizedString requirementsToOverride = "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
-                    LocalizedString newRequirements = "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/OverrideWith";
-                    
-                    var entriesToOverride = 4;
-                    for (int j = 0; j < entriesToOverride; j++)
-                    {
-                        if (i < __result.Count)
-                        {
-                            __result[i].DisplayName = __result[i].DisplayName.Replace(nameToOverride, newDisplayName);
-                            __result[i].DisplayName = __result[i].DisplayName.Replace(requirementsToOverride, newRequirements);
-                            i++;
-                        }
-                    }
-                    
-                    genericExperimentOverriden = true;
+                    // we'll advance the index by 4 to skip through descriptions of the found experiment
+                    i += 4;
+                    firstExperimentFound = true;
                     continue;
                 }
                 
-                // generic experiment has been defined, so we need to remove other experiment entries
+                // first experiment was already found, so we need to remove other found experiments
                 var entriesToRemove = 4;
 
                 for (int j = 0; j < entriesToRemove; j++)

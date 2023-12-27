@@ -1,15 +1,15 @@
 @new("orbital_survey_visual_mapping_low_25")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/25"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/25";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -19,21 +19,21 @@
         }
     ];
     DataValue: 6;
-    TransmissionSize: 100;
+    TransmissionSize: 1000;
 }
 
 @new("orbital_survey_visual_mapping_high_25")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/25"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/25";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -48,16 +48,16 @@
 
 @new("orbital_survey_visual_mapping_low_50")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/50"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/50";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -72,16 +72,16 @@
 
 @new("orbital_survey_visual_mapping_high_50")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/50"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/50";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -96,16 +96,16 @@
 
 @new("orbital_survey_visual_mapping_low_75")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/75"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/75";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -120,16 +120,16 @@
 
 @new("orbital_survey_visual_mapping_high_75")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/75"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/75";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -144,16 +144,16 @@
 
 @new("orbital_survey_visual_mapping_low_100")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/100"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/100";
+    ];    
     ValidLocations: [
         {
             BodyName: "",
@@ -168,16 +168,16 @@
 
 @new("orbital_survey_visual_mapping_high_100")
 :experiments {
-    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride";
-    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride";
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
     ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100";
     DataFlavorDescriptions: [
         {
             ResearchLocationID: "Default",
-            LocalizationTag: "OrbitalSurvey/VisualMapping/Flavor/Default/100"
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100"
         }
-    ];
-    DataReportDisplayName: "OrbitalSurvey/VisualMapping/DataReportDisplayName/100";
+    ];    
     ValidLocations: [
         {
             BodyName: "",

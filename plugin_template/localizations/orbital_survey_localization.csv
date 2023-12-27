@@ -33,32 +33,34 @@ OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
 
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/ToOverride,Text,,[INSERT-DISPLAY-NAME-OR-DELETE]
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/ToOverride,Text,,[INSERT-DISPLAY-REQUIREMENTS-NAME]
-OrbitalSurvey/Experiments/OabDescription/DisplayName/OverrideWith,Text,,Visual Mapping
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements/OverrideWith,Text,,"Map 25%, 50%, 75% and 100% of the celestial body's surface"
+OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the celestial body's surface"
 
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface
 
-OrbitalSurvey/VisualMapping/DisplayName/25,Text,,[REMOVE-FROM-OAB] Visual Mapping 25%
-OrbitalSurvey/VisualMapping/DisplayRequirements/25,Text,,Map 1/4 of the celestial body's surface
-OrbitalSurvey/VisualMapping/DataReportDisplayName/25,Text,,Visual Mapping 25%
-OrbitalSurvey/VisualMapping/Flavor/Default/25,Text,,You scanned 1/4 of the body's surface
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface
 
-OrbitalSurvey/VisualMapping/DisplayName/50,Text,,[REMOVE-FROM-OAB] Visual Mapping 50%
-OrbitalSurvey/VisualMapping/DisplayRequirements/50,Text,,Map 1/2 of the celestial body's surface
-OrbitalSurvey/VisualMapping/DataReportDisplayName/50,Text,,Visual Mapping 50%
-OrbitalSurvey/VisualMapping/Flavor/Default/50,Text,,You scanned 1/2 of the body's surface
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface
 
-OrbitalSurvey/VisualMapping/DisplayName/75,Text,,[REMOVE-FROM-OAB] Visual Mapping 75%
-OrbitalSurvey/VisualMapping/DisplayRequirements/75,Text,,Map 3/4 of the celestial body's surface
-OrbitalSurvey/VisualMapping/DataReportDisplayName/75,Text,,Visual Mapping 75%
-OrbitalSurvey/VisualMapping/Flavor/Default/75,Text,,You scanned 3/4 of the body's surface
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!
 
-OrbitalSurvey/VisualMapping/DisplayName/100,Text,,[REMOVE-FROM-OAB] Visual Mapping 100%
-OrbitalSurvey/VisualMapping/DisplayRequirements/100,Text,,Map the entire celestial body's surface
-OrbitalSurvey/VisualMapping/DataReportDisplayName/100,Text,,Visual Mapping 100%
-OrbitalSurvey/VisualMapping/Flavor/Default/100,Text,,Body fully scanned!
+OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Biome Mapping
 
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface
+
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Biome Mapping 50%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface
+
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapping 75%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface
+
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!
 
 
 PartModules/OrbitalSurvey/TriggerExperiment,Text,,Trigger Experiment
