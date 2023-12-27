@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using I2.Loc;
+using KSP.Messages;
 using KSP.Modules;
 
 namespace OrbitalSurvey;
@@ -81,5 +82,19 @@ public class Patches
                 }
             }
         }
+    }
+    
+    [HarmonyPatch(typeof(Module_ScienceExperiment), "OnScienceSituationChanged"), HarmonyPrefix]
+    private static bool Test(MessageCenterMessage msg, Module_ScienceExperiment __instance)
+    {
+        return false;
+        
+        VesselScienceSituationChangedMessage vesselScienceSituationChangedMessage = msg as VesselScienceSituationChangedMessage;
+        if (vesselScienceSituationChangedMessage != null && __instance._vesselComponent != null && vesselScienceSituationChangedMessage.Vessel.GlobalId.Equals(__instance._vesselComponent.GlobalId))
+        {
+            __instance.UpdatePAM();
+        }
+
+        return false;
     }
 }
