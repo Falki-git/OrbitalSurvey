@@ -11,6 +11,7 @@
  * - live position indicators
  * - scanning parts by -StanWildin
  * - missions triggered by discovering discoverables
+ * - legend for biome and altimetry
  * 
  * TODO LONG-TERM: 
  * - adjust FOV for large bodies
