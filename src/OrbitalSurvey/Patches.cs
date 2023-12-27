@@ -23,7 +23,7 @@ public class Patches
 
         return true;
     }
-    
+    /*
     /// <summary>
     /// Also used to remove experiments from PAM
     /// </summary>
@@ -40,7 +40,7 @@ public class Patches
 
         return true;
     }
-    
+    */
     /// <summary>
     /// This removes experiment descriptions on parts in OAB
     /// Since there are experiments for 25%, 50%, 75% and 100% and then for High and Low orbits, there would be too much

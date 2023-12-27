@@ -1,3 +1,4 @@
+/*
 @new("orbital_survey_visual_mapping_low_25")
 :experiments {
     DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
@@ -21,6 +22,7 @@
     DataValue: 6;
     TransmissionSize: 1000;
 }
+*/
 
 @new("orbital_survey_visual_mapping_high_25")
 :experiments {
@@ -40,12 +42,13 @@
             ScienceSituation: "HighOrbit",
             RequiresRegion: false,
             ScienceRegion: ""
-        }
+        },m
     ];
     DataValue: 3;
     TransmissionSize: 100;
 }
 
+/*
 @new("orbital_survey_visual_mapping_low_50")
 :experiments {
     DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
@@ -69,6 +72,7 @@
     DataValue: 6;
     TransmissionSize: 100;
 }
+*/
 
 @new("orbital_survey_visual_mapping_high_50")
 :experiments {
@@ -94,6 +98,7 @@
     TransmissionSize: 100;
 }
 
+/*
 @new("orbital_survey_visual_mapping_low_75")
 :experiments {
     DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
@@ -117,6 +122,7 @@
     DataValue: 6;
     TransmissionSize: 100;
 }
+*/
 
 @new("orbital_survey_visual_mapping_high_75")
 :experiments {
@@ -142,6 +148,7 @@
     TransmissionSize: 100;
 }
 
+/*
 @new("orbital_survey_visual_mapping_low_100")
 :experiments {
     DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
@@ -165,6 +172,7 @@
     DataValue: 12;
     TransmissionSize: 100;
 }
+*/
 
 @new("orbital_survey_visual_mapping_high_100")
 :experiments {
