@@ -1,4 +1,4 @@
-Key,Type,Desc,English
+Key,Type,Desc,English,French,Italian,German,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
 
 PartModules/OrbitalSurvey/Name,Text,,Orbital Survey
 PartModules/OrbitalSurvey/Status,Text,,Status
