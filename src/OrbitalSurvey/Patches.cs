@@ -2,6 +2,7 @@
 using I2.Loc;
 using KSP.Game.Science;
 using KSP.Logging;
+using KSP.Messages;
 using KSP.Modules;
 using KSP.Sim.impl;
 
@@ -56,6 +57,12 @@ public class Patches
         bool firstExperimentFound = false;
         LocalizedString experimentName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
         
+        // if a language is selected that isn't supported the retrieved string will be null, so just return
+        if (string.IsNullOrEmpty(experimentName))
+        {
+	        return;
+        }
+        
         for (int i = 0; i < __result.Count; i++)
         {
             // go through the list of entries and look for experiments to delete
@@ -85,6 +92,20 @@ public class Patches
             }
         }
     }
+
+    /*
+    [HarmonyPatch(typeof(Module_ScienceExperiment), "OnScienceSituationChanged"), HarmonyPrefix]
+    private static bool OnScienceSituationChanged(MessageCenterMessage msg, Module_ScienceExperiment __instance)
+    {
+	    return false;
+
+	    VesselScienceSituationChangedMessage vesselScienceSituationChangedMessage = msg as VesselScienceSituationChangedMessage;
+	    if (vesselScienceSituationChangedMessage != null && __instance._vesselComponent != null && vesselScienceSituationChangedMessage.Vessel.GlobalId.Equals(__instance._vesselComponent.GlobalId))
+	    {
+		    __instance.UpdatePAM();
+	    }
+    }
+    */
     
     /// <summary>
     /// Reimplementation of the original method with the following log spam being omitted:
