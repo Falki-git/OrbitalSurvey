@@ -32,7 +32,6 @@ OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
 
 
-
 OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the celestial body's surface"
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping
@@ -54,6 +53,11 @@ OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapp
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!
+
+OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!
+OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science
+OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!
+OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science
 
 
 PartModules/OrbitalSurvey/TriggerExperiment,Text,,Trigger Experiment

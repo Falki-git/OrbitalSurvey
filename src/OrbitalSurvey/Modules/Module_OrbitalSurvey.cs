@@ -140,7 +140,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private void OnToggleChangedValue(bool newValue)
     {
         _LOGGER.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
-        ((PartComponentModule_OrbitalSurvey)ComponentModule).LastScanTime = ScanUtility.UT;
+        ((PartComponentModule_OrbitalSurvey)ComponentModule).LastScanTime = Utility.UT;
         
         UpdateFlightPAMVisibility(newValue);
 

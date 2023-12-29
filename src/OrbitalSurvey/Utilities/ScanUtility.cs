@@ -8,8 +8,6 @@ namespace OrbitalSurvey.Utilities;
 
 public static class ScanUtility
 {
-    public static double UT => GameManager.Instance.Game.UniverseModel.UniverseTime;
-    
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ScanUtility");
     
     public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, float scanningCone)

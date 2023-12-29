@@ -141,6 +141,12 @@ public class Core : MonoBehaviour
         if (experimentLevel != ExperimentLevel.None)
         {
             ScienceManager.Instance.TriggerExperiment(scienceModule, mapType, experimentLevel);
+            
+            NotificationUtility.Instance.NotifyExperimentComplete(
+                scienceModule.Part.PartOwner.SimulationObject.Vessel.Name,
+                scienceModule.Part.PartOwner.SimulationObject.Orbit.referenceBody.Name,
+                experimentLevel
+            );
         }
     }
 }

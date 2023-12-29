@@ -67,6 +67,84 @@
  *
  *
  *
+
+var notification = GameManager.Instance.Game.Notifications;
+
+var tex = SpaceWarp.API.Assets.AssetManager.GetAsset<Texture2D>(
+$"falki.orbital_survey/images/icon.png");
+var sprite = UnityEngine.Sprite.Create(tex, new UnityEngine.Rect(0, 0, tex.width, tex.height), new UnityEngine.Vector2(0.5f, 0.5f));
+
+var notificationData = new KSP.Game.NotificationData()
+{
+    Importance = NotificationImportance.Low,
+    Tier = NotificationTier.Alert,
+    TimeStamp = OrbitalSurvey.Utilities.Utility.UT,
+    AlertTitle = new NotificationLineItemData()
+        {
+            Icon = sprite,
+            ObjectParams = new object[]{ "test" },
+            LocKey = "OrbitalSurvey/Experiments/Notification"
+        },
+        FirstLine = new NotificationLineItemData()
+            {
+                LocKey = "something goes here"
+            }
+        };
+    notification.ProcessNotification(notificationData);
+}
+
+
+var notification = GameManager.Instance.Game.Notifications;
+
+var tex = SpaceWarp.API.Assets.AssetManager.GetAsset<Texture2D>(
+$"falki.orbital_survey/images/icon.png");
+var sprite = UnityEngine.Sprite.Create(tex, new UnityEngine.Rect(0, 0, tex.width, tex.height), new UnityEngine.Vector2(0.5f, 0.5f));
+
+var notificationData = new KSP.Game.NotificationData()
+    {
+       Importance = NotificationImportance.Low,
+       Tier = NotificationTier.Alert,
+       TimeStamp = OrbitalSurvey.Utilities.Utility.UT,
+       AdminTitle = new NotificationLineItemData()
+                {
+                    Icon = sprite,
+                    ObjectParams = new object[]{ "test" },
+                    LocKey = "OrbitalSurvey/Experiments/Notification"
+                },
+       FirstLine = new NotificationLineItemData()
+                {
+                    LocKey = "something goes here"
+                }
+,
+            };
+            notification.ProcessNotification(notificationData);
+
+
+
+
+
+
+var notificationData = new NotificationData()
+        {
+            Importance = NotificationImportance.Low,
+            Tier = NotificationTier.Alert,
+            TimeStamp = Utility.UT,
+            AdminTitle = new NotificationLineItemData()
+            {
+                ObjectParams = new object[]{ "test" },
+                LocKey = "OrbitalSurvey/Experiments/Notification/Complete/Title"
+            },
+            FirstLine = new NotificationLineItemData()
+            {
+                LocKey = "OrbitalSurvey/Experiments/Notification/Complete/FirstLine"
+            }
+        };
+
+
+GameManager.Instance.Game.Notifications.ProcessNotification(notificationData);
+
+
+ *
  *
  *
  *

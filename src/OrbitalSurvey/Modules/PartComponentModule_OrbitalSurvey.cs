@@ -18,7 +18,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     private Data_OrbitalSurvey _dataOrbitalSurvey;
-    private double _timeSinceLastScan => ScanUtility.UT - LastScanTime;
+    private double _timeSinceLastScan => Utility.UT - LastScanTime;
     
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
@@ -47,7 +47,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
         _dataScienceExperiment = _moduleScienceExperiment?.dataScienceExperiment;
 
-        LastScanTime = ScanUtility.UT;
+        LastScanTime = Utility.UT;
     }
 
     // This starts triggering when vessel is placed in Flight. Does not trigger in OAB.
