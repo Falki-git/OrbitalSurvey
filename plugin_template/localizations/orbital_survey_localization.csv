@@ -32,7 +32,7 @@ OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the celestial body's surface"
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface"
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%
