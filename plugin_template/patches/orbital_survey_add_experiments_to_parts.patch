@@ -1,34 +1,14 @@
 :parts #antenna* {
     +Module_ScienceExperiment {
         +Data_ScienceExperiment {
-            //ExperimentsStandings: [];
-            //LastKnownValidSituation: {
-            //    CelestialBodyScalar: 0.0,
-            //    ScienceRegionScalar: 0.0,
-            //    SituationScalar: 0.0,
-            //    ResearchLocation: null
-            //};
+            ExperimentsStandings: [];
+            LastKnownValidSituation: {
+                CelestialBodyScalar: 0.0,
+                ScienceRegionScalar: 0.0,
+                SituationScalar: 0.0,
+                ResearchLocation: null
+            };
             Experiments: [
-                /*
-                {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping_low_25",
-                    //CrewRequired: 0,
-                    //TimeToComplete: 5.0,
-                    ContextualExperiment: true,
-                    ResourcesCost: [
-                        //{
-                        //    Rate: 1.0,
-                        //    ResourceName: "ElectricCharge",
-                        //    AcceptanceThreshold: 30.0
-                        //}
-                    ],
-                    DenyInterruption: true,
-                    //ExperimentUsesResources: false, //true
-                    //DeployedBoolAnimatorParamName: "",
-                    CFXName: "fx_science",
-                    SFXEvent: "Invalid"
-                },
-                */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_25",
                     ContextualExperiment: true,
@@ -37,16 +17,6 @@
                     CFXName: "fx_science",
                     SFXEvent: "Invalid"
                 },
-                /*
-                {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping_low_50",
-                    ContextualExperiment: true,
-                    ResourcesCost: [],
-                    DenyInterruption: true,
-                    CFXName: "fx_science",
-                    SFXEvent: "Invalid"
-                },
-                */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_50",
                     ContextualExperiment: true,
@@ -55,16 +25,6 @@
                     CFXName: "fx_science",
                     SFXEvent: "Invalid"
                 },
-                /*
-                {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping_low_75",
-                    ContextualExperiment: true,
-                    ResourcesCost: [],
-                    DenyInterruption: true,
-                    CFXName: "fx_science",
-                    SFXEvent: "Invalid"
-                },
-                */
                 {
                     ExperimentDefinitionID: "orbital_survey_visual_mapping_high_75",
                     ContextualExperiment: true,
@@ -73,18 +33,41 @@
                     CFXName: "fx_science",
                     SFXEvent: "Invalid"
                 },
-                /*
                 {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping_low_100",
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_100",
                     ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
                     CFXName: "fx_science",
                     SFXEvent: "Invalid"
                 },
-                */
+                // Biomes
                 {
-                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_100",
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_25",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_50",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_75",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_100",
                     ContextualExperiment: true,
                     ResourcesCost: [],
                     DenyInterruption: true,
