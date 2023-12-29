@@ -119,29 +119,28 @@ var notificationData = new KSP.Game.NotificationData()
             };
             notification.ProcessNotification(notificationData);
 
+Visual:
+antenna_0v_dish_ra-2,RA-2 [LONG-RANGE PROBES]
+antenna_1v_parabolic_dts-m1,Communotron DTS-M1 [ENHANCED ELECTRONICS]
+antenna_1v_dish_hg55,Communotron HG-55 [DEEP-SPACE PROBES]
+antenna_1v_dish_88-88,Communotron 88-88 [LONG-RANGE GENERATION]
+
+Biome:
+antenna_0v_dish_ra-15,RA-15 [DURABLE POWER SYSTEMS]
+antenna_1v_dish_ra-100,RA-100 [LONG-RANGE GENERATION]
+
+n/a:
+antenna_0v_16,Communotron 16 [PROBES]
+antenna_0v_16s,Communotron 16-S [PROBES]
+antenna_1v_dish_hg5,Communotron HG-5 [LONG-RANGE PROBES]
 
 
 
 
 
-var notificationData = new NotificationData()
-        {
-            Importance = NotificationImportance.Low,
-            Tier = NotificationTier.Alert,
-            TimeStamp = Utility.UT,
-            AdminTitle = new NotificationLineItemData()
-            {
-                ObjectParams = new object[]{ "test" },
-                LocKey = "OrbitalSurvey/Experiments/Notification/Complete/Title"
-            },
-            FirstLine = new NotificationLineItemData()
-            {
-                LocKey = "OrbitalSurvey/Experiments/Notification/Complete/FirstLine"
-            }
-        };
 
 
-GameManager.Instance.Game.Notifications.ProcessNotification(notificationData);
+
 
 
  *
