@@ -4,6 +4,7 @@ using KSP.Game.Science;
 using KSP.Logging;
 using KSP.Messages;
 using KSP.Modules;
+using KSP.Sim.Definitions;
 using KSP.Sim.impl;
 
 namespace OrbitalSurvey;
@@ -54,19 +55,22 @@ public class Patches
     [HarmonyPatch(typeof(Data_ScienceExperiment), "GetPartInfoEntries"), HarmonyPostfix]
     private static void RemoveOabExperimentDescriptions(List<OABPartData.PartInfoModuleEntry> __result, Data_ScienceExperiment __instance)
     {
-        bool firstExperimentFound = false;
-        LocalizedString experimentName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+        LocalizedString visualMappingExperimentName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+        LocalizedString biomeMappingExperimentName = "OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping";
         
         // if a language is selected that isn't supported the retrieved string will be null, so just return
-        if (string.IsNullOrEmpty(experimentName))
+        if (string.IsNullOrEmpty(visualMappingExperimentName) || string.IsNullOrEmpty(biomeMappingExperimentName))
         {
 	        return;
         }
+     
+        bool firstExperimentFound = false;
         
+        // Visual Mapping
         for (int i = 0; i < __result.Count; i++)
         {
             // go through the list of entries and look for experiments to delete
-            while (i < __result.Count && __result[i].DisplayName.Contains(experimentName))
+            while (i < __result.Count && __result[i].DisplayName.Contains(visualMappingExperimentName))
             {
                 // Orbital Survey experiment found
                 
@@ -91,21 +95,39 @@ public class Patches
                 }
             }
         }
-    }
+        
+        firstExperimentFound = false;
+        
+        // Biome Mapping
+        for (int i = 0; i < __result.Count; i++)
+        {
+	        // go through the list of entries and look for experiments to delete
+	        while (i < __result.Count && __result[i].DisplayName.Contains(biomeMappingExperimentName))
+	        {
+		        // Orbital Survey experiment found
+                
+		        // check if this is the first experiment; if it it we leave it intact
+		        if (!firstExperimentFound)
+		        {
+			        // we'll advance the index by 4 to skip through descriptions of the found experiment
+			        i += 4;
+			        firstExperimentFound = true;
+			        continue;
+		        }
+                
+		        // first experiment was already found, so we need to remove other found experiments
+		        var entriesToRemove = 4;
 
-    /*
-    [HarmonyPatch(typeof(Module_ScienceExperiment), "OnScienceSituationChanged"), HarmonyPrefix]
-    private static bool OnScienceSituationChanged(MessageCenterMessage msg, Module_ScienceExperiment __instance)
-    {
-	    return false;
-
-	    VesselScienceSituationChangedMessage vesselScienceSituationChangedMessage = msg as VesselScienceSituationChangedMessage;
-	    if (vesselScienceSituationChangedMessage != null && __instance._vesselComponent != null && vesselScienceSituationChangedMessage.Vessel.GlobalId.Equals(__instance._vesselComponent.GlobalId))
-	    {
-		    __instance.UpdatePAM();
-	    }
+		        for (int j = 0; j < entriesToRemove; j++)
+		        {
+			        if (i < __result.Count)
+			        {
+				        __result.RemoveAt(i);
+			        }
+		        }
+	        }
+        }
     }
-    */
     
     /// <summary>
     /// Reimplementation of the original method with the following log spam being omitted:
@@ -160,4 +182,16 @@ public class Patches
 
 		return false;
     }
+
+    #region Potentialpatches
+    
+    /*
+    [HarmonyPatch(typeof(Module_ScienceExperiment), "OnScienceSituationChanged"), HarmonyPrefix]
+    private static bool OnScienceSituationChanged(MessageCenterMessage msg, Module_ScienceExperiment __instance)
+
+    [HarmonyPatch(typeof(PartComponentModule_ScienceExperiment), "IsExperimentAllowed"), HarmonyPrefix]
+    private static bool IsExperimentAllowed(PartComponentModule_ScienceExperiment __instance, ref bool __result, int experimentIndex, bool notify = true)
+    */
+    
+    #endregion
 }
