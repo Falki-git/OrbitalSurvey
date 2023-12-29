@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
 using KSP.Modules;
+using KSP.Sim.impl;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
@@ -132,16 +133,15 @@ public class Core : MonoBehaviour
         OnMapHasDataValueChanged?.Invoke(GetBodiesContainingData());
     }
 
-    public void CheckIfExperimentNeedsToTrigger(Data_ScienceExperiment moduleData, string body, MapType mapType)
+    public void CheckIfExperimentNeedsToTrigger(PartComponentModule_ScienceExperiment scienceModule, string body, MapType mapType)
     {
         var celestialData = CelestialDataDictionary[body];
         var experimentLevel = celestialData.CheckIfExperimentNeedsToTrigger(mapType);
 
         if (experimentLevel != ExperimentLevel.None)
         {
-            ScienceManager.Instance.TriggerExperiment(moduleData, mapType, experimentLevel);
+            ScienceManager.Instance.TriggerExperiment(scienceModule, mapType, experimentLevel);
         }
-
     }
 }
 

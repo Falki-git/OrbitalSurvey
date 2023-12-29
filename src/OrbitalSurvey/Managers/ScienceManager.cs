@@ -1,5 +1,5 @@
 ﻿using BepInEx.Logging;
-using KSP.Modules;
+using KSP.Sim.impl;
 using OrbitalSurvey.Models;
 using Logger = BepInEx.Logging.Logger;
 
@@ -34,7 +34,7 @@ public class ScienceManager
         }
     };
 
-    public bool TriggerExperiment(Data_ScienceExperiment moduleData, MapType map, ExperimentLevel level)
+    public bool TriggerExperiment(PartComponentModule_ScienceExperiment scienceModule, MapType map, ExperimentLevel level)
     {
         if (!ExperimentDefinitions.ContainsKey(map))
         {
@@ -50,19 +50,18 @@ public class ScienceManager
         
         string experimentToTrigger = ExperimentDefinitions[map][level];
 
-        foreach (var experiment in moduleData.ExperimentStandings)
+        var experiment = scienceModule.GetExperimentDefinitionByID(experimentToTrigger);
+        if (experiment == null)
         {
-            if (experiment.ExperimentID == experimentToTrigger)
-            {
-                experiment.CurrentExperimentState = ExperimentState.RUNNING;
-                experiment.ConditionMet = true;
-                
-                _LOGGER.LogInfo($"Experiment {experimentToTrigger} triggered!");
-                return true;
-            }
+            _LOGGER.LogError($"Experiment {experimentToTrigger} ID not found. Cannot trigger the experiment!");
+            return false;
         }
         
-        _LOGGER.LogError($"Experiment {experimentToTrigger} not found in data module! Cannot trigger experiment");
-        return false;
+        var index = scienceModule.GetExperimentIndexFromID(experimentToTrigger);
+        
+        scienceModule.CreateScienceReports(experiment, index);
+        
+        _LOGGER.LogInfo($"Experiment {experimentToTrigger} triggered!");
+        return true;
     }
 }

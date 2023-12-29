@@ -23,6 +23,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
     private Data_ScienceExperiment _dataScienceExperiment; 
+    private PartComponentModule_ScienceExperiment _moduleScienceExperiment;
 
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
@@ -43,8 +44,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
         
         Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
-        var scienceModule = m as PartComponentModule_ScienceExperiment;
-        _dataScienceExperiment = scienceModule?.dataScienceExperiment;
+        _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
+        _dataScienceExperiment = _moduleScienceExperiment?.dataScienceExperiment;
 
         LastScanTime = ScanUtility.UT;
     }
@@ -88,7 +89,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
             
             // check is experiment needs to trigger and if so, trigger it
-            Core.Instance.CheckIfExperimentNeedsToTrigger(_dataScienceExperiment, body, mapType);
+            Core.Instance.CheckIfExperimentNeedsToTrigger(_moduleScienceExperiment, body, mapType);
             
             LastScanTime = universalTime;
 

@@ -23,6 +23,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
     private ModuleAction _actionOpenGui;
     private ModuleAction _triggerExperiment;
+    private ModuleAction _triggerScienceReport;
 
     private bool _isDebugFovEnabled;
 
@@ -39,8 +40,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         
         _actionOpenGui = new ModuleAction(OnOpenMapClicked);
         _triggerExperiment = new ModuleAction(OnTriggerExperiment);
+        _triggerScienceReport = new ModuleAction(OnCreateScienceReport);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/TriggerExperiment", _triggerExperiment, 7);
+        _dataOrbitalSurvey.AddAction("Trigger Science Report", _triggerScienceReport, 8);
 
         _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
 
@@ -69,7 +72,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
         
     }
-
+    
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
@@ -168,6 +171,20 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         experiment.ConditionMet = true;
     }
 
+    private void OnCreateScienceReport()
+    {
+        ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
+        PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
+
+        var experiment =
+            module.dataScienceExperiment.ExperimentStandings.Find(
+                e => e.ExperimentID.StartsWith("orbital_survey_visual_mapping"));
+
+        var expDef = module.GetExperimentDefinitionByID("orbital_survey_visual_mapping_high_25");
+
+        module.CreateScienceReports(expDef, 0);
+    }
+
     private void UpdateFlightPAMVisibility(bool state)
     {
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
@@ -181,6 +198,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
         _dataOrbitalSurvey.SetVisible(_actionOpenGui, state);
         _dataOrbitalSurvey.SetVisible(_triggerExperiment, state);
+        _dataOrbitalSurvey.SetVisible(_triggerScienceReport, state);
     }
 
     private void UpdateOabPAMVisibility()
