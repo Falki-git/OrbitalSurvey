@@ -1,31 +1,83 @@
-$minCommRange: 1000000000;
+@use 'constants';
+@use 'builtin:config';
 
-:parts {
-    .Module_DataTransmitter:[$commRange: $$CommunicationRange;] {
-        @if $commRange > $minCommRange {
-            +Module_OrbitalSurvey {
-                +Data_OrbitalSurvey {
-                    RequiredResource: {
-                        Rate: 0.0, // set dynamically through settings
-                        ResourceName: "ElectricCharge",
-                        AcceptanceThreshold: 0.1
-                    };
-                }
-            }
-            PAMModuleVisualsOverride +: [
-                {
-                    PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
-                    ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
-                    ShowHeader: true,
-                    ShowFooter: true
-                }
-            ];
-            //PAMModuleSortOverride: +[
-            //    {
-            //        PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
-            //        sortIndex: 40
-            //    }
-            //];
+$visual-field-of-view: get-config("orbital-survey-constants", "visual-field-of-view");
+$visual-min-alt: get-config("orbital-survey-constants", "visual-min-alt");
+$visual-ideal-alt: get-config("orbital-survey-constants", "visual-ideal-alt");
+$visual-max-alt: get-config("orbital-survey-constants", "visual-max-alt");
+$visual-ec-consumption: get-config("orbital-survey-constants", "visual-ec-consumption");
+$biome-field-of-view: get-config("orbital-survey-constants", "biome-field-of-view");
+$biome-min-alt: get-config("orbital-survey-constants", "biome-min-alt");
+$biome-ideal-alt: get-config("orbital-survey-constants", "biome-ideal-alt");
+$biome-max-alt: get-config("orbital-survey-constants", "biome-max-alt");
+$biome-ec-consumption: get-config("orbital-survey-constants", "biome-ec-consumption");
+
+:parts #antenna_0v_dish_ra-2, #antenna_1v_parabolic_dts-m1, #antenna_1v_dish_hg55, #antenna_1v_dish_88-88 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            Mode: {
+                storedValue: "Visual"
+            };
+            ScanningFieldOfView: {
+                storedValue: $visual-field-of-view
+            };
+            MinimumAltitude: {
+                storedValue: $visual-min-alt
+            }; 
+            IdealAltitude: {
+                storedValue: $visual-ideal-alt
+            };
+            MaximumAltitude: {
+                storedValue: $visual-max-alt
+            };
+            RequiredResource: {
+                Rate: $visual-ec-consumption,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
         }
     }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_0v_dish_ra-15, #antenna_1v_dish_ra-100 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: {
+                storedValue: "Biome"
+            };
+            ScanningFieldOfViewValue: {
+                storedValue: $biome-field-of-view
+            };
+            MinimumAltitudeValue: {
+                storedValue: $biome-min-alt
+            };
+            IdealAltitudeValue: {
+                storedValue: $biome-ideal-alt
+            };
+            MaximumAltitudeValue: {
+                storedValue: $biome-max-alt
+            };
+            RequiredResource: {
+                Rate: $biome-ec-consumption,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
 }

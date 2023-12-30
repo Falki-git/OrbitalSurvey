@@ -1,0 +1,11 @@
+@create-config "orbital-survey-constants", "visual-field-of-view": 10;
+@create-config "orbital-survey-constants", "visual-min-alt": 100000;
+@create-config "orbital-survey-constants", "visual-ideal-alt": 500000;
+@create-config "orbital-survey-constants", "visual-max-alt": 1000000;
+@create-config "orbital-survey-constants", "visual-ec-consumption": 1;
+
+@create-config "orbital-survey-constants", "biome-field-of-view": 5;
+@create-config "orbital-survey-constants", "biome-min-alt": 300000;
+@create-config "orbital-survey-constants", "biome-ideal-alt": 750000;
+@create-config "orbital-survey-constants", "biome-max-alt": 900000;
+@create-config "orbital-survey-constants", "biome-ec-consumption": 2;

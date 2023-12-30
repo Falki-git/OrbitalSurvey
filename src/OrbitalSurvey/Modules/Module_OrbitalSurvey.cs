@@ -42,10 +42,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _triggerExperiment = new ModuleAction(OnTriggerExperiment);
         _triggerScienceReport = new ModuleAction(OnCreateScienceReport);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
-        _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/TriggerExperiment", _triggerExperiment, 7);
-        _dataOrbitalSurvey.AddAction("Trigger Science Report", _triggerScienceReport, 8);
-
-        _dataOrbitalSurvey.Mode.OnChangedValue += OnModeChanged;
+        _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/TriggerExperiment", _triggerExperiment, 6);
+        _dataOrbitalSurvey.AddAction("Trigger Science Report", _triggerScienceReport, 6);
 
         if (PartBackingMode == PartBackingModes.Flight)
         {
@@ -67,10 +65,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         {
             UpdateOabPAMVisibility();
         }
-        
-        UpdateValues(_dataOrbitalSurvey.Mode.GetValue());
-
-        
     }
     
     // This triggers in flight
@@ -127,14 +121,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     public override void OnShutdown()
     {
         _LOGGER.LogDebug($"OnShutdown triggered.");
-        _dataOrbitalSurvey.Mode.OnChangedValue -= OnModeChanged;
         _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
-    }
-
-    private void OnModeChanged(string newMode)
-    {
-        _LOGGER.LogDebug(($"Mode.OnChangedValue triggered. New value is {newMode}"));
-        UpdateValues(newMode);
     }
 
     private void OnToggleChangedValue(bool newValue)
@@ -213,18 +200,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, false);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
         _dataOrbitalSurvey.SetVisible(_actionOpenGui, false);
-    }
-    
-    private void UpdateValues(string newMode)
-    {
-        var mapType = Enum.Parse<MapType>(newMode);
-        
-        _dataOrbitalSurvey.ScanningFieldOfView.SetValue(Settings.ModeScanningStats[mapType].FieldOfView);
-        _dataOrbitalSurvey.MinimumAltitude.SetValue(Settings.ModeScanningStats[mapType].MinAltitude / 1000);
-        _dataOrbitalSurvey.IdealAltitude.SetValue(Settings.ModeScanningStats[mapType].IdealAltitude / 1000);
-        _dataOrbitalSurvey.MaximumAltitude.SetValue(Settings.ModeScanningStats[mapType].MaxAltitude / 1000);
-
-        _dataOrbitalSurvey.RequiredResource.Rate = Settings.EcConsumptionRate[mapType];
     }
     
     // This triggers always
