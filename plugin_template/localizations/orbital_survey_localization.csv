@@ -58,6 +58,3 @@ OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""
 OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science
 OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!
 OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science
-
-
-PartModules/OrbitalSurvey/TriggerExperiment,Text,,Trigger Experiment

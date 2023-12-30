@@ -26,6 +26,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private ModuleAction _triggerScienceReport;
 
     private bool _isDebugFovEnabled;
+    private bool _isDebugTriggerExperimentVisible;
+    private bool _isDebugTriggerScienceReportVisible;
 
     public override void AddDataModules()
     {
@@ -42,8 +44,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _triggerExperiment = new ModuleAction(OnTriggerExperiment);
         _triggerScienceReport = new ModuleAction(OnCreateScienceReport);
         _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/OpenGui", _actionOpenGui, 6);
-        _dataOrbitalSurvey.AddAction("PartModules/OrbitalSurvey/TriggerExperiment", _triggerExperiment, 6);
-        _dataOrbitalSurvey.AddAction("Trigger Science Report", _triggerScienceReport, 6);
+        
+        // Debugging actions
+        _dataOrbitalSurvey.AddAction("Trigger Experiment", _triggerExperiment, 1);
+        _dataOrbitalSurvey.AddAction("Trigger Science Report", _triggerScienceReport, 1);
 
         if (PartBackingMode == PartBackingModes.Flight)
         {
@@ -145,6 +149,39 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         SceneController.Instance.ToggleUI(true);
     }
 
+    private void UpdateFlightPAMVisibility(bool state)
+    {
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
+        _dataOrbitalSurvey.SetVisible(_actionOpenGui, state);
+        _dataOrbitalSurvey.SetVisible(_triggerExperiment, false);
+        _dataOrbitalSurvey.SetVisible(_triggerScienceReport, false);
+    }
+
+    private void UpdateOabPAMVisibility()
+    {
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, true);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
+        _dataOrbitalSurvey.SetVisible(_actionOpenGui, false);
+        _dataOrbitalSurvey.SetVisible(_triggerExperiment, false);
+        _dataOrbitalSurvey.SetVisible(_triggerScienceReport, false);
+    }
+    
+    // Debugging actions
     private void OnTriggerExperiment()
     {
         ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
@@ -171,36 +208,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
         module.CreateScienceReports(expDef, 0);
     }
-
-    private void UpdateFlightPAMVisibility(bool state)
-    {
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, state);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
-        _dataOrbitalSurvey.SetVisible(_actionOpenGui, state);
-        _dataOrbitalSurvey.SetVisible(_triggerExperiment, state);
-        _dataOrbitalSurvey.SetVisible(_triggerScienceReport, state);
-    }
-
-    private void UpdateOabPAMVisibility()
-    {
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, false);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, false);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MaximumAltitude, true);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.PercentComplete, false);
-        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
-        _dataOrbitalSurvey.SetVisible(_actionOpenGui, false);
-    }
     
     // This triggers always
     public override void OnUpdate(float deltaTime)
@@ -223,16 +230,25 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     
     private void PerformDebugChecks()
     {
-        if (DebugUI.Instance.DebugFovEnabled && !_isDebugFovEnabled)
+        // Debug FOV
+        if (DebugUI.Instance.DebugFovEnabled != _isDebugFovEnabled)
         {
-            _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, true);
-            _isDebugFovEnabled = true;
+            _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, DebugUI.Instance.DebugFovEnabled);
+            _isDebugFovEnabled = DebugUI.Instance.DebugFovEnabled;
         }
         
-        if (!DebugUI.Instance.DebugFovEnabled && _isDebugFovEnabled)
+        // Debug Trigger Experiment
+        if (DebugUI.Instance.DebugTriggerExperiment != _isDebugTriggerExperimentVisible)
         {
-            _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfViewDebug, false);
-            _isDebugFovEnabled = false;
+            _dataOrbitalSurvey.SetVisible(_triggerExperiment, DebugUI.Instance.DebugTriggerExperiment);
+            _isDebugTriggerExperimentVisible = DebugUI.Instance.DebugTriggerExperiment;
+        }
+        
+        // Debug Trigger Science Report
+        if (DebugUI.Instance.DebugTriggerScienceReport != _isDebugTriggerScienceReportVisible)
+        {
+            _dataOrbitalSurvey.SetVisible(_triggerScienceReport, DebugUI.Instance.DebugTriggerScienceReport);
+            _isDebugTriggerScienceReportVisible = DebugUI.Instance.DebugTriggerScienceReport;
         }
     }
     
@@ -240,8 +256,6 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     {
         ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
         PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
-        
-        //_dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, true);
 
         var data = module.dataScienceExperiment;
         data.SetVisible(data.Location, false);
@@ -276,43 +290,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _LOGGER.LogDebug("Extend triggered.");
         return true;
     }
-
-    private void TestBed()
-    {
-        // _testAction = new ModuleAction(TestAction);
-        // _dataOrbitalSurvey.AddAction("Enable Orbital Survey", _testAction);
-        // var isVisible = base.part != null;
-        // _dataOrbitalSurvey.SetVisible(_testAction, isVisible);
-
-        // _dataOrbitalSurvey.MyModulePropertyTest.SetValue("setting some value");
-        // _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MyModulePropertyTest, true);
-        // _dataOrbitalSurvey.SetLabel(_dataOrbitalSurvey.MyModulePropertyTest, "new label");
-        // _dataOrbitalSurvey.MyModulePropertyTest.SetValue("new value");
-
-        // _moduleProperty = new ModuleProperty<string>("Hello World!");
-        // _dataOrbitalSurvey.AddProperty("MyModulePropertyTest", _moduleProperty);
-        // _dataOrbitalSurvey.SetVisible(_moduleProperty, true);
-        // _dataOrbitalSurvey.MyModulePropertyTest.SetValue(());
-        
-        
-        // colors that work: red, yellow, grey, white, blue, black, green, lightblue
-        //_dataOrbitalSurvey.Status.SetValue(StatusStrings.STATUS[Status.Scanning]);
-        
-        //_dataOrbitalSurvey.State.SetValue("<color=yellow>Below ideal alt \u26a0</color>");
-        //_dataOrbitalSurvey.State.SetValue(StatusStrings.STATE[State.AboveMax]);
-    }
     
     public override string GetModuleDisplayName() => "This is GetModuleDisplayName()";
-    
-    /*
-    private ModuleAction _testAction;
-    private ModuleProperty<string> _moduleProperty;
-    */
-    
-    private void TestAction()
-    {
-        _LOGGER.LogDebug("Hello World");
-    }
     
     #endregion
 }

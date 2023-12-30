@@ -61,7 +61,7 @@ public class Data_OrbitalSurvey : ModuleData
     public ModuleProperty<float> MaximumAltitude = new (0, true, val => $"{((float)val/1000):N0} km");
     
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOVDebug")]
-    [PAMDisplayControl(SortIndex = 7)]
+    [PAMDisplayControl(SortIndex = 1)]
     [SteppedRange(1f, 45f, 1f)]
     public ModuleProperty<float> ScanningFieldOfViewDebug = new (1f, false, val => $"{val:N0}°");
 
