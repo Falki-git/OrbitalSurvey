@@ -175,9 +175,10 @@ public class Patches
 				__instance.SetExperimentState(count, ExperimentState.READY);
 				continue;
 			case ExperimentState.INVALIDLOCATION:
-				GlobalLog.LogF(LogFilter.Simulation, "Science Experiment {0} moved to an invalid location, pausing.", new object[] { experimentDefinition.DisplayName });
+				//GlobalLog.LogF(LogFilter.Simulation, "Science Experiment {0} moved to an invalid location, pausing.", new object[] { experimentDefinition.DisplayName });
 				continue;
 			}
+			//GlobalLog.LogF(LogFilter.Simulation, "Science Experiment {0} moved to a valid location, but something else is preventing the experiment from being ready.", new object[] { experimentDefinition.DisplayName });
 		}
 
 		return false;
