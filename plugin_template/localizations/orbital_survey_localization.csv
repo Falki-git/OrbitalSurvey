@@ -33,29 +33,29 @@ OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erfo
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface"
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers"
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!
+OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%,Visuelle Kartierung 50%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Kartierung 75%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Biome Mapping
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Biome Mapping 50%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapping 75%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Biome Mapping,Biom Kartierung
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%,Biom Kartierung 25%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Biome Mapping 50%,Biom Kartierung 50%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapping 75%,Biom Kartierung 75%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%,Biom Kartierung 100%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
 
-OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!
-OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science
-OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!
-OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science
+OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!
+OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten
+OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat einen Meilenstein bei der orbitalen Kartierung erreicht!
+OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten
