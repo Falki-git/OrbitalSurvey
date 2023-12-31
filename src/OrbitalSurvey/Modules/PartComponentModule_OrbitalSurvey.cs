@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
+using KSP.Modules;
 using KSP.Sim.impl;
 using KSP.Sim.ResourceSystem;
 using OrbitalSurvey.Debug;
@@ -17,10 +18,14 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.PartComponentModule");
     private Data_OrbitalSurvey _dataOrbitalSurvey;
-    private double _timeSinceLastScan => ScanUtility.UT - LastScanTime;
+    private double _timeSinceLastScan => Utility.UT - LastScanTime;
     
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
+    private PartComponentModule_ScienceExperiment _moduleScienceExperiment;
+    public Data_Deployable DataDeployable;
+
+    private bool _isDebugCustomFovEnabled;
 
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
@@ -37,10 +42,38 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         {
             _dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
         }
-        
-        _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
 
-        LastScanTime = ScanUtility.UT;
+        _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
+        
+        // get the ScienceExperiment module; to be used for triggering experiments
+        Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
+        _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
+        
+        // try to get Data_Deployable is the part has a Deployable module; scanning is disabled if part is not deployed
+        Part.TryGetModule(typeof(PartComponentModule_Deployable), out var m2);
+        if (m2 != null)
+        {
+            var moduleDeployable = m2 as PartComponentModule_Deployable;
+            foreach (var dataDeployable in moduleDeployable.DataModules?.ValuesList)
+            {
+                if (dataDeployable is Data_Deployable)
+                {
+                    DataDeployable = dataDeployable as Data_Deployable;
+                    DataDeployable.toggleExtend.OnChangedValue += (_) => ResetLastScanTime();
+                    break;
+                }
+            }
+        }
+
+        LastScanTime = Utility.UT;
+    }
+
+    /// <summary>
+    /// Resets the LastScanTime. This is needed so that retroactive scanning doesn't kick in when module is enabled. 
+    /// </summary>
+    public void ResetLastScanTime()
+    {
+        LastScanTime = Utility.UT;
     }
 
     // This starts triggering when vessel is placed in Flight. Does not trigger in OAB.
@@ -51,10 +84,15 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         DoScan(universalTime);
     }
 
+    /// <summary>
+    /// Primary method that initiates scans 
+    /// </summary>
     private void DoScan(double universalTime)
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value)
+            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value &&
+            (DataDeployable?.IsExtended ?? true) &&
+            _dataOrbitalSurvey.ScanningStats != null)
         {
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
@@ -66,22 +104,30 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
             var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-            var scanningCone = DebugUI.Instance.DebugFovEnabled ?
-                _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue() : _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
+
+            // check if debugging scanning FOV needs to be applied or removed
+            if (DebugUI.Instance.DebugFovEnabled != _isDebugCustomFovEnabled)
+            {
+                _dataOrbitalSurvey.ScanningStats.FieldOfView = DebugUI.Instance.DebugFovEnabled ?
+                    _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue() :  _dataOrbitalSurvey.ScanningFieldOfView.GetValue();
+                _isDebugCustomFovEnabled = DebugUI.Instance.DebugFovEnabled;
+            }
             
-            // _logger.LogDebug($"'{vessel.Name}' ({body}) scanning enabled. Last scan: {LastScanTime}.\n" + 
-            //         $"T since last scan: {_timeSinceLastScan}. UT: {universalTime}. dUT: {deltaUniversalTime}");
-            
-            PerformRetroactiveScanningIfNeeded(vessel, body, mapType, scanningCone);
+            // retroactive scanning is needed for high warp factors
+            // since updates are rare, we need to "catch-up" to where the vessel was during the time skip
+            PerformRetroactiveScanningIfNeeded(vessel, body, mapType, _dataOrbitalSurvey.ScanningStats);
             
             // proceed with a normal scan
             var altitude = vessel.AltitudeFromRadius;
             var longitude = vessel.Longitude;
             var latitude = vessel.Latitude;
             
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats);
             
-            LastScanTime = universalTime;
+            // check is experiment needs to trigger and if so, trigger it
+            Core.Instance.CheckIfExperimentNeedsToTrigger(_moduleScienceExperiment, body, mapType);
+            
+            ResetLastScanTime();
 
             // FOR DEBUGGING PURPOSES
             if (DebugUI.Instance.BufferAnalyticsScan)
@@ -92,7 +138,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
     }
 
-    private void PerformRetroactiveScanningIfNeeded(VesselComponent vessel, string body, MapType mapType, float scanningCone)
+    private void PerformRetroactiveScanningIfNeeded(VesselComponent vessel, string body, MapType mapType, ScanningStats scanningStats)
     {
         double latitude, longitude, altitude;
         
@@ -106,7 +152,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + retroactiveTimeBetweenScans,
                 out latitude, out longitude, out altitude);
         
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone, true);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningStats, true);
             LastScanTime += retroactiveTimeBetweenScans;
         }
     }
@@ -116,12 +162,11 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         var vessel = base.Part.PartOwner.SimulationObject.Vessel;
         var body = vessel.mainBody.Name;
         var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
-        var scanningCone = _dataOrbitalSurvey.ScanningFieldOfViewDebug.GetValue();
         
         double latitude, longitude, altitude;
         OrbitUtility.GetOrbitalParametersAtUT(vessel, ut, out latitude, out longitude, out altitude);
         
-        Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningCone);
+        Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats);
         
         Core.Instance.CelestialDataDictionary[body].Maps[mapType].UpdateCurrentMapAsPerDiscoveredPixels();
     }

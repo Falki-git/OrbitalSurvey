@@ -43,7 +43,7 @@ public class CelestialData
     public double MinimumScanningAltitude => AtmosphereDepth; // TODO
     public double MaximumScanningAltitude => Body.sphereOfInfluence; // TODO
     
-    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning)
+    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning)
     {
         var map = Maps[mapType];
 
@@ -52,7 +52,7 @@ public class CelestialData
             return;
         
         // calculate what the scanning radius is given the altitude and the field of view of the scanner
-        var scanningRadius = ScanUtility.GetScanRadius(mapType, Radius, altitude, scanningCone);
+        var scanningRadius = ScanUtility.GetScanRadius(Radius, altitude, scanningStats);
 
         // need to adjust the scanning radius to take into account the resolution of the texture
         var scanningRadiusForTexture =
@@ -68,5 +68,11 @@ public class CelestialData
     {
         var map = Maps[mapType];
         map.ClearMap();
+    }
+
+    public ExperimentLevel CheckIfExperimentNeedsToTrigger(MapType mapType)
+    {
+        var map = Maps[mapType];
+        return map.CheckIfExperimentNeedsToBeTriggered();
     }
 }

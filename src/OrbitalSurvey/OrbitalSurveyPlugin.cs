@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using JetBrains.Annotations;
+using KSP.Game;
 using KSP.UI.Binding;
 using OrbitalSurvey.Debug;
 using SpaceWarp;
@@ -11,6 +12,7 @@ using UnityEngine;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
+using Patches = OrbitalSurvey.Utilities.Patches;
 
 namespace OrbitalSurvey;
 
@@ -75,6 +77,12 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         
         // register for save/load events 
         SaveManager.Instance.Register();
+        
+        // register for EC background processing
+        SpaceWarp.API.Parts.PartComponentModuleOverride
+            .RegisterModuleForBackgroundResourceProcessing<OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
+        
+        Harmony.CreateAndPatchAll(typeof(Patches));
     }
 
     private void Update()

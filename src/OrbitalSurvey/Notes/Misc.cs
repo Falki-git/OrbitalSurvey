@@ -67,6 +67,83 @@
  *
  *
  *
+
+var notification = GameManager.Instance.Game.Notifications;
+
+var tex = SpaceWarp.API.Assets.AssetManager.GetAsset<Texture2D>(
+$"falki.orbital_survey/images/icon.png");
+var sprite = UnityEngine.Sprite.Create(tex, new UnityEngine.Rect(0, 0, tex.width, tex.height), new UnityEngine.Vector2(0.5f, 0.5f));
+
+var notificationData = new KSP.Game.NotificationData()
+{
+    Importance = NotificationImportance.Low,
+    Tier = NotificationTier.Alert,
+    TimeStamp = OrbitalSurvey.Utilities.Utility.UT,
+    AlertTitle = new NotificationLineItemData()
+        {
+            Icon = sprite,
+            ObjectParams = new object[]{ "test" },
+            LocKey = "OrbitalSurvey/Experiments/Notification"
+        },
+        FirstLine = new NotificationLineItemData()
+            {
+                LocKey = "something goes here"
+            }
+        };
+    notification.ProcessNotification(notificationData);
+}
+
+
+var notification = GameManager.Instance.Game.Notifications;
+
+var tex = SpaceWarp.API.Assets.AssetManager.GetAsset<Texture2D>(
+$"falki.orbital_survey/images/icon.png");
+var sprite = UnityEngine.Sprite.Create(tex, new UnityEngine.Rect(0, 0, tex.width, tex.height), new UnityEngine.Vector2(0.5f, 0.5f));
+
+var notificationData = new KSP.Game.NotificationData()
+    {
+       Importance = NotificationImportance.Low,
+       Tier = NotificationTier.Alert,
+       TimeStamp = OrbitalSurvey.Utilities.Utility.UT,
+       AdminTitle = new NotificationLineItemData()
+                {
+                    Icon = sprite,
+                    ObjectParams = new object[]{ "test" },
+                    LocKey = "OrbitalSurvey/Experiments/Notification"
+                },
+       FirstLine = new NotificationLineItemData()
+                {
+                    LocKey = "something goes here"
+                }
+,
+            };
+            notification.ProcessNotification(notificationData);
+
+Visual:
+antenna_0v_dish_ra-2,RA-2 [LONG-RANGE PROBES]
+antenna_0v_dish_ra-15,RA-15 [DURABLE POWER SYSTEMS]
+antenna_1v_dish_ra-100,RA-100 [LONG-RANGE GENERATION]
+
+Biome:
+antenna_1v_parabolic_dts-m1,Communotron DTS-M1 [ENHANCED ELECTRONICS]
+antenna_1v_dish_hg55,Communotron HG-55 [DEEP-SPACE PROBES]
+antenna_1v_dish_88-88,Communotron 88-88 [LONG-RANGE GENERATION]
+
+n/a:
+antenna_0v_16,Communotron 16 [PROBES]
+antenna_0v_16s,Communotron 16-S [PROBES]
+antenna_1v_dish_hg5,Communotron HG-5 [LONG-RANGE PROBES]
+
+
+
+
+
+
+
+
+
+
+ *
  *
  *
  *

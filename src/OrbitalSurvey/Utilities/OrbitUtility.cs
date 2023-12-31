@@ -32,7 +32,7 @@ public static class OrbitUtility
         
         var circumference = 2 * body.radius * Math.PI;
         var lengthOfDay = body.rotationPeriod;
-        var deltaUT = ScanUtility.UT - UT;
+        var deltaUT = Utility.UT - UT;
         var rotationDifferenceAtEquator = (deltaUT * circumference) / lengthOfDay;
         
         return (rotationDifferenceAtEquator / body.radius) * (180 / Math.PI);

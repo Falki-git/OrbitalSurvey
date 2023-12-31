@@ -127,5 +127,5 @@ RADAR Altimetry Sensor      RadarLo / Slope 5	5000 m	5000 m	500 km
 [MapTraq® (deprecated)][5e]	None	        N/A	N/A	    N/A	    N/A
 
 
-
+PartUtil.GetComponentInPart<Module_ScienceExperiment>(this.part.transform)._pamItems[0].Status
 

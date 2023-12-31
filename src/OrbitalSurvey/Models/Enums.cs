@@ -12,7 +12,8 @@ public enum Status
     Scanning,
     Idle,
     Complete,
-    NoPower
+    NoPower,
+    NotDeployed
 }
 
 public enum State
@@ -29,4 +30,13 @@ public enum Difficulty
     EASY,
     NORMAL,
     HARD
+}
+
+public enum ExperimentLevel
+{
+    None,
+    Quarter,
+    Half,
+    ThreeQuarters,
+    Full
 }

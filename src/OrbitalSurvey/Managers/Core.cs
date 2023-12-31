@@ -1,5 +1,6 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
+using KSP.Sim.impl;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
@@ -83,15 +84,23 @@ public class Core : MonoBehaviour
             SaveManager.Instance.LoadData();
     }
 
-    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning = false)
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning = false)
     {
-        // Sometimes, load data can be done before the textures are initialized
+        // sometimes, load data can be done before the textures are initialized
         if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
+        {
             return;
+        }
+
+        // skip scanning if we're below min or above max altitude
+        if (altitude < scanningStats.MinAltitude || altitude > scanningStats.MaxAltitude)
+        {
+            return;
+        }
         
         var celestialData = CelestialDataDictionary[body];
         
-        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone, isRetroActiveScanning);
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningStats, isRetroActiveScanning);
     }
 
     public void ClearMap(string body, MapType mapType)
@@ -106,7 +115,7 @@ public class Core : MonoBehaviour
             .Select(entry => entry.Key)
             .ToList();
 
-        // If nothing has been discovered so far, return the HomeWorld (Kerbin)
+        // if nothing has been discovered so far, return the HomeWorld (Kerbin)
         if (!toReturn.Any())
         {
             var homeWorld = GameManager.Instance.Game?.UniverseModel?
@@ -129,6 +138,23 @@ public class Core : MonoBehaviour
     public void InvokeOnMapHasDataValueChanged()
     {
         OnMapHasDataValueChanged?.Invoke(GetBodiesContainingData());
+    }
+
+    public void CheckIfExperimentNeedsToTrigger(PartComponentModule_ScienceExperiment scienceModule, string body, MapType mapType)
+    {
+        var celestialData = CelestialDataDictionary[body];
+        var experimentLevel = celestialData.CheckIfExperimentNeedsToTrigger(mapType);
+
+        if (experimentLevel != ExperimentLevel.None)
+        {
+            ScienceManager.Instance.TriggerExperiment(scienceModule, mapType, experimentLevel);
+            
+            NotificationUtility.Instance.NotifyExperimentComplete(
+                scienceModule.Part.PartOwner.SimulationObject.Vessel.Name,
+                scienceModule.Part.PartOwner.SimulationObject.Orbit.referenceBody.Name,
+                experimentLevel
+            );
+        }
     }
 }
 

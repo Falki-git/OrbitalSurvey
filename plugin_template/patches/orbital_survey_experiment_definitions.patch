@@ -1,0 +1,194 @@
+@new("orbital_survey_visual_mapping_high_25")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        },
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_50")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_75")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_visual_mapping_high_100")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    TransmissionSize: 100;
+}
+
+
+// BIOMES
+
+@new("orbital_survey_biome_mapping_high_25")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        },
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_biome_mapping_high_50")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_biome_mapping_high_75")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 3;
+    TransmissionSize: 100;
+}
+
+@new("orbital_survey_biome_mapping_high_100")
+:experiments {
+    DisplayName: "OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping";
+    DisplayRequirements: "OrbitalSurvey/Experiments/OabDescription/DisplayRequirements";
+    ExperimentType: "DataType";
+    DataReportDisplayName: "OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100";
+    DataFlavorDescriptions: [
+        {
+            ResearchLocationID: "Default",
+            LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100"
+        }
+    ];    
+    ValidLocations: [
+        {
+            BodyName: "",
+            ScienceSituation: "HighOrbit",
+            RequiresRegion: false,
+            ScienceRegion: ""
+        }
+    ];
+    DataValue: 6;
+    TransmissionSize: 100;
+}

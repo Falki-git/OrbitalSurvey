@@ -1,32 +1,61 @@
-Key,Type,Desc,English
+Key,Type,Desc,English,German,French,Italian,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
 
-PartModules/OrbitalSurvey/Name,Text,,Orbital Survey
-PartModules/OrbitalSurvey/Status,Text,,Status
-PartModules/OrbitalSurvey/Enabled,Text,,Enabled
-PartModules/OrbitalSurvey/Mode,Text,,Mode
-PartModules/OrbitalSurvey/State,Text,,State
-PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View
-PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug)
-PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude
-PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude
-PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
-PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete
-PartModules/OrbitalSurvey/OpenGui,Text,,Open Map
+PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey
+PartModules/OrbitalSurvey/Status,Text,,Status,Status
+PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert
+PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus
+PartModules/OrbitalSurvey/State,Text,,State,State
+PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld
+PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug)
+PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Mindesthöhe
+PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude,Optimale Höhe
+PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude,Maximale Höhe
+PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete,Prozent Vollständig
+PartModules/OrbitalSurvey/OpenGui,Text,,Open Map,Öffne Karte
 
-OrbitalSurvey/Status/Disabled,Text,,Disabled
-OrbitalSurvey/Status/Scanning,Text,,Scanning
-OrbitalSurvey/Status/Idle,Text,,Idle
-OrbitalSurvey/Status/Complete,Text,,Survey Complete
-OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>
+OrbitalSurvey/Status/Disabled,Text,,Disabled,Deaktiviert
+OrbitalSurvey/Status/Scanning,Text,,Scanning,Scanning
+OrbitalSurvey/Status/Idle,Text,,Idle,Leerlauf
+OrbitalSurvey/Status/Complete,Text,,Survey Complete,Erfassung Vollständig
+OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>,<color=red>Keine Energie ⚠</color>
+OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>
 
-OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>
-OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
-OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>
-OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>
-OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>
+OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>,<color=red>Unter Mindesthöhe ⚠</color>
+OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter Optimaler Höhe ⚠</color>
+OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>,<color=green>Optimale Höhe</color>
+OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<color=yellow>Über Optimaler Höhe ⚠</color>
+OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>
 
-OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>
+OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>
 
-OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit
-OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
-OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
+OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit
+OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich
+OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung
+
+
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers"
+
+OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%,Visuelle Kartierung 50%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Kartierung 75%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
+
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Biome Mapping,Biom Kartierung
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%,Biom Kartierung 25%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Biome Mapping 50%,Biom Kartierung 50%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapping 75%,Biom Kartierung 75%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%,Biom Kartierung 100%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
+
+OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!
+OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten
+OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat einen Meilenstein bei der orbitalen Kartierung erreicht!
+OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten

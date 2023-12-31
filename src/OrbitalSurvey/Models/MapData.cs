@@ -18,12 +18,14 @@ public class MapData
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
-    public List<(int, int)> BufferedDiscoveredPixels = new();
+    private readonly List<(int, int)> _bufferedDiscoveredPixels = new();
     public bool IsFullyScanned { get; set; }
 
     public int DiscoveredPixelsCount;
     public int TotalPixelCount => Settings.ActiveResolution * Settings.ActiveResolution;
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
+
+    public ExperimentLevel ExperimentLevel;
 
     public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
     public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
@@ -45,6 +47,9 @@ public class MapData
 
     public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning)
     {
+        // set the radius to at least 1 pixel
+        scanningRadius = scanningRadius == 0 ? 1 : scanningRadius;
+        
         int newlyDiscoveredPixelCount = 0;
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
         for (int j = y - scanningRadius; j < y + scanningRadius; j++)
@@ -55,6 +60,10 @@ public class MapData
          
             // divide the width radius by 2 cause the texture's AR is 1:1, but the real AR should be 2:1
             var trueWidthRadius = (int)((scanningRadius / 2f));
+            if (trueWidthRadius == 0)
+            {
+                trueWidthRadius = 1;
+            }
             
             // due to mercator projection, area towards the poles gets distorted, so we need to apply a correction
             var latitudeOfYPixel= ScanUtility.TextureYToLatitude(j, Settings.ActiveResolution);
@@ -85,7 +94,7 @@ public class MapData
                     // This is done to increase performance
                     if (isRetroActiveScanning)
                     {
-                        BufferedDiscoveredPixels.Add((xPixel, j));
+                        _bufferedDiscoveredPixels.Add((xPixel, j));
                     }
                     else
                     {
@@ -116,15 +125,15 @@ public class MapData
         if (!isRetroActiveScanning)
         {
             // If there are buffered pixels after retroactive scanning, paint them now
-            if (BufferedDiscoveredPixels.Count > 0)
+            if (_bufferedDiscoveredPixels.Count > 0)
             {
-                foreach (var pixel in BufferedDiscoveredPixels)
+                foreach (var pixel in _bufferedDiscoveredPixels)
                 {
                     CurrentMap.SetPixel(pixel.Item1, pixel.Item2,
                         ScannedMap.GetPixel(pixel.Item1, pixel.Item2));
                 }
                 
-                BufferedDiscoveredPixels.Clear();
+                _bufferedDiscoveredPixels.Clear();
             }
             
             CurrentMap.Apply();
@@ -138,6 +147,7 @@ public class MapData
         HasData = false;
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
+        ExperimentLevel = ExperimentLevel.None;
     }
 
     public void UpdateDiscoveredPixels(bool[,] loadedPixels, bool loadedDataIsFullyScanned = false)
@@ -219,5 +229,47 @@ public class MapData
         this.DiscoveredPixelsCount = TotalPixelCount;
         Graphics.CopyTexture(ScannedMap, CurrentMap);
         CurrentMap.Apply();
+    }
+
+    public ExperimentLevel CheckIfExperimentNeedsToBeTriggered()
+    {
+        var mapPercentage = PercentDiscovered;
+        bool levelChanged = false;
+        
+        switch (ExperimentLevel)
+        {
+            case ExperimentLevel.Full: return ExperimentLevel.None;
+            
+            case ExperimentLevel.ThreeQuarters:
+                if (IsFullyScanned)
+                {
+                    ExperimentLevel = ExperimentLevel.Full;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.Half:
+                if (mapPercentage >= 0.75f)
+                {
+                    ExperimentLevel = ExperimentLevel.ThreeQuarters;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.Quarter:
+                if (mapPercentage >= 0.50f)
+                {
+                    ExperimentLevel = ExperimentLevel.Half;
+                    levelChanged = true;
+                }
+                break;
+            case ExperimentLevel.None:
+                if (mapPercentage >= 0.25f)
+                {
+                    ExperimentLevel = ExperimentLevel.Quarter;
+                    levelChanged = true;
+                }
+                break;
+        }
+
+        return levelChanged ? ExperimentLevel : ExperimentLevel.None; 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BepInEx.Logging;
-using KSP.Game;
 using OrbitalSurvey.Models;
 using UnityEngine;
 using Logger = BepInEx.Logging.Logger;
@@ -8,15 +7,13 @@ namespace OrbitalSurvey.Utilities;
 
 public static class ScanUtility
 {
-    public static double UT => GameManager.Instance.Game.UniverseModel.UniverseTime;
-    
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ScanUtility");
     
-    public static double GetScanRadius(MapType mapType, double bodyRadius, double altitude, float scanningCone)
+    public static double GetScanRadius(double bodyRadius, double altitude, ScanningStats scanningStats)
     {
         var r = bodyRadius;
         var h = altitude;
-        var alpha = DegreesToRadians((scanningCone / 2f));
+        var alpha = DegreesToRadians((scanningStats.FieldOfView / 2f));
         
         // the Law of sines: alpha / sin(r) = beta / sin(r + h)
         var beta = DegreesToRadians(180f) - Math.Asin(((r + h) * Math.Sin(alpha)) / r);
@@ -38,7 +35,7 @@ public static class ScanUtility
 
         // apply a reduction factor if vessel is not at ideal altitude
         
-        var factor = GetMinMaxReductionFactor(mapType, altitude);
+        var factor = GetMinMaxReductionFactor(altitude, scanningStats);
         //_LOGGER.LogDebug($"Radius: {radiusOfScanningCone}. Factor: {factor}. Radius /w factor: {radiusOfScanningCone * factor}");
         radiusOfScanningCone *= factor;
         
@@ -115,30 +112,20 @@ public static class ScanUtility
         // inverse of GetTextureCoordinatesFromGeographicCoordinates
         return ((180f * (double)y) / (double)textureHeight) - 90f;
     }
-    
-    private static void GetMinMaxIdealAltitudes(
-        MapType mapType, out double minAlt, out double idealAlt, out double maxAlt)
-    {
-        minAlt = Settings.ModeScanningStats[mapType].MinAltitude;
-        idealAlt = Settings.ModeScanningStats[mapType].IdealAltitude;
-        maxAlt = Settings.ModeScanningStats[mapType].MaxAltitude;
-    }
 
-    private static double GetMinMaxReductionFactor(MapType mapType, double altitude)
+    private static double GetMinMaxReductionFactor(double altitude, ScanningStats scanningStats)
     {
         double totalRange;
 
-        GetMinMaxIdealAltitudes(mapType, out var minAlt, out var idealAlt, out var maxAlt);
-
-        var currentAltDif = Math.Abs(idealAlt - altitude);
+        var currentAltDif = Math.Abs(scanningStats.IdealAltitude - altitude);
         
-        if (altitude < idealAlt)
+        if (altitude < scanningStats.IdealAltitude)
         {
-            totalRange = Math.Abs(idealAlt - minAlt);
+            totalRange = Math.Abs(scanningStats.IdealAltitude - scanningStats.MinAltitude);
         }
         else
         {
-            totalRange = Math.Abs(maxAlt - idealAlt);
+            totalRange = Math.Abs(scanningStats.MaxAltitude - scanningStats.IdealAltitude);
         }
         
         var factor = Math.Clamp(1 - (currentAltDif / totalRange), 0, 1);
@@ -160,13 +147,11 @@ public static class ScanUtility
     /// <summary>
     /// Returns the state of the vessel in terms of its relation to ideal scanning altitude
     /// </summary>
-    public static State GetAltitudeState(MapType mapType, double altitude)
+    public static State GetAltitudeState(double altitude, ScanningStats scanningStats)
     {
-        GetMinMaxIdealAltitudes(mapType, out var minAlt, out var idealAlt, out var maxAlt);
-
-        if (altitude < idealAlt * 0.95f)
+        if (altitude < scanningStats.IdealAltitude * 0.95f)
         {
-            if (altitude < minAlt)
+            if (altitude < scanningStats.MinAltitude)
             {
                 return State.BelowMin;
             }
@@ -174,9 +159,9 @@ public static class ScanUtility
             return State.BelowIdeal;
         }
 
-        if (altitude > idealAlt * 1.05f)
+        if (altitude > scanningStats.IdealAltitude * 1.05f)
         {
-            if (altitude > maxAlt)
+            if (altitude > scanningStats.MaxAltitude)
             {
                 return State.AboveMax;
             }

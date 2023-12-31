@@ -2,23 +2,26 @@
  * 
  * TODO:
  * n/a
+ *
+ * TODO NEAR-TERM:
+ * - Region Map
+ * - Altimetry Map
+ * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
+ * - live position indicators
+ * - scanning parts by -StanWildin
+ * - missions triggered by discovering discoverables
+ * - legend for biome and altimetry
+ * 
  * 
  * TODO LONG-TERM: 
- * - adjust FOV for large bodies
- * - larger FOV for larger commstrength 
  * - live position indicators and next/previous orbit
  * - scanning triangle in Map scene when active
- * - altimeter data?
- * - scanning parts
- * - buffering and transmitting scans
- * - buffer scans until transmitted
+ * - next/previous orbits 
  * - see if clouds can be removed (requested by The Space Peacock)
- * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man) 
- *
- * TODO SCIENCE:
- * - transmit to get science
- * - scanning mode progression
- * - larger FOV progression
+ * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
+ * - adding waypoints
+ * - support for custom planet packs (packs will register their maps)
+ * 
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -43,5 +46,14 @@
  * - hide bodies with no data from the dropdown
  * - optimize analytic scanning further
  * - add configurable settings
+ * - figure out how to remove PAM entries
+ * - Experiments for all map types, 25%, 50%, 75%, 100%
+ * - larger FOV for larger commstrength
+ * - buffering and transmitting scans (probably redundant with For Science!)
+ * - buffer scans until transmitted (probably redundant with For Science!)
+ * - transmit to get science
+ * - scanning mode progression
+ * - larger FOV progression
+ * - adjust FOV for large bodies
  * 
  */

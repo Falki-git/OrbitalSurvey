@@ -1,0 +1,152 @@
+@use 'constants';
+@use 'builtin:config';
+
+:parts #antenna_0v_dish_ra-2 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Visual";
+            ScanningFieldOfViewValue: $VISUAL-EARLY-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $VISUAL-EARLY-MIN-ALT;
+            IdealAltitudeValue: $VISUAL-EARLY-IDEAL-ALT;
+            MaximumAltitudeValue: $VISUAL-EARLY-MAX-ALT;
+            RequiredResource: {
+                Rate: $VISUAL-EARLY-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_parabolic_dts-m1 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Biome";
+            ScanningFieldOfViewValue: $BIOME-EARLY-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $BIOME-EARLY-MIN-ALT;
+            IdealAltitudeValue: $BIOME-EARLY-IDEAL-ALT;
+            MaximumAltitudeValue: $BIOME-EARLY-MAX-ALT;
+            RequiredResource: {
+                Rate: $BIOME-EARLY-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_0v_dish_ra-15 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Visual";
+            ScanningFieldOfViewValue: $VISUAL-MID-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $VISUAL-MID-MIN-ALT;
+            IdealAltitudeValue: $VISUAL-MID-IDEAL-ALT;
+            MaximumAltitudeValue: $VISUAL-MID-MAX-ALT;
+            RequiredResource: {
+                Rate: $VISUAL-MID-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_hg55 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Biome";
+            ScanningFieldOfViewValue: $BIOME-MID-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $BIOME-MID-MIN-ALT;
+            IdealAltitudeValue: $BIOME-MID-IDEAL-ALT;
+            MaximumAltitudeValue: $BIOME-MID-MAX-ALT;
+            RequiredResource: {
+                Rate: $BIOME-MID-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_ra-100 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Visual";
+            ScanningFieldOfViewValue: $VISUAL-LATE-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $VISUAL-LATE-MIN-ALT;
+            IdealAltitudeValue: $VISUAL-LATE-IDEAL-ALT;
+            MaximumAltitudeValue: $VISUAL-LATE-MAX-ALT;
+            RequiredResource: {
+                Rate: $VISUAL-LATE-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_88-88 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "Biome";
+            ScanningFieldOfViewValue: $BIOME-LATE-FIELD-OF-VIEW;
+            MinimumAltitudeValue: $BIOME-LATE-MIN-ALT;
+            IdealAltitudeValue: $BIOME-LATE-IDEAL-ALT;
+            MaximumAltitudeValue: $BIOME-LATE-MAX-ALT;
+            RequiredResource: {
+                Rate: $BIOME-LATE-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}

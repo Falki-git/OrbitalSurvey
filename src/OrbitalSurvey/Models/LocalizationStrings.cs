@@ -11,6 +11,7 @@ public static class LocalizationStrings
         { Status.Idle, "OrbitalSurvey/Status/Idle" },
         { Status.Complete, "OrbitalSurvey/Status/Complete" },
         { Status.NoPower, "OrbitalSurvey/Status/NoPower" },
+        { Status.NotDeployed, "OrbitalSurvey/Status/NotDeployed" }
     };
 
     public static readonly Dictionary<State, LocalizedString> STATE = new()

@@ -1,0 +1,99 @@
+:parts #antenna_0v_dish_ra-2, #antenna_0v_dish_ra-15, #antenna_1v_dish_ra-100 {
+    +Module_ScienceExperiment {
+        +Data_ScienceExperiment {
+            ExperimentsStandings: [];
+            LastKnownValidSituation: {
+                CelestialBodyScalar: 0.0,
+                ScienceRegionScalar: 0.0,
+                SituationScalar: 0.0,
+                ResearchLocation: null
+            };
+            Experiments: [
+                {
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_25",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_50",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_75",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_visual_mapping_high_100",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                }
+            ];
+            NotifyOnCompletion: false;
+            ResourceThresholdMultiplier: 0.25;            
+        }
+    }
+}
+
+:parts #antenna_1v_parabolic_dts-m1, #antenna_1v_dish_hg55, #antenna_1v_dish_88-88 {
+    +Module_ScienceExperiment {
+        +Data_ScienceExperiment {
+            ExperimentsStandings: [];
+            LastKnownValidSituation: {
+                CelestialBodyScalar: 0.0,
+                ScienceRegionScalar: 0.0,
+                SituationScalar: 0.0,
+                ResearchLocation: null
+            };
+            Experiments: [
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_25",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_50",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_75",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+                {
+                    ExperimentDefinitionID: "orbital_survey_biome_mapping_high_100",
+                    ContextualExperiment: true,
+                    ResourcesCost: [],
+                    DenyInterruption: true,
+                    CFXName: "fx_science",
+                    SFXEvent: "Invalid"
+                },
+            ];
+            NotifyOnCompletion: false;
+            ResourceThresholdMultiplier: 0.25;            
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using KSP.Game;
+using KSP.Sim.impl;
 using UnityEngine;
 
 namespace OrbitalSurvey.Utilities;
@@ -9,6 +10,8 @@ public static class Utility
     public static GameStateConfiguration GameState => GameManager.Instance?.Game?.GlobalGameState?.GetGameState();
     
     private static readonly string _IMPORT_PATH = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
+    
+    public static double UT => GameManager.Instance.Game.UniverseModel.UniverseTime;
 
     public static Texture2D ImportTexture(string filename)
     {
@@ -40,4 +43,8 @@ public static class Utility
     }
     
     public static string SessionGuidString => GameManager.Instance?.Game?.SessionGuidString;
+    
+    public static List<CelestialBodyComponent> GetAllCelestialBodies() => GameManager.Instance.Game?.UniverseModel?.GetAllCelestialBodies();
+
+    public static List<string> GetAllCelestialBodyNames() => GetAllCelestialBodies().Select(body => body.Name).ToList();
 }
