@@ -1,6 +1,5 @@
 ﻿using BepInEx.Logging;
 using KSP.Game;
-using KSP.Modules;
 using KSP.Sim.impl;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
@@ -85,7 +84,7 @@ public class Core : MonoBehaviour
             SaveManager.Instance.LoadData();
     }
 
-    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, float scanningCone, bool isRetroActiveScanning = false)
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning = false)
     {
         // Sometimes, load data can be done before the textures are initialized
         if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
@@ -93,7 +92,7 @@ public class Core : MonoBehaviour
         
         var celestialData = CelestialDataDictionary[body];
         
-        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningCone, isRetroActiveScanning);
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningStats, isRetroActiveScanning);
     }
 
     public void ClearMap(string body, MapType mapType)

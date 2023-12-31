@@ -91,7 +91,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];_dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
         
         var altitude = vessel.Model.AltitudeFromRadius;
-        var state = ScanUtility.GetAltitudeState(mode, altitude);
+        var state = ScanUtility.GetAltitudeState(altitude, _dataOrbitalSurvey.ScanningStats);
         
         // Update Status
         if (map.IsFullyScanned)

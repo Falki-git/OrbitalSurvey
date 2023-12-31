@@ -1,4 +1,4 @@
-:parts #antenna_0v_dish_ra-2, #antenna_1v_parabolic_dts-m1, #antenna_1v_dish_hg55, #antenna_1v_dish_88-88 {
+:parts #antenna_0v_dish_ra-2, #antenna_0v_dish_ra-15, #antenna_1v_dish_ra-100 {
     +Module_ScienceExperiment {
         +Data_ScienceExperiment {
             ExperimentsStandings: [];
@@ -48,7 +48,7 @@
     }
 }
 
-:parts #antenna_0v_dish_ra-15, #antenna_1v_dish_ra-100 {
+:parts #antenna_1v_parabolic_dts-m1, #antenna_1v_dish_hg55, #antenna_1v_dish_88-88 {
     +Module_ScienceExperiment {
         +Data_ScienceExperiment {
             ExperimentsStandings: [];

@@ -16,7 +16,8 @@ public static class Settings
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
-
+    
+    /*
     public static Dictionary<MapType, ScanningStats> ModeScanningStats = new()
     {
         {
@@ -40,7 +41,7 @@ public static class Settings
             }
         }
     };
-
+    
     public struct ScanningStats
     {
         public int FieldOfView;
@@ -54,6 +55,7 @@ public static class Settings
         { MapType.Visual, 1.0f },
         { MapType.Biome, 2.0f }
     };
+    */
     
     public static void Initialize()
     {
