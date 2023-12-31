@@ -1,36 +1,36 @@
-Key,Type,Desc,English,French,Italian,German,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
+Key,Type,Desc,English,German,French,Italian,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
 
-PartModules/OrbitalSurvey/Name,Text,,Orbital Survey
-PartModules/OrbitalSurvey/Status,Text,,Status
-PartModules/OrbitalSurvey/Enabled,Text,,Enabled
-PartModules/OrbitalSurvey/Mode,Text,,Mode
-PartModules/OrbitalSurvey/State,Text,,State
-PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View
-PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug)
-PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude
-PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude
-PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude
-PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete
-PartModules/OrbitalSurvey/OpenGui,Text,,Open Map
+PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey
+PartModules/OrbitalSurvey/Status,Text,,Status,Status
+PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert
+PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus
+PartModules/OrbitalSurvey/State,Text,,State,State
+PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld
+PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug)
+PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Mindesthöhe
+PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude,Optimale Höhe
+PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude,Maximale Höhe
+PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete,Prozent Vollständig
+PartModules/OrbitalSurvey/OpenGui,Text,,Open Map,Öffne Karte
 
-OrbitalSurvey/Status/Disabled,Text,,Disabled
-OrbitalSurvey/Status/Scanning,Text,,Scanning
-OrbitalSurvey/Status/Idle,Text,,Idle
-OrbitalSurvey/Status/Complete,Text,,Survey Complete
-OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>
+OrbitalSurvey/Status/Disabled,Text,,Disabled,Deaktiviert
+OrbitalSurvey/Status/Scanning,Text,,Scanning,Scanning
+OrbitalSurvey/Status/Idle,Text,,Idle,Leerlauf
+OrbitalSurvey/Status/Complete,Text,,Survey Complete,Erfassung Vollständig
+OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>,<color=red>Keine Energie ⚠</color>
 OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>
 
-OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>
-OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
-OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>
-OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>
-OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>
+OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>,<color=red>Unter Mindesthöhe ⚠</color>
+OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter Optimaler Höhe ⚠</color>
+OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>,<color=green>Optimale Höhe</color>
+OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<color=yellow>Über Optimaler Höhe ⚠</color>
+OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>
 
-OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>
+OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>
 
-OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit
-OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required
-OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge
+OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit
+OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich
+OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung
 
 
 OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface"
