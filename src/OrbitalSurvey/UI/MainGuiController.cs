@@ -158,8 +158,8 @@ public class MainGuiController : MonoBehaviour
     {
         if (percent == 1f)
             PercentComplete.text = LocalizationStrings.COMPLETE;
-        else 
-            PercentComplete.text = percent.ToString("P0");
+        else
+            PercentComplete.text = $"{Math.Floor(percent * 100).ToString()} %";
     }
     
     private void SetMap(float _)
