@@ -1,13 +1,10 @@
 ﻿using HarmonyLib;
 using I2.Loc;
 using KSP.Game.Science;
-using KSP.Logging;
-using KSP.Messages;
 using KSP.Modules;
-using KSP.Sim.Definitions;
 using KSP.Sim.impl;
 
-namespace OrbitalSurvey;
+namespace OrbitalSurvey.Utilities;
 
 public class Patches
 { 

@@ -12,6 +12,7 @@ using UnityEngine;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
+using Patches = OrbitalSurvey.Utilities.Patches;
 
 namespace OrbitalSurvey;
 
