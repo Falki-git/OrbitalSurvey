@@ -86,9 +86,17 @@ public class Core : MonoBehaviour
 
     public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning = false)
     {
-        // Sometimes, load data can be done before the textures are initialized
+        // sometimes, load data can be done before the textures are initialized
         if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
+        {
             return;
+        }
+
+        // skip scanning if we're below min or above max altitude
+        if (altitude < scanningStats.MinAltitude || altitude > scanningStats.MaxAltitude)
+        {
+            return;
+        }
         
         var celestialData = CelestialDataDictionary[body];
         
@@ -107,7 +115,7 @@ public class Core : MonoBehaviour
             .Select(entry => entry.Key)
             .ToList();
 
-        // If nothing has been discovered so far, return the HomeWorld (Kerbin)
+        // if nothing has been discovered so far, return the HomeWorld (Kerbin)
         if (!toReturn.Any())
         {
             var homeWorld = GameManager.Instance.Game?.UniverseModel?

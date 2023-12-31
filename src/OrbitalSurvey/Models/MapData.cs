@@ -47,6 +47,9 @@ public class MapData
 
     public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning)
     {
+        // set the radius to at least 1 pixel
+        scanningRadius = scanningRadius == 0 ? 1 : scanningRadius;
+        
         int newlyDiscoveredPixelCount = 0;
         // start with Y coordinate cause the width of the scanning area depends on latitude, due to mercator projection
         for (int j = y - scanningRadius; j < y + scanningRadius; j++)
@@ -57,6 +60,10 @@ public class MapData
          
             // divide the width radius by 2 cause the texture's AR is 1:1, but the real AR should be 2:1
             var trueWidthRadius = (int)((scanningRadius / 2f));
+            if (trueWidthRadius == 0)
+            {
+                trueWidthRadius = 1;
+            }
             
             // due to mercator projection, area towards the poles gets distorted, so we need to apply a correction
             var latitudeOfYPixel= ScanUtility.TextureYToLatitude(j, Settings.ActiveResolution);
