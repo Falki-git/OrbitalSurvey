@@ -63,7 +63,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     private void DoScan(double universalTime)
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value)
+            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value && _dataOrbitalSurvey.ScanningStats != null)
         {
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
