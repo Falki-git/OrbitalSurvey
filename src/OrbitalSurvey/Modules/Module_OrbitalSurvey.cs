@@ -106,6 +106,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         {
             _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
         }
+        else if (((PartComponentModule_OrbitalSurvey)ComponentModule).DataDeployable?.IsExtended == false)
+        {
+            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.NotDeployed]);
+        }
         else
         {
             _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Scanning]);
@@ -131,7 +135,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
     private void OnToggleChangedValue(bool newValue)
     {
         _LOGGER.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
-        ((PartComponentModule_OrbitalSurvey)ComponentModule).LastScanTime = Utility.UT;
+        ((PartComponentModule_OrbitalSurvey)ComponentModule).ResetLastScanTime();
         
         UpdateFlightPAMVisibility(newValue);
 

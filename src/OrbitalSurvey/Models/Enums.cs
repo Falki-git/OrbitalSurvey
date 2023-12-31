@@ -12,7 +12,8 @@ public enum Status
     Scanning,
     Idle,
     Complete,
-    NoPower
+    NoPower,
+    NotDeployed
 }
 
 public enum State

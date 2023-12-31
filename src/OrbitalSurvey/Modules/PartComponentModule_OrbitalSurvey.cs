@@ -22,8 +22,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
-    private Data_ScienceExperiment _dataScienceExperiment; 
     private PartComponentModule_ScienceExperiment _moduleScienceExperiment;
+    public Data_Deployable DataDeployable;
 
     private bool _isDebugCustomFovEnabled;
 
@@ -44,12 +44,32 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
 
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
-
+        
         Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
         _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
-        _dataScienceExperiment = _moduleScienceExperiment?.dataScienceExperiment;
+        
+        // try to get Data_Deployable is the part has a Deployable module
+        Part.TryGetModule(typeof(PartComponentModule_Deployable), out var m2);
+        if (m2 != null)
+        {
+            var moduleDeployable = m2 as PartComponentModule_Deployable;
+            foreach (var dataDeployable in moduleDeployable.DataModules?.ValuesList)
+            {
+                if (dataDeployable is Data_Deployable)
+                {
+                    DataDeployable = dataDeployable as Data_Deployable;
+                    DataDeployable.toggleExtend.OnChangedValue += (_) => ResetLastScanTime();
+                    break;
+                }
+            }
+        }
 
-    LastScanTime = Utility.UT;
+        LastScanTime = Utility.UT;
+    }
+
+    public void ResetLastScanTime()
+    {
+        LastScanTime = Utility.UT;
     }
 
     // This starts triggering when vessel is placed in Flight. Does not trigger in OAB.
@@ -63,7 +83,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     private void DoScan(double universalTime)
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value && _dataOrbitalSurvey.ScanningStats != null)
+            _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value &&
+            (DataDeployable?.IsExtended ?? true) &&
+            _dataOrbitalSurvey.ScanningStats != null)
         {
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
@@ -96,7 +118,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             // check is experiment needs to trigger and if so, trigger it
             Core.Instance.CheckIfExperimentNeedsToTrigger(_moduleScienceExperiment, body, mapType);
             
-            LastScanTime = universalTime;
+            ResetLastScanTime();
 
             // FOR DEBUGGING PURPOSES
             if (DebugUI.Instance.BufferAnalyticsScan)

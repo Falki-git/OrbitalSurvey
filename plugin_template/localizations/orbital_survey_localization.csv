@@ -18,6 +18,7 @@ OrbitalSurvey/Status/Scanning,Text,,Scanning
 OrbitalSurvey/Status/Idle,Text,,Idle
 OrbitalSurvey/Status/Complete,Text,,Survey Complete
 OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>
+OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>
 
 OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>
 OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>
