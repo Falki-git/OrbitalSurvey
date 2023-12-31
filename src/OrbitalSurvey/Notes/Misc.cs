@@ -121,13 +121,13 @@ var notificationData = new KSP.Game.NotificationData()
 
 Visual:
 antenna_0v_dish_ra-2,RA-2 [LONG-RANGE PROBES]
+antenna_0v_dish_ra-15,RA-15 [DURABLE POWER SYSTEMS]
+antenna_1v_dish_ra-100,RA-100 [LONG-RANGE GENERATION]
+
+Biome:
 antenna_1v_parabolic_dts-m1,Communotron DTS-M1 [ENHANCED ELECTRONICS]
 antenna_1v_dish_hg55,Communotron HG-55 [DEEP-SPACE PROBES]
 antenna_1v_dish_88-88,Communotron 88-88 [LONG-RANGE GENERATION]
-
-Biome:
-antenna_0v_dish_ra-15,RA-15 [DURABLE POWER SYSTEMS]
-antenna_1v_dish_ra-100,RA-100 [LONG-RANGE GENERATION]
 
 n/a:
 antenna_0v_16,Communotron 16 [PROBES]
