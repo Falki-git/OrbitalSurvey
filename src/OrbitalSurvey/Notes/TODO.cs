@@ -12,8 +12,8 @@
  * - missions triggered by discovering discoverables
  * - legend for biome and altimetry
  * 
+ * 
  * TODO LONG-TERM: 
- * - adjust FOV for large bodies
  * - live position indicators and next/previous orbit
  * - scanning triangle in Map scene when active
  * - next/previous orbits 
@@ -21,9 +21,7 @@
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - adding waypoints
  * - support for custom planet packs (packs will register their maps)
- *
- * TODO SCIENCE:
- * n/a
+ * 
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -56,5 +54,6 @@
  * - transmit to get science
  * - scanning mode progression
  * - larger FOV progression
+ * - adjust FOV for large bodies
  * 
  */

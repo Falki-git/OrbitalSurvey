@@ -45,10 +45,11 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
 
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
         
+        // get the ScienceExperiment module; to be used for triggering experiments
         Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
         _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
         
-        // try to get Data_Deployable is the part has a Deployable module
+        // try to get Data_Deployable is the part has a Deployable module; scanning is disabled if part is not deployed
         Part.TryGetModule(typeof(PartComponentModule_Deployable), out var m2);
         if (m2 != null)
         {
@@ -67,6 +68,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         LastScanTime = Utility.UT;
     }
 
+    /// <summary>
+    /// Resets the LastScanTime. This is needed so that retroactive scanning doesn't kick in when module is enabled. 
+    /// </summary>
     public void ResetLastScanTime()
     {
         LastScanTime = Utility.UT;
@@ -80,6 +84,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         DoScan(universalTime);
     }
 
+    /// <summary>
+    /// Primary method that initiates scans 
+    /// </summary>
     private void DoScan(double universalTime)
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
@@ -106,6 +113,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
                 _isDebugCustomFovEnabled = DebugUI.Instance.DebugFovEnabled;
             }
             
+            // retroactive scanning is needed for high warp factors
+            // since updates are rare, we need to "catch-up" to where the vessel was during the time skip
             PerformRetroactiveScanningIfNeeded(vessel, body, mapType, _dataOrbitalSurvey.ScanningStats);
             
             // proceed with a normal scan

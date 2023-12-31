@@ -5,6 +5,9 @@ using Logger = BepInEx.Logging.Logger;
 
 namespace OrbitalSurvey.Managers;
 
+/// <summary>
+/// Handles triggering mapping experiments
+/// </summary>
 public class ScienceManager
 {
     private ScienceManager() { }
@@ -34,6 +37,10 @@ public class ScienceManager
         }
     };
 
+    /// <summary>
+    /// Triggers experiment for the given MapType and ExperimentLevel.
+    /// This method is called when the experiment level reaches the next milestone (1/4 -> 1/2 -> 3/4 -> full)
+    /// </summary>
     public bool TriggerExperiment(PartComponentModule_ScienceExperiment scienceModule, MapType map, ExperimentLevel level)
     {
         if (!ExperimentDefinitions.ContainsKey(map))

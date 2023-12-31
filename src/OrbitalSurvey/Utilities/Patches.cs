@@ -45,8 +45,7 @@ public class Patches
     
     /// <summary>
     /// This removes experiment descriptions on parts in OAB
-    /// Since there are experiments for 25%, 50%, 75% and 100% and then for High and Low orbits, there would be too much
-    /// spam to show them all.
+    /// Since there are experiments for 25%, 50%, 75% and 100%, there would be too much spam to show them all.
     /// First experiment that is found is skipped, following experiments are deleted.  
     /// </summary>
     [HarmonyPatch(typeof(Data_ScienceExperiment), "GetPartInfoEntries"), HarmonyPostfix]
@@ -128,7 +127,8 @@ public class Patches
     
     /// <summary>
     /// Reimplementation of the original method with the following log spam being omitted:
-    /// "[Unity] [Simulation] Science Experiment {experiment name} moved to a valid location, but something else is preventing the experiment from being ready." 
+    /// "[Unity] [Simulation] Science Experiment {experiment name} moved to a valid location, but something else is preventing the experiment from being ready."
+    /// "Science Experiment {experiment name} moved to an invalid location, pausing." 
     /// </summary>
     [HarmonyPatch(typeof(PartComponentModule_ScienceExperiment), "RefreshLocationsValidity"), HarmonyPrefix]
     private static bool RefreshLocationsValidity(PartComponentModule_ScienceExperiment __instance)
