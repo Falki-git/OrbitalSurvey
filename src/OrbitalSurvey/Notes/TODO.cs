@@ -1,16 +1,14 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - live position indicators
  *
  * TODO NEAR-TERM:
- * - Region Map
  * - Altimetry Map
  * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
- * - live position indicators
  * - scanning parts by -StanWildin
  * - missions triggered by discovering discoverables
- * - legend for biome and altimetry
+ * - legend for altimetry
  * 
  * 
  * TODO LONG-TERM: 
@@ -55,6 +53,8 @@
  * - scanning mode progression
  * - larger FOV progression
  * - adjust FOV for large bodies
+ * - Region Map
+ * - Legend for Region
  *
  * Release notes:
  * - Biomes are replaced by Regions
