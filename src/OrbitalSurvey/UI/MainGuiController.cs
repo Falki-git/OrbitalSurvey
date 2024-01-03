@@ -2,6 +2,7 @@
 using KSP.Game;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class MainGuiController : MonoBehaviour
     public Label PercentComplete;
     public Button CloseButton;
     public VisualElement MapContainer;
+    public VisualElement LegendContainer;
     public Toggle PlanetaryOverlay;
     
     private const string _BODY_INITIAL_VALUE = "<body>";
@@ -60,6 +62,7 @@ public class MainGuiController : MonoBehaviour
         MapContainer = Root.Q<VisualElement>("map__container");
         
         // footer controls
+        LegendContainer = Root.Q<VisualElement>("legend__container");
         PlanetaryOverlay = Root.Q<Toggle>("planetary-overlay");
         PlanetaryOverlay.RegisterValueChangedCallback((evt) => ToggleOverlay(evt.newValue));
         PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
@@ -160,11 +163,13 @@ public class MainGuiController : MonoBehaviour
         
         var body = BodyDropdown.value;
         
+        BuildLegend(body);
+        
         if (_selectedMap != null) 
             _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
 
         _selectedMap = Core.Instance.CelestialDataDictionary[body].Maps[mapType];
-
+        
         if (_selectedMap.PercentDiscovered == 0f)
         {
             MapContainer.Clear();
@@ -186,9 +191,21 @@ public class MainGuiController : MonoBehaviour
     private void UpdatePercentageComplete(float percent)
     {
         if (percent == 1f)
+        {
+            // Map is full scanned
             PercentComplete.text = LocalizationStrings.COMPLETE;
+
+            // Show Region legend if MapType is Biome
+            if (SceneController.Instance.SelectedMapType == MapType.Biome)
+            {
+                LegendContainer.visible = true;
+            }
+        }
         else
+        {
             PercentComplete.text = $"{Math.Floor(percent * 100).ToString()} %";
+        }
+            
     }
     
     private void SetMap(float _)
@@ -196,6 +213,25 @@ public class MainGuiController : MonoBehaviour
         MapContainer.Clear();
         MapContainer.style.backgroundImage = _selectedMap.CurrentMap;
         _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
+    }
+    
+    /// <summary>
+    /// Builds the Regions legend container
+    /// </summary>
+    private void BuildLegend(string body)
+    {
+        LegendContainer.Clear();
+        LegendContainer.visible = false;
+
+        if (string.IsNullOrEmpty(body))
+            return;
+        
+        var legendRegions = RegionsManager.Instance.Data[body].Values.ToList();
+
+        foreach (var region in legendRegions)
+        {
+            LegendContainer.Add(new LegendKeyControl(region.Color, region.RegionId.AddSpaceBeforeUppercase()));
+        }
     }
     
     private void ToggleOverlay(bool newState)
