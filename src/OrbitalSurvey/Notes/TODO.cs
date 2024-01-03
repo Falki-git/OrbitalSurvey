@@ -64,7 +64,7 @@
  *     - If upgrading from a previous version, existing vessels, parts and gathered maps are updated with the new scanning mode
  * - Legend that contains colors and keys for Region mapping are now visible on the mapping UI
  *     - For the legend to be revealed you need to fully scan the body 
- *     - If you don't want the legend, you can toggle it off in Settings -> Mods -> TODO
+ *     - If you don't want the legend, you can toggle it off in Settings -> Mods -> Orbital Survey -> Show Region legend
  * 
  * NOTE: some Regions are quite rare on certain bodies so they could be considered spoilers. You've been warned!
  * 
