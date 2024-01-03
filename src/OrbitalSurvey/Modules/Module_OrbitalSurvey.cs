@@ -77,7 +77,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         if (!Core.Instance.MapsInitialized || !_dataOrbitalSurvey.EnabledToggle.GetValue())
             return;
         
-        var mode = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        var mode = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
         var body = vessel.Model.mainBody.Name;
         
         // If Body doesn't exist in the dictionary (e.g. Kerbol), set to Idle and return;
@@ -145,7 +145,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
     private void OnOpenMapClicked()
     {
-        var mode = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        var mode = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
         var body = vessel.Model.mainBody.Name;
 
         SceneController.Instance.SelectedMapType = mode;

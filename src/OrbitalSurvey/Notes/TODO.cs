@@ -1,16 +1,14 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - live position indicators
  *
  * TODO NEAR-TERM:
- * - Region Map
  * - Altimetry Map
  * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
- * - live position indicators
  * - scanning parts by -StanWildin
  * - missions triggered by discovering discoverables
- * - legend for biome and altimetry
+ * - legend for altimetry
  * 
  * 
  * TODO LONG-TERM: 
@@ -55,5 +53,19 @@
  * - scanning mode progression
  * - larger FOV progression
  * - adjust FOV for large bodies
+ * - Region Map
+ * - Legend for Region
+ *
+ * Release notes:
+ * - Biomes are replaced by Regions
+ *     - With the For Science! update a new concept of Regions was introduced for science gathering that doesn't align to previous Biomes
+ *     - To help with finding different Regions, previous Biome mapping is replaced with Region mapping
+ *     - Discoverables are NOT displayed on Region maps
+ *     - If upgrading from a previous version, existing vessels, parts and gathered maps are updated with the new scanning mode
+ * - Legend that contains colors and keys for Region mapping are now visible on the mapping UI
+ *     - For the legend to be revealed you need to fully scan the body 
+ *     - If you don't want the legend, you can toggle it off in Settings -> Mods -> Orbital Survey -> Show Region legend
+ * 
+ * NOTE: some Regions are quite rare on certain bodies so they could be considered spoilers. You've been warned!
  * 
  */

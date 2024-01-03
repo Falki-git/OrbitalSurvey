@@ -107,7 +107,7 @@ public class MapData
                     if (PercentDiscovered >= 0.95f)
                     {
                         SetAsFullyScanned();
-                        OnDiscoveredPixelCountChanged.Invoke(PercentDiscovered);
+                        OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
                         return;
                     }
                 }

@@ -4,7 +4,7 @@
 :parts #antenna_0v_dish_ra-2 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Visual";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-EARLY-FIELD-OF-VIEW;
             MinimumAltitudeValue: $VISUAL-EARLY-MIN-ALT;
             IdealAltitudeValue: $VISUAL-EARLY-IDEAL-ALT;
@@ -29,7 +29,7 @@
 :parts #antenna_1v_parabolic_dts-m1 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Biome";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-EARLY-FIELD-OF-VIEW;
             MinimumAltitudeValue: $BIOME-EARLY-MIN-ALT;
             IdealAltitudeValue: $BIOME-EARLY-IDEAL-ALT;
@@ -54,7 +54,7 @@
 :parts #antenna_0v_dish_ra-15 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Visual";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-MID-FIELD-OF-VIEW;
             MinimumAltitudeValue: $VISUAL-MID-MIN-ALT;
             IdealAltitudeValue: $VISUAL-MID-IDEAL-ALT;
@@ -79,7 +79,7 @@
 :parts #antenna_1v_dish_hg55 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Biome";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-MID-FIELD-OF-VIEW;
             MinimumAltitudeValue: $BIOME-MID-MIN-ALT;
             IdealAltitudeValue: $BIOME-MID-IDEAL-ALT;
@@ -104,7 +104,7 @@
 :parts #antenna_1v_dish_ra-100 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Visual";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-LATE-FIELD-OF-VIEW;
             MinimumAltitudeValue: $VISUAL-LATE-MIN-ALT;
             IdealAltitudeValue: $VISUAL-LATE-IDEAL-ALT;
@@ -129,7 +129,7 @@
 :parts #antenna_1v_dish_88-88 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
-            ModeValue: "Biome";
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-LATE-FIELD-OF-VIEW;
             MinimumAltitudeValue: $BIOME-LATE-MIN-ALT;
             IdealAltitudeValue: $BIOME-LATE-IDEAL-ALT;

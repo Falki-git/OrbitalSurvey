@@ -38,10 +38,13 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             return;
         }
 
+        // This should never happen. Commenting out till we can test it better
+        /*
         if (string.IsNullOrEmpty(_dataOrbitalSurvey.Mode.GetValue()))
         {
-            _dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
+            //_dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
         }
+        */
 
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
         
@@ -103,7 +106,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
-            var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+            // var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+            var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue]; 
 
             // check if debugging scanning FOV needs to be applied or removed
             if (DebugUI.Instance.DebugFovEnabled != _isDebugCustomFovEnabled)
@@ -161,7 +165,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     {
         var vessel = base.Part.PartOwner.SimulationObject.Vessel;
         var body = vessel.mainBody.Name;
-        var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        //var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
+        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
         
         double latitude, longitude, altitude;
         OrbitUtility.GetOrbitalParametersAtUT(vessel, ut, out latitude, out longitude, out altitude);

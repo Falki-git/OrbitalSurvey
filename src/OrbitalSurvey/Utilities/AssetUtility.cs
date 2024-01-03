@@ -50,22 +50,22 @@ public class AssetUtility : MonoBehaviour
     
     public readonly Dictionary<string, string> BiomeBundleAssetAddresses = new()
     {
-        { "Moho_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/moho_biome_1024.png"},
-        { "Eve_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/eve_biome_1024.png"},
-        { "Gilly_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/gilly_biome_1024.png"},
-        { "Kerbin_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/kerbin_biome_1024.png"},
-        { "Mun_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/mun_biome_1024.png"},
-        { "Minmus_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/minmus_biome_1024.png"},
-        { "Duna_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/duna_biome_1024.png"},
-        { "Ike_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/ike_biome_1024.png"},
-        { "Dres_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/dres_biome_1024.png"},
-        { "Jool_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/jool_biome_1024.png"},
-        { "Laythe_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/laythe_biome_1024.png"},
-        { "Vall_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/vall_biome_1024.png"},
-        { "Tylo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/tylo_biome_1024.png"},
-        { "Bop_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/bop_biome_1024.png"},
-        { "Pol_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/pol_biome_1024.png"},
-        { "Eeloo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/biomemaps/eeloo_biome_1024.png"}
+        { "Moho_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/moho_region_1024.png"},
+        { "Eve_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/eve_region_1024.png"},
+        { "Gilly_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/gilly_region_1024.png"},
+        { "Kerbin_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/kerbin_region_1024.png"},
+        { "Mun_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/mun_region_1024.png"},
+        { "Minmus_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/minmus_region_1024.png"},
+        { "Duna_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/duna_region_1024.png"},
+        { "Ike_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/ike_region_1024.png"},
+        { "Dres_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/dres_region_1024.png"},
+        { "Jool_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/jool_region_1024.png"},
+        { "Laythe_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/laythe_region_1024.png"},
+        { "Vall_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/vall_region_1024.png"},
+        { "Tylo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/tylo_region_1024.png"},
+        { "Bop_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/bop_region_1024.png"},
+        { "Pol_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/pol_region_1024.png"},
+        { "Eeloo_1024", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps/orbitalsurvey/regionmaps/eeloo_region_1024.png"}
     };
     
     public static readonly Dictionary<string, string> OtherAssetsAddresses = new()

@@ -4,6 +4,8 @@ PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey
 PartModules/OrbitalSurvey/Status,Text,,Status,Status
 PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert
 PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus
+PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle
+PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region
 PartModules/OrbitalSurvey/State,Text,,State,State
 PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld
 PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug)
@@ -45,14 +47,14 @@ OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%
 OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Biome Mapping,Biom Kartierung
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Biome Mapping 25%,Biom Kartierung 25%
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Kartierung
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Kartierung 25%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Biome Mapping 50%,Biom Kartierung 50%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Kartierung 50%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Biome Mapping 75%,Biom Kartierung 75%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Kartierung 75%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Biome Mapping 100%,Biom Kartierung 100%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Kartierung 100%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!
 
 OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!
