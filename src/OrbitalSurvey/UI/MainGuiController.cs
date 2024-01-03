@@ -190,13 +190,15 @@ public class MainGuiController : MonoBehaviour
 
     private void UpdatePercentageComplete(float percent)
     {
+        // Is map fully scanned
         if (percent == 1f)
         {
-            // Map is full scanned
+            // Map is fully scanned
             PercentComplete.text = LocalizationStrings.COMPLETE;
 
             // Show Region legend if MapType is Biome
-            if (SceneController.Instance.SelectedMapType == MapType.Biome)
+            if (SceneController.Instance.SelectedMapType == MapType.Biome &&
+                Settings.ShowRegionLegend.Value)
             {
                 LegendContainer.visible = true;
             }

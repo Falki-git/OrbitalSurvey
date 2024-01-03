@@ -13,6 +13,8 @@ public static class Settings
     public static ConfigEntry<int> TimeBetweenRetroactiveScansLow;
     public static ConfigEntry<Difficulty> Difficulty; // Not used
     
+    public static ConfigEntry<bool> ShowRegionLegend;
+    
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
@@ -67,6 +69,16 @@ public static class Settings
                 "Time between scans.\n\n"
                 + "Increase the value for better performance, but at a cost for possibility of spotty scans.",
                 new AcceptableValueRange<float>(0.5f, 5f)
+            )
+        );
+        
+        ShowRegionLegend = Plugin.Config.Bind(
+            "General",
+            "Show Region legend when mapping is 100% complete",
+            true,
+            new ConfigDescription(
+                "Whether a legend with colors and Region names will be shown after Region mapping is 100% complete.\n\n"
+                + "Toggle this off if you want spoiler free mapping."
             )
         );
         
