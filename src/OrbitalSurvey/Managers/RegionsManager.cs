@@ -164,7 +164,7 @@ public class RegionsManager
                 { 2, new RegionColor { RegionId = "Canyons", Color = new Color32(51, 47, 38, 255) } },
                 { 3, new RegionColor { RegionId = "Craters", Color = new Color32(105, 100, 100, 255) } },
                 { 1, new RegionColor { RegionId = "GreatRift", Color = new Color32(176, 181, 181, 255) } },
-                { 0, new RegionColor { RegionId = "IceFields", Color = new Color32(116, 153, 124, 255) } },
+                { 0, new RegionColor { RegionId = "IceFields", Color = new Color32(149, 227, 243, 255) } },
             }
         },
     };
