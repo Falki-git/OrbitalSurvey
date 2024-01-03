@@ -83,6 +83,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
             .RegisterModuleForBackgroundResourceProcessing<OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
         
         Harmony.CreateAndPatchAll(typeof(Patches));
+        Harmony.CreateAndPatchAll(typeof(DebugPatches));
     }
 
     private void Update()

@@ -47,4 +47,10 @@ public static class LocalizationStrings
         {"PercentComplete", "PartModules/OrbitalSurvey/PercentComplete"},
         {"OpenGui", "PartModules/OrbitalSurvey/OpenGui"},
     };
+
+    public static readonly Dictionary<string, MapType> MODE_TYPE_TO_MAP_TYPE = new()
+    {
+        { "PartModules/OrbitalSurvey/Mode/Visual", MapType.Visual },
+        { "PartModules/OrbitalSurvey/Mode/Biome", MapType.Biome },
+    };
 }

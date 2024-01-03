@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using I2.Loc;
 using KSP.Game;
 using KSP.Sim;
 using KSP.Sim.Definitions;
@@ -79,7 +80,7 @@ public class Data_OrbitalSurvey : ModuleData
         // with [KSPDefinition] aren't being set as readOnly, so they spawn in Flight gamestate as sliders.
         // If we set [JsonIgnore] to properties, then they spawn as readOnly, but Patch Manager isn't registering them.
         // So, we use the "*Value" meta values to set the properties 
-        Mode.SetValue(ModeValue);
+        Mode.SetValue(new LocalizedString(ModeValue));
         ScanningFieldOfView.SetValue(ScanningFieldOfViewValue);
         MinimumAltitude.SetValue(MinimumAltitudeValue);
         IdealAltitude.SetValue(IdealAltitudeValue);
@@ -107,7 +108,7 @@ public class Data_OrbitalSurvey : ModuleData
             delegateList.Add(new OABPartData.PartInfoModuleEntry("", (_) => LocalizationStrings.OAB_DESCRIPTION["ModuleDescription"]));
             
             // MapType header
-            var entry = new OABPartData.PartInfoModuleEntry(ModeValue,
+            var entry = new OABPartData.PartInfoModuleEntry(new LocalizedString(ModeValue),
                 _ =>
                 {
                     // Subentries
@@ -152,7 +153,7 @@ public class Data_OrbitalSurvey : ModuleData
             ResourceDefinitionID resourceIDFromName = GameManager.Instance.Game.ResourceDefinitionDatabase.GetResourceIDFromName(this.RequiredResource.ResourceName);
             if (resourceIDFromName == ResourceDefinitionID.InvalidID)
             {
-                _LOGGER.LogError($"[ModuleLight]: There are no resources with name {this.RequiredResource.ResourceName}");
+                _LOGGER.LogError($"There are no resources with name {this.RequiredResource.ResourceName}");
                 return;
             }
             RequestConfig = new ResourceFlowRequestCommandConfig();

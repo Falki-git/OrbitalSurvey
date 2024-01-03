@@ -1,4 +1,5 @@
-﻿using KSP.Game;
+﻿using I2.Loc;
+using KSP.Game;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
@@ -26,6 +27,11 @@ public class MainGuiController : MonoBehaviour
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
 
     private MapData _selectedMap;
+    
+    /// <summary>
+    /// Item1 = localization key (e.g. "PartModules/OrbitalSurvey/Mode/Visual"), Item2 = localization value (e.g. "Visual") 
+    /// </summary>
+    private List<(string, string)> _mapTypeLocalizationStrings;
 
     private bool _isOverlayEligible
     {
@@ -77,7 +83,7 @@ public class MainGuiController : MonoBehaviour
         
         if (SceneController.Instance.SelectedMapType != null)
         {
-            MapTypeDropdown.value = SceneController.Instance.SelectedMapType.ToString();
+            MapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
             OnSelectionChanged(null);
         }
         
@@ -89,6 +95,14 @@ public class MainGuiController : MonoBehaviour
         
         // save the window position (only for current session) when it moves
         Root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+    }
+
+    private string GetLocalizedValueForMapType(MapType mapType)
+    {
+        var localizationString =
+            LocalizationStrings.MODE_TYPE_TO_MAP_TYPE.First(kvp => kvp.Value == mapType).Key;
+
+        return _mapTypeLocalizationStrings.Find(listItem => listItem.Item1 == localizationString).Item2;
     }
 
     private void BuildBodyDropdown()
@@ -106,16 +120,31 @@ public class MainGuiController : MonoBehaviour
     private void BuildMapTypeDropdown()
     {
         MapTypeDropdown.value = _MAPTYPE_INITIAL_VALUE;
-        MapTypeDropdown.choices = Enum.GetNames(typeof(MapType)).ToList();
+        MapTypeDropdown.choices = GetMapTypeChoices();
         MapTypeDropdown.RegisterValueChangedCallback(OnSelectionChanged);
     }
-    
-    private void OnSelectionChanged(ChangeEvent<string> _)
+
+    private List<string> GetMapTypeChoices()
+    {
+        _mapTypeLocalizationStrings = new();
+
+        foreach (var key in LocalizationStrings.MODE_TYPE_TO_MAP_TYPE.Keys)
+        {
+            _mapTypeLocalizationStrings.Add((key, new LocalizedString(key)));
+        }
+
+        return _mapTypeLocalizationStrings.Select(listItem => listItem.Item2).ToList();
+    }
+
+    private void OnSelectionChanged(ChangeEvent<string> evt)
     {
         if (MapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
+
+        string mapTypeLocalizationString =
+            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == MapTypeDropdown.value).Item1;
         
-        var mapType = Enum.Parse<MapType>(MapTypeDropdown.value);
+        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
         SceneController.Instance.SelectedMapType = mapType;
 
         // Planetary Overlay
@@ -177,7 +206,9 @@ public class MainGuiController : MonoBehaviour
         bool isSuccessful;
         if (newState)
         {
-            var mapType = Enum.Parse<MapType>(MapTypeDropdown.value);
+            string mapTypeLocalizationString =
+                _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == MapTypeDropdown.value).Item1;
+            var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
             isSuccessful = OverlayManager.Instance.DrawOverlay(mapType);
         }
         else
