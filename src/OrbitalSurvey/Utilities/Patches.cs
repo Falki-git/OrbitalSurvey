@@ -193,6 +193,7 @@ public class Patches
     
     #endregion
     
+    /*
     [HarmonyPatch(typeof(Data_Command), "InitializeControlPoints"), HarmonyPostfix]
     private static void Test(Data_Command __instance)
     {
@@ -213,4 +214,5 @@ public class Patches
 	    
 	    KSP.Logging.GlobalLog.LogF(KSP.Logging.LogFilter.Simulation, "[ReactionWheel] My patch ran");
     }
+    */
 }
