@@ -38,10 +38,10 @@
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-top-color: var(--frontground-darkerblue-4);
     border-bottom-color: var(--frontground-darkerblue-4);
 }
@@ -90,8 +90,8 @@
     background-color: rgba(0, 0, 0, 0);
     height: 7%;
     width: 100%;
-    align-items: flex-end;
-    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
 
 .title__container {
@@ -259,9 +259,15 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
+.overlay__toggle {
+    width: 11%;
+    justify-content: flex-end;
+    font-size: 10px;
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Medium%20SDF.asset?fileID=11400000&guid=ca4cab634f6d3284294893797c2fb994&type=2#JetBrainsMono-Medium SDF');
+}
+
 .unity-toggle__text {
-    margin-left: 10px;
-    font-size: 12px;
+    margin-left: 5px;
 }
 
 .unity-toggle__checkmark {
@@ -281,4 +287,40 @@
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     -unity-background-image-tint-color: var(--theme-font-color);
+}
+
+.legend__container {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0);
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 89%;
+}
+
+.legend-key {
+    flex-direction: row;
+    align-items: center;
+}
+
+.legend-key__color {
+    width: 10px;
+    height: 10px;
+    min-height: 10px;
+    min-width: 10px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.legend-key__text {
+    font-size: 9px;
+    margin-left: 5px;
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Medium%20SDF.asset?fileID=11400000&guid=ca4cab634f6d3284294893797c2fb994&type=2#JetBrainsMono-Medium SDF');
 }

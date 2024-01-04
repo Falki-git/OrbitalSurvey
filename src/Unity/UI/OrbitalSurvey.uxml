@@ -21,7 +21,8 @@
             <ui:VisualElement name="map__container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="footer" class="footer">
-            <ui:Toggle text="Planetary overlay" name="planetary-overlay" />
+            <ui:VisualElement name="legend__container" class="legend__container" />
+            <ui:Toggle text="Overlay" name="planetary-overlay" class="overlay__toggle" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

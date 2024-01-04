@@ -192,4 +192,27 @@ public class Patches
     */
     
     #endregion
+    
+    /*
+    [HarmonyPatch(typeof(Data_Command), "InitializeControlPoints"), HarmonyPostfix]
+    private static void Test(Data_Command __instance)
+    {
+	    __instance.minimumCrew = 5;
+	    __instance.CurrentCrew = 1;
+	    __instance.hibernate.SetValue(true);
+	    KSP.Logging.GlobalLog.LogF(KSP.Logging.LogFilter.Simulation, "My patch ran");
+    }
+    
+    [HarmonyPatch(typeof(Data_ReactionWheel), "SetupResourceRequest"), HarmonyPostfix]
+    private static void TestTwo(Data_ReactionWheel __instance)
+    {
+	    //__instance.WheelState = Data_ReactionWheel.ReactionWheelState.Disabled;
+	    //__instance.WheelActuatorMode.SetValue(Data_ReactionWheel.ActuatorModes.ManualOnly);
+	    // __instance.PitchTorque = 0;
+	    // __instance.RollTorque = 0;
+	    // __instance.YawTorque = 0;
+	    
+	    KSP.Logging.GlobalLog.LogF(KSP.Logging.LogFilter.Simulation, "[ReactionWheel] My patch ran");
+    }
+    */
 }
