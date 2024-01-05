@@ -4,7 +4,8 @@
  * - live position indicators
  *
  * TODO NEAR-TERM:
- * - next/previous orbit 
+ * - next/previous orbit
+ * - lat, long coordinates
  * - revamp of min/alt/max altitudes to be more dynamic
  * - Altimetry Map + legend
  * - scanning parts by -StanWildin
@@ -15,7 +16,6 @@
  * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
  * - missions triggered by discovering discoverables
  * - scanning triangle in Map scene when active
- * - see if clouds can be removed (requested by The Space Peacock)
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - adding waypoints by clicking on the map
  * - zoomable map or a new window with a bigger map
