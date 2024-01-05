@@ -5,6 +5,7 @@
  *
  * TODO NEAR-TERM:
  * - next/previous orbit 
+ * - revamp of min/alt/max altitudes to be more dynamic
  * - Altimetry Map + legend
  * - scanning parts by -StanWildin
  * 
@@ -16,15 +17,16 @@
  * - scanning triangle in Map scene when active
  * - see if clouds can be removed (requested by The Space Peacock)
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
- * - adding waypoints
- * - support for custom planet packs (packs will register their maps) * 
+ * - adding waypoints by clicking on the map
+ * - zoomable map or a new window with a bigger map
+ * - support for custom planet packs (packs will register their maps) 
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
  * - mark 95% as complete
  * - analytic gathering of data while timewarping - retroactive mapping for higher warp factors
  * - minimum and maximum altitude for mapping
- * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
+ * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in mind body's SOI)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - UITK UI 
  * - handle scene changes (remove overlay, maybe close window?)
