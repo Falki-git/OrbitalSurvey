@@ -11,7 +11,7 @@ public static class Utility
     
     private static readonly string _IMPORT_PATH = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data");
     
-    public static double UT => GameManager.Instance.Game.UniverseModel.UniverseTime;
+    public static double UT => GameManager.Instance.Game?.UniverseModel?.UniverseTime ?? 0;
 
     public static Texture2D ImportTexture(string filename)
     {
