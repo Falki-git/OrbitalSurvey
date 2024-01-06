@@ -9,7 +9,7 @@ using Logger = BepInEx.Logging.Logger;
 
 namespace OrbitalSurvey.Managers;
 
-public class Core : MonoBehaviour
+public class Core// : MonoBehaviour
 {
     private Core()
     {
@@ -48,7 +48,7 @@ public class Core : MonoBehaviour
                 
                 celesData.Maps[MapType.Visual].ScannedMap =
                     AssetManager.GetAsset<Texture2D>(
-                        OrbitalSurveyPlugin.Instance.AssetUtility.VisualBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
+                        AssetUtility.Instance.VisualBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
                         );
                 
                 _LOGGER.LogInfo($"Visual map for {key} successfully initialized.");
@@ -63,7 +63,7 @@ public class Core : MonoBehaviour
             {
                 celesData.Maps[MapType.Biome].ScannedMap =
                     AssetManager.GetAsset<Texture2D>(
-                        OrbitalSurveyPlugin.Instance.AssetUtility.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
+                        AssetUtility.Instance.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
                         );
                 
                 _LOGGER.LogInfo($"Biome map for {key} successfully initialized.");
