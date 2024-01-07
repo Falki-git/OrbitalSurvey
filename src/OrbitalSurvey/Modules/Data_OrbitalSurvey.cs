@@ -72,6 +72,31 @@ public class Data_OrbitalSurvey : ModuleData
     [KSPDefinition] public float IdealAltitudeValue;
     [KSPDefinition] public float MaximumAltitudeValue;
 
+    
+    private Status _statusValue;
+    public Status StatusValue
+    {
+        get => _statusValue;
+        set
+        {
+            _statusValue = value;
+            // update PAM
+            Status.SetValue(LocalizationStrings.STATUS[value]);
+        }
+    }
+    
+    private State _stateValue;
+    public State StateValue
+    {
+        get => _stateValue;
+        set
+        {
+            _stateValue = value;
+            // update PAM
+            State.SetValue(LocalizationStrings.STATE[value]);
+        }
+    }
+
     public ScanningStats ScanningStats;
 
     public override void OnPartBehaviourModuleInit()
@@ -86,15 +111,24 @@ public class Data_OrbitalSurvey : ModuleData
         IdealAltitude.SetValue(IdealAltitudeValue);
         MaximumAltitude.SetValue(MaximumAltitudeValue);
         
-        // Setting ScanningStats that will be used by Module and PartComponentModule
+        InitializeScanningStats();
+    }
+
+    public void InitializeScanningStats()
+    {
+        if (ScanningStats != null)
+            return;
+        
+        // Setting ScanningStats that will be used by BehaviourModule and PartComponentModule
         ScanningStats = new ScanningStats
         {
-            FieldOfView = ScanningFieldOfView.GetValue(),
-            MinAltitude = MinimumAltitude.GetValue(),
-            IdealAltitude = IdealAltitude.GetValue(),
-            MaxAltitude = MaximumAltitude.GetValue()
+            FieldOfView = ScanningFieldOfViewValue,
+            MinAltitude = MinimumAltitudeValue,
+            IdealAltitude = IdealAltitudeValue,
+            MaxAltitude = MaximumAltitudeValue
         };
     }
+    
 
     /// <summary>
     /// Add OAB module description on all eligible parts
@@ -176,4 +210,7 @@ public class Data_OrbitalSurvey : ModuleData
     public PartModuleResourceSetting RequiredResource;
 
     public ResourceFlowRequestCommandConfig RequestConfig;
+
+    [JsonIgnore]
+    public PartComponentModule_OrbitalSurvey PartComponentModule;
 }

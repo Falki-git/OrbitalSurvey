@@ -32,8 +32,6 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
     // Singleton instance of the plugin class
     public static OrbitalSurveyPlugin Instance { get; set; }
 
-    public AssetUtility AssetUtility;
-
     /// <summary>
     /// Runs when the mod is first initialized.
     /// </summary>
@@ -73,7 +71,11 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         
         DebugUI.Instance.InitializeStyles();
 
-        AssetUtility = gameObject.AddComponent<AssetUtility>();
+        // create providers
+        var providers = new GameObject("OrbitalSurvey_Providers");
+        providers.transform.parent = this.transform;
+        providers.AddComponent<AssetUtility>();
+        providers.AddComponent<VesselManager>();
         
         // register for save/load events 
         SaveManager.Instance.Register();

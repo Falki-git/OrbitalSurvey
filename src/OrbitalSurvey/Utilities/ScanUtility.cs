@@ -43,12 +43,26 @@ public static class ScanUtility
     }
 
     public static (int x, int y) GetTextureCoordinatesFromGeographicCoordinates
-        (double longitude, double latitude, int textureWidth, int textureHeight)
+        (double latitude, double longitude)
     {
+        int textureWidth = Settings.ActiveResolution;
+        int textureHeight = Settings.ActiveResolution;
+        
         var x = textureWidth * ((longitude + 180) / 360f);
         var y = textureHeight * ((latitude + 90) / 180f);
 
         return ((int)x, (int)y);
+    }
+    
+    public static (float percentX, float percentY) GetMapGuiCoordinatesFromGeographicCoordinates
+        (double latitude, double longitude)
+    {
+        var (textureX, textureY) = GetTextureCoordinatesFromGeographicCoordinates(latitude, longitude);
+
+        var percentX = (float)textureX / Settings.ActiveResolution;
+        var percentY = (float)textureY / Settings.ActiveResolution;
+
+        return (percentX, percentY);
     }
 
     public static double ConvertRealScanningRadiusToTextureScanningRadius(double realScanningRadius, double bodyRadius)

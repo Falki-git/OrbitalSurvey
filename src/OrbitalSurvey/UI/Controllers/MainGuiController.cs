@@ -24,6 +24,8 @@ public class MainGuiController : MonoBehaviour
     public VisualElement MapContainer;
     public VisualElement LegendContainer;
     public Toggle PlanetaryOverlay;
+
+    public VesselController VesselController;
     
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
@@ -75,6 +77,9 @@ public class MainGuiController : MonoBehaviour
             $"{AssetUtility.OtherAssetsAddresses["StaticBackground"]}");
         MapContainer.style.backgroundImage = staticBackground;
         
+        // create vessel controller (for markers and additional info)
+        VesselController = gameObject.AddComponent<VesselController>();
+        
         // disable Planetary Overlay toggle since it's first needed for the body and maptype to be selected
         PlanetaryOverlay.SetEnabled(false);
         
@@ -114,17 +119,17 @@ public class MainGuiController : MonoBehaviour
         PopulateBodyChoices(Core.Instance.GetBodiesContainingData());
         BodyDropdown.RegisterValueChangedCallback(OnSelectionChanged);
     }
-
-    private void PopulateBodyChoices(IEnumerable<string> bodiesWithData)
-    {
-        BodyDropdown.choices = bodiesWithData.ToList();
-    }
-
+    
     private void BuildMapTypeDropdown()
     {
         MapTypeDropdown.value = _MAPTYPE_INITIAL_VALUE;
         MapTypeDropdown.choices = GetMapTypeChoices();
         MapTypeDropdown.RegisterValueChangedCallback(OnSelectionChanged);
+    }
+    
+    private void PopulateBodyChoices(IEnumerable<string> bodiesWithData)
+    {
+        BodyDropdown.choices = bodiesWithData.ToList();
     }
 
     private List<string> GetMapTypeChoices()
@@ -184,6 +189,8 @@ public class MainGuiController : MonoBehaviour
 
         _selectedMap.OnDiscoveredPixelCountChanged += UpdatePercentageComplete;
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
+
+        VesselController.RebuildVesselMarkers(body);
 
         SceneController.Instance.SelectedBody = body;
     }

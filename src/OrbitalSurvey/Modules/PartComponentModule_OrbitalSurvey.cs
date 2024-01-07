@@ -6,6 +6,7 @@ using KSP.Sim.ResourceSystem;
 using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.UI;
 using Logger = BepInEx.Logging.Logger;
 using OrbitalSurvey.Utilities;
 
@@ -30,8 +31,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     // This triggers when Flight scene is loaded. It triggers for active vessels also.
     public override void OnStart(double universalTime)
     {
-        //_LOGGER.LogDebug("OnStart triggered.");
-
+        _LOGGER.LogDebug($"OnStart triggered. Vessel '{Part?.PartOwner?.SimulationObject?.Vessel?.Name ?? "n/a"}'");
+        
         if (!DataModules.TryGetByType<Data_OrbitalSurvey>(out _dataOrbitalSurvey))
         {
             _LOGGER.LogError("Unable to find a Data_OrbitalSurvey in the PartComponentModule for " + base.Part.PartName);
@@ -46,6 +47,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
         */
 
+        _dataOrbitalSurvey.InitializeScanningStats();
+        _dataOrbitalSurvey.PartComponentModule = this;
+        
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
         
         // get the ScienceExperiment module; to be used for triggering experiments
@@ -69,6 +73,8 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
 
         LastScanTime = Utility.UT;
+
+        RegisterAtVesselManager();
     }
 
     /// <summary>
@@ -84,6 +90,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     public override void OnUpdate(double universalTime, double deltaUniversalTime)
     {
         ResourceConsumptionUpdate(deltaUniversalTime);
+        UpdateStatusAndState();
         DoScan(universalTime);
     }
 
@@ -106,6 +113,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
+            if (!Core.Instance.CelestialDataDictionary.ContainsKey(body))
+                return;
+            
             // var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
             var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue]; 
 
@@ -222,9 +232,69 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         }
     }
 
+    private void UpdateStatusAndState()
+    {
+        if (!Core.Instance.MapsInitialized || !_dataOrbitalSurvey.EnabledToggle.GetValue())
+            return;
+        
+        var mode = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
+        var vessel = Part.PartOwner.SimulationObject.Vessel; 
+        var body = vessel.mainBody.Name;
+        
+        // If Body doesn't exist in the dictionary (e.g. Kerbol), set to Idle and return;
+        if (!Core.Instance.CelestialDataDictionary.ContainsKey(body))
+        {
+            _dataOrbitalSurvey.StatusValue = Status.Idle;
+            _dataOrbitalSurvey.PercentComplete.SetValue(0f);
+            return;
+        }
+        
+        var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];
+        _dataOrbitalSurvey.StatusValue = Status.Idle;
+        
+        var altitude = vessel.AltitudeFromRadius;
+        var state = ScanUtility.GetAltitudeState(altitude, _dataOrbitalSurvey.ScanningStats);
+        
+        // Update Status
+        if (map.IsFullyScanned)
+        {
+            _dataOrbitalSurvey.StatusValue = Status.Complete;
+        }
+        else if (!_dataOrbitalSurvey.HasResourcesToOperate)
+        {
+            _dataOrbitalSurvey.StatusValue = Status.NoPower;
+        }
+        else if (state is State.BelowMin or State.AboveMax)
+        {
+            _dataOrbitalSurvey.StatusValue = Status.Idle;
+        }
+        else if (DataDeployable?.IsExtended == false)
+        {
+            _dataOrbitalSurvey.StatusValue = Status.NotDeployed;
+        }
+        else
+        {
+            _dataOrbitalSurvey.StatusValue = Status.Scanning;
+        }
+        
+        // Update State
+        _dataOrbitalSurvey.StateValue = state;
+        
+        // Update PercentComplete
+        _dataOrbitalSurvey.PercentComplete.SetValue(map.PercentDiscovered);
+    }
+
     public override void OnShutdown()
     {
-        _LOGGER.LogDebug("OnShutdown triggered.");
+        _LOGGER.LogDebug($"OnShutdown triggered. Vessel '{Part?.PartOwner?.SimulationObject?.Vessel?.Name ?? "n/a"}' ");
+    }
+    
+    /// <summary>
+    /// Registers this module (and vessel) at the VesselManager that handles position marker and other stats in MainGui
+    /// </summary>
+    private void RegisterAtVesselManager()
+    {
+        VesselManager.Instance.RegisterModule(Part.PartOwner.SimulationObject.Vessel, _dataOrbitalSurvey);
     }
 
     // -

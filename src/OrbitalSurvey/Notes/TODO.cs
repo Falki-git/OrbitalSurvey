@@ -1,11 +1,11 @@
 ﻿/*
  * 
  * TODO:
- * - live position indicators
+ * - GUI buttons for toggling the marker, vessel name and geo coords
+ * 
  *
  * TODO NEAR-TERM:
  * - next/previous orbit
- * - lat, long coordinates
  * - revamp of min/alt/max altitudes to be more dynamic
  * - Altimetry Map + legend
  * - scanning parts by -StanWildin
@@ -55,6 +55,12 @@
  * - adjust FOV for large bodies
  * - Region Map
  * - Legend for Region
+ * - live position indicators (TODO: vessel registration, unregistration)
+ * - status, state, name, lat/lon updates for vessel markers in GUI
+ * 
+ * Changelog:
+ * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)  
+ * 
  *
  * 
  */

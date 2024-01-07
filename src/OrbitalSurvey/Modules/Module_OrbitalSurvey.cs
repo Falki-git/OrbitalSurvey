@@ -38,6 +38,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
     public override void OnInitialize()
     {
+        _LOGGER.LogDebug($"OnInitialize triggered. Vessel '{_part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'.");
+        
         base.OnInitialize();
         
         _actionOpenGui = new ModuleAction(OnOpenMapClicked);
@@ -60,7 +62,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
 
             if (!isEnabled)
             {
-                _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Disabled]);
+                _dataOrbitalSurvey.StatusValue = Status.Disabled;
             }
             
             HideScienceExperimentPamProperties();    
@@ -77,58 +79,17 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         if (!Core.Instance.MapsInitialized || !_dataOrbitalSurvey.EnabledToggle.GetValue())
             return;
         
-        var mode = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
-        var body = vessel.Model.mainBody.Name;
+        // Logic for updating Status, State and MapPercentage moved to PartComponentModule_OrbitalSurvey.UpdateStatusAndState
         
-        // If Body doesn't exist in the dictionary (e.g. Kerbol), set to Idle and return;
-        if (!Core.Instance.CelestialDataDictionary.ContainsKey(body))
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
-            _dataOrbitalSurvey.PercentComplete.SetValue(0f);
-            return;
-        }
-        
-        var map = Core.Instance.CelestialDataDictionary[body].Maps[mode];_dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
-        
-        var altitude = vessel.Model.AltitudeFromRadius;
-        var state = ScanUtility.GetAltitudeState(altitude, _dataOrbitalSurvey.ScanningStats);
-        
-        // Update Status
-        if (map.IsFullyScanned)
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Complete]);
-        }
-        else if (!_dataOrbitalSurvey.HasResourcesToOperate)
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.NoPower]);
-        }
-        else if (state is State.BelowMin or State.AboveMax)
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Idle]);
-        }
-        else if (((PartComponentModule_OrbitalSurvey)ComponentModule).DataDeployable?.IsExtended == false)
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.NotDeployed]);
-        }
-        else
-        {
-            _dataOrbitalSurvey.Status.SetValue(LocalizationStrings.STATUS[Status.Scanning]);
-        }
-        
-        // Update State
-        _dataOrbitalSurvey.State.SetValue(LocalizationStrings.STATE[state]);
-        
-        // Update PercentComplete
-        _dataOrbitalSurvey.PercentComplete.SetValue(map.PercentDiscovered);
-
         PerformDebugChecks();
     }
 
     // This... also triggers when Flight scene is loaded? (why?)
     // It triggers when exiting the game also.
+    // It triggers for only active vessel it appears
     public override void OnShutdown()
     {
-        _LOGGER.LogDebug($"OnShutdown triggered.");
+        _LOGGER.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
         _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
     }
 
@@ -139,8 +100,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         
         UpdateFlightPAMVisibility(newValue);
 
-        _dataOrbitalSurvey.Status.SetValue(
-            newValue ? LocalizationStrings.STATUS[Status.Scanning] : LocalizationStrings.STATUS[Status.Disabled]);
+        _dataOrbitalSurvey.StatusValue = newValue ? Status.Scanning : Status.Disabled;
     }
 
     private void OnOpenMapClicked()

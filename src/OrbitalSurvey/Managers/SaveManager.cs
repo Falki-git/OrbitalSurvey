@@ -134,5 +134,7 @@ public class SaveManager
 
         bufferedLoadData = null;
         HasBufferedLoadData = false;
+        
+        VesselManager.Instance.SetLastRefreshTimeToNow();
     }
 }

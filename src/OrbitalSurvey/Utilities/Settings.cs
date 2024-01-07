@@ -8,12 +8,13 @@ public static class Settings
     public static OrbitalSurveyPlugin Plugin => OrbitalSurveyPlugin.Instance;
 
     public static ConfigEntry<float> TimeBetweenScans;
+    public static ConfigEntry<bool> ShowRegionLegend;
+    public static ConfigEntry<float> GuiRefreshInterval;
+    
     public static ConfigEntry<int> TimeBetweenRetroactiveScansHigh;
     public static ConfigEntry<int> TimeBetweenRetroactiveScansMid;
     public static ConfigEntry<int> TimeBetweenRetroactiveScansLow;
     public static ConfigEntry<Difficulty> Difficulty; // Not used
-    
-    public static ConfigEntry<bool> ShowRegionLegend;
     
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
@@ -79,6 +80,16 @@ public static class Settings
             new ConfigDescription(
                 "Whether a legend with colors and Region names will be shown after Region mapping is 100% complete.\n\n"
                 + "Toggle this off if you want spoiler free mapping."
+            )
+        );
+        
+        GuiRefreshInterval = Plugin.Config.Bind(
+            "General",
+            "GUI refresh interval (in sec)",
+            1f,
+            new ConfigDescription(
+                "How much time in seconds needs to pass for mapping GUI to refresh.",
+                new AcceptableValueRange<float>(0.5f, 5f)
             )
         );
         
