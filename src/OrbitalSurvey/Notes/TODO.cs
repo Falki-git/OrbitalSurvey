@@ -3,8 +3,6 @@
  * TODO:
  * - GUI buttons for toggling the position marker, vessel name and geo coords
  *
- * Changelog for next version:
- * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
  *
  * TODO NEAR-TERM:
  * - replace region names with the localized version (loc_source_10.csv)
@@ -29,6 +27,7 @@
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
  * - scanning parts by -StanWildin
+ * 
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -66,7 +65,9 @@
  * - Legend for Region
  * - live position indicators, vessel registration, unregistration
  * - status, state, name, lat/lon updates for vessel markers in GUI   
- * 
+ *
+ * Changelog for next version:
+ * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
  *
  * 
  */
