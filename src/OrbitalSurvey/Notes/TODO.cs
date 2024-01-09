@@ -1,25 +1,34 @@
 ﻿/*
  * 
  * TODO:
- * - GUI buttons for toggling the marker, vessel name and geo coords
- * 
+ * - GUI buttons for toggling the position marker, vessel name and geo coords
+ *
+ * Changelog for next version:
+ * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
  *
  * TODO NEAR-TERM:
- * - next/previous orbit
+ * - replace region names with the localized version (loc_source_10.csv)
  * - revamp of min/alt/max altitudes to be more dynamic
- * - Altimetry Map + legend
- * - scanning parts by -StanWildin
+ * - next/previous orbit
+ * - altimetry Map + legend
  * 
  * 
  * TODO LONG-TERM: 
- * - see if Slope map can be generated
- * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
- * - missions triggered by discovering discoverables
- * - scanning triangle in Map scene when active
- * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - adding waypoints by clicking on the map
  * - zoomable map or a new window with a bigger map
- * - support for custom planet packs (packs will register their maps) 
+ * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
+ * - Discoverables Map
+ *      - trigger mission (what will trigger the mission?)
+ *      - one discoverable at a time
+ *      - false positives
+ *      - wide area not centered at the discoverable
+ *       - high EC consumption
+ *       - far in the tech tree
+ * - support for custom planet packs (packs will register their maps)
+ * - see if Slope map can be generated
+ * - scanning triangle in Map scene when active
+ * - revamp map fetching from the game
+ * - scanning parts by -StanWildin
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -55,11 +64,8 @@
  * - adjust FOV for large bodies
  * - Region Map
  * - Legend for Region
- * - live position indicators (TODO: vessel registration, unregistration)
- * - status, state, name, lat/lon updates for vessel markers in GUI
- * 
- * Changelog:
- * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)  
+ * - live position indicators, vessel registration, unregistration
+ * - status, state, name, lat/lon updates for vessel markers in GUI   
  * 
  *
  * 
