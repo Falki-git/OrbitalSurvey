@@ -167,4 +167,3 @@ namespace OrbitalSurvey.UI.Controls
         }
     }
 }
-
