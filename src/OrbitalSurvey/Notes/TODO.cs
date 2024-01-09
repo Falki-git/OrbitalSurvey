@@ -1,14 +1,17 @@
 ﻿/*
  * 
  * TODO:
- * - GUI buttons for toggling the position marker, vessel name and geo coords
+ * - notification area at the bottom-right corner
+ * - close button different styling
+ * - dropdown controls different styling
  *
  *
  * TODO NEAR-TERM:
  * - replace region names with the localized version (loc_source_10.csv)
+ * - resizable canvas
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
- * - altimetry Map + legend
+ * - altimetry Map + legend 
  * 
  * 
  * TODO LONG-TERM: 
@@ -64,7 +67,8 @@
  * - Region Map
  * - Legend for Region
  * - live position indicators, vessel registration, unregistration
- * - status, state, name, lat/lon updates for vessel markers in GUI   
+ * - status, state, name, lat/lon updates for vessel markers in GUI
+ * - GUI buttons for toggling the position marker, vessel name and geo coords
  *
  * Changelog for next version:
  * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
