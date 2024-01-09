@@ -1,4 +1,5 @@
-﻿using I2.Loc;
+﻿using BepInEx.Logging;
+using I2.Loc;
 using KSP.Game;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
@@ -7,6 +8,7 @@ using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Logger = BepInEx.Logging.Logger;
 
 namespace OrbitalSurvey.UI;
 
@@ -22,8 +24,11 @@ public class MainGuiController : MonoBehaviour
     public Label PercentComplete;
     public Button CloseButton;
     public VisualElement MapContainer;
+    public VisualElement SideBar;
+    public SideToggleControl OverlayToggle;
+    public SideToggleControl VesselToggle;
+    public SideToggleControl GeoCoordinatesToggle;
     public VisualElement LegendContainer;
-    public Toggle PlanetaryOverlay;
 
     public VesselController VesselController;
     
@@ -31,6 +36,8 @@ public class MainGuiController : MonoBehaviour
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
 
     private MapData _selectedMap;
+    
+    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MainGuiController");
     
     /// <summary>
     /// Item1 = localization key (e.g. "PartModules/OrbitalSurvey/Mode/Visual"), Item2 = localization value (e.g. "Visual") 
@@ -63,11 +70,23 @@ public class MainGuiController : MonoBehaviour
         // body control
         MapContainer = Root.Q<VisualElement>("map__container");
         
+        // side-bar controls
+        SideBar = Root.Q<VisualElement>("side-bar");        
+        OverlayToggle = new SideToggleControl() { TextValue = "OVL" };
+        OverlayToggle.RegisterCallback<ClickEvent>(OnOverlayToggleClicked);
+        VesselToggle = new SideToggleControl() { TextValue = "VES" };
+        VesselToggle.RegisterCallback<ClickEvent>(OnVesselToggleClicked);
+        GeoCoordinatesToggle = new SideToggleControl() { TextValue = "GEO" };
+        GeoCoordinatesToggle.RegisterCallback<ClickEvent>(OnGeoCoordinatesToggleClicked);
+        SideBar.Add(OverlayToggle);
+        SideBar.Add(VesselToggle);
+        SideBar.Add(GeoCoordinatesToggle);
+        
         // footer controls
         LegendContainer = Root.Q<VisualElement>("legend__container");
-        PlanetaryOverlay = Root.Q<Toggle>("planetary-overlay");
-        PlanetaryOverlay.RegisterValueChangedCallback((evt) => ToggleOverlay(evt.newValue));
-        PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
+        //PlanetaryOverlay = Root.Q<Toggle>("planetary-overlay");
+        //PlanetaryOverlay.RegisterValueChangedCallback((evt) => ToggleOverlay(evt.newValue));
+        //PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
         
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
@@ -80,9 +99,6 @@ public class MainGuiController : MonoBehaviour
         // create vessel controller (for markers and additional info)
         VesselController = gameObject.AddComponent<VesselController>();
         
-        // disable Planetary Overlay toggle since it's first needed for the body and maptype to be selected
-        PlanetaryOverlay.SetEnabled(false);
-        
         // check if a map was previously selected and restore it (window was previously closed and now opened again)
         if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
         {
@@ -92,7 +108,13 @@ public class MainGuiController : MonoBehaviour
         if (SceneController.Instance.SelectedMapType != null)
         {
             MapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
-            OnSelectionChanged(null);
+            OnSelectionChanged(null, false);
+        }
+        
+        // if overlay is already active, set the overlay toggle as toggled
+        if (OverlayManager.Instance.OverlayActive)
+        {
+            OverlayToggle.TriggerToggle(true);
         }
         
         // check if previous window position exists and restore it (window was previously moved then closed)
@@ -103,6 +125,22 @@ public class MainGuiController : MonoBehaviour
         
         // save the window position (only for current session) when it moves
         Root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+    }
+
+    private void OnOverlayToggleClicked(ClickEvent evt)
+    {
+        // when this method is called, the toggle is already set to the new value, so we'll use it
+        ToggleOverlay(OverlayToggle.IsToggled);
+    }
+    
+    private void OnVesselToggleClicked(ClickEvent evt)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnGeoCoordinatesToggleClicked(ClickEvent evt)
+    {
+        throw new NotImplementedException();
     }
 
     private string GetLocalizedValueForMapType(MapType mapType)
@@ -117,14 +155,14 @@ public class MainGuiController : MonoBehaviour
     {
         BodyDropdown.value = _BODY_INITIAL_VALUE;
         PopulateBodyChoices(Core.Instance.GetBodiesContainingData());
-        BodyDropdown.RegisterValueChangedCallback(OnSelectionChanged);
+        BodyDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
     }
     
     private void BuildMapTypeDropdown()
     {
         MapTypeDropdown.value = _MAPTYPE_INITIAL_VALUE;
         MapTypeDropdown.choices = GetMapTypeChoices();
-        MapTypeDropdown.RegisterValueChangedCallback(OnSelectionChanged);
+        MapTypeDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
     }
     
     private void PopulateBodyChoices(IEnumerable<string> bodiesWithData)
@@ -144,8 +182,10 @@ public class MainGuiController : MonoBehaviour
         return _mapTypeLocalizationStrings.Select(listItem => listItem.Item2).ToList();
     }
 
-    private void OnSelectionChanged(ChangeEvent<string> evt)
+    private void OnSelectionChanged(ChangeEvent<string> evt, bool playSound = true)
     {
+        if (playSound && Settings.PlayUiSounds.Value) { KSP.Audio.KSPAudioEventManager.OnKSCBuildingClick(new Vector2()); }
+        
         if (MapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
 
@@ -155,10 +195,14 @@ public class MainGuiController : MonoBehaviour
         var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
         SceneController.Instance.SelectedMapType = mapType;
 
-        // Planetary Overlay
-        PlanetaryOverlay.SetEnabled(_isOverlayEligible);
+        // Enabled the Overlay toggle if it's disabled and if we're in Flight/Map view
+        if (!OverlayToggle.IsEnabled)
+        {
+            OverlayToggle.SetEnabled(_isOverlayEligible);
+        }
+        
         // if Planetary Overlay is already toggled, change the map type
-        if (PlanetaryOverlay.value)
+        if (OverlayToggle.IsToggled)
         {
             OverlayManager.Instance.DrawOverlay(mapType);
         }
@@ -214,7 +258,6 @@ public class MainGuiController : MonoBehaviour
         {
             PercentComplete.text = $"{Math.Floor(percent * 100).ToString()} %";
         }
-            
     }
     
     private void SetMap(float _)
@@ -259,11 +302,6 @@ public class MainGuiController : MonoBehaviour
         else
         {
             isSuccessful = OverlayManager.Instance.RemoveOverlay();
-        }
-
-        if (!isSuccessful)
-        {
-            PlanetaryOverlay.SetValueWithoutNotify(!newState);
         }
     }
     
