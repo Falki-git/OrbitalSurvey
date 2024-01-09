@@ -153,21 +153,6 @@ public class VesselController : MonoBehaviour
         }
     }
 
-    private void UnsubscribeAllControlsAndClearCanvas()
-    {
-        foreach (var vesselAndControl in _trackedVessels)
-        {
-            vesselAndControl.vessel.OnNameChanged -= (value) => OnNameChanged(vesselAndControl.control, value);
-            vesselAndControl.vessel.OnMapGuiPositionChanged -= (value) => OnMapGuiPositionChanged(vesselAndControl.control, value);
-            vesselAndControl.vessel.OnGeographicCoordinatesChanged -= (value) => OnGeographicCoordinatesChanged(vesselAndControl.control, value);
-            vesselAndControl.vessel.OnVisualModuleChanged -= (value) => OnModuleChanged(vesselAndControl.control, value, MapType.Visual);
-            vesselAndControl.vessel.OnBiomeModuleChanged -= (value) => OnModuleChanged(vesselAndControl.control, value, MapType.Biome);
-        }
-        
-        _trackedVessels.Clear();
-        Canvas.Clear();
-    }
-
     private void OnDestroy()
     {
         VesselManager.Instance.ClearAllSubscriptions();
