@@ -72,7 +72,7 @@ public class VesselManager : MonoBehaviour
         VesselStats vesselStats;
         bool isNewVessel = false;
         
-        //check if vessel already exists (case: multiple modules on the same vessel)
+        // check if vessel already exists (case: multiple modules on the same vessel)
         var existingVesselStats = OrbitalSurveyVessels.Find(vesselStats => vesselStats.Vessel == vessel);
         if (existingVesselStats != null)
         {
@@ -98,6 +98,7 @@ public class VesselManager : MonoBehaviour
         if (isNewVessel)
         {
             OnVesselRegistered?.Invoke(vesselStats);
+            _LOGGER.LogInfo($"New vessel '{vesselStats.Name}' registered. Number of modules: {vesselStats.ModuleStats.Count}.");
         }
     }
     
@@ -176,6 +177,7 @@ public class VesselManager : MonoBehaviour
             {
                 vesselStats.Body = vesselStats.Vessel.Orbit.referenceBody.bodyName;
                 OnVesselChangedBody?.Invoke(vesselStats);
+                _LOGGER.LogInfo($"Vessel '{vesselStats.Name}' changed reference body to '{vesselStats.Body}'.");
             }
             vesselStats.GeographicCoordinates = (vesselStats.Vessel.Latitude, vesselStats.Vessel.Longitude);
             vesselStats.MapLocationPercent = ScanUtility.GetMapGuiCoordinatesFromGeographicCoordinates(
@@ -273,10 +275,6 @@ public class VesselManager : MonoBehaviour
                         _isBiomeModuleUpdatedThisLoop = true;
                     }
                 }
-                
-                //moduleStats.Mode = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[moduleStats.DataModule.ModeValue];
-                //moduleStats.Status = moduleStats.DataModule.StatusValue;
-                //moduleStats.State = moduleStats.DataModule.StateValue;
             }
 
             // VISUAL: check if a visual module was updated this loop and then invoke the change for the first module found
