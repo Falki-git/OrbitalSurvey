@@ -51,6 +51,12 @@ namespace OrbitalSurvey.UI.Controls
             LatitudeValue = latitude;
             LongitudeValue = longitude;
         }
+
+        public VesselMarkerControl(bool isVesselNameVisible, bool isGeoCoordinatesVisible) : this()
+        {
+            SetVesselNameVisibility(isVesselNameVisible);
+            SetGeoCoordinatesVisibility(isGeoCoordinatesVisible);
+        }
         
         public VesselMarkerControl()
         {
@@ -123,6 +129,17 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.RemoveFromClassList(UssClassName_MarkerWarningTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerErrorTint);
             _markerElement.AddToClassList(UssClassName_MarkerInnactiveTint);
+        }
+
+        public void SetVesselNameVisibility(bool isVisible)
+        {
+            _nameLabel.visible = isVisible;
+        }
+
+        public void SetGeoCoordinatesVisibility(bool isVisible)
+        {
+            _latitudeLabel.visible = isVisible;
+            _longitudeLabel.visible = isVisible;
         }
         
         public new class UxmlFactory : UxmlFactory<VesselMarkerControl, UxmlTraits> { }

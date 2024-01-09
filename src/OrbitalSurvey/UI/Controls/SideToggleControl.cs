@@ -78,7 +78,7 @@ namespace OrbitalSurvey.UI.Controls
             RegisterCallback<PointerLeaveEvent>(OnPointerLeaveEvent);
 
             // set as toggled off when first built
-            TriggerToggle(false, false);
+            SwitchToggleState(false, false);
             
             // set as disabled when first built
             SetEnabled(false);
@@ -125,10 +125,10 @@ namespace OrbitalSurvey.UI.Controls
             if (!IsEnabled)
                 return;
             
-            TriggerToggle(!IsToggled);
+            SwitchToggleState(!IsToggled);
         }
 
-        public void TriggerToggle(bool state, bool playSound = true)
+        public void SwitchToggleState(bool state, bool playSound = true)
         {
             _LOGGER.LogInfo($"OnClickEvent for '{TextValue}'. Control set to '{state}'.");
             IsToggled = state;
@@ -149,7 +149,7 @@ namespace OrbitalSurvey.UI.Controls
         public new void SetEnabled(bool state)
         {
             _LOGGER.LogInfo($"Setting control '{TextValue}' enabled property to 'state'.");
-            TriggerToggle(false, false);
+            SwitchToggleState(false, false);
             
             IsEnabled = state;
             if (IsEnabled)

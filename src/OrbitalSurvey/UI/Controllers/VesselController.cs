@@ -58,7 +58,7 @@ public class VesselController : MonoBehaviour
 
         foreach (var vessel in vessels)
         {
-            var control = new VesselMarkerControl()
+            var control = new VesselMarkerControl(SceneController.Instance.IsVesselNamesVisible,SceneController.Instance.IsGeoCoordinatesVisible)
             {
                 NameValue = vessel.Name,
                 LatitudeValue = vessel.GeographicCoordinates.Latitude,
@@ -150,6 +150,26 @@ public class VesselController : MonoBehaviour
         {
             control.SetAsGood();
             return;
+        }
+    }
+
+    public void ToggleVesselNames()
+    {
+        SceneController.Instance.IsVesselNamesVisible = !SceneController.Instance.IsVesselNamesVisible;
+
+        foreach (var vessel in _trackedVessels)
+        {
+            vessel.control.SetVesselNameVisibility(SceneController.Instance.IsVesselNamesVisible);
+        }
+    }
+
+    public void ToggleGeoCoordinates()
+    {
+        SceneController.Instance.IsGeoCoordinatesVisible = !SceneController.Instance.IsGeoCoordinatesVisible;
+
+        foreach (var vessel in _trackedVessels)
+        {
+            vessel.control.SetGeoCoordinatesVisibility(SceneController.Instance.IsGeoCoordinatesVisible);
         }
     }
 

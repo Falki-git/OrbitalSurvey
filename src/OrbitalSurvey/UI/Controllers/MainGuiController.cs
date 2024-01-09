@@ -24,7 +24,8 @@ public class MainGuiController : MonoBehaviour
     public Label PercentComplete;
     public Button CloseButton;
     public VisualElement MapContainer;
-    public VisualElement SideBar;
+    public VisualElement UpperSidebar;
+    public VisualElement LowerSidebar;
     public SideToggleControl OverlayToggle;
     public SideToggleControl VesselToggle;
     public SideToggleControl GeoCoordinatesToggle;
@@ -71,22 +72,24 @@ public class MainGuiController : MonoBehaviour
         MapContainer = Root.Q<VisualElement>("map__container");
         
         // side-bar controls
-        SideBar = Root.Q<VisualElement>("side-bar");        
+        UpperSidebar = Root.Q<VisualElement>("side-bar__upper");
+        LowerSidebar = Root.Q<VisualElement>("side-bar__lower");
         OverlayToggle = new SideToggleControl() { TextValue = "OVL" };
         OverlayToggle.RegisterCallback<ClickEvent>(OnOverlayToggleClicked);
         VesselToggle = new SideToggleControl() { TextValue = "VES" };
+        VesselToggle.SetEnabled(true);
+        VesselToggle.SwitchToggleState(SceneController.Instance.IsVesselNamesVisible, false);
         VesselToggle.RegisterCallback<ClickEvent>(OnVesselToggleClicked);
         GeoCoordinatesToggle = new SideToggleControl() { TextValue = "GEO" };
+        GeoCoordinatesToggle.SetEnabled(true);
+        GeoCoordinatesToggle.SwitchToggleState(SceneController.Instance.IsGeoCoordinatesVisible, false);
         GeoCoordinatesToggle.RegisterCallback<ClickEvent>(OnGeoCoordinatesToggleClicked);
-        SideBar.Add(OverlayToggle);
-        SideBar.Add(VesselToggle);
-        SideBar.Add(GeoCoordinatesToggle);
+        UpperSidebar.Add(OverlayToggle);
+        LowerSidebar.Add(VesselToggle);
+        LowerSidebar.Add(GeoCoordinatesToggle);
         
         // footer controls
         LegendContainer = Root.Q<VisualElement>("legend__container");
-        //PlanetaryOverlay = Root.Q<Toggle>("planetary-overlay");
-        //PlanetaryOverlay.RegisterValueChangedCallback((evt) => ToggleOverlay(evt.newValue));
-        //PlanetaryOverlay.SetValueWithoutNotify(OverlayManager.Instance.OverlayActive);
         
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
@@ -114,7 +117,7 @@ public class MainGuiController : MonoBehaviour
         // if overlay is already active, set the overlay toggle as toggled
         if (OverlayManager.Instance.OverlayActive)
         {
-            OverlayToggle.TriggerToggle(true);
+            OverlayToggle.SwitchToggleState(true, false);
         }
         
         // check if previous window position exists and restore it (window was previously moved then closed)
@@ -135,12 +138,12 @@ public class MainGuiController : MonoBehaviour
     
     private void OnVesselToggleClicked(ClickEvent evt)
     {
-        throw new NotImplementedException();
+        VesselController.ToggleVesselNames();
     }
 
     private void OnGeoCoordinatesToggleClicked(ClickEvent evt)
     {
-        throw new NotImplementedException();
+        VesselController.ToggleGeoCoordinates();
     }
 
     private string GetLocalizedValueForMapType(MapType mapType)
