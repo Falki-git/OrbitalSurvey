@@ -13,9 +13,9 @@ public class VesselController : MonoBehaviour
     { }
     
     public UIDocument MainGui;
-    public MainGuiController MainGuiController;
-    public VisualElement Root;
-    public VisualElement Canvas;
+    private MainGuiController _mainGuiController;
+    private VisualElement _root;
+    private VisualElement _canvas;
 
     private float _canvasWidth;
     private float _canvasHeight;
@@ -26,10 +26,10 @@ public class VesselController : MonoBehaviour
     public void OnEnable()
     {
         MainGui = GetComponent<UIDocument>();
-        MainGuiController = GetComponent<MainGuiController>();
-        Root = MainGui.rootVisualElement;
+        _mainGuiController = GetComponent<MainGuiController>();
+        _root = MainGui.rootVisualElement;
 
-        Canvas = Root.Q<VisualElement>("canvas");
+        _canvas = _root.Q<VisualElement>("canvas");
         StartCoroutine(GetCanvasSize());
     }
 
@@ -38,8 +38,8 @@ public class VesselController : MonoBehaviour
         // wait for 1 frame for the canvas to get its size
         yield return null;
         
-        _canvasWidth = Canvas.layout.width;
-        _canvasHeight = Canvas.layout.height;
+        _canvasWidth = _canvas.layout.width;
+        _canvasHeight = _canvas.layout.height;
         _canvasInitialized = true;
     }
 
@@ -52,7 +52,7 @@ public class VesselController : MonoBehaviour
         }
         
         VesselManager.Instance.ClearAllSubscriptions();
-        Canvas.Clear();
+        _canvas.Clear();
         
         var vessels = VesselManager.Instance.OrbitalSurveyVessels.FindAll(v => v.Body == body);
 
@@ -73,7 +73,7 @@ public class VesselController : MonoBehaviour
             
             OnMapGuiPositionChanged(control, vessel.MapLocationPercent);
             InitializeModuleStyles(control, vessel);
-            Canvas.Add(control);
+            _canvas.Add(control);
             _trackedVessels.Add((vessel, control));
         }
 
@@ -166,7 +166,7 @@ public class VesselController : MonoBehaviour
         var notificationText = SceneController.Instance.IsVesselNamesVisible ?
             LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOn] :
             LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOff];
-        MainGuiController.ShowNotification(notificationText);
+        _mainGuiController.ShowNotification(notificationText);
     }
 
     public void ToggleGeoCoordinates()
@@ -182,7 +182,7 @@ public class VesselController : MonoBehaviour
         var notificationText = SceneController.Instance.IsGeoCoordinatesVisible ?
             LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOn] :
             LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
-        MainGuiController.ShowNotification(notificationText);
+        _mainGuiController.ShowNotification(notificationText);
     }
 
     private void OnDestroy()

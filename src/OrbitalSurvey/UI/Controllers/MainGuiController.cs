@@ -19,27 +19,24 @@ public class MainGuiController : MonoBehaviour
     { }
     
     public UIDocument MainGui;
-    public VisualElement Root;
-    public DropdownField BodyDropdown;
-    public DropdownField MapTypeDropdown;
-    public Label PercentComplete;
-    public Button CloseButton;
-    public VisualElement MapContainer;
-    public Label NotificationLabel;
-    public VisualElement UpperSidebar;
-    public VisualElement LowerSidebar;
-    public SideToggleControl OverlayToggle;
-    public SideToggleControl VesselToggle;
-    public SideToggleControl GeoCoordinatesToggle;
-    public VisualElement LegendContainer;
-
-    public VesselController VesselController;
     
+    private VisualElement _root;
+    private DropdownField _bodyDropdown;
+    private DropdownField _mapTypeDropdown;
+    private Label _percentComplete;
+    private Button _closeButton;
+    private VisualElement _mapContainer;
+    private Label _notificationLabel;
+    private VisualElement _upperSidebar;
+    private VisualElement _lowerSidebar;
+    private SideToggleControl _overlayToggle;
+    private SideToggleControl _vesselToggle;
+    private SideToggleControl _geoCoordinatesToggle;
+    private VisualElement _legendContainer;
+    private VesselController _vesselController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
-
     private Coroutine _hideNotification;
-
     private MapData _selectedMap;
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MainGuiController");
@@ -63,38 +60,38 @@ public class MainGuiController : MonoBehaviour
     public void OnEnable()
     {
         MainGui = GetComponent<UIDocument>();
-        Root = MainGui.rootVisualElement;
+        _root = MainGui.rootVisualElement;
         
         // header controls
-        BodyDropdown = Root.Q<DropdownField>("body__dropdown");
-        MapTypeDropdown = Root.Q<DropdownField>("map-type__dropdown");
-        PercentComplete = Root.Q<Label>("percent-complete");
-        CloseButton = Root.Q<Button>("close-button");
-        CloseButton.RegisterCallback<ClickEvent>(OnCloseButton);
+        _bodyDropdown = _root.Q<DropdownField>("body__dropdown");
+        _mapTypeDropdown = _root.Q<DropdownField>("map-type__dropdown");
+        _percentComplete = _root.Q<Label>("percent-complete");
+        _closeButton = _root.Q<Button>("close-button");
+        _closeButton.RegisterCallback<ClickEvent>(OnCloseButton);
         
         // body control
-        MapContainer = Root.Q<VisualElement>("map__container");
-        NotificationLabel = Root.Q<Label>("notification");
+        _mapContainer = _root.Q<VisualElement>("map__container");
+        _notificationLabel = _root.Q<Label>("notification");
         
         // side-bar controls
-        UpperSidebar = Root.Q<VisualElement>("side-bar__upper");
-        LowerSidebar = Root.Q<VisualElement>("side-bar__lower");
-        OverlayToggle = new SideToggleControl() { TextValue = "OVL" };
-        OverlayToggle.RegisterCallback<ClickEvent>(OnOverlayToggleClicked);
-        VesselToggle = new SideToggleControl() { TextValue = "VES" };
-        VesselToggle.SetEnabled(true);
-        VesselToggle.SwitchToggleState(SceneController.Instance.IsVesselNamesVisible, false);
-        VesselToggle.RegisterCallback<ClickEvent>(OnVesselToggleClicked);
-        GeoCoordinatesToggle = new SideToggleControl() { TextValue = "GEO" };
-        GeoCoordinatesToggle.SetEnabled(true);
-        GeoCoordinatesToggle.SwitchToggleState(SceneController.Instance.IsGeoCoordinatesVisible, false);
-        GeoCoordinatesToggle.RegisterCallback<ClickEvent>(OnGeoCoordinatesToggleClicked);
-        UpperSidebar.Add(OverlayToggle);
-        LowerSidebar.Add(VesselToggle);
-        LowerSidebar.Add(GeoCoordinatesToggle);
+        _upperSidebar = _root.Q<VisualElement>("side-bar__upper");
+        _lowerSidebar = _root.Q<VisualElement>("side-bar__lower");
+        _overlayToggle = new SideToggleControl() { TextValue = "OVL" };
+        _overlayToggle.RegisterCallback<ClickEvent>(OnOverlayToggleClicked);
+        _vesselToggle = new SideToggleControl() { TextValue = "VES" };
+        _vesselToggle.SetEnabled(true);
+        _vesselToggle.SwitchToggleState(SceneController.Instance.IsVesselNamesVisible, false);
+        _vesselToggle.RegisterCallback<ClickEvent>(OnVesselToggleClicked);
+        _geoCoordinatesToggle = new SideToggleControl() { TextValue = "GEO" };
+        _geoCoordinatesToggle.SetEnabled(true);
+        _geoCoordinatesToggle.SwitchToggleState(SceneController.Instance.IsGeoCoordinatesVisible, false);
+        _geoCoordinatesToggle.RegisterCallback<ClickEvent>(OnGeoCoordinatesToggleClicked);
+        _upperSidebar.Add(_overlayToggle);
+        _lowerSidebar.Add(_vesselToggle);
+        _lowerSidebar.Add(_geoCoordinatesToggle);
         
         // footer controls
-        LegendContainer = Root.Q<VisualElement>("legend__container");
+        _legendContainer = _root.Q<VisualElement>("legend__container");
         
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
@@ -102,45 +99,45 @@ public class MainGuiController : MonoBehaviour
 
         var staticBackground = AssetManager.GetAsset<Texture2D>(
             $"{AssetUtility.OtherAssetsAddresses["StaticBackground"]}");
-        MapContainer.style.backgroundImage = staticBackground;
+        _mapContainer.style.backgroundImage = staticBackground;
         
         // create vessel controller (for markers and additional info)
-        VesselController = gameObject.AddComponent<VesselController>();
+        _vesselController = gameObject.AddComponent<VesselController>();
         
         // check if a map was previously selected and restore it (window was previously closed and now opened again)
         if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
         {
-            BodyDropdown.value = SceneController.Instance.SelectedBody;
+            _bodyDropdown.value = SceneController.Instance.SelectedBody;
         }
         
         if (SceneController.Instance.SelectedMapType != null)
         {
-            MapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
+            _mapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
             OnSelectionChanged(null, false);
         }
         
         // if overlay is already active, set the overlay toggle as toggled
         if (OverlayManager.Instance.OverlayActive)
         {
-            OverlayToggle.SwitchToggleState(true, false);
+            _overlayToggle.SwitchToggleState(true, false);
         }
         
         // check if previous window position exists and restore it (window was previously moved then closed)
         if (SceneController.Instance.WindowPosition != null)
-            Root[0].transform.position = SceneController.Instance.WindowPosition.Value;
+            _root[0].transform.position = SceneController.Instance.WindowPosition.Value;
         else
-            Root[0].transform.position = new Vector3(100, 200);
+            _root[0].transform.position = new Vector3(100, 200);
         
         // save the window position (only for current session) when it moves
-        Root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+        _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
     }
 
     private void OnOverlayToggleClicked(ClickEvent evt)
     {
         // when this method is called, the toggle is already set to the new value, so we'll use it
-        ToggleOverlay(OverlayToggle.IsToggled);
+        ToggleOverlay(_overlayToggle.IsToggled);
         
-        var notificationText = OverlayToggle.IsToggled ?
+        var notificationText = _overlayToggle.IsToggled ?
             LocalizationStrings.NOTIFICATIONS[Notification.OverlayOn] :
             LocalizationStrings.NOTIFICATIONS[Notification.OverlayOff];
         ShowNotification(notificationText);
@@ -148,12 +145,12 @@ public class MainGuiController : MonoBehaviour
     
     private void OnVesselToggleClicked(ClickEvent evt)
     {
-        VesselController.ToggleVesselNames();
+        _vesselController.ToggleVesselNames();
     }
 
     private void OnGeoCoordinatesToggleClicked(ClickEvent evt)
     {
-        VesselController.ToggleGeoCoordinates();
+        _vesselController.ToggleGeoCoordinates();
     }
 
     private string GetLocalizedValueForMapType(MapType mapType)
@@ -166,21 +163,21 @@ public class MainGuiController : MonoBehaviour
 
     private void BuildBodyDropdown()
     {
-        BodyDropdown.value = _BODY_INITIAL_VALUE;
+        _bodyDropdown.value = _BODY_INITIAL_VALUE;
         PopulateBodyChoices(Core.Instance.GetBodiesContainingData());
-        BodyDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
+        _bodyDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
     }
     
     private void BuildMapTypeDropdown()
     {
-        MapTypeDropdown.value = _MAPTYPE_INITIAL_VALUE;
-        MapTypeDropdown.choices = GetMapTypeChoices();
-        MapTypeDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
+        _mapTypeDropdown.value = _MAPTYPE_INITIAL_VALUE;
+        _mapTypeDropdown.choices = GetMapTypeChoices();
+        _mapTypeDropdown.RegisterValueChangedCallback(evt => OnSelectionChanged(evt));
     }
     
     private void PopulateBodyChoices(IEnumerable<string> bodiesWithData)
     {
-        BodyDropdown.choices = bodiesWithData.ToList();
+        _bodyDropdown.choices = bodiesWithData.ToList();
     }
 
     private List<string> GetMapTypeChoices()
@@ -199,31 +196,31 @@ public class MainGuiController : MonoBehaviour
     {
         if (playSound && Settings.PlayUiSounds.Value) { KSP.Audio.KSPAudioEventManager.OnKSCBuildingClick(new Vector2()); }
         
-        if (MapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
+        if (_mapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
 
         string mapTypeLocalizationString =
-            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == MapTypeDropdown.value).Item1;
+            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
         
         var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
         SceneController.Instance.SelectedMapType = mapType;
 
         // Enabled the Overlay toggle if it's disabled and if we're in Flight/Map view
-        if (!OverlayToggle.IsEnabled)
+        if (!_overlayToggle.IsEnabled)
         {
-            OverlayToggle.SetEnabled(_isOverlayEligible);
+            _overlayToggle.SetEnabled(_isOverlayEligible);
         }
         
         // if Planetary Overlay is already toggled, change the map type
-        if (OverlayToggle.IsToggled)
+        if (_overlayToggle.IsToggled)
         {
             OverlayManager.Instance.DrawOverlay(mapType);
         }
         
-        if (BodyDropdown.value == _BODY_INITIAL_VALUE)
+        if (_bodyDropdown.value == _BODY_INITIAL_VALUE)
             return;
         
-        var body = BodyDropdown.value;
+        var body = _bodyDropdown.value;
         
         BuildLegend(body);
         
@@ -234,9 +231,9 @@ public class MainGuiController : MonoBehaviour
         
         if (_selectedMap.PercentDiscovered == 0f)
         {
-            MapContainer.Clear();
-            MapContainer.Add(new Label("Awaiting scanning data..."));
-            MapContainer.style.backgroundImage = null;
+            _mapContainer.Clear();
+            _mapContainer.Add(new Label("Awaiting scanning data..."));
+            _mapContainer.style.backgroundImage = null;
             _selectedMap.OnDiscoveredPixelCountChanged += SetMap;
         }
         else
@@ -247,7 +244,7 @@ public class MainGuiController : MonoBehaviour
         _selectedMap.OnDiscoveredPixelCountChanged += UpdatePercentageComplete;
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
 
-        VesselController.RebuildVesselMarkers(body);
+        _vesselController.RebuildVesselMarkers(body);
 
         SceneController.Instance.SelectedBody = body;
     }
@@ -258,25 +255,25 @@ public class MainGuiController : MonoBehaviour
         if (percent == 1f)
         {
             // Map is fully scanned
-            PercentComplete.text = LocalizationStrings.COMPLETE;
+            _percentComplete.text = LocalizationStrings.COMPLETE;
 
             // Show Region legend if MapType is Biome
             if (SceneController.Instance.SelectedMapType == MapType.Biome &&
                 Settings.ShowRegionLegend.Value)
             {
-                LegendContainer.visible = true;
+                _legendContainer.visible = true;
             }
         }
         else
         {
-            PercentComplete.text = $"{Math.Floor(percent * 100).ToString()} %";
+            _percentComplete.text = $"{Math.Floor(percent * 100).ToString()} %";
         }
     }
     
     private void SetMap(float _)
     {
-        MapContainer.Clear();
-        MapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+        _mapContainer.Clear();
+        _mapContainer.style.backgroundImage = _selectedMap.CurrentMap;
         _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
     }
     
@@ -285,8 +282,8 @@ public class MainGuiController : MonoBehaviour
     /// </summary>
     private void BuildLegend(string body)
     {
-        LegendContainer.Clear();
-        LegendContainer.visible = false;
+        _legendContainer.Clear();
+        _legendContainer.visible = false;
 
         if (string.IsNullOrEmpty(body))
             return;
@@ -295,20 +292,20 @@ public class MainGuiController : MonoBehaviour
 
         foreach (var region in legendRegions)
         {
-            LegendContainer.Add(new LegendKeyControl(region.Color, region.RegionId.AddSpaceBeforeUppercase()));
+            _legendContainer.Add(new LegendKeyControl(region.Color, region.RegionId.AddSpaceBeforeUppercase()));
         }
     }
     
     private void ToggleOverlay(bool newState)
     {
-        if (MapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
+        if (_mapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
         
         bool isSuccessful;
         if (newState)
         {
             string mapTypeLocalizationString =
-                _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == MapTypeDropdown.value).Item1;
+                _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
             var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
             isSuccessful = OverlayManager.Instance.DrawOverlay(mapType);
         }
@@ -320,7 +317,7 @@ public class MainGuiController : MonoBehaviour
     
     private void OnPositionChanged(PointerUpEvent evt)
     {
-        SceneController.Instance.WindowPosition = Root[0].transform.position;
+        SceneController.Instance.WindowPosition = _root[0].transform.position;
     }
     
     private void OnCloseButton(ClickEvent evt)
@@ -330,8 +327,8 @@ public class MainGuiController : MonoBehaviour
 
     public void ShowNotification(string message)
     {
-        NotificationLabel.text = message;
-        NotificationLabel.AddToClassList("notification--show");
+        _notificationLabel.text = message;
+        _notificationLabel.AddToClassList("notification--show");
         
         // stop the previous coroutine for hiding if it's still running (case: multiple fast clicks) 
         if (_hideNotification != null)
@@ -346,6 +343,6 @@ public class MainGuiController : MonoBehaviour
     private IEnumerator HideNotification(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        NotificationLabel.RemoveFromClassList("notification--show");
+        _notificationLabel.RemoveFromClassList("notification--show");
     }
 }
