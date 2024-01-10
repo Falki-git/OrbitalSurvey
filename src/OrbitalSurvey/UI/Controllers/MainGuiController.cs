@@ -1,4 +1,5 @@
-﻿using BepInEx.Logging;
+﻿using System.Collections;
+using BepInEx.Logging;
 using I2.Loc;
 using KSP.Game;
 using OrbitalSurvey.Managers;
@@ -24,6 +25,7 @@ public class MainGuiController : MonoBehaviour
     public Label PercentComplete;
     public Button CloseButton;
     public VisualElement MapContainer;
+    public Label NotificationLabel;
     public VisualElement UpperSidebar;
     public VisualElement LowerSidebar;
     public SideToggleControl OverlayToggle;
@@ -35,6 +37,8 @@ public class MainGuiController : MonoBehaviour
     
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
+
+    private Coroutine _hideNotification;
 
     private MapData _selectedMap;
     
@@ -70,6 +74,7 @@ public class MainGuiController : MonoBehaviour
         
         // body control
         MapContainer = Root.Q<VisualElement>("map__container");
+        NotificationLabel = Root.Q<Label>("notification");
         
         // side-bar controls
         UpperSidebar = Root.Q<VisualElement>("side-bar__upper");
@@ -134,6 +139,11 @@ public class MainGuiController : MonoBehaviour
     {
         // when this method is called, the toggle is already set to the new value, so we'll use it
         ToggleOverlay(OverlayToggle.IsToggled);
+        
+        var notificationText = OverlayToggle.IsToggled ?
+            LocalizationStrings.NOTIFICATIONS[Notification.OverlayOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.OverlayOff];
+        ShowNotification(notificationText);
     }
     
     private void OnVesselToggleClicked(ClickEvent evt)
@@ -316,5 +326,26 @@ public class MainGuiController : MonoBehaviour
     private void OnCloseButton(ClickEvent evt)
     {
         SceneController.Instance.ToggleUI(false);
+    }
+
+    public void ShowNotification(string message)
+    {
+        NotificationLabel.text = message;
+        NotificationLabel.AddToClassList("notification--show");
+        
+        // stop the previous coroutine for hiding if it's still running (case: multiple fast clicks) 
+        if (_hideNotification != null)
+        {
+            StopCoroutine(_hideNotification);
+        }
+
+        // start a coroutine for hiding the notification
+        _hideNotification = StartCoroutine(HideNotification(3f));
+    }
+
+    private IEnumerator HideNotification(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        NotificationLabel.RemoveFromClassList("notification--show");
     }
 }

@@ -161,6 +161,12 @@ public class VesselController : MonoBehaviour
         {
             vessel.control.SetVesselNameVisibility(SceneController.Instance.IsVesselNamesVisible);
         }
+
+        // send notification
+        var notificationText = SceneController.Instance.IsVesselNamesVisible ?
+            LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOff];
+        MainGuiController.ShowNotification(notificationText);
     }
 
     public void ToggleGeoCoordinates()
@@ -171,6 +177,12 @@ public class VesselController : MonoBehaviour
         {
             vessel.control.SetGeoCoordinatesVisibility(SceneController.Instance.IsGeoCoordinatesVisible);
         }
+        
+        // send notification
+        var notificationText = SceneController.Instance.IsGeoCoordinatesVisible ?
+            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
+        MainGuiController.ShowNotification(notificationText);
     }
 
     private void OnDestroy()

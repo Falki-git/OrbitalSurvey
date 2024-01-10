@@ -40,3 +40,13 @@ public enum ExperimentLevel
     ThreeQuarters,
     Full
 }
+
+public enum Notification
+{
+    OverlayOn,
+    OverlayOff,
+    VesselNamesOn,
+    VesselNamesOff,
+    GeoCoordsOn,
+    GeoCoordsOff
+}
