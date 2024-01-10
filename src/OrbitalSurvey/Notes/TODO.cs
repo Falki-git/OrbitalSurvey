@@ -1,7 +1,6 @@
 ﻿/*
  * 
  * TODO:
- * - close button different styling
  * - dropdown controls different styling
  *
  *
@@ -69,6 +68,7 @@
  * - status, state, name, lat/lon updates for vessel markers in GUI
  * - GUI buttons for toggling the position marker, vessel name and geo coords
  * - notification area at the bottom-right corner
+ * - close button different styling
  *
  * Changelog for next version:
  * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
