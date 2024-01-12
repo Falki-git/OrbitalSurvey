@@ -8,6 +8,10 @@ namespace OrbitalSurvey.Utilities;
 
 public class AssetUtility : MonoBehaviour
 {
+    public static AssetUtility Instance { get; set; }
+
+    private void Start() => Instance = this;
+    
     private readonly Dictionary<string, string> _scaledVisualAddressableAddresses = new()
     {
         { "Moho", "Assets/Environments/systems/kerbol/moho/scaledspace/moho_scaled_d.png"},

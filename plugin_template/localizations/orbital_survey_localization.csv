@@ -29,6 +29,12 @@ OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>,,,,,,,,<color=red>高于最高高度 ⚠</color>
 
 OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>,,,,,,,,<color=green>完成！</color>
+OrbitalSurvey/UI/Overlay/ON,Text,,Overlay: ON
+OrbitalSurvey/UI/Overlay/OFF,Text,,Overlay: OFF
+OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON
+OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF
+OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON
+OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF
 
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,,,,,,,在轨扫描天体
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,,,,,,,所需资源

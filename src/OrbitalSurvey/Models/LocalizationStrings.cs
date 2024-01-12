@@ -53,4 +53,14 @@ public static class LocalizationStrings
         { "PartModules/OrbitalSurvey/Mode/Visual", MapType.Visual },
         { "PartModules/OrbitalSurvey/Mode/Biome", MapType.Biome },
     };
+    
+    public static readonly Dictionary<Notification, LocalizedString> NOTIFICATIONS = new()
+    {
+        { Notification.OverlayOn, "OrbitalSurvey/UI/Overlay/ON"},
+        { Notification.OverlayOff, "OrbitalSurvey/UI/Overlay/OFF"},
+        { Notification.VesselNamesOn, "OrbitalSurvey/UI/VesselNames/ON"},
+        { Notification.VesselNamesOff, "OrbitalSurvey/UI/VesselNames/OFF"},
+        { Notification.GeoCoordsOn, "OrbitalSurvey/UI/GeoCoordinates/ON"},
+        { Notification.GeoCoordsOff, "OrbitalSurvey/UI/GeoCoordinates/OFF"},
+    };
 }

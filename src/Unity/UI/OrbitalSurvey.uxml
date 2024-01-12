@@ -17,12 +17,20 @@
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="body" class="body">
-            <ui:VisualElement name="map__container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        <ui:VisualElement name="middle-container" class="middle-container" style="flex-direction: row;">
+            <ui:VisualElement name="body" class="body">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:VisualElement name="map__container" style="flex-grow: 1;" />
+                    <ui:VisualElement name="canvas" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="side-bar" class="side-bar">
+                <ui:VisualElement name="side-bar__upper" class="side-bar__upper" />
+                <ui:VisualElement name="side-bar__lower" class="side-bar__lower" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="footer" class="footer">
             <ui:VisualElement name="legend__container" class="legend__container" />
-            <ui:Toggle text="Overlay" name="planetary-overlay" class="overlay__toggle" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -8,56 +8,18 @@ public static class Settings
     public static OrbitalSurveyPlugin Plugin => OrbitalSurveyPlugin.Instance;
 
     public static ConfigEntry<float> TimeBetweenScans;
+    public static ConfigEntry<bool> ShowRegionLegend;
+    public static ConfigEntry<bool> PlayUiSounds;
+    public static ConfigEntry<float> GuiRefreshInterval;
+    
     public static ConfigEntry<int> TimeBetweenRetroactiveScansHigh;
     public static ConfigEntry<int> TimeBetweenRetroactiveScansMid;
     public static ConfigEntry<int> TimeBetweenRetroactiveScansLow;
     public static ConfigEntry<Difficulty> Difficulty; // Not used
     
-    public static ConfigEntry<bool> ShowRegionLegend;
-    
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
-    
-    /*
-    public static Dictionary<MapType, ScanningStats> ModeScanningStats = new()
-    {
-        {
-            MapType.Visual,
-            new ScanningStats
-            {
-                FieldOfView = 10,
-                MinAltitude = 100000,
-                IdealAltitude = 500000,
-                MaxAltitude = 1000000
-            }
-        },
-        {
-            MapType.Biome,
-            new ScanningStats
-            {
-                FieldOfView = 5,
-                MinAltitude = 300000,
-                IdealAltitude = 750000,
-                MaxAltitude = 900000
-            }
-        }
-    };
-    
-    public struct ScanningStats
-    {
-        public int FieldOfView;
-        public float MinAltitude;
-        public float IdealAltitude;
-        public float MaxAltitude;
-    }
-    
-    public static Dictionary<MapType, float> EcConsumptionRate = new()
-    {
-        { MapType.Visual, 1.0f },
-        { MapType.Biome, 2.0f }
-    };
-    */
     
     public static void Initialize()
     {
@@ -79,6 +41,23 @@ public static class Settings
             new ConfigDescription(
                 "Whether a legend with colors and Region names will be shown after Region mapping is 100% complete.\n\n"
                 + "Toggle this off if you want spoiler free mapping."
+            )
+        );
+        
+        PlayUiSounds = Plugin.Config.Bind(
+            "General",
+            "Play UI sounds",
+            true,
+            new ConfigDescription("If UI sounds will be played when clicked.")
+        );
+        
+        GuiRefreshInterval = Plugin.Config.Bind(
+            "General",
+            "GUI refresh interval (in sec)",
+            1f,
+            new ConfigDescription(
+                "How much time in seconds needs to pass for mapping GUI to refresh.",
+                new AcceptableValueRange<float>(0.5f, 5f)
             )
         );
         

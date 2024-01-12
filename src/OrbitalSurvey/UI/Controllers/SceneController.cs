@@ -26,6 +26,9 @@ public class SceneController
     public MapType? SelectedMapType;
     public Vector3? WindowPosition;
     
+    public bool IsVesselNamesVisible;
+    public bool IsGeoCoordinatesVisible;
+    
     private bool _showMainGui;
     public bool ShowMainGui
     {
