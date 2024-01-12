@@ -12,7 +12,7 @@ namespace OrbitalSurvey.UI.Controls
         public const string UssClassName_MarkerGoodTint = UssClassName_Marker + "--good";
         public const string UssClassName_MarkerWarningTint = UssClassName_Marker + "--warning";
         public const string UssClassName_MarkerErrorTint = UssClassName_Marker + "--error";
-        public const string UssClassName_MarkerInnactiveTint = UssClassName_Marker + "--innactive";
+        public const string UssClassName_MarkerInactiveTint = UssClassName_Marker + "--inactive";
         public static string UssClassName_Latitude = UssClassName + "__latitude";
         public static string UssClassName_Longitude = UssClassName + "__longitude";
 
@@ -36,13 +36,13 @@ namespace OrbitalSurvey.UI.Controls
         public double LatitudeValue
         {
             //get => LatitudeLabel.text;
-            set => _latitudeLabel.text = $"LAT: {value.ToString("F3")} °";
+            set => _latitudeLabel.text = $"LAT: {value.ToString("F3")}°";
         }
 
         public double LongitudeValue
         {
             //get => LongitudeLabel.text;
-            set => _longitudeLabel.text = $"LON: {value.ToString("F3")} °";
+            set => _longitudeLabel.text = $"LON: {value.ToString("F3")}°";
         }
 
         public VesselMarkerControl(string name, double latitude, double longitude) : this()
@@ -96,7 +96,7 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.RemoveFromClassList(UssClassName_MarkerGoodTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerWarningTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerErrorTint);
-            _markerElement.RemoveFromClassList(UssClassName_MarkerInnactiveTint);
+            _markerElement.RemoveFromClassList(UssClassName_MarkerInactiveTint);
         }
 
         public void SetAsGood()
@@ -104,7 +104,7 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.AddToClassList(UssClassName_MarkerGoodTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerWarningTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerErrorTint);
-            _markerElement.RemoveFromClassList(UssClassName_MarkerInnactiveTint);
+            _markerElement.RemoveFromClassList(UssClassName_MarkerInactiveTint);
         }
 
         public void SetAsWarning()
@@ -112,7 +112,7 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.RemoveFromClassList(UssClassName_MarkerGoodTint);
             _markerElement.AddToClassList(UssClassName_MarkerWarningTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerErrorTint);
-            _markerElement.RemoveFromClassList(UssClassName_MarkerInnactiveTint);
+            _markerElement.RemoveFromClassList(UssClassName_MarkerInactiveTint);
         }
 
         public void SetAsError()
@@ -120,15 +120,15 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.RemoveFromClassList(UssClassName_MarkerGoodTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerWarningTint);
             _markerElement.AddToClassList(UssClassName_MarkerErrorTint);
-            _markerElement.RemoveFromClassList(UssClassName_MarkerInnactiveTint);
+            _markerElement.RemoveFromClassList(UssClassName_MarkerInactiveTint);
         }
 
-        public void SetAsInnactive()
+        public void SetAsInactive()
         {
             _markerElement.RemoveFromClassList(UssClassName_MarkerGoodTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerWarningTint);
             _markerElement.RemoveFromClassList(UssClassName_MarkerErrorTint);
-            _markerElement.AddToClassList(UssClassName_MarkerInnactiveTint);
+            _markerElement.AddToClassList(UssClassName_MarkerInactiveTint);
         }
 
         public void SetVesselNameVisibility(bool isVisible)

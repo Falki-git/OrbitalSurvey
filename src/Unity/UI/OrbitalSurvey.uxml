@@ -22,6 +22,7 @@
                 <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
                     <ui:VisualElement name="map__container" style="flex-grow: 1;" />
                     <ui:VisualElement name="canvas" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
+                    <ui:Label tabindex="-1" text="Overlay: ON" display-tooltip-when-elided="true" name="notification" class="notification" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="side-bar" class="side-bar">

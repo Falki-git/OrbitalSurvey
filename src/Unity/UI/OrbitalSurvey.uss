@@ -23,8 +23,10 @@
     --yellowish-translucent: rgba(237, 208, 147, 0.1);
     --blueish: rgb(60, 62, 146);
     --blueish-translucent: rgba(60, 62, 146, 0.1);
+    --redish: rgb(133, 13, 0);
+    --redish-translucent: rgba(133, 13, 0, 0.5);
     --border-active-green: rgb(64, 245, 0);
-    --border-active-green-translucent: rgba(64, 245, 0, 0.1);
+    --border-active-green-translucent: rgba(64, 245, 0, 0.4);
     --led-checked-green: rgb(0, 255, 102);
     --led-unchecked-gray: rgb(85, 88, 102);
     --led-disabled-gray: rgb(42, 42, 50);
@@ -216,10 +218,6 @@
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
     border-left-color: var(--yellowish-translucent);
     border-right-color: var(--yellowish-translucent);
     border-top-color: var(--yellowish-translucent);
@@ -227,6 +225,11 @@
     width: 100%;
     height: 100%;
     font-size: 12px;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .unity-base-popup-field__text {
@@ -240,9 +243,36 @@
     font-size: 12px;
 }
 
+.unity-popup-field .unity-text-element {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 .unity-popup-field:hover .unity-text-element {
-    background-color: var(--yellowish);
-    color: var(--black-full);
+    border-left-color: var(--background-lightgray-4-translucent);
+    border-right-color: var(--background-lightgray-4-translucent);
+    border-top-color: var(--background-lightgray-4-translucent);
+    border-bottom-color: var(--background-lightgray-4-translucent);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    background-color: var(--black-1-translucent);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: var(--background-lightgray-4-translucent);
+    background-image: url('project://database/Assets/UI/orbital_survey/ICO-Dropdown-arrows.png?fileID=2800000&guid=4dadd0a281f3c914a99251725faae526&type=3#ICO-Dropdown-arrows');
 }
 
 .percent-complete {
@@ -271,10 +301,10 @@
     background-color: rgba(15, 19, 24, 0);
     width: 25px;
     height: 25px;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     -unity-background-scale-mode: scale-to-fit;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -282,16 +312,20 @@
     border-bottom-right-radius: 3px;
 }
 
-.close-button:hover {
+.close-button--hover--notused {
     background-color: rgba(255, 255, 255, 0.25);
 }
 
 .close-button__background {
     width: 100%;
     height: 100%;
-    background-image: url('project://database/Assets/UI/orbital_survey/k2d2_cross.png?fileID=2800000&guid=ca97245ccb97d6e4d93263ea89a0d5ff&type=3#k2d2_cross');
-    -unity-background-image-tint-color: rgb(192, 199, 213);
+    background-image: url('project://database/Assets/UI/orbital_survey/ICO-Close-med.png?fileID=2800000&guid=12aeb7277da0ad3429321687b2e299ef&type=3#ICO-Close-med');
     -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: var(--background-lightgray-4);
+}
+
+.close-button__background:hover {
+    -unity-background-image-tint-color: var(--redish);
 }
 
 .legend__container {
@@ -347,7 +381,9 @@
     text-overflow: ellipsis;
     height: 30%;
     white-space: normal;
-    text-shadow: 10px 10px 0 rgb(0, 0, 0);
+    text-shadow: -10px 10px 0 rgb(0, 0, 0);
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Bold%20SDF.asset?fileID=11400000&guid=5d23620e1b8bb5e49ab80186ee3fed9b&type=2#JetBrainsMono-Bold SDF');
+    color: rgb(255, 255, 255);
 }
 
 .vessel-marker__marker {
@@ -368,7 +404,7 @@
     -unity-background-image-tint-color: rgb(255, 0, 0);
 }
 
-.vessel-marker__marker--innactive {
+.vessel-marker__marker--inactive {
     -unity-background-image-tint-color: rgb(200, 200, 200);
 }
 
@@ -376,14 +412,18 @@
     -unity-text-align: upper-center;
     padding-bottom: 0;
     height: 15%;
-    text-shadow: 10px 10px 0 rgb(0, 0, 0);
+    text-shadow: -10px 10px 0 rgb(0, 0, 0);
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Bold%20SDF.asset?fileID=11400000&guid=5d23620e1b8bb5e49ab80186ee3fed9b&type=2#JetBrainsMono-Bold SDF');
+    color: rgb(255, 255, 255);
 }
 
 .vessel-marker__longitude {
     -unity-text-align: upper-center;
     padding-top: 0;
     height: 15%;
-    text-shadow: 10px 10px 0 rgb(0, 0, 0);
+    text-shadow: -10px 10px 0 rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Bold%20SDF.asset?fileID=11400000&guid=5d23620e1b8bb5e49ab80186ee3fed9b&type=2#JetBrainsMono-Bold SDF');
 }
 
 .side-toggle {
@@ -490,4 +530,26 @@
 
 .side-toggle__text--disabled {
     color: var(--background-lightgray-4-translucent);
+}
+
+.notification {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background-color: var(--border-active-green-translucent);
+    color: var(--black-1);
+    -unity-font-definition: url('project://database/Packages/uitkforksp2.controls/Assets/Theme/Fonts/JetBrainsMono/JetBrainsMono-Medium%20SDF.asset?fileID=11400000&guid=ca4cab634f6d3284294893797c2fb994&type=2#JetBrainsMono-Medium SDF');
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    -unity-text-align: upper-center;
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.notification--show {
+    transition-duration: 1s;
+    opacity: 1;
 }
