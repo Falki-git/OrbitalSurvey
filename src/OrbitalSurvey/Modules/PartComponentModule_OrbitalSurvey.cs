@@ -6,7 +6,6 @@ using KSP.Sim.ResourceSystem;
 using OrbitalSurvey.Debug;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
-using OrbitalSurvey.UI;
 using Logger = BepInEx.Logging.Logger;
 using OrbitalSurvey.Utilities;
 
