@@ -1,3 +1,0 @@
-:parts #antenna* > Module_DataTransmitter > Data_Transmitter {
-    CommunicationRange: *500;
-}
