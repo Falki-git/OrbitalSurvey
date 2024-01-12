@@ -1,8 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - dropdown controls different styling
- *
+ * n/a
  *
  * TODO NEAR-TERM:
  * - replace region names with the localized version (loc_source_10.csv)
@@ -69,6 +68,7 @@
  * - GUI buttons for toggling the position marker, vessel name and geo coords
  * - notification area at the bottom-right corner
  * - close button different styling
+ * - dropdown controls different styling
  *
  * Changelog for next version:
  * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
