@@ -92,7 +92,7 @@ public class VesselController : MonoBehaviour
         var module = vessel.ModuleStats.Find(m => m.Mode == mapType);
         if (module == null)
         {
-            control.SetAsInnactive();
+            control.SetAsInactive();
             return;
         }
         
@@ -123,7 +123,7 @@ public class VesselController : MonoBehaviour
 
         if (!module.Enabled)
         {
-            control.SetAsInnactive();
+            control.SetAsInactive();
             return;
         }
 
