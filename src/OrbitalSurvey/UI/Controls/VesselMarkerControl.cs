@@ -36,13 +36,13 @@ namespace OrbitalSurvey.UI.Controls
         public double LatitudeValue
         {
             //get => LatitudeLabel.text;
-            set => _latitudeLabel.text = $"LAT: {value.ToString("F3")} °";
+            set => _latitudeLabel.text = $"LAT: {value:F3}°";
         }
         
         public double LongitudeValue
         {
             //get => LongitudeLabel.text;
-            set => _longitudeLabel.text = $"LON: {value.ToString("F3")} °";
+            set => _longitudeLabel.text = $"LON: {value:F3}°";
         }
 
         public VesselMarkerControl(string name, double latitude, double longitude) : this()
