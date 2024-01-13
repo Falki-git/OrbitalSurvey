@@ -34,6 +34,7 @@ public class MainGuiController : MonoBehaviour
     private SideToggleControl _geoCoordinatesToggle;
     private VisualElement _legendContainer;
     private VesselController _vesselController;
+    private ResizeController _resizeController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
     private Coroutine _hideNotification;
@@ -101,9 +102,6 @@ public class MainGuiController : MonoBehaviour
             $"{AssetUtility.OtherAssetsAddresses["StaticBackground"]}");
         _mapContainer.style.backgroundImage = staticBackground;
         
-        // create vessel controller (for markers and additional info)
-        _vesselController = gameObject.AddComponent<VesselController>();
-        
         // check if a map was previously selected and restore it (window was previously closed and now opened again)
         if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
         {
@@ -130,6 +128,12 @@ public class MainGuiController : MonoBehaviour
         
         // save the window position (only for current session) when it moves
         _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+        
+        // create vessel controller (for markers and additional info)
+        _vesselController = gameObject.AddComponent<VesselController>();
+
+        // create resize controller for resizing the map canvas
+        _resizeController = gameObject.AddComponent<ResizeController>();
     }
 
     private void OnOverlayToggleClicked(ClickEvent evt)

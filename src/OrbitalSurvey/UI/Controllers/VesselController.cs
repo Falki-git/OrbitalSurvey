@@ -31,8 +31,9 @@ public class VesselController : MonoBehaviour
 
         _canvas = _root.Q<VisualElement>("canvas");
         StartCoroutine(GetCanvasSize());
+        StartCoroutine(RegisterForWindowResize());
     }
-
+    
     private IEnumerator GetCanvasSize()
     {
         // wait for 1 frame for the canvas to get its size
@@ -44,6 +45,7 @@ public class VesselController : MonoBehaviour
     }
 
     public void RebuildVesselMarkers(string body) => StartCoroutine(Rebuild(body));
+    private IEnumerator Rebuild() => Rebuild(SceneController.Instance.SelectedBody);
     private IEnumerator Rebuild(string body)
     {
         if (!_canvasInitialized)
@@ -78,9 +80,9 @@ public class VesselController : MonoBehaviour
         }
 
         VesselManager.Instance.OnVesselChangedBody +=
-            (value) => StartCoroutine(Rebuild(SceneController.Instance.SelectedBody));
+            (value) => StartCoroutine(Rebuild());
         VesselManager.Instance.OnVesselRegistered +=
-            (value) => StartCoroutine(Rebuild(SceneController.Instance.SelectedBody));
+            (value) => StartCoroutine(Rebuild());
     }
 
     private void InitializeModuleStyles(VesselMarkerControl control, VesselManager.VesselStats vessel)
@@ -183,6 +185,24 @@ public class VesselController : MonoBehaviour
             LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOn] :
             LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
         _mainGuiController.ShowNotification(notificationText);
+    }
+    
+    /// <summary>
+    /// Get the new width and height of the canvas after window is resized by the player. The rebuild the UI. 
+    /// </summary>
+    private IEnumerator RegisterForWindowResize()
+    {
+        if (ResizeController.Instance == null)
+        {
+            yield return null;
+        }
+
+        ResizeController.Instance.OnWindowResized += (newWidth, newHeight) =>
+        {
+            _canvasWidth = _canvas.layout.width;
+            _canvasHeight = _canvas.layout.height;
+            StartCoroutine(Rebuild());
+        };
     }
 
     private void OnDestroy()
