@@ -4,8 +4,8 @@ PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey,,,,,,,,轨道
 PartModules/OrbitalSurvey/Status,Text,,Status,Status,,,,,,,,状态
 PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert,,,,,,,,启用
 PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,,,,,,,,模式
-PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle
-PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region
+PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle,,,,,,,,光学
+PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region,,,,,,,,区域
 PartModules/OrbitalSurvey/State,Text,,State,State,,,,,,,,状态
 PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld,,,,,,,,视野
 PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug),,,,,,,,视野(debug)
@@ -29,19 +29,19 @@ OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>,,,,,,,,<color=red>高于最高高度 ⚠</color>
 
 OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>,,,,,,,,<color=green>完成！</color>
-OrbitalSurvey/UI/Overlay/ON,Text,,Overlay: ON
-OrbitalSurvey/UI/Overlay/OFF,Text,,Overlay: OFF
-OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON
-OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF
-OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON
-OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF
+OrbitalSurvey/UI/Overlay/ON,Text,,Overlay: ON,,,,,,,,,叠加层：显示
+OrbitalSurvey/UI/Overlay/OFF,Text,,Overlay: OFF,,,,,,,,,叠加层：隐藏
+OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON,,,,,,,,,飞船名称：显示
+OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF,,,,,,,,,飞船名称：隐藏
+OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON,,,,,,,,,地理坐标：显示
+OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF,,,,,,,,,地理坐标：隐藏
 
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,,,,,,,在轨扫描天体
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,,,,,,,所需资源
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung,,,,,,,,电能
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,,,,,,,“绘制天体表面的25%、50%、75%和100%”
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,,,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung,,,,,,,,光学测绘
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%,,,,,,,,光学测绘25%
@@ -53,17 +53,17 @@ OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%,,,,,,,,光学测绘100%
 OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,,,,,,,天体完全扫描！
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Kartierung,,,,,,,,生物群系测绘
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Kartierung 25%,,,,,,,,生物群系测绘25%
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Kartierung,,,,,,,,区域测绘
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Kartierung 25%,,,,,,,,区域测绘25%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/4
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Kartierung 50%,,,,,,,,生物群系测绘50%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Kartierung 50%,,,,,,,,区域测绘50%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/2
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Kartierung 75%,,,,,,,,生物群系测绘75%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Kartierung 75%,,,,,,,,区域测绘75%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的3/4
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Kartierung 100%,,,,,,,,生物群系测绘100%
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Kartierung 100%,,,,,,,,区域测绘100%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,,,,,,,天体完全扫描！
 
 OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!,,,,,,,,位于""{1}""的飞船""{0}""已完成轨道测绘！
-OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输测绘报告以收集科研点数
+OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输报告并获得科研点数
 OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat einen Meilenstein bei der orbitalen Kartierung erreicht!,,,,,,,,位于""{1}""的飞船""{0}""已达到一个轨道测绘的里程碑！
-OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输测绘报告以收集科研点数
+OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输报告并获得科研点数
