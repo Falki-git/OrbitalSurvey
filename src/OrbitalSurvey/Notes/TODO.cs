@@ -1,11 +1,11 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - resizable canvas
+ * 
  *
  * TODO NEAR-TERM:
- * - replace region names with the localized version (loc_source_10.csv)
- * - resizable canvas
+ * - replace region names with the localized version (loc_source_10.csv) 
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
  * - altimetry Map + legend 
@@ -70,8 +70,6 @@
  * - close button different styling
  * - dropdown controls different styling
  *
- * Changelog for next version:
- * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
  *
  * 
  */
