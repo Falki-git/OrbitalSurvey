@@ -1,24 +1,32 @@
 ﻿/*
  * 
  * TODO:
- * - live position indicators
+ * n/a
  *
  * TODO NEAR-TERM:
- * - Altimetry Map
- * - Discoverables Map (false positives, wide area, high EC consumption, far in the tech tree)
- * - scanning parts by -StanWildin
- * - missions triggered by discovering discoverables
- * - legend for altimetry
+ * - replace region names with the localized version (loc_source_10.csv)
+ * - resizable canvas
+ * - revamp of min/alt/max altitudes to be more dynamic
+ * - next/previous orbit
+ * - altimetry Map + legend 
  * 
  * 
  * TODO LONG-TERM: 
- * - live position indicators and next/previous orbit
- * - scanning triangle in Map scene when active
- * - next/previous orbits 
- * - see if clouds can be removed (requested by The Space Peacock)
+ * - adding waypoints by clicking on the map
+ * - zoomable map or a new window with a bigger map
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
- * - adding waypoints
+ * - Discoverables Map
+ *      - trigger mission (what will trigger the mission?)
+ *      - one discoverable at a time
+ *      - false positives
+ *      - wide area not centered at the discoverable
+ *       - high EC consumption
+ *       - far in the tech tree
  * - support for custom planet packs (packs will register their maps)
+ * - see if Slope map can be generated
+ * - scanning triangle in Map scene when active
+ * - revamp map fetching from the game
+ * - scanning parts by -StanWildin
  * 
  *
  * DONE:
@@ -26,7 +34,7 @@
  * - mark 95% as complete
  * - analytic gathering of data while timewarping - retroactive mapping for higher warp factors
  * - minimum and maximum altitude for mapping
- * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in my body's SOI)
+ * - add ideal altitude. Above that viewing cone shrinks. Define max altitude as well (keep in mind body's SOI)
  * - finish scanning module on antennas: add additional info (mix/max altitude, fixed FOV, map percentage, draw overlay?, open map?...)
  * - UITK UI 
  * - handle scene changes (remove overlay, maybe close window?)
@@ -55,17 +63,15 @@
  * - adjust FOV for large bodies
  * - Region Map
  * - Legend for Region
+ * - live position indicators, vessel registration, unregistration
+ * - status, state, name, lat/lon updates for vessel markers in GUI
+ * - GUI buttons for toggling the position marker, vessel name and geo coords
+ * - notification area at the bottom-right corner
+ * - close button different styling
+ * - dropdown controls different styling
  *
- * Release notes:
- * - Biomes are replaced by Regions
- *     - With the For Science! update a new concept of Regions was introduced for science gathering that doesn't align to previous Biomes
- *     - To help with finding different Regions, previous Biome mapping is replaced with Region mapping
- *     - Discoverables are NOT displayed on Region maps
- *     - If upgrading from a previous version, existing vessels, parts and gathered maps are updated with the new scanning mode
- * - Legend that contains colors and keys for Region mapping are now visible on the mapping UI
- *     - For the legend to be revealed you need to fully scan the body 
- *     - If you don't want the legend, you can toggle it off in Settings -> Mods -> Orbital Survey -> Show Region legend
- * 
- * NOTE: some Regions are quite rare on certain bodies so they could be considered spoilers. You've been warned!
+ * Changelog for next version:
+ * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
+ *
  * 
  */
