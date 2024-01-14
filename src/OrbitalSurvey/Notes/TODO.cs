@@ -73,6 +73,7 @@
  * - dropdown controls different styling
  *
  * - For Changelog:
- *      - mouseovering vessel markers now shows vessel names and geo coordinates, independent of the toggle state
+ *      - mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
+ *      - added Italian translations by @leonardfactory
  * 
  */
