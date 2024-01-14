@@ -2,9 +2,11 @@
  * 
  * TODO:
  * - resizable canvas
- * 
+ * - zoomable canvas
+ * - track active vessel
  *
  * TODO NEAR-TERM:
+ * - GEO on mouse over
  * - replace region names with the localized version (loc_source_10.csv) 
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
@@ -70,6 +72,7 @@
  * - close button different styling
  * - dropdown controls different styling
  *
- *
+ * - For Changelog:
+ *      - mouseovering vessel markers now shows vessel names and geo coordinates, independent of the toggle state
  * 
  */
