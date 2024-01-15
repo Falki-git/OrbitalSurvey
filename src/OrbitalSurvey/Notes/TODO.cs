@@ -29,7 +29,11 @@
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
  * - scanning parts by -StanWildin
- * 
+ *
+ * BUG FIXES OR IMPROVEMENTS NEEDED:
+ * - take into account all modules of the same type at updates and update status to the "highest" state
+ * - see if I can reproduce scanning data disappearing when returning to KSC
+ * - experiments get locked in on a particular vessel
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
