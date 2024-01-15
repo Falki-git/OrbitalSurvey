@@ -41,7 +41,7 @@ OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erfo
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung,,Carica Elettrica,,,,,,电能
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,"Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,"Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung,,Mappatura visuale,,,,,,光学测绘
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%,,Mappatura visuale 25%,,,,,,光学测绘25%
