@@ -40,6 +40,8 @@ public class ResizeController : MonoBehaviour
         _resizeHandle.RegisterCallback<PointerUpEvent>(OnResizeHandleMouseUp);
         
         StartCoroutine(GetMinWindowSize());
+        
+        _LOGGER.LogInfo("Initialized.");
     }
     
     private IEnumerator GetMinWindowSize()
