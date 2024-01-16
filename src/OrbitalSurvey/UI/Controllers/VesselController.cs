@@ -32,8 +32,10 @@ public class VesselController : MonoBehaviour
         _canvas = _root.Q<VisualElement>("canvas");
         StartCoroutine(GetCanvasSize());
         StartCoroutine(RegisterForWindowResize());
+        StartCoroutine(RegisterForZoomFactorChanged());
+        StartCoroutine(RegisterForPanExecuted());
     }
-    
+
     private IEnumerator GetCanvasSize()
     {
         // wait for 1 frame for the canvas to get its size
@@ -108,8 +110,9 @@ public class VesselController : MonoBehaviour
     
     private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged)
     {
-        control.style.left =_canvasWidth * mapGuiPositionChanged.percentX;
-        control.style.top = _canvasHeight * (1 - mapGuiPositionChanged.percentY);
+        var scaledCoordinates = GetScaledCoordinates(mapGuiPositionChanged.percentX, 1 - mapGuiPositionChanged.percentY);
+        control.style.left = scaledCoordinates.x;
+        control.style.top = scaledCoordinates.y;
     }
     
     private void OnGeographicCoordinatesChanged(VesselMarkerControl control, (double latitude, double longitude) coords)
@@ -188,7 +191,7 @@ public class VesselController : MonoBehaviour
     }
     
     /// <summary>
-    /// Get the new width and height of the canvas after window is resized by the player. The rebuild the UI. 
+    /// Get the new width and height of the canvas after window is resized by the player. Then rebuild the UI. 
     /// </summary>
     private IEnumerator RegisterForWindowResize()
     {
@@ -203,6 +206,60 @@ public class VesselController : MonoBehaviour
             _canvasHeight = _canvas.layout.height;
             StartCoroutine(Rebuild());
         };
+    }
+    
+    private IEnumerator RegisterForZoomFactorChanged()
+    {
+        if (ZoomAndPanController.Instance == null)
+        {
+            yield return null;
+        }
+        
+        ZoomAndPanController.Instance.OnZoomFactorChanged += (zoomFactor) => StartCoroutine(Rebuild());
+    }
+    
+    private IEnumerator RegisterForPanExecuted()
+    {
+        if (ZoomAndPanController.Instance == null)
+        {
+            yield return null;
+        }
+
+        ZoomAndPanController.Instance.OnPanExecuted += (panOffset) => StartCoroutine((Rebuild()));
+    }
+    
+    private Vector2 GetScaledCoordinates(float percentX, float percentY)
+    {
+        var scaledDistanceToCenter = ScaledDistanceToCenter(percentX, percentY);
+
+        var scaledTextureCoordinates = new Vector2
+        {
+            x = scaledDistanceToCenter.x + _canvasWidth / 2,
+            y = scaledDistanceToCenter.y + _canvasHeight / 2
+        };
+
+        return scaledTextureCoordinates;
+    }
+
+    private Vector2 ScaledDistanceToCenter(float percentX, float percentY)
+    {
+        var distanceToCenter = DistanceToCenter(percentX, percentY);
+        distanceToCenter.x *= ZoomAndPanController.Instance.ZoomFactor;
+        distanceToCenter.y *= ZoomAndPanController.Instance.ZoomFactor;
+        return distanceToCenter;
+    }
+
+    private Vector2 DistanceToCenter(float percentX, float percentY)
+    {
+        var distanceToCenter = new Vector2(
+            percentX * _canvasWidth - _canvasWidth / 2,
+            percentY * _canvasHeight - _canvasHeight / 2);
+        
+        // apply panning offset
+        distanceToCenter.x += ZoomAndPanController.Instance.PanOffset.x;
+        distanceToCenter.y += ZoomAndPanController.Instance.PanOffset.y;
+
+        return distanceToCenter;
     }
 
     private void OnDestroy()

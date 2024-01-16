@@ -35,6 +35,7 @@ public class MainGuiController : MonoBehaviour
     private VisualElement _legendContainer;
     private VesselController _vesselController;
     private ResizeController _resizeController;
+    private ZoomAndPanController _zoomAndPanController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
     private Coroutine _hideNotification;
@@ -60,6 +61,15 @@ public class MainGuiController : MonoBehaviour
 
     public void OnEnable()
     {
+        // create vessel controller (for markers and additional info)
+        _vesselController = gameObject.AddComponent<VesselController>();
+
+        // create resize controller for resizing the map canvas
+        _resizeController = gameObject.AddComponent<ResizeController>();
+        
+        // create zoom controller for zooming and panning
+        _zoomAndPanController = gameObject.AddComponent<ZoomAndPanController>();
+        
         MainGui = GetComponent<UIDocument>();
         _root = MainGui.rootVisualElement;
         
@@ -71,7 +81,7 @@ public class MainGuiController : MonoBehaviour
         _closeButton.RegisterCallback<ClickEvent>(OnCloseButton);
         
         // body control
-        _mapContainer = _root.Q<VisualElement>("map__container");
+        _mapContainer = _root.Q<VisualElement>("map");
         _notificationLabel = _root.Q<Label>("notification");
         
         // side-bar controls
@@ -128,12 +138,6 @@ public class MainGuiController : MonoBehaviour
         
         // save the window position (only for current session) when it moves
         _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
-        
-        // create vessel controller (for markers and additional info)
-        _vesselController = gameObject.AddComponent<VesselController>();
-
-        // create resize controller for resizing the map canvas
-        _resizeController = gameObject.AddComponent<ResizeController>();
     }
 
     private void OnOverlayToggleClicked(ClickEvent evt)
