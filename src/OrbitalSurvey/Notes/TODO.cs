@@ -1,11 +1,10 @@
 ﻿/*
  * 
  * TODO:
- * - track active vessel
+ * - event unregistration
  * 
  *
  * TODO NEAR-TERM:
- * - GEO on mouse over
  * - replace region names with the localized version (loc_source_10.csv) 
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
@@ -14,7 +13,6 @@
  * 
  * TODO LONG-TERM: 
  * - adding waypoints by clicking on the map
- * - zoomable map or a new window with a bigger map
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
@@ -76,6 +74,10 @@
  * - notification area at the bottom-right corner
  * - close button different styling
  * - dropdown controls different styling
+ * - GEO on mouse over
+ * - resizable canvas
+ * - zoomable canvas
+ * - track active vessel
  *
  * - For Changelog:
  *      - mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
