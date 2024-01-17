@@ -35,6 +35,7 @@
  * - see if I can reproduce scanning data disappearing when returning to KSC
  * - experiments get locked in on a particular vessel
  * - adjust Eve's Olympus color
+ * - change UITK fonts (Chinese)
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
