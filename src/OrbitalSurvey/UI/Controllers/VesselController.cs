@@ -11,6 +11,11 @@ public class VesselController : MonoBehaviour
 {
     public VesselController()
     { }
+
+    public static VesselController Instance;
+    
+    public delegate void ActiveVesselMapGuiPositionChanged((float percentX, float percentY) mapGuiPositionChanged);
+    public event ActiveVesselMapGuiPositionChanged OnActiveVesselMapGuiPositionChanged;
     
     public UIDocument MainGui;
     private MainGuiController _mainGuiController;
@@ -25,6 +30,7 @@ public class VesselController : MonoBehaviour
     
     public void OnEnable()
     {
+        Instance = this;
         MainGui = GetComponent<UIDocument>();
         _mainGuiController = GetComponent<MainGuiController>();
         _root = MainGui.rootVisualElement;
@@ -70,12 +76,12 @@ public class VesselController : MonoBehaviour
             };
 
             vessel.OnNameChanged += (value) => OnNameChanged(control, value);
-            vessel.OnMapGuiPositionChanged += (value) => OnMapGuiPositionChanged(control, value);
+            vessel.OnMapGuiPositionChanged += (value) => OnMapGuiPositionChanged(control, value, vessel.IsActiveVessel);
             vessel.OnGeographicCoordinatesChanged += (value) => OnGeographicCoordinatesChanged(control, value);
             vessel.OnVisualModuleChanged += (value) => OnModuleChanged(control, value, MapType.Visual);
             vessel.OnBiomeModuleChanged += (value) => OnModuleChanged(control, value, MapType.Biome);
             
-            OnMapGuiPositionChanged(control, vessel.MapLocationPercent);
+            OnMapGuiPositionChanged(control, vessel.MapLocationPercent, vessel.IsActiveVessel);
             InitializeModuleStyles(control, vessel);
             _canvas.Add(control);
             _trackedVessels.Add((vessel, control));
@@ -108,11 +114,16 @@ public class VesselController : MonoBehaviour
         control.NameValue = name;
     }
     
-    private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged)
+    private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged, bool isActiveVessel)
     {
         var scaledCoordinates = GetScaledCoordinates(mapGuiPositionChanged.percentX, 1 - mapGuiPositionChanged.percentY);
         control.style.left = scaledCoordinates.x;
         control.style.top = scaledCoordinates.y;
+
+        if (isActiveVessel)
+        {
+            OnActiveVesselMapGuiPositionChanged?.Invoke(mapGuiPositionChanged);
+        }
     }
     
     private void OnGeographicCoordinatesChanged(VesselMarkerControl control, (double latitude, double longitude) coords)
@@ -191,7 +202,8 @@ public class VesselController : MonoBehaviour
     }
     
     /// <summary>
-    /// Get the new width and height of the canvas after window is resized by the player. Then rebuild the UI. 
+    /// Gets the new width and height of the canvas after window is resized by the player.
+    /// Then repositions all vessel markers. 
     /// </summary>
     private IEnumerator RegisterForWindowResize()
     {
@@ -204,28 +216,34 @@ public class VesselController : MonoBehaviour
         {
             _canvasWidth = _canvas.layout.width;
             _canvasHeight = _canvas.layout.height;
-            StartCoroutine(Rebuild());
+            RepositionAllVesselControls();
         };
     }
     
+    /// <summary>
+    /// Repositions all vessel markers when zoom factor is changed
+    /// </summary>
     private IEnumerator RegisterForZoomFactorChanged()
     {
         if (ZoomAndPanController.Instance == null)
         {
             yield return null;
         }
-        
-        ZoomAndPanController.Instance.OnZoomFactorChanged += (zoomFactor) => StartCoroutine(Rebuild());
+
+        ZoomAndPanController.Instance.OnZoomFactorChanged += (zoomFactor) => RepositionAllVesselControls();
     }
     
+    /// <summary>
+    /// Repositions all vessel markers when a pan is executed
+    /// </summary>
     private IEnumerator RegisterForPanExecuted()
     {
         if (ZoomAndPanController.Instance == null)
         {
             yield return null;
         }
-
-        ZoomAndPanController.Instance.OnPanExecuted += (panOffset) => StartCoroutine((Rebuild()));
+        
+        ZoomAndPanController.Instance.OnPanExecuted += (panOffset) => RepositionAllVesselControls();
     }
     
     private Vector2 GetScaledCoordinates(float percentX, float percentY)
@@ -260,6 +278,22 @@ public class VesselController : MonoBehaviour
         distanceToCenter.y += ZoomAndPanController.Instance.PanOffset.y;
 
         return distanceToCenter;
+    }
+    
+    /// <summary>
+    /// Refreshes positions of all vessel markers.
+    /// Called after a UI event triggered that requires repositioning (zoom, pan, resize)
+    /// </summary>
+    private void RepositionAllVesselControls()
+    {
+        foreach (var vesselTuple in _trackedVessels)
+        {
+            var vessel = vesselTuple.vessel;
+            var control = vesselTuple.control;
+            var scaledCoordinates = GetScaledCoordinates(vessel.MapLocationPercent.PercentX, 1 - vessel.MapLocationPercent.PercentY);
+            control.style.left = scaledCoordinates.x;
+            control.style.top = scaledCoordinates.y;
+        }
     }
 
     private void OnDestroy()

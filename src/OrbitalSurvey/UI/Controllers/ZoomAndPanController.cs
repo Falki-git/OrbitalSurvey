@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -32,22 +33,26 @@ public class ZoomAndPanController: MonoBehaviour
     public event PanExecuted OnPanExecuted;
     
     private VisualElement _root;
+    private MainGuiController _mainGuiController;
     private VisualElement _mapContainer;
     private VisualElement _zoomControls;
     private Label _zoomFactorLabel;
     private Button _trackVessel;
     private Button _zoomIn;
     private Button _zoomOut;
-
+    
     private bool _isPanningRegistered;
     private bool _isPanning;
     private Vector3 _lastMousePosition;
+    private bool _isTrackingActiveVessel;
 
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ZoomController");
+    private const string _TRACK_VESSEL_USS = "zoom-controls__button--toggled"; 
     
     public void Start()
     {
         Instance = this;
+        _mainGuiController = GetComponent<MainGuiController>();
         _root = GetComponent<UIDocument>().rootVisualElement[0];
         _mapContainer = _root.Q<VisualElement>("map");
         _mapContainer.StopMouseEventsPropagation();
@@ -58,6 +63,7 @@ public class ZoomAndPanController: MonoBehaviour
         _zoomIn = _root.Q<Button>("zoom-in");
         _zoomOut = _root.Q<Button>("zoom-out");
         
+        _trackVessel.RegisterCallback<ClickEvent>(evt => OnTrackVesselClicked(evt));
         _zoomIn.RegisterCallback<ClickEvent>(evt => IncreaseScale(evt));
         _zoomOut.RegisterCallback<ClickEvent>(evt => DecreaseScale(evt));
         
@@ -225,6 +231,9 @@ public class ZoomAndPanController: MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Keeps the pan offset in check by preventing the texture from being moved outside of canvas bounds
+    /// </summary>
     private void AdjustPanOffsetIfMaxReached()
     {
         var canvasWidth = _mapContainer.layout.width;
@@ -258,6 +267,56 @@ public class ZoomAndPanController: MonoBehaviour
         _mapContainer.transform.position = new Vector3(0, 0, 0);
         PanOffset = new Vector2(0, 0);
     }
-    
+
+    /// <summary>
+    /// Tracks the current active vessel
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="forceNewState">Optional override for tracking</param>
+    private void OnTrackVesselClicked(ClickEvent _, bool? forceNewState = null)
+    {
+        var newState = forceNewState ?? !_isTrackingActiveVessel;
+        
+        if (newState)
+        {
+            _trackVessel.AddToClassList(_TRACK_VESSEL_USS);
+            VesselController.Instance.OnActiveVesselMapGuiPositionChanged += PanCanvasToActiveVesselPosition;
+        }
+        else
+        {
+            _trackVessel.RemoveFromClassList(_TRACK_VESSEL_USS);
+            VesselController.Instance.OnActiveVesselMapGuiPositionChanged -= PanCanvasToActiveVesselPosition;
+        }
+        
+        // send notification
+        var notificationText = newState ?
+            LocalizationStrings.NOTIFICATIONS[Notification.VesselTrackingOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.VesselTrackingOff];
+        _mainGuiController.ShowNotification(notificationText);
+
+        _isTrackingActiveVessel = newState;
+    }
+
+    /// <summary>
+    /// Moves the canvas to follow the active vessel (if active vessel tracking is toggled on)
+    /// </summary>
+    /// <param name="vesselPosition">At what texture % _should_ the vessel be positioned if canvas didn't follow it</param>
+    private void PanCanvasToActiveVesselPosition((float percentX, float percentY) vesselPosition)
+    {
+        // calculate the scaled position the vessel _should_ be
+        var newPosition = new Vector2(
+            -1 * (_mapContainer.layout.width * vesselPosition.percentX - _mapContainer.layout.width / 2) * ZoomFactor,
+            -1 * (_mapContainer.layout.height * (1 - vesselPosition.percentY) - _mapContainer.layout.height / 2) * ZoomFactor
+        );
+        
+        // set the scaled position to the canvas.
+        // this locks the canvas to where the vessel should be (but isn't because canvas is following it) 
+        _mapContainer.transform.position = new Vector3(newPosition.x, newPosition.y, 0);
+        PanOffset = newPosition / ZoomFactor;
+        
+        // clamping if the canvas is near the edge
+        AdjustPanOffsetIfMaxReached();
+    }
+
     #endregion
 }

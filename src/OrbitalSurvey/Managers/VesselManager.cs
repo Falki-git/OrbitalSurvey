@@ -314,6 +314,7 @@ public class VesselManager : MonoBehaviour
     {
         public VesselComponent Vessel;
         public List<ModuleStats> ModuleStats = new();
+        public bool IsActiveVessel => Vessel.SimulationObject.IsActiveVessel;
 
         private string _name;
         public string Name

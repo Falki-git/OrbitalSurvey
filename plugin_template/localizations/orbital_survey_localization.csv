@@ -35,6 +35,8 @@ OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON,,,Nomi veicoli: ON,,,,,,�
 OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF,,,Nomi veicoli: OFF,,,,,,飞船名称：隐藏
 OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON,,,Coordinate geografiche: ON,,,,,,地理坐标：显示
 OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF,,,Coordinate geografiche: OFF,,,,,,地理坐标：隐藏
+OrbitalSurvey/UI/VesselTracking/ON,Text,,Active vessel tracking: ON,,,Segui veicolo attivo: ON,,,,,,追踪运行中的飞船：开
+OrbitalSurvey/UI/VesselTracking/OFF,Text,,Active vessel tracking: OFF,,,Segui veicolo attivo: OFF,,,,,,追踪运行中的飞船：关
 
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,"Scansiona corpi celesti dall'orbita",,,,,,在轨扫描天体
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,Risorse Richieste,,,,,,所需资源

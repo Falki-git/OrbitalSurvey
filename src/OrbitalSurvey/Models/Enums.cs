@@ -48,5 +48,7 @@ public enum Notification
     VesselNamesOn,
     VesselNamesOff,
     GeoCoordsOn,
-    GeoCoordsOff
+    GeoCoordsOff,
+    VesselTrackingOn,
+    VesselTrackingOff
 }
