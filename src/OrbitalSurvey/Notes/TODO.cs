@@ -1,9 +1,8 @@
 ﻿/*
  * 
  * TODO:
- * - resizable canvas
- * - zoomable canvas
  * - track active vessel
+ * 
  *
  * TODO NEAR-TERM:
  * - GEO on mouse over
