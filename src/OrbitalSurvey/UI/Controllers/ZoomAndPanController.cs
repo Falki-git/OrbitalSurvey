@@ -33,8 +33,11 @@ public class ZoomAndPanController: MonoBehaviour
     
     private VisualElement _root;
     private VisualElement _mapContainer;
-    private Button _inc;
-    private Button _dec;
+    private VisualElement _zoomControls;
+    private Label _zoomFactorLabel;
+    private Button _trackVessel;
+    private Button _zoomIn;
+    private Button _zoomOut;
 
     private bool _isPanningRegistered;
     private bool _isPanning;
@@ -49,16 +52,20 @@ public class ZoomAndPanController: MonoBehaviour
         _mapContainer = _root.Q<VisualElement>("map");
         _mapContainer.StopMouseEventsPropagation();
         
-        _inc = _root.Q<Button>("inc");
-        _dec = _root.Q<Button>("dec");
+        _zoomControls = _root.Q<VisualElement>("zoom-controls");
+        _zoomFactorLabel = _root.Q<Label>("zoom-factor"); 
+        _trackVessel = _root.Q<Button>("track-vessel");
+        _zoomIn = _root.Q<Button>("zoom-in");
+        _zoomOut = _root.Q<Button>("zoom-out");
         
-        _inc.RegisterCallback<ClickEvent>(evt => IncreaseScale(evt));
-        _dec.RegisterCallback<ClickEvent>(evt => DecreaseScale(evt));
+        _zoomIn.RegisterCallback<ClickEvent>(evt => IncreaseScale(evt));
+        _zoomOut.RegisterCallback<ClickEvent>(evt => DecreaseScale(evt));
         
         _mapContainer.RegisterCallback<WheelEvent>(OnMouseScroll);
 
         // see if dragging the mouse over the canvas should drag the window or pan the map
         OnZoomFactorChanged += SwitchDraggingOrPanningIfNeeded;
+        OnZoomFactorChanged += UpdateZoomFactorLabel;
         
         _LOGGER.LogInfo("Initialized.");
     }
@@ -162,6 +169,11 @@ public class ZoomAndPanController: MonoBehaviour
         }
         
         evt.StopPropagation();
+    }
+    
+    private void UpdateZoomFactorLabel(float zoomFactor)
+    {
+        _zoomFactorLabel.text = $"{zoomFactor:F1}";
     }
     
     #endregion

@@ -29,7 +29,7 @@ public class VesselController : MonoBehaviour
         _mainGuiController = GetComponent<MainGuiController>();
         _root = MainGui.rootVisualElement;
 
-        _canvas = _root.Q<VisualElement>("canvas");
+        _canvas = _root.Q<VisualElement>("marker-canvas");
         StartCoroutine(GetCanvasSize());
         StartCoroutine(RegisterForWindowResize());
         StartCoroutine(RegisterForZoomFactorChanged());

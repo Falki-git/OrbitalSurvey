@@ -94,7 +94,7 @@ namespace OrbitalSurvey.UI.Controls
             _longitudeLabel.AddToClassList(UssClassName_Longitude);
             hierarchy.Add(_longitudeLabel);
 
-            // Show/hide vessel name and 
+            // Show/hide vessel name and geo coordinates on hovering
             _markerElement.RegisterCallback<PointerEnterEvent>(_ =>
             {
                 _vesselNameVisibilityState = _nameLabel.visible;
