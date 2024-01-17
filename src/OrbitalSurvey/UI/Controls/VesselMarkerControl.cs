@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OrbitalSurvey.Utilities;
+using UnityEngine;
 using UnityEngine.UIElements;
 // ReSharper disable InconsistentNaming
 
@@ -112,6 +113,8 @@ namespace OrbitalSurvey.UI.Controls
             RegisterCallback<PointerMoveEvent>(ZoomAndPanController.Instance.OnPanMoving);
             RegisterCallback<PointerUpEvent>(ZoomAndPanController.Instance.OnPanEnding);
             RegisterCallback<WheelEvent>(ZoomAndPanController.Instance.OnMouseScroll);
+            
+            this.StopMouseEventsPropagation();
         }
 
         public void SetAsNormal()

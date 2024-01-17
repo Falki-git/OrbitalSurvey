@@ -47,6 +47,7 @@ public class ZoomAndPanController: MonoBehaviour
         Instance = this;
         _root = GetComponent<UIDocument>().rootVisualElement[0];
         _mapContainer = _root.Q<VisualElement>("map");
+        _mapContainer.StopMouseEventsPropagation();
         
         _inc = _root.Q<Button>("inc");
         _dec = _root.Q<Button>("dec");
