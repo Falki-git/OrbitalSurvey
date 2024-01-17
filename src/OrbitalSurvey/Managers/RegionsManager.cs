@@ -23,7 +23,8 @@ public class RegionsManager
             {
                 { 0, new RegionColor { RegionId = "Foothills", Color = new Color32(190, 41, 236, 255) } },
                 { 3, new RegionColor { RegionId = "ImpactSites", Color = new Color32(128, 0, 128, 255) } },
-                { 4, new RegionColor { RegionId = "Olympus", Color = new Color32(102, 0, 102, 255) } },
+                { 4, new RegionColor { RegionId = "Olympus", Color = new Color32(0, 0, 0, 255) } },
+                // { 4, new RegionColor { RegionId = "Olympus", Color = new Color32(102, 0, 102, 255) } },
                 { 1, new RegionColor { RegionId = "Seas", Color = new Color32(255, 255, 255, 255) } },
                 { 2, new RegionColor { RegionId = "Shallows", Color = new Color32(216, 150, 255, 255) } },
             }
