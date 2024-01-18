@@ -379,14 +379,10 @@ public class VesselManager : MonoBehaviour
         public delegate void BodyChanged(string body);
         public delegate void GeographicCoordinatesChanged((double Latitude, double Longitude) geographicCoordinates);
         public delegate void MapGuiPositionChanged((float percentX, float percentY) mapGuiPositionChanged);
-        //public delegate void VisualModuleChanged(ModuleStats module);
-        //public delegate void BiomeModuleChanged(ModuleStats module);
         public event NameChanged OnNameChanged;
         public event BodyChanged OnBodyChanged;
         public event GeographicCoordinatesChanged OnGeographicCoordinatesChanged;
         public event MapGuiPositionChanged OnMapGuiPositionChanged;
-        //public event VisualModuleChanged OnVisualModuleChanged;
-        //public event BiomeModuleChanged OnBiomeModuleChanged;
         public event Action<List<ModuleStats>> OnVisualModuleChanged;
         public event Action<List<ModuleStats>> OnBiomeModuleChanged;
 

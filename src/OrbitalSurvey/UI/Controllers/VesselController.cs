@@ -196,37 +196,6 @@ public class VesselController : MonoBehaviour
             case MarkerState.Good : control.SetAsGood(); break;
             default: control.SetAsInactive(); break;
         }
-
-        // if (!module.Enabled)
-        // {
-        //     control.SetAsInactive();
-        //     return;
-        // }
-        //
-        // if (module.Status == Status.Complete)
-        // {
-        //     control.SetAsNormal();
-        //     return;
-        // }
-        //
-        // if (module.State == State.BelowMin || module.State == State.AboveMax ||
-        //     module.Status == Status.NoPower || module.Status == Status.NotDeployed)
-        // {
-        //     control.SetAsError();
-        //     return;
-        // }
-        //
-        // if (module.State == State.BelowIdeal || module.State == State.AboveIdeal)
-        // {
-        //     control.SetAsWarning();
-        //     return;
-        // }
-        //
-        // if (module.State == State.Ideal)
-        // {
-        //     control.SetAsGood();
-        //     return;
-        // }
     }
 
     public void ToggleVesselNames()
