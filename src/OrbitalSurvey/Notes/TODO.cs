@@ -3,7 +3,6 @@
  * TODO:
  * - maybe load 2k texture on 100%?
  * - multiple module handling in UI updates
- * - change Eve's Olympus color
  * - update UITK fonts because of Chinese characters
  *
  * TODO NEAR-TERM:
@@ -81,9 +80,11 @@
  * - zoomable canvas
  * - track active vessel
  * - event unregistration
+ * - change Eve's Olympus color
  *
  * - For Changelog:
  *      - mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
  *      - added Italian translations by @leonardfactory
+ *      - updated Eve's Olympus region color to black so it's easier to differentiate from other regions
  * 
  */
