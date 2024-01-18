@@ -1,8 +1,10 @@
 ﻿/*
  * 
  * TODO:
- * n/a
- * 
+ * - maybe load 2k texture on 100%?
+ * - multiple module handling in UI updates
+ * - change Eve's Olympus color
+ * - update UITK fonts because of Chinese characters
  *
  * TODO NEAR-TERM:
  * - replace region names with the localized version (loc_source_10.csv) 
