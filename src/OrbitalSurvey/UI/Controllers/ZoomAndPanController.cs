@@ -25,12 +25,9 @@ public class ZoomAndPanController: MonoBehaviour
             OnPanExecuted?.Invoke(_panOffset);
         }
     }
-    
-    public delegate void ZoomFactorChanged(float zoomFactor);
-    public event ZoomFactorChanged OnZoomFactorChanged;
-    
-    public delegate void PanExecuted(Vector2 panOffset);
-    public event PanExecuted OnPanExecuted;
+
+    public event Action<float> OnZoomFactorChanged;
+    public event Action<Vector2> OnPanExecuted;
     
     private VisualElement _root;
     private MainGuiController _mainGuiController;
@@ -319,4 +316,15 @@ public class ZoomAndPanController: MonoBehaviour
     }
 
     #endregion
+
+    private void OnDestroy()
+    {
+        OnZoomFactorChanged -= SwitchDraggingOrPanningIfNeeded;
+        OnZoomFactorChanged -= UpdateZoomFactorLabel;
+
+        if (VesselController.Instance != null)
+        {
+            VesselController.Instance.OnActiveVesselMapGuiPositionChanged -= PanCanvasToActiveVesselPosition;    
+        }
+    }
 }

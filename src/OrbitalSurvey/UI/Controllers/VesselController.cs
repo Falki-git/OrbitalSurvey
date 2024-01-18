@@ -28,6 +28,10 @@ public class VesselController : MonoBehaviour
 
     private List<(VesselManager.VesselStats vessel, VesselMarkerControl control)> _trackedVessels = new();
     
+    private Action<float, float> _windowResizedHandler;
+    private Action<float> _zoomFactorChangeHandler;
+    private Action<Vector2> _panExecutedHandler;
+    
     public void OnEnable()
     {
         Instance = this;
@@ -211,13 +215,15 @@ public class VesselController : MonoBehaviour
         {
             yield return null;
         }
-
-        ResizeController.Instance.OnWindowResized += (newWidth, newHeight) =>
+        
+        _windowResizedHandler = (newWidth, newHeight) =>
         {
             _canvasWidth = _canvas.layout.width;
             _canvasHeight = _canvas.layout.height;
             RepositionAllVesselControls();
         };
+
+        ResizeController.Instance.OnWindowResized += _windowResizedHandler;
     }
     
     /// <summary>
@@ -229,8 +235,10 @@ public class VesselController : MonoBehaviour
         {
             yield return null;
         }
+        
+        _zoomFactorChangeHandler = (zoomFactor) => RepositionAllVesselControls();
 
-        ZoomAndPanController.Instance.OnZoomFactorChanged += (zoomFactor) => RepositionAllVesselControls();
+        ZoomAndPanController.Instance.OnZoomFactorChanged += _zoomFactorChangeHandler;
     }
     
     /// <summary>
@@ -242,8 +250,10 @@ public class VesselController : MonoBehaviour
         {
             yield return null;
         }
+
+        _panExecutedHandler = (panOffset) => RepositionAllVesselControls();
         
-        ZoomAndPanController.Instance.OnPanExecuted += (panOffset) => RepositionAllVesselControls();
+        ZoomAndPanController.Instance.OnPanExecuted += _panExecutedHandler;
     }
     
     private Vector2 GetScaledCoordinates(float percentX, float percentY)
@@ -299,5 +309,16 @@ public class VesselController : MonoBehaviour
     private void OnDestroy()
     {
         VesselManager.Instance.ClearAllSubscriptions();
+
+        if (ResizeController.Instance != null)
+        {
+            ResizeController.Instance.OnWindowResized -= _windowResizedHandler;        
+        }
+
+        if (ZoomAndPanController.Instance != null)
+        {
+            ZoomAndPanController.Instance.OnZoomFactorChanged -= _zoomFactorChangeHandler;
+            ZoomAndPanController.Instance.OnPanExecuted -= _panExecutedHandler;
+        }
     }
 }

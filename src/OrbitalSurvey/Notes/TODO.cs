@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - event unregistration
+ * n/a
  * 
  *
  * TODO NEAR-TERM:
@@ -78,6 +78,7 @@
  * - resizable canvas
  * - zoomable canvas
  * - track active vessel
+ * - event unregistration
  *
  * - For Changelog:
  *      - mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state

@@ -13,8 +13,7 @@ public class ResizeController : MonoBehaviour
 {
     public static ResizeController Instance;
     
-    public delegate void WindowResized(float newWidth, float newHeight);
-    public event WindowResized OnWindowResized;
+    public event Action<float, float> OnWindowResized;
     
     private VisualElement _root;
     private VisualElement _resizeHandle;
