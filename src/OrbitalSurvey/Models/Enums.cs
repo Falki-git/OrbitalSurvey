@@ -52,3 +52,12 @@ public enum Notification
     VesselTrackingOn,
     VesselTrackingOff
 }
+
+public enum MarkerState
+{
+    Inactive,
+    Normal,
+    Error,
+    Warning,
+    Good
+}

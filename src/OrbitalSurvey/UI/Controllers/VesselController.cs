@@ -103,8 +103,8 @@ public class VesselController : MonoBehaviour
         if (mapType == null)
             return;
         
-        var module = vessel.ModuleStats.Find(m => m.Mode == mapType);
-        if (module == null)
+        var module = vessel.ModuleStats.FindAll(m => m.Mode == mapType);
+        if (module.Count == 0)
         {
             control.SetAsInactive();
             return;
@@ -136,41 +136,97 @@ public class VesselController : MonoBehaviour
         control.LongitudeValue = coords.longitude;
     }
     
-    private void OnModuleChanged(VesselMarkerControl control, VesselManager.ModuleStats module, MapType mode)
+    private void OnModuleChanged(VesselMarkerControl control, List<VesselManager.ModuleStats> modules, MapType mode)
     {
         if(mode != SceneController.Instance.SelectedMapType)
             return;
 
-        if (!module.Enabled)
+        // initialize the marker with the "lowest" state, then see what module has the "highest" state
+        var markerState = MarkerState.Inactive;
+
+        // go through the list of all modules (if vessel has multiple modules with the same mode)
+        // and look for the module with the "highest" state (inactive -> complete -> error -> warning -> good) 
+        foreach (var module in modules)
         {
-            control.SetAsInactive();
-            return;
+            if (!module.Enabled)
+            {
+                continue;
+            }
+            
+            if (module.Status == Status.Complete &&
+                markerState < MarkerState.Normal)
+            {
+                markerState = MarkerState.Normal;
+                
+                // if mapping is complete, then there's no need to check further
+                break;
+            }
+            
+            if ((module.State == State.BelowMin || module.State == State.AboveMax ||
+                module.Status == Status.NoPower || module.Status == Status.NotDeployed) &&
+                markerState < MarkerState.Error)
+            {
+                markerState = MarkerState.Error;
+                continue;
+            }
+            
+            if ((module.State == State.BelowIdeal || module.State == State.AboveIdeal) &&
+                markerState < MarkerState.Warning)
+            {
+                markerState = MarkerState.Warning;
+                continue;
+            }
+            
+            if (module.State == State.Ideal)
+            {
+                markerState = MarkerState.Good;
+                
+                // if marker has the highest state, then there's no need to check further
+                break;
+            }
+        }
+        
+        // update vessel control
+        switch (markerState)
+        {
+            case MarkerState.Inactive: control.SetAsInactive(); break;
+            case MarkerState.Normal: control.SetAsNormal(); break;
+            case MarkerState.Error: control.SetAsError(); break;
+            case MarkerState.Warning: control.SetAsWarning(); break;
+            case MarkerState.Good : control.SetAsGood(); break;
+            default: control.SetAsInactive(); break;
         }
 
-        if (module.Status == Status.Complete)
-        {
-            control.SetAsNormal();
-            return;
-        }
-
-        if (module.State == State.BelowMin || module.State == State.AboveMax ||
-            module.Status == Status.NoPower || module.Status == Status.NotDeployed)
-        {
-            control.SetAsError();
-            return;
-        }
-
-        if (module.State == State.BelowIdeal || module.State == State.AboveIdeal)
-        {
-            control.SetAsWarning();
-            return;
-        }
-
-        if (module.State == State.Ideal)
-        {
-            control.SetAsGood();
-            return;
-        }
+        // if (!module.Enabled)
+        // {
+        //     control.SetAsInactive();
+        //     return;
+        // }
+        //
+        // if (module.Status == Status.Complete)
+        // {
+        //     control.SetAsNormal();
+        //     return;
+        // }
+        //
+        // if (module.State == State.BelowMin || module.State == State.AboveMax ||
+        //     module.Status == Status.NoPower || module.Status == Status.NotDeployed)
+        // {
+        //     control.SetAsError();
+        //     return;
+        // }
+        //
+        // if (module.State == State.BelowIdeal || module.State == State.AboveIdeal)
+        // {
+        //     control.SetAsWarning();
+        //     return;
+        // }
+        //
+        // if (module.State == State.Ideal)
+        // {
+        //     control.SetAsGood();
+        //     return;
+        // }
     }
 
     public void ToggleVesselNames()

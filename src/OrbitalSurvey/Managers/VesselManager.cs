@@ -280,15 +280,15 @@ public class VesselManager : MonoBehaviour
             // VISUAL: check if a visual module was updated this loop and then invoke the change for the first module found
             if (_isVisualModuleUpdatedThisLoop)
             {
-                var visualModule = vesselStats.ModuleStats.Find(m => m.Mode == MapType.Visual);
-                vesselStats.InvokeVisualModuleChanged(visualModule);
+                var visualModules = vesselStats.ModuleStats.FindAll(m => m.Mode == MapType.Visual);
+                vesselStats.InvokeVisualModuleChanged(visualModules);
             }
             
             // BIOME: check if a module was updated this loop and then invoke the change for the first module found
             if (_isBiomeModuleUpdatedThisLoop)
             {
-                var biomeModule = vesselStats.ModuleStats.Find(m => m.Mode == MapType.Biome);
-                vesselStats.InvokeBiomeModuleChanged(biomeModule);
+                var biomeModules = vesselStats.ModuleStats.FindAll(m => m.Mode == MapType.Biome);
+                vesselStats.InvokeBiomeModuleChanged(biomeModules);
             }
         }
         
@@ -372,21 +372,23 @@ public class VesselManager : MonoBehaviour
             }
         }
 
-        public void InvokeVisualModuleChanged(ModuleStats module) => OnVisualModuleChanged?.Invoke(module);
-        public void InvokeBiomeModuleChanged(ModuleStats module) => OnBiomeModuleChanged?.Invoke(module);
+        public void InvokeVisualModuleChanged(List<ModuleStats> modules) => OnVisualModuleChanged?.Invoke(modules);
+        public void InvokeBiomeModuleChanged(List<ModuleStats> modules) => OnBiomeModuleChanged?.Invoke(modules);
         
         public delegate void NameChanged(string name);
         public delegate void BodyChanged(string body);
         public delegate void GeographicCoordinatesChanged((double Latitude, double Longitude) geographicCoordinates);
         public delegate void MapGuiPositionChanged((float percentX, float percentY) mapGuiPositionChanged);
-        public delegate void VisualModuleChanged(ModuleStats module);
-        public delegate void BiomeModuleChanged(ModuleStats module);
+        //public delegate void VisualModuleChanged(ModuleStats module);
+        //public delegate void BiomeModuleChanged(ModuleStats module);
         public event NameChanged OnNameChanged;
         public event BodyChanged OnBodyChanged;
         public event GeographicCoordinatesChanged OnGeographicCoordinatesChanged;
         public event MapGuiPositionChanged OnMapGuiPositionChanged;
-        public event VisualModuleChanged OnVisualModuleChanged;
-        public event BiomeModuleChanged OnBiomeModuleChanged;
+        //public event VisualModuleChanged OnVisualModuleChanged;
+        //public event BiomeModuleChanged OnBiomeModuleChanged;
+        public event Action<List<ModuleStats>> OnVisualModuleChanged;
+        public event Action<List<ModuleStats>> OnBiomeModuleChanged;
 
         public void ClearAllSubscriptions()
         {
