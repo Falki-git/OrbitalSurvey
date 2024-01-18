@@ -9,7 +9,7 @@
             <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
                 <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body__dropdown" class="body__dropdown" />
                 <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type__dropdown" class="map-type__dropdown" />
-                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="percent-complete" class="percent-complete" style="-unity-text-align: upper-center;" />
+                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="percent-complete" text="69%" class="percent-complete" style="-unity-text-align: upper-center;" />
             </ui:VisualElement>
             <ui:VisualElement name="close-button__container" class="close-button__container">
                 <ui:Button name="close-button" class="close-button">
@@ -20,9 +20,21 @@
         <ui:VisualElement name="middle-container" class="middle-container" style="flex-direction: row;">
             <ui:VisualElement name="body" class="body">
                 <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-                    <ui:VisualElement name="map__container" style="flex-grow: 1;" />
-                    <ui:VisualElement name="canvas" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
+                    <ui:VisualElement name="map__container" class="map__container">
+                        <ui:VisualElement name="map" class="map" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; overflow: hidden; position: absolute; height: 100%;">
+                        <ui:VisualElement name="marker-canvas" picking-mode="Ignore" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
+                    </ui:VisualElement>
                     <ui:Label tabindex="-1" text="Overlay: ON" display-tooltip-when-elided="true" name="notification" class="notification" />
+                    <ui:VisualElement name="zoom-controls" picking-mode="Ignore" class="zoom-controls">
+                        <ui:Label tabindex="-1" text="1.0" display-tooltip-when-elided="true" name="zoom-factor" picking-mode="Ignore" class="zoom-controls__factor" />
+                        <ui:Button display-tooltip-when-elided="true" name="track-vessel" class="zoom-controls__button" style="padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px;">
+                            <ui:VisualElement name="track-vessel__icon" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/UI/orbital_survey/TrackVessel.png?fileID=2800000&amp;guid=35b26f866395de04cb0a70d816fcf5d5&amp;type=3#TrackVessel&apos;);" />
+                        </ui:Button>
+                        <ui:Button text="+" display-tooltip-when-elided="true" name="zoom-in" class="zoom-controls__button" />
+                        <ui:Button text="-" display-tooltip-when-elided="true" name="zoom-out" class="zoom-controls__button" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="side-bar" class="side-bar">
@@ -32,6 +44,9 @@
         </ui:VisualElement>
         <ui:VisualElement name="footer" class="footer">
             <ui:VisualElement name="legend__container" class="legend__container" />
+        </ui:VisualElement>
+        <ui:VisualElement name="resize-handle__container" class="resize-handle__container">
+            <ui:VisualElement name="resize-handle" class="resize-handle" style="-unity-background-image-tint-color: rgb(255, 255, 255); left: 13px; top: 13px; max-width: 7px; max-height: 7px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
