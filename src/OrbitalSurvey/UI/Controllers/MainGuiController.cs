@@ -2,6 +2,7 @@
 using BepInEx.Logging;
 using I2.Loc;
 using KSP.Game;
+using KSP.Game.Science;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
@@ -106,7 +107,14 @@ public class MainGuiController : MonoBehaviour
         _legendContainer = _root.Q<VisualElement>("legend__container");
         
         // define handler for the new CurrentMap instance
-        _newCurrentMapInstanceHandler = (newInstance) => _mapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+        _newCurrentMapInstanceHandler = (newInstance) =>
+        {
+            _mapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+            if (_overlayToggle.IsToggled)
+            {
+                OverlayManager.Instance.DrawOverlay(GetCurrentMapType());
+            }
+        };
         
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
@@ -204,6 +212,14 @@ public class MainGuiController : MonoBehaviour
         return _mapTypeLocalizationStrings.Select(listItem => listItem.Item2).ToList();
     }
 
+    private MapType GetCurrentMapType()
+    {
+        string mapTypeLocalizationString =
+            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
+        
+        return LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
+    }
+
     private void OnSelectionChanged(ChangeEvent<string> evt, bool playSound = true)
     {
         if (playSound && Settings.PlayUiSounds.Value) { KSP.Audio.KSPAudioEventManager.OnKSCBuildingClick(new Vector2()); }
@@ -211,13 +227,10 @@ public class MainGuiController : MonoBehaviour
         if (_mapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
 
-        string mapTypeLocalizationString =
-            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
-        
-        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
+        var mapType = GetCurrentMapType();
         SceneController.Instance.SelectedMapType = mapType;
 
-        // Enabled the Overlay toggle if it's disabled and if we're in Flight/Map view
+        // Enable the Overlay toggle if it's disabled and if we're in Flight/Map view
         if (!_overlayToggle.IsEnabled)
         {
             _overlayToggle.SetEnabled(_isOverlayEligible);
@@ -309,7 +322,7 @@ public class MainGuiController : MonoBehaviour
 
         foreach (var region in legendRegions)
         {
-            _legendContainer.Add(new LegendKeyControl(region.Color, region.RegionId.AddSpaceBeforeUppercase()));
+            _legendContainer.Add(new LegendKeyControl(region.Color, ScienceRegionsHelper.GetRegionDisplayName(region.RegionId)));
         }
     }
     

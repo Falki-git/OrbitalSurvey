@@ -5,7 +5,6 @@
  * 
  *
  * TODO NEAR-TERM:
- * - replace region names with the localized version (loc_source_10.csv) 
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
  * - altimetry Map + legend 
@@ -91,5 +90,8 @@
  *      - Updated Eve's Olympus region color to black so it's easier to differentiate from other regions
  *      - Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
  *      - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
+ *      - Replaced region names with the localized version (e.g. BiggestCrater -> Rayed Crater)
+ * 
+ * 
  * 
  */
