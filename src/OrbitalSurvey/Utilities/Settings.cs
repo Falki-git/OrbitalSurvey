@@ -26,6 +26,7 @@ public static class Settings
     public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
+    public static int HighResolution = 2048;
     
     public static void Initialize()
     {

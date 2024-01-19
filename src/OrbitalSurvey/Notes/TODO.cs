@@ -1,8 +1,8 @@
 ﻿/*
  * 
  * TODO:
- * - maybe load 2k texture on 100%?
- * - update UITK fonts because of Chinese characters
+ * n/a
+ * 
  *
  * TODO NEAR-TERM:
  * - replace region names with the localized version (loc_source_10.csv) 
@@ -28,11 +28,8 @@
  * - scanning parts by -StanWildin
  *
  * BUG FIXES OR IMPROVEMENTS NEEDED:
- * - take into account all modules of the same type at updates and update status to the "highest" state
  * - see if I can reproduce scanning data disappearing when returning to KSC
  * - experiments get locked in on a particular vessel
- * - adjust Eve's Olympus color
- * - change UITK fonts (Chinese)
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -81,11 +78,18 @@
  * - event unregistration
  * - change Eve's Olympus color
  * - multiple module handling in UI updates
+ * - load 2k texture on 100%
+ * - update UITK fonts because of Chinese characters
  *
  * - For Changelog:
- *      - mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
- *      - added Italian translations by @leonardfactory
- *      - updated Eve's Olympus region color to black so it's easier to differentiate from other regions
- *      - fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
+ *      - Added canvas resizing
+ *      - Added canvas zooming, up to x10
+ *      - Added active vessel tracking when zoomed in
+ *      - Mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
+ *      - Added Italian translations by @leonardfactory
+ *      - Fixed Chinese fonts not displaying properly in some cases 
+ *      - Updated Eve's Olympus region color to black so it's easier to differentiate from other regions
+ *      - Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
+ *      - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
  * 
  */

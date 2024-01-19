@@ -40,6 +40,7 @@ public class MainGuiController : MonoBehaviour
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
     private Coroutine _hideNotification;
     private MapData _selectedMap;
+    private Action<Texture2D> _newCurrentMapInstanceHandler;
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MainGuiController");
     
@@ -103,6 +104,9 @@ public class MainGuiController : MonoBehaviour
         
         // footer controls
         _legendContainer = _root.Q<VisualElement>("legend__container");
+        
+        // define handler for the new CurrentMap instance
+        _newCurrentMapInstanceHandler = (newInstance) => _mapContainer.style.backgroundImage = _selectedMap.CurrentMap;
         
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
@@ -231,9 +235,13 @@ public class MainGuiController : MonoBehaviour
         var body = _bodyDropdown.value;
         
         BuildLegend(body);
-        
-        if (_selectedMap != null) 
+
+        if (_selectedMap != null)
+        {
+            // unregister events from the previous MapData
             _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+            _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
+        }
 
         _selectedMap = Core.Instance.CelestialDataDictionary[body].Maps[mapType];
         
@@ -250,6 +258,7 @@ public class MainGuiController : MonoBehaviour
         }
 
         _selectedMap.OnDiscoveredPixelCountChanged += UpdatePercentageComplete;
+        _selectedMap.OnNewCurrentInstanceCreated += _newCurrentMapInstanceHandler;
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
 
         _vesselController.RebuildVesselMarkers(body);
@@ -352,5 +361,11 @@ public class MainGuiController : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _notificationLabel.RemoveFromClassList("notification--show");
+    }
+
+    private void OnDestroy()
+    {
+        _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+        _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
     }
 }
