@@ -22,7 +22,19 @@ public class VesselManager : MonoBehaviour
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.VesselManager");
 
     public double LastRefreshTime;
-    private double _timeSinceLastRefresh => Utility.UT - LastRefreshTime;
+
+    private double _timeSinceLastRefresh
+    {
+        get
+        {
+            if (Utility.UT < LastRefreshTime)
+            {
+                LastRefreshTime = Utility.UT - (double)Settings.GuiRefreshInterval.Value;
+            }
+            
+            return Utility.UT - LastRefreshTime;
+        }
+    }
 
     private bool _isVisualModuleUpdatedThisLoop;
     private bool _isBiomeModuleUpdatedThisLoop;
