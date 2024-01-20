@@ -21,7 +21,9 @@ public class ResizeController : MonoBehaviour
     private float _minWindowWidth;
     private float _minWindowHeight;
     private float _aspectRatio;
+#pragma warning disable CS0169 // Field is never used
     private VisualElement _canvas;
+#pragma warning restore CS0169 // Field is never used
     
     private bool _isResizing;
     private Vector3 _initialMousePosition;

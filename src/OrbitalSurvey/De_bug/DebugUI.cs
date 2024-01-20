@@ -3,8 +3,8 @@ using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using SpaceWarp.API.UI;
 using UnityEngine;
-using UnityEngine.Networking;
 using Utility = OrbitalSurvey.Utilities.Utility;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
 
 #pragma warning disable CS0618 // Type or member is obsolete
 

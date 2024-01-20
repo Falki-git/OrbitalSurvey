@@ -430,7 +430,9 @@ public class VesselManager : MonoBehaviour
             }
         }
         
+        #pragma warning disable CS0169 // Field is never used
         private MapType _mode;
+        #pragma warning restore CS0169 // Field is never used
         public MapType Mode // => LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[DataModule.ModeValue];
         {
             get;
