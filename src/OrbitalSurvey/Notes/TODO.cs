@@ -80,18 +80,25 @@
  * - load 2k texture on 100%
  * - update UITK fonts because of Chinese characters
  *
- * - For Changelog:
- *      - Added canvas resizing
- *      - Added canvas zooming, up to x10
- *      - Added active vessel tracking when zoomed in
- *      - Mouse-overing vessel markers now shows vessel names and geo coordinates, independent of the toggle state
- *      - Added Italian translations by @leonardfactory
- *      - Fixed Chinese fonts not displaying properly in some cases 
- *      - Updated Eve's Olympus region color to black so it's easier to differentiate from other regions
- *      - Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
- *      - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
- *      - Replaced region names with the localized version (e.g. BiggestCrater -> Rayed Crater)
- * 
- * 
+ 
+ For Changelog:
+ 
+ Features:
+    - Canvas can now be resized
+    - Zooming is now possible, up to x10
+    - Active vessel can be tracked when zoomed in
+    - Mouse-overing vessel markers now shows vessel names and geo coordinates
+ 
+ Other:
+    - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
+    - (rocket) Added Italian translations by @leonardfactory
+    - (rocket) Fixed Chinese fonts not displaying properly in some cases - reported by @fengyuan0529   
+
+Fixes: 
+    - (rocket) Updated Eve's Olympus region color to black so it's easier to differentiate from other regions - reported by @Dolphin
+    - (rocket) Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode - reported by @schlosrat
+    - Replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
+  
+ 
  * 
  */
