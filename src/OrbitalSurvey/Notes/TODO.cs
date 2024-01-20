@@ -25,6 +25,7 @@
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
  * - scanning parts by -StanWildin
+ * - register planted flags?
  *
  * BUG FIXES OR IMPROVEMENTS NEEDED:
  * - see if I can reproduce scanning data disappearing when returning to KSC
