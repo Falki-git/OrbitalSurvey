@@ -201,7 +201,7 @@ public class VesselManager : MonoBehaviour
                 var moduleStats = vesselStats.ModuleStats[j];
                 
                 // check if module is destroyed (case: part was destroyed)
-                if (moduleStats.DataModule == null) // TODO check if there's another condition, like the above vessel.Name == "NULL"
+                if (moduleStats.DataModule == null)
                 {
                     vesselStats.ModuleStats.Remove(moduleStats);
 
