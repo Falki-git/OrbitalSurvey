@@ -399,3 +399,4 @@ FodyWeavers.xsd
 *.dll
 
 dist/
+dist/DeployAndRun/BepInEx/plugins/OrbitalSurvey/OrbitalSurvey.dll

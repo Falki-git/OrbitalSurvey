@@ -11,6 +11,11 @@ public class VesselController : MonoBehaviour
 {
     public VesselController()
     { }
+
+    public static VesselController Instance;
+    
+    public delegate void ActiveVesselMapGuiPositionChanged((float percentX, float percentY) mapGuiPositionChanged);
+    public event ActiveVesselMapGuiPositionChanged OnActiveVesselMapGuiPositionChanged;
     
     public UIDocument MainGui;
     private MainGuiController _mainGuiController;
@@ -23,14 +28,22 @@ public class VesselController : MonoBehaviour
 
     private List<(VesselManager.VesselStats vessel, VesselMarkerControl control)> _trackedVessels = new();
     
+    private Action<float, float> _windowResizedHandler;
+    private Action<float> _zoomFactorChangeHandler;
+    private Action<Vector2> _panExecutedHandler;
+    
     public void OnEnable()
     {
+        Instance = this;
         MainGui = GetComponent<UIDocument>();
         _mainGuiController = GetComponent<MainGuiController>();
         _root = MainGui.rootVisualElement;
 
-        _canvas = _root.Q<VisualElement>("canvas");
+        _canvas = _root.Q<VisualElement>("marker-canvas");
         StartCoroutine(GetCanvasSize());
+        StartCoroutine(RegisterForWindowResize());
+        StartCoroutine(RegisterForZoomFactorChanged());
+        StartCoroutine(RegisterForPanExecuted());
     }
 
     private IEnumerator GetCanvasSize()
@@ -44,6 +57,7 @@ public class VesselController : MonoBehaviour
     }
 
     public void RebuildVesselMarkers(string body) => StartCoroutine(Rebuild(body));
+    private IEnumerator Rebuild() => Rebuild(SceneController.Instance.SelectedBody);
     private IEnumerator Rebuild(string body)
     {
         if (!_canvasInitialized)
@@ -66,21 +80,21 @@ public class VesselController : MonoBehaviour
             };
 
             vessel.OnNameChanged += (value) => OnNameChanged(control, value);
-            vessel.OnMapGuiPositionChanged += (value) => OnMapGuiPositionChanged(control, value);
+            vessel.OnMapGuiPositionChanged += (value) => OnMapGuiPositionChanged(control, value, vessel.IsActiveVessel);
             vessel.OnGeographicCoordinatesChanged += (value) => OnGeographicCoordinatesChanged(control, value);
             vessel.OnVisualModuleChanged += (value) => OnModuleChanged(control, value, MapType.Visual);
             vessel.OnBiomeModuleChanged += (value) => OnModuleChanged(control, value, MapType.Biome);
             
-            OnMapGuiPositionChanged(control, vessel.MapLocationPercent);
+            OnMapGuiPositionChanged(control, vessel.MapLocationPercent, vessel.IsActiveVessel);
             InitializeModuleStyles(control, vessel);
             _canvas.Add(control);
             _trackedVessels.Add((vessel, control));
         }
 
         VesselManager.Instance.OnVesselChangedBody +=
-            (value) => StartCoroutine(Rebuild(SceneController.Instance.SelectedBody));
+            (value) => StartCoroutine(Rebuild());
         VesselManager.Instance.OnVesselRegistered +=
-            (value) => StartCoroutine(Rebuild(SceneController.Instance.SelectedBody));
+            (value) => StartCoroutine(Rebuild());
     }
 
     private void InitializeModuleStyles(VesselMarkerControl control, VesselManager.VesselStats vessel)
@@ -89,8 +103,8 @@ public class VesselController : MonoBehaviour
         if (mapType == null)
             return;
         
-        var module = vessel.ModuleStats.Find(m => m.Mode == mapType);
-        if (module == null)
+        var module = vessel.ModuleStats.FindAll(m => m.Mode == mapType);
+        if (module.Count == 0)
         {
             control.SetAsInactive();
             return;
@@ -104,10 +118,16 @@ public class VesselController : MonoBehaviour
         control.NameValue = name;
     }
     
-    private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged)
+    private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged, bool isActiveVessel)
     {
-        control.style.left =_canvasWidth * mapGuiPositionChanged.percentX;
-        control.style.top = _canvasHeight * (1 - mapGuiPositionChanged.percentY);
+        var scaledCoordinates = GetScaledCoordinates(mapGuiPositionChanged.percentX, 1 - mapGuiPositionChanged.percentY);
+        control.style.left = scaledCoordinates.x;
+        control.style.top = scaledCoordinates.y;
+
+        if (isActiveVessel)
+        {
+            OnActiveVesselMapGuiPositionChanged?.Invoke(mapGuiPositionChanged);
+        }
     }
     
     private void OnGeographicCoordinatesChanged(VesselMarkerControl control, (double latitude, double longitude) coords)
@@ -116,40 +136,65 @@ public class VesselController : MonoBehaviour
         control.LongitudeValue = coords.longitude;
     }
     
-    private void OnModuleChanged(VesselMarkerControl control, VesselManager.ModuleStats module, MapType mode)
+    private void OnModuleChanged(VesselMarkerControl control, List<VesselManager.ModuleStats> modules, MapType mode)
     {
         if(mode != SceneController.Instance.SelectedMapType)
             return;
 
-        if (!module.Enabled)
-        {
-            control.SetAsInactive();
-            return;
-        }
+        // initialize the marker with the "lowest" state, then see what module has the "highest" state
+        var markerState = MarkerState.Inactive;
 
-        if (module.Status == Status.Complete)
+        // go through the list of all modules (if vessel has multiple modules with the same mode)
+        // and look for the module with the "highest" state (inactive -> complete -> error -> warning -> good) 
+        foreach (var module in modules)
         {
-            control.SetAsNormal();
-            return;
+            if (!module.Enabled)
+            {
+                continue;
+            }
+            
+            if (module.Status == Status.Complete &&
+                markerState < MarkerState.Normal)
+            {
+                markerState = MarkerState.Normal;
+                
+                // if mapping is complete, then there's no need to check further
+                break;
+            }
+            
+            if ((module.State == State.BelowMin || module.State == State.AboveMax ||
+                module.Status == Status.NoPower || module.Status == Status.NotDeployed) &&
+                markerState < MarkerState.Error)
+            {
+                markerState = MarkerState.Error;
+                continue;
+            }
+            
+            if ((module.State == State.BelowIdeal || module.State == State.AboveIdeal) &&
+                markerState < MarkerState.Warning)
+            {
+                markerState = MarkerState.Warning;
+                continue;
+            }
+            
+            if (module.State == State.Ideal)
+            {
+                markerState = MarkerState.Good;
+                
+                // if marker has the highest state, then there's no need to check further
+                break;
+            }
         }
-
-        if (module.State == State.BelowMin || module.State == State.AboveMax ||
-            module.Status == Status.NoPower || module.Status == Status.NotDeployed)
+        
+        // update vessel control
+        switch (markerState)
         {
-            control.SetAsError();
-            return;
-        }
-
-        if (module.State == State.BelowIdeal || module.State == State.AboveIdeal)
-        {
-            control.SetAsWarning();
-            return;
-        }
-
-        if (module.State == State.Ideal)
-        {
-            control.SetAsGood();
-            return;
+            case MarkerState.Inactive: control.SetAsInactive(); break;
+            case MarkerState.Normal: control.SetAsNormal(); break;
+            case MarkerState.Error: control.SetAsError(); break;
+            case MarkerState.Warning: control.SetAsWarning(); break;
+            case MarkerState.Good : control.SetAsGood(); break;
+            default: control.SetAsInactive(); break;
         }
     }
 
@@ -184,9 +229,121 @@ public class VesselController : MonoBehaviour
             LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
         _mainGuiController.ShowNotification(notificationText);
     }
+    
+    /// <summary>
+    /// Gets the new width and height of the canvas after window is resized by the player.
+    /// Then repositions all vessel markers. 
+    /// </summary>
+    private IEnumerator RegisterForWindowResize()
+    {
+        if (ResizeController.Instance == null)
+        {
+            yield return null;
+        }
+        
+        _windowResizedHandler = (newWidth, newHeight) =>
+        {
+            _canvasWidth = _canvas.layout.width;
+            _canvasHeight = _canvas.layout.height;
+            RepositionAllVesselControls();
+        };
+
+        ResizeController.Instance.OnWindowResized += _windowResizedHandler;
+    }
+    
+    /// <summary>
+    /// Repositions all vessel markers when zoom factor is changed
+    /// </summary>
+    private IEnumerator RegisterForZoomFactorChanged()
+    {
+        if (ZoomAndPanController.Instance == null)
+        {
+            yield return null;
+        }
+        
+        _zoomFactorChangeHandler = (zoomFactor) => RepositionAllVesselControls();
+
+        ZoomAndPanController.Instance.OnZoomFactorChanged += _zoomFactorChangeHandler;
+    }
+    
+    /// <summary>
+    /// Repositions all vessel markers when a pan is executed
+    /// </summary>
+    private IEnumerator RegisterForPanExecuted()
+    {
+        if (ZoomAndPanController.Instance == null)
+        {
+            yield return null;
+        }
+
+        _panExecutedHandler = (panOffset) => RepositionAllVesselControls();
+        
+        ZoomAndPanController.Instance.OnPanExecuted += _panExecutedHandler;
+    }
+    
+    private Vector2 GetScaledCoordinates(float percentX, float percentY)
+    {
+        var scaledDistanceToCenter = ScaledDistanceToCenter(percentX, percentY);
+
+        var scaledTextureCoordinates = new Vector2
+        {
+            x = scaledDistanceToCenter.x + _canvasWidth / 2,
+            y = scaledDistanceToCenter.y + _canvasHeight / 2
+        };
+
+        return scaledTextureCoordinates;
+    }
+
+    private Vector2 ScaledDistanceToCenter(float percentX, float percentY)
+    {
+        var distanceToCenter = DistanceToCenter(percentX, percentY);
+        distanceToCenter.x *= ZoomAndPanController.Instance.ZoomFactor;
+        distanceToCenter.y *= ZoomAndPanController.Instance.ZoomFactor;
+        return distanceToCenter;
+    }
+
+    private Vector2 DistanceToCenter(float percentX, float percentY)
+    {
+        var distanceToCenter = new Vector2(
+            percentX * _canvasWidth - _canvasWidth / 2,
+            percentY * _canvasHeight - _canvasHeight / 2);
+        
+        // apply panning offset
+        distanceToCenter.x += ZoomAndPanController.Instance.PanOffset.x;
+        distanceToCenter.y += ZoomAndPanController.Instance.PanOffset.y;
+
+        return distanceToCenter;
+    }
+    
+    /// <summary>
+    /// Refreshes positions of all vessel markers.
+    /// Called after a UI event triggered that requires repositioning (zoom, pan, resize)
+    /// </summary>
+    private void RepositionAllVesselControls()
+    {
+        foreach (var vesselTuple in _trackedVessels)
+        {
+            var vessel = vesselTuple.vessel;
+            var control = vesselTuple.control;
+            var scaledCoordinates = GetScaledCoordinates(vessel.MapLocationPercent.PercentX, 1 - vessel.MapLocationPercent.PercentY);
+            control.style.left = scaledCoordinates.x;
+            control.style.top = scaledCoordinates.y;
+        }
+    }
 
     private void OnDestroy()
     {
         VesselManager.Instance.ClearAllSubscriptions();
+
+        if (ResizeController.Instance != null)
+        {
+            ResizeController.Instance.OnWindowResized -= _windowResizedHandler;        
+        }
+
+        if (ZoomAndPanController.Instance != null)
+        {
+            ZoomAndPanController.Instance.OnZoomFactorChanged -= _zoomFactorChangeHandler;
+            ZoomAndPanController.Instance.OnPanExecuted -= _panExecutedHandler;
+        }
     }
 }

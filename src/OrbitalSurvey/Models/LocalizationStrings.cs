@@ -62,5 +62,7 @@ public static class LocalizationStrings
         { Notification.VesselNamesOff, "OrbitalSurvey/UI/VesselNames/OFF"},
         { Notification.GeoCoordsOn, "OrbitalSurvey/UI/GeoCoordinates/ON"},
         { Notification.GeoCoordsOff, "OrbitalSurvey/UI/GeoCoordinates/OFF"},
+        { Notification.VesselTrackingOn, "OrbitalSurvey/UI/VesselTracking/ON"},
+        { Notification.VesselTrackingOff, "OrbitalSurvey/UI/VesselTracking/OFF"},
     };
 }

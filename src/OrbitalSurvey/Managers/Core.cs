@@ -51,6 +51,11 @@ public class Core// : MonoBehaviour
                         AssetUtility.Instance.VisualBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
                         );
                 
+                celesData.Maps[MapType.Visual].ScannedMapHiRes =
+                    AssetManager.GetAsset<Texture2D>(
+                        AssetUtility.Instance.VisualBundleAssetAddresses[$"{key}_{Settings.HighResolution}"]
+                    );
+                
                 _LOGGER.LogInfo($"Visual map for {key} successfully initialized.");
             }
             catch (Exception ex)
@@ -65,6 +70,11 @@ public class Core// : MonoBehaviour
                     AssetManager.GetAsset<Texture2D>(
                         AssetUtility.Instance.BiomeBundleAssetAddresses[$"{key}_{Settings.ActiveResolution}"]
                         );
+                
+                celesData.Maps[MapType.Biome].ScannedMapHiRes =
+                    AssetManager.GetAsset<Texture2D>(
+                        AssetUtility.Instance.BiomeBundleAssetAddresses[$"{key}_{Settings.HighResolution}"]
+                    );
                 
                 _LOGGER.LogInfo($"Biome map for {key} successfully initialized.");
             }

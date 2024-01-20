@@ -158,7 +158,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         // if time since last scan begins to rise up (due to low performance), reduce the frequency of scans 
         var retroactiveTimeBetweenScans = ScanUtility.GetRetroactiveTimeBetweenScans(_timeSinceLastScan);
 
-        // for large time warp factors time between updates will be a lot larger, so we need to do a bit of catching up
+        // for large time warp factors time between updates will be a lot longer, so we need to do a bit of catching up
         // we'll iterate through each "time between scans" from the last scan time until we're caught up to the present
         while (_timeSinceLastScan > retroactiveTimeBetweenScans)
         {

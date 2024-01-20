@@ -2,10 +2,9 @@
  * 
  * TODO:
  * n/a
+ * 
  *
  * TODO NEAR-TERM:
- * - replace region names with the localized version (loc_source_10.csv)
- * - resizable canvas
  * - revamp of min/alt/max altitudes to be more dynamic
  * - next/previous orbit
  * - altimetry Map + legend 
@@ -13,7 +12,6 @@
  * 
  * TODO LONG-TERM: 
  * - adding waypoints by clicking on the map
- * - zoomable map or a new window with a bigger map
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
@@ -27,7 +25,10 @@
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
  * - scanning parts by -StanWildin
- * 
+ *
+ * BUG FIXES OR IMPROVEMENTS NEEDED:
+ * - see if I can reproduce scanning data disappearing when returning to KSC
+ * - experiments get locked in on a particular vessel
  *
  * DONE:
  * - save/load persistence of mapping data (POC done)
@@ -69,9 +70,35 @@
  * - notification area at the bottom-right corner
  * - close button different styling
  * - dropdown controls different styling
+ * - GEO on mouse over
+ * - resizable canvas
+ * - zoomable canvas
+ * - track active vessel
+ * - event unregistration
+ * - change Eve's Olympus color
+ * - multiple module handling in UI updates
+ * - load 2k texture on 100%
+ * - update UITK fonts because of Chinese characters
  *
- * Changelog for next version:
- * - fixed bug where unloaded vessels on game load weren't performing active scanning (map wasn't immediately updated)
- *
+ 
+ For Changelog:
+ 
+ Features:
+    - Canvas can now be resized
+    - Zooming is now possible, up to x10
+    - Active vessel can be tracked when zoomed in
+    - Mouse-overing vessel markers now shows vessel names and geo coordinates
+ 
+ Other:
+    - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
+    - (rocket) Added Italian translations by @leonardfactory
+    - (rocket) Fixed Chinese fonts not displaying properly in some cases - reported by @fengyuan0529   
+
+Fixes: 
+    - (rocket) Updated Eve's Olympus region color to black so it's easier to differentiate from other regions - reported by @Dolphin
+    - (rocket) Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode - reported by @schlosrat
+    - Replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
+  
+ 
  * 
  */

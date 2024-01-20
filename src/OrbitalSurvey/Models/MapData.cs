@@ -14,7 +14,10 @@ public class MapData
         DiscoveredPixels = new bool[Settings.ActiveResolution, Settings.ActiveResolution];
     }
 
+    public event Action<Texture2D> OnNewCurrentInstanceCreated; 
+
     public Texture2D ScannedMap { get; set; }
+    public Texture2D ScannedMapHiRes { get; set; }
     public Texture2D HiddenMap { get; set; }
     public Texture2D CurrentMap { get; set; }
     public bool[,] DiscoveredPixels { get; set; }
@@ -145,6 +148,10 @@ public class MapData
         Array.Clear(DiscoveredPixels, 0, DiscoveredPixels.Length);
         DiscoveredPixelsCount = 0;
         HasData = false;
+        CurrentMap = new Texture2D(HiddenMap.width, HiddenMap.height, TextureFormat.RGBA32, false);
+        Graphics.CopyTexture(HiddenMap, CurrentMap);
+        CurrentMap.Apply();
+        OnNewCurrentInstanceCreated?.Invoke(CurrentMap);
         UpdateCurrentMapAsPerDiscoveredPixels();
         IsFullyScanned = false;
         ExperimentLevel = ExperimentLevel.None;
@@ -171,6 +178,7 @@ public class MapData
             // map is partially scanned, update the map accordingly
             this.IsFullyScanned = false;
             this.HasData = true;
+            CurrentMap = new Texture2D(HiddenMap.width, HiddenMap.height, TextureFormat.RGBA32, false);
             DiscoveredPixels = SaveUtility.CopyArrayData(loadedPixels, out DiscoveredPixelsCount);
             UpdateCurrentMapAsPerDiscoveredPixels();    
         }
@@ -227,8 +235,12 @@ public class MapData
         this.IsFullyScanned = true;
         this.HasData = true;
         this.DiscoveredPixelsCount = TotalPixelCount;
-        Graphics.CopyTexture(ScannedMap, CurrentMap);
+        
+        // copy the high resolution map to the current map
+        CurrentMap = new Texture2D(ScannedMapHiRes.width, ScannedMapHiRes.height, TextureFormat.RGBA32, false);
+        Graphics.CopyTexture(ScannedMapHiRes, CurrentMap);
         CurrentMap.Apply();
+        OnNewCurrentInstanceCreated?.Invoke(CurrentMap);
     }
 
     public ExperimentLevel CheckIfExperimentNeedsToBeTriggered()

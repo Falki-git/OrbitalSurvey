@@ -2,6 +2,7 @@
 using BepInEx.Logging;
 using I2.Loc;
 using KSP.Game;
+using KSP.Game.Science;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
@@ -34,10 +35,13 @@ public class MainGuiController : MonoBehaviour
     private SideToggleControl _geoCoordinatesToggle;
     private VisualElement _legendContainer;
     private VesselController _vesselController;
+    private ResizeController _resizeController;
+    private ZoomAndPanController _zoomAndPanController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
     private Coroutine _hideNotification;
     private MapData _selectedMap;
+    private Action<Texture2D> _newCurrentMapInstanceHandler;
     
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.MainGuiController");
     
@@ -59,6 +63,15 @@ public class MainGuiController : MonoBehaviour
 
     public void OnEnable()
     {
+        // create vessel controller (for markers and additional info)
+        _vesselController = gameObject.AddComponent<VesselController>();
+
+        // create resize controller for resizing the map canvas
+        _resizeController = gameObject.AddComponent<ResizeController>();
+        
+        // create zoom controller for zooming and panning
+        _zoomAndPanController = gameObject.AddComponent<ZoomAndPanController>();
+        
         MainGui = GetComponent<UIDocument>();
         _root = MainGui.rootVisualElement;
         
@@ -70,7 +83,7 @@ public class MainGuiController : MonoBehaviour
         _closeButton.RegisterCallback<ClickEvent>(OnCloseButton);
         
         // body control
-        _mapContainer = _root.Q<VisualElement>("map__container");
+        _mapContainer = _root.Q<VisualElement>("map");
         _notificationLabel = _root.Q<Label>("notification");
         
         // side-bar controls
@@ -93,6 +106,16 @@ public class MainGuiController : MonoBehaviour
         // footer controls
         _legendContainer = _root.Q<VisualElement>("legend__container");
         
+        // define handler for the new CurrentMap instance
+        _newCurrentMapInstanceHandler = (newInstance) =>
+        {
+            _mapContainer.style.backgroundImage = _selectedMap.CurrentMap;
+            if (_overlayToggle.IsToggled)
+            {
+                OverlayManager.Instance.DrawOverlay(GetCurrentMapType());
+            }
+        };
+        
         BuildBodyDropdown();
         Core.Instance.OnMapHasDataValueChanged += PopulateBodyChoices;
         BuildMapTypeDropdown();
@@ -100,9 +123,6 @@ public class MainGuiController : MonoBehaviour
         var staticBackground = AssetManager.GetAsset<Texture2D>(
             $"{AssetUtility.OtherAssetsAddresses["StaticBackground"]}");
         _mapContainer.style.backgroundImage = staticBackground;
-        
-        // create vessel controller (for markers and additional info)
-        _vesselController = gameObject.AddComponent<VesselController>();
         
         // check if a map was previously selected and restore it (window was previously closed and now opened again)
         if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
@@ -192,6 +212,14 @@ public class MainGuiController : MonoBehaviour
         return _mapTypeLocalizationStrings.Select(listItem => listItem.Item2).ToList();
     }
 
+    private MapType GetCurrentMapType()
+    {
+        string mapTypeLocalizationString =
+            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
+        
+        return LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
+    }
+
     private void OnSelectionChanged(ChangeEvent<string> evt, bool playSound = true)
     {
         if (playSound && Settings.PlayUiSounds.Value) { KSP.Audio.KSPAudioEventManager.OnKSCBuildingClick(new Vector2()); }
@@ -199,13 +227,10 @@ public class MainGuiController : MonoBehaviour
         if (_mapTypeDropdown.value == _MAPTYPE_INITIAL_VALUE)
             return;
 
-        string mapTypeLocalizationString =
-            _mapTypeLocalizationStrings.Find(listItem => listItem.Item2 == _mapTypeDropdown.value).Item1;
-        
-        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[mapTypeLocalizationString];
+        var mapType = GetCurrentMapType();
         SceneController.Instance.SelectedMapType = mapType;
 
-        // Enabled the Overlay toggle if it's disabled and if we're in Flight/Map view
+        // Enable the Overlay toggle if it's disabled and if we're in Flight/Map view
         if (!_overlayToggle.IsEnabled)
         {
             _overlayToggle.SetEnabled(_isOverlayEligible);
@@ -223,9 +248,13 @@ public class MainGuiController : MonoBehaviour
         var body = _bodyDropdown.value;
         
         BuildLegend(body);
-        
-        if (_selectedMap != null) 
+
+        if (_selectedMap != null)
+        {
+            // unregister events from the previous MapData
             _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+            _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
+        }
 
         _selectedMap = Core.Instance.CelestialDataDictionary[body].Maps[mapType];
         
@@ -242,6 +271,7 @@ public class MainGuiController : MonoBehaviour
         }
 
         _selectedMap.OnDiscoveredPixelCountChanged += UpdatePercentageComplete;
+        _selectedMap.OnNewCurrentInstanceCreated += _newCurrentMapInstanceHandler;
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
 
         _vesselController.RebuildVesselMarkers(body);
@@ -292,7 +322,7 @@ public class MainGuiController : MonoBehaviour
 
         foreach (var region in legendRegions)
         {
-            _legendContainer.Add(new LegendKeyControl(region.Color, region.RegionId.AddSpaceBeforeUppercase()));
+            _legendContainer.Add(new LegendKeyControl(region.Color, ScienceRegionsHelper.GetRegionDisplayName(region.RegionId)));
         }
     }
     
@@ -344,5 +374,11 @@ public class MainGuiController : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _notificationLabel.RemoveFromClassList("notification--show");
+    }
+
+    private void OnDestroy()
+    {
+        _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+        _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
     }
 }

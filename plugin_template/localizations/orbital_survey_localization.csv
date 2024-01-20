@@ -1,69 +1,71 @@
 Key,Type,Desc,English,German,French,Italian,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
 
-PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey,,,,,,,,轨道勘测
-PartModules/OrbitalSurvey/Status,Text,,Status,Status,,,,,,,,状态
-PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert,,,,,,,,启用
-PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,,,,,,,,模式
-PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle
-PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region
-PartModules/OrbitalSurvey/State,Text,,State,State,,,,,,,,状态
-PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld,,,,,,,,视野
-PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug),,,,,,,,视野(debug)
-PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Mindesthöhe,,,,,,,,最低高度
-PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude,Optimale Höhe,,,,,,,,理想高度
-PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude,Maximale Höhe,,,,,,,,最高高度
-PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete,Prozent Vollständig,,,,,,,,完成度
-PartModules/OrbitalSurvey/OpenGui,Text,,Open Map,Öffne Karte,,,,,,,,打开地图
+PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbital Survey,,Rilevamento Orbitale,,,,,,轨道勘测
+PartModules/OrbitalSurvey/Status,Text,,Status,Status,,Status,,,,,,状态
+PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert,,Attivo,,,,,,启用
+PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,,Modalità,,,,,,模式
+PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle,,Visuale,,,,,,光学
+PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region,,Regione,,,,,,区域
+PartModules/OrbitalSurvey/State,Text,,State,State,,Stato,,,,,,状态
+PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld,,Campo Visivo,,,,,,视野
+PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug),,Campo Visivo (debug),,,,,,视野(debug)
+PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Mindesthöhe,,Altitudine Minima,,,,,,最低高度
+PartModules/OrbitalSurvey/IdealAltitude,Text,,Ideal Altitude,Optimale Höhe,,Altitudine Ideale,,,,,,理想高度
+PartModules/OrbitalSurvey/MaxAltitude,Text,,Max Altitude,Maximale Höhe,,Alt. Massima,,,,,,最高高度
+PartModules/OrbitalSurvey/PercentComplete,Text,,Percent Complete,Prozent Vollständig,,Perc. Completamento,,,,,,完成度
+PartModules/OrbitalSurvey/OpenGui,Text,,Open Map,Öffne Karte,,Apri Mappa,,,,,,打开地图
 
-OrbitalSurvey/Status/Disabled,Text,,Disabled,Deaktiviert,,,,,,,,停用
-OrbitalSurvey/Status/Scanning,Text,,Scanning,Scanning,,,,,,,,扫描中
-OrbitalSurvey/Status/Idle,Text,,Idle,Leerlauf,,,,,,,,闲置
-OrbitalSurvey/Status/Complete,Text,,Survey Complete,Erfassung Vollständig,,,,,,,,扫描完成
-OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>,<color=red>Keine Energie ⚠</color>,,,,,,,,<color=red>电能不足 ⚠</color>
-OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>,<color=red>Nicht Bereitgestellt ⚠</color>,,,,,,,,<color=red>未展开 ⚠</color>
+OrbitalSurvey/Status/Disabled,Text,,Disabled,Deaktiviert,,Disattivato,,,,,,停用
+OrbitalSurvey/Status/Scanning,Text,,Scanning,Scanning,,Scansione,,,,,,扫描中
+OrbitalSurvey/Status/Idle,Text,,Idle,Leerlauf,,Inattivo,,,,,,闲置
+OrbitalSurvey/Status/Complete,Text,,Survey Complete,Erfassung Vollständig,,Rilevamento Completato,,,,,,扫描完成
+OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>,<color=red>Keine Energie ⚠</color>,,<color=red>Senza Energia ⚠</color>,,,,,,<color=red>电能不足 ⚠</color>
+OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>,<color=red>Nicht Bereitgestellt ⚠</color>,,<color=red>Non Attivato ⚠</color>,,,,,,<color=red>未展开 ⚠</color>
 
-OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>,<color=red>Unter Mindesthöhe ⚠</color>,,,,,,,,<color=red>低于最低高度 ⚠</color>
-OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter Optimaler Höhe ⚠</color>,,,,,,,,<color=yellow>低于理想高度 ⚠</color>
-OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>,<color=green>Optimale Höhe</color>,,,,,,,,<color=green>理想高度</color>
-OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<color=yellow>Über Optimaler Höhe ⚠</color>,,,,,,,,<color=yellow>高于理想高度 ⚠</color>
-OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>,,,,,,,,<color=red>高于最高高度 ⚠</color>
+OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>,<color=red>Unter Mindesthöhe ⚠</color>,,<color=red>Sotto altitudine minima ⚠</color>,,,,,,<color=red>低于最低高度 ⚠</color>
+OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter Optimaler Höhe ⚠</color>,,<color=yellow>Sotto altitudine ideale ⚠</color>,,,,,,<color=yellow>低于理想高度 ⚠</color>
+OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>,<color=green>Optimale Höhe</color>,,<color=green>Altitudine ideale</color>,,,,,,<color=green>理想高度</color>
+OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<color=yellow>Über Optimaler Höhe ⚠</color>,,<color=yellow>Sopra altitudine ideale ⚠</color>,,,,,,<color=yellow>高于理想高度 ⚠</color>
+OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>,,<color=red>Sopra altitudine max ⚠</color>,,,,,,<color=red>高于最高高度 ⚠</color>
 
-OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>,,,,,,,,<color=green>完成！</color>
-OrbitalSurvey/UI/Overlay/ON,Text,,Overlay: ON
-OrbitalSurvey/UI/Overlay/OFF,Text,,Overlay: OFF
-OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON
-OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF
-OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON
-OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF
+OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>,,<color=green>Completato!</color>,,,,,,<color=green>完成！</color>
+OrbitalSurvey/UI/Overlay/ON,Text,,Overlay: ON,Overlay: An,,Overlay: ON,,,,,,叠加层：显示
+OrbitalSurvey/UI/Overlay/OFF,Text,,Overlay: OFF,Overlay: Aus,,Overlay: OFF,,,,,,叠加层：隐藏
+OrbitalSurvey/UI/VesselNames/ON,Text,,Vessel names: ON,Satellitennamen: An,,Nomi veicoli: ON,,,,,,飞船名称：显示
+OrbitalSurvey/UI/VesselNames/OFF,Text,,Vessel names: OFF,Satellitennamen: Aus,,Nomi veicoli: OFF,,,,,,飞船名称：隐藏
+OrbitalSurvey/UI/GeoCoordinates/ON,Text,,Geographic coordinates: ON,Geographische Koordinaten: An,,Coordinate geografiche: ON,,,,,,地理坐标：显示
+OrbitalSurvey/UI/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF,Geographische Koordinaten: Aus,,Coordinate geografiche: OFF,,,,,,地理坐标：隐藏
+OrbitalSurvey/UI/VesselTracking/ON,Text,,Active vessel tracking: ON,Aktive Satellitenverfolgung: An,,Segui veicolo attivo: ON,,,,,,追踪运行中的载具：开
+OrbitalSurvey/UI/VesselTracking/OFF,Text,,Active vessel tracking: OFF,Aktive Satellitenverfolgung: Aus,,Segui veicolo attivo: OFF,,,,,,追踪运行中的载具：关
 
-OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,,,,,,,在轨扫描天体
-OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,,,,,,,所需资源
-OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung,,,,,,,,电能
+OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,"Scansiona corpi celesti dall'orbita",,,,,,在轨扫描天体
+OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,Risorse Richieste,,,,,,所需资源
+OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung,,Carica Elettrica,,,,,,电能
 
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,,,,,,,“绘制天体表面的25%、50%、75%和100%”
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,"Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung,,,,,,,,光学测绘
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%,,,,,,,,光学测绘25%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/4
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%,Visuelle Kartierung 50%,,,,,,,,光学测绘50%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/2
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Kartierung 75%,,,,,,,,光学测绘75%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的3/4
-OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%,,,,,,,,光学测绘100%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,,,,,,,天体完全扫描！
+OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Kartierung,,Mappatura visuale,,,,,,光学测绘
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Kartierung 25%,,Mappatura visuale 25%,,,,,,光学测绘25%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt,,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%,Visuelle Kartierung 50%,,Mappatura visuale 50%,,,,,,光学测绘50%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt,,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Kartierung 75%,,Mappatura visuale 75%,,,,,,光学测绘75%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt,,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
+OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Kartierung 100%,,Mappatura visuale 100%,,,,,,光学测绘100%
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
-OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Kartierung,,,,,,,,生物群系测绘
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Kartierung 25%,,,,,,,,生物群系测绘25%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/4
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Kartierung 50%,,,,,,,,生物群系测绘50%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的1/2
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Kartierung 75%,,,,,,,,生物群系测绘75%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt,,,,,,,,您扫描了天体表面的3/4
-OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Kartierung 100%,,,,,,,,生物群系测绘100%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,,,,,,,天体完全扫描！
+OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Kartierung,,Mappatura delle regioni,,,,,,区域测绘
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Kartierung 25%,,Mappatura delle regioni 25%,,,,,,区域测绘25%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Du hast 1/4 des Himmelskörpers gescannt,,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Kartierung 50%,,Mappatura delle regioni 50%,,,,,,区域测绘50%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Du hast 1/2 des Himmelskörpers gescannt,,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Kartierung 75%,,Mappatura delle regioni 75%,,,,,,区域测绘75%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Du hast 3/4 des Himmelskörpers gescannt,,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
+OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Kartierung 100%,,Mappatura delle regioni 100%,,,,,,区域测绘100%
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
-OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!,,,,,,,,位于""{1}""的飞船""{0}""已完成轨道测绘！
-OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输测绘报告以收集科研点数
-OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat einen Meilenstein bei der orbitalen Kartierung erreicht!,,,,,,,,位于""{1}""的飞船""{0}""已达到一个轨道测绘的里程碑！
-OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,,,,,,,传输测绘报告以收集科研点数
+OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Vessel ""{0}"" on ""{1}"" has finished its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat die orbitale Kartierung abgeschlossen!,,"Il veicolo ""{0}"" su ""{1}"" ha completato la sua mappatura orbitale!",,,,,,位于""{1}""的飞船""{0}""已完成轨道测绘！
+OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,Trasmetti il rapporto di mappatura per raccogliere dati scientifici,,,,,,传输报告并获得科研点数
+OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Vessel ""{0}"" on ""{1}"" has reached a milestone in its orbital mapping!,Satellit ""{0}"" von ""{1}"" hat einen Meilenstein bei der orbitalen Kartierung erreicht!,,"Il veicolo ""{0}"" su ""{1}"" ha raggiunto un traguardo nella sua mappatura orbitale!",,,,,,位于""{1}""的飞船""{0}""已达到一个轨道测绘的里程碑！
+OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,Übertrage den Kartierungsbericht ums Wissenschaftspunkte zu erhalten,,Trasmetti il rapporto di mappatura per raccogliere dati scientifici,,,,,,传输报告并获得科研点数

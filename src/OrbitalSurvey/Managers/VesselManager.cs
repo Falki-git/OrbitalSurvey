@@ -22,7 +22,19 @@ public class VesselManager : MonoBehaviour
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.VesselManager");
 
     public double LastRefreshTime;
-    private double _timeSinceLastRefresh => Utility.UT - LastRefreshTime;
+
+    private double _timeSinceLastRefresh
+    {
+        get
+        {
+            if (Utility.UT < LastRefreshTime)
+            {
+                LastRefreshTime = Utility.UT - (double)Settings.GuiRefreshInterval.Value;
+            }
+            
+            return Utility.UT - LastRefreshTime;
+        }
+    }
 
     private bool _isVisualModuleUpdatedThisLoop;
     private bool _isBiomeModuleUpdatedThisLoop;
@@ -189,7 +201,7 @@ public class VesselManager : MonoBehaviour
                 var moduleStats = vesselStats.ModuleStats[j];
                 
                 // check if module is destroyed (case: part was destroyed)
-                if (moduleStats.DataModule == null) // TODO check if there's another condition, like the above vessel.Name == "NULL"
+                if (moduleStats.DataModule == null)
                 {
                     vesselStats.ModuleStats.Remove(moduleStats);
 
@@ -280,15 +292,15 @@ public class VesselManager : MonoBehaviour
             // VISUAL: check if a visual module was updated this loop and then invoke the change for the first module found
             if (_isVisualModuleUpdatedThisLoop)
             {
-                var visualModule = vesselStats.ModuleStats.Find(m => m.Mode == MapType.Visual);
-                vesselStats.InvokeVisualModuleChanged(visualModule);
+                var visualModules = vesselStats.ModuleStats.FindAll(m => m.Mode == MapType.Visual);
+                vesselStats.InvokeVisualModuleChanged(visualModules);
             }
             
             // BIOME: check if a module was updated this loop and then invoke the change for the first module found
             if (_isBiomeModuleUpdatedThisLoop)
             {
-                var biomeModule = vesselStats.ModuleStats.Find(m => m.Mode == MapType.Biome);
-                vesselStats.InvokeBiomeModuleChanged(biomeModule);
+                var biomeModules = vesselStats.ModuleStats.FindAll(m => m.Mode == MapType.Biome);
+                vesselStats.InvokeBiomeModuleChanged(biomeModules);
             }
         }
         
@@ -314,6 +326,7 @@ public class VesselManager : MonoBehaviour
     {
         public VesselComponent Vessel;
         public List<ModuleStats> ModuleStats = new();
+        public bool IsActiveVessel => Vessel.SimulationObject.IsActiveVessel;
 
         private string _name;
         public string Name
@@ -371,21 +384,19 @@ public class VesselManager : MonoBehaviour
             }
         }
 
-        public void InvokeVisualModuleChanged(ModuleStats module) => OnVisualModuleChanged?.Invoke(module);
-        public void InvokeBiomeModuleChanged(ModuleStats module) => OnBiomeModuleChanged?.Invoke(module);
+        public void InvokeVisualModuleChanged(List<ModuleStats> modules) => OnVisualModuleChanged?.Invoke(modules);
+        public void InvokeBiomeModuleChanged(List<ModuleStats> modules) => OnBiomeModuleChanged?.Invoke(modules);
         
         public delegate void NameChanged(string name);
         public delegate void BodyChanged(string body);
         public delegate void GeographicCoordinatesChanged((double Latitude, double Longitude) geographicCoordinates);
         public delegate void MapGuiPositionChanged((float percentX, float percentY) mapGuiPositionChanged);
-        public delegate void VisualModuleChanged(ModuleStats module);
-        public delegate void BiomeModuleChanged(ModuleStats module);
         public event NameChanged OnNameChanged;
         public event BodyChanged OnBodyChanged;
         public event GeographicCoordinatesChanged OnGeographicCoordinatesChanged;
         public event MapGuiPositionChanged OnMapGuiPositionChanged;
-        public event VisualModuleChanged OnVisualModuleChanged;
-        public event BiomeModuleChanged OnBiomeModuleChanged;
+        public event Action<List<ModuleStats>> OnVisualModuleChanged;
+        public event Action<List<ModuleStats>> OnBiomeModuleChanged;
 
         public void ClearAllSubscriptions()
         {
@@ -419,7 +430,9 @@ public class VesselManager : MonoBehaviour
             }
         }
         
+        #pragma warning disable CS0169 // Field is never used
         private MapType _mode;
+        #pragma warning restore CS0169 // Field is never used
         public MapType Mode // => LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[DataModule.ModeValue];
         {
             get;

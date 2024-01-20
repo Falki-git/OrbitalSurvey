@@ -48,5 +48,16 @@ public enum Notification
     VesselNamesOn,
     VesselNamesOff,
     GeoCoordsOn,
-    GeoCoordsOff
+    GeoCoordsOff,
+    VesselTrackingOn,
+    VesselTrackingOff
+}
+
+public enum MarkerState
+{
+    Inactive,
+    Normal,
+    Error,
+    Warning,
+    Good
 }

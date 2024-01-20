@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using OrbitalSurvey.Utilities;
+using UnityEngine;
 using UnityEngine.UIElements;
 // ReSharper disable InconsistentNaming
 
@@ -20,6 +21,9 @@ namespace OrbitalSurvey.UI.Controls
         private VisualElement _markerElement;
         private Label _latitudeLabel;
         private Label _longitudeLabel;
+
+        private bool _vesselNameVisibilityState;
+        private bool _geoCoordinatesVisiblityState;
         
         public string NameValue
         {
@@ -89,6 +93,28 @@ namespace OrbitalSurvey.UI.Controls
             };
             _longitudeLabel.AddToClassList(UssClassName_Longitude);
             hierarchy.Add(_longitudeLabel);
+
+            // Show/hide vessel name and geo coordinates on hovering
+            _markerElement.RegisterCallback<PointerEnterEvent>(_ =>
+            {
+                _vesselNameVisibilityState = _nameLabel.visible;
+                _geoCoordinatesVisiblityState = _latitudeLabel.visible;
+                SetVesselNameVisibility(true);
+                SetGeoCoordinatesVisibility(true);
+            });
+            _markerElement.RegisterCallback<PointerLeaveEvent>(_ =>
+            {
+                SetVesselNameVisibility(_vesselNameVisibilityState);
+                SetGeoCoordinatesVisibility(_geoCoordinatesVisiblityState);
+            });
+            
+            // Forward events to the ZoomController that handles zooming (mousewheel) and panning (down/move/up)
+            RegisterCallback<PointerDownEvent>(ZoomAndPanController.Instance.OnPanStarting);
+            RegisterCallback<PointerMoveEvent>(ZoomAndPanController.Instance.OnPanMoving);
+            RegisterCallback<PointerUpEvent>(ZoomAndPanController.Instance.OnPanEnding);
+            RegisterCallback<WheelEvent>(ZoomAndPanController.Instance.OnMouseScroll);
+            
+            this.StopMouseEventsPropagation();
         }
 
         public void SetAsNormal()
