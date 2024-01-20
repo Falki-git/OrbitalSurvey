@@ -6,12 +6,12 @@
  *
  * TODO NEAR-TERM:
  * - revamp of min/alt/max altitudes to be more dynamic
- * - next/previous orbit
+ * - adding waypoints by clicking on the map
  * - altimetry Map + legend 
  * 
  * 
  * TODO LONG-TERM: 
- * - adding waypoints by clicking on the map
+ * - next/previous orbit
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
@@ -79,26 +79,15 @@
  * - multiple module handling in UI updates
  * - load 2k texture on 100%
  * - update UITK fonts because of Chinese characters
+ * - mouse-overing vessel markers now shows vessel names and geo coordinates
+ * - added Italian translations
+ * - fixed Chinese fonts not displaying properly in some cases
+ * - updated Eve's Olympus region color to black so it's easier to differentiate from other regions
+ * - fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
+ * - replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
  *
- 
- For Changelog:
- 
- Features:
-    - Canvas can now be resized
-    - Zooming is now possible, up to x10
-    - Active vessel can be tracked when zoomed in
-    - Mouse-overing vessel markers now shows vessel names and geo coordinates
- 
- Other:
-    - After mapping 100% of the body's surface, a higher resolution texture (2048x2048) is loaded to give a much clearer picture when zooming
-    - (rocket) Added Italian translations by @leonardfactory
-    - (rocket) Fixed Chinese fonts not displaying properly in some cases - reported by @fengyuan0529   
-
-Fixes: 
-    - (rocket) Updated Eve's Olympus region color to black so it's easier to differentiate from other regions - reported by @Dolphin
-    - (rocket) Fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode - reported by @schlosrat
-    - Replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
-  
- 
- * 
+ * Changelog:
+ * - Fixed KerbinMountain region localization
+ *
+ *
  */
