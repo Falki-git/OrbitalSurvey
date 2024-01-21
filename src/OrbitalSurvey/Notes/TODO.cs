@@ -15,6 +15,7 @@
  * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
+ *      - both visual and region mapping must be 100%
  *      - one discoverable at a time
  *      - false positives
  *      - wide area not centered at the discoverable
