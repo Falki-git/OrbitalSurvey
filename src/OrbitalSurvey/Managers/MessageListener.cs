@@ -58,7 +58,7 @@ public class MessageListener
             Core.Instance.InitializeCelestialData();
         }
         
-        DebugUI.Instance.InitilizeControls();
+        DebugUI.Instance.InitializeControls();
         DebugUI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;
     }
     
