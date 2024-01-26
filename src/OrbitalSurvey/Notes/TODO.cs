@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - add KSP button
+ * n/a
  * 
  *
  * TODO NEAR-TERM:
@@ -11,7 +11,7 @@
  * 
  * TODO LONG-TERM: 
  * - next/previous orbit
- * - maybe a settings that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
+ * - maybe a setting that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
  *      - both visual and region mapping must be 100%
