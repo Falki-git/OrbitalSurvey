@@ -1,14 +1,27 @@
 @use 'constants';
 @use 'builtin:config';
 
+// GLOBAL VARIABLES
+$VISUAL-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-early-field-of-view");
+$VISUAL-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-early-ec-consumption");
+$BIOME-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-early-field-of-view");
+$BIOME-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-early-ec-consumption");
+
+$VISUAL-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-mid-field-of-view");
+$VISUAL-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-mid-ec-consumption");
+$BIOME-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-mid-field-of-view");
+$BIOME-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-mid-ec-consumption");
+
+$VISUAL-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-late-field-of-view");
+$VISUAL-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-late-ec-consumption");
+$BIOME-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-late-field-of-view");
+$BIOME-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-late-ec-consumption");
+
 :parts #antenna_0v_dish_ra-2 {
     +Module_OrbitalSurvey {
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-EARLY-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $VISUAL-EARLY-MIN-ALT;
-            IdealAltitudeValue: $VISUAL-EARLY-IDEAL-ALT;
-            MaximumAltitudeValue: $VISUAL-EARLY-MAX-ALT;
             RequiredResource: {
                 Rate: $VISUAL-EARLY-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",
@@ -31,9 +44,6 @@
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-EARLY-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $BIOME-EARLY-MIN-ALT;
-            IdealAltitudeValue: $BIOME-EARLY-IDEAL-ALT;
-            MaximumAltitudeValue: $BIOME-EARLY-MAX-ALT;
             RequiredResource: {
                 Rate: $BIOME-EARLY-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",
@@ -56,9 +66,6 @@
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-MID-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $VISUAL-MID-MIN-ALT;
-            IdealAltitudeValue: $VISUAL-MID-IDEAL-ALT;
-            MaximumAltitudeValue: $VISUAL-MID-MAX-ALT;
             RequiredResource: {
                 Rate: $VISUAL-MID-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",
@@ -81,9 +88,6 @@
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-MID-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $BIOME-MID-MIN-ALT;
-            IdealAltitudeValue: $BIOME-MID-IDEAL-ALT;
-            MaximumAltitudeValue: $BIOME-MID-MAX-ALT;
             RequiredResource: {
                 Rate: $BIOME-MID-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",
@@ -106,9 +110,6 @@
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
             ScanningFieldOfViewValue: $VISUAL-LATE-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $VISUAL-LATE-MIN-ALT;
-            IdealAltitudeValue: $VISUAL-LATE-IDEAL-ALT;
-            MaximumAltitudeValue: $VISUAL-LATE-MAX-ALT;
             RequiredResource: {
                 Rate: $VISUAL-LATE-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",
@@ -131,9 +132,6 @@
         +Data_OrbitalSurvey {
             ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
             ScanningFieldOfViewValue: $BIOME-LATE-FIELD-OF-VIEW;
-            MinimumAltitudeValue: $BIOME-LATE-MIN-ALT;
-            IdealAltitudeValue: $BIOME-LATE-IDEAL-ALT;
-            MaximumAltitudeValue: $BIOME-LATE-MAX-ALT;
             RequiredResource: {
                 Rate: $BIOME-LATE-EC-CONSUMPTION,
                 ResourceName: "ElectricCharge",

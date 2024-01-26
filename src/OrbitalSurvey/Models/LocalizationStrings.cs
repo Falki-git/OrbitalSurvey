@@ -29,7 +29,8 @@ public static class LocalizationStrings
     {
         { "ModuleDescription", "OrbitalSurvey/OAB/Description" },
         { "ResourcesRequired", "OrbitalSurvey/OAB/ResourcesRequiredTitle" },
-        { "ElectricCharge", "OrbitalSurvey/OAB/ResourcesRequiredEntry" }
+        { "ElectricCharge", "OrbitalSurvey/OAB/ResourcesRequiredEntry" },
+        { "CategoryDescription", "OrbitalSurvey/OAB/CategoryDescription" }
     };
 
     public static readonly Dictionary<string, LocalizedString> PARTMODULES = new()

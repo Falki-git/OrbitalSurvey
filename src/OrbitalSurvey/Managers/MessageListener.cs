@@ -57,6 +57,11 @@ public class MessageListener
             _LOGGER.LogInfo("New SessionGuidString detected. Resetting data.");
             Core.Instance.InitializeCelestialData();
         }
+
+        if (!CelestialCategoryManager.Instance.IsCelestialBodyCategoryInitialized)
+        {
+            CelestialCategoryManager.Instance.InitializeCelestialBodyCategories();
+        }
         
         DebugUI.Instance.InitializeControls();
         DebugUI.Instance.IsDebugWindowOpen = Settings.WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD;

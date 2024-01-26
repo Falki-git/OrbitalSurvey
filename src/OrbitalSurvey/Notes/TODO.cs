@@ -1,11 +1,10 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - add KSP button
  * 
  *
  * TODO NEAR-TERM:
- * - revamp of min/alt/max altitudes to be more dynamic
  * - adding waypoints by clicking on the map
  * - altimetry Map + legend 
  * 
@@ -87,9 +86,10 @@
  * - updated Eve's Olympus region color to black so it's easier to differentiate from other regions
  * - fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
  * - replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
+ * - revamp of min/ideal/max altitudes to be more dynamic
  *
  * Changelog:
  * - Fixed KerbinMountain region localization
- *
+ * - Revamped Min/Ideal/Max altitudes
  *
  */
