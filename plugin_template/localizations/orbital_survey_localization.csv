@@ -7,11 +7,11 @@ PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,,Modalità,,,,,,模式
 PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuelle,,Visuale,,,,,,光学
 PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region,,Regione,,,,,,区域
 PartModules/OrbitalSurvey/State,Text,,State,State,,Stato,,,,,,状态
-PartModules/OrbitalSurvey/BodyCategory,Text,,Body Category,<german>,,Categoria Corpo,,,,,,天体类型
-PartModules/OrbitalSurvey/BodyCategory/Preview,Text,,Body Category (preview only),<german>,,Categoria Corpo (solo anteprima),,,,,,天体类型（仅预览)
-PartModules/OrbitalSurvey/BodyCategory/Small,Text,,Small,<german>,,Piccolo,,,,,,小
-PartModules/OrbitalSurvey/BodyCategory/Medium,Text,,Medium,<german>,,Medio,,,,,,中
-PartModules/OrbitalSurvey/BodyCategory/Large,Text,,Large,<german>,,Grande,,,,,,大
+PartModules/OrbitalSurvey/BodyCategory,Text,,Body Category,,,Categoria Corpo,,,,,,天体类型
+PartModules/OrbitalSurvey/BodyCategory/Preview,Text,,Body Category (preview only),,,Categoria Corpo (solo anteprima),,,,,,天体类型（仅预览)
+PartModules/OrbitalSurvey/BodyCategory/Small,Text,,Small,,,Piccolo,,,,,,小
+PartModules/OrbitalSurvey/BodyCategory/Medium,Text,,Medium,,,Medio,,,,,,中
+PartModules/OrbitalSurvey/BodyCategory/Large,Text,,Large,,,Grande,,,,,,大
 PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Sichtfeld,,Campo Visivo,,,,,,视野
 PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Sichtfeld (debug),,Campo Visivo (debug),,,,,,视野(debug)
 PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Mindesthöhe,,Altitudine Minima,,,,,,最低高度
@@ -46,7 +46,7 @@ OrbitalSurvey/UI/VesselTracking/OFF,Text,,Active vessel tracking: OFF,Aktive Sat
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,"Scansiona corpi celesti dall'orbita",,,,,,在轨扫描天体
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,Risorse Richieste,,,,,,所需资源
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrische Ladung,,Carica Elettrica,,,,,,电能
-OrbitalSurvey/OAB/CategoryDescription,Text,,{0} Category (max {1} km radius),<german>,,Categoria {0} (raggio max {1} km),,,,,,{0}型（最大半径{1}千米)
+OrbitalSurvey/OAB/CategoryDescription,Text,,{0} Category (max {1} km radius),,,Categoria {0} (raggio max {1} km),,,,,,{0}型（最大半径{1}千米)
 
 OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Kartiere 25%, 50%, 75% und 100% des Himmelskörpers",,"Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
 
