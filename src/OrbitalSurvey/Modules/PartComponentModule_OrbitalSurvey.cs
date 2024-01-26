@@ -37,16 +37,9 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             _LOGGER.LogError("Unable to find a Data_OrbitalSurvey in the PartComponentModule for " + base.Part.PartName);
             return;
         }
-
-        // This should never happen. Commenting out till we can test it better
-        /*
-        if (string.IsNullOrEmpty(_dataOrbitalSurvey.Mode.GetValue()))
-        {
-            //_dataOrbitalSurvey.Mode.SetValue(MapType.Visual.ToString());
-        }
-        */
-
+        
         _dataOrbitalSurvey.InitializeScanningStats();
+        
         _dataOrbitalSurvey.PartComponentModule = this;
         
         _dataOrbitalSurvey.SetupResourceRequest(base.resourceFlowRequestBroker);
@@ -70,7 +63,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
                 }
             }
         }
-
+        
         LastScanTime = Utility.UT;
 
         RegisterAtVesselManager();
@@ -100,8 +93,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     {
         if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
             _timeSinceLastScan >= (double)Settings.TimeBetweenScans.Value &&
-            (DataDeployable?.IsExtended ?? true) &&
-            _dataOrbitalSurvey.ScanningStats != null)
+            (DataDeployable?.IsExtended ?? true))
         {
             // if EC is spent, skip scanning
             if (!_dataOrbitalSurvey.HasResourcesToOperate)
@@ -112,12 +104,19 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             
             var vessel = base.Part.PartOwner.SimulationObject.Vessel;
             var body = vessel.mainBody.Name;
+
             if (!Core.Instance.CelestialDataDictionary.ContainsKey(body))
                 return;
             
-            // var mapType = Enum.Parse<MapType>(_dataOrbitalSurvey.Mode.GetValue());
             var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue]; 
 
+            // check if scanning stats need updating (case: a) first scan, b) vessel changed SOI)
+            if (body != _dataOrbitalSurvey.ScanningStats.Body)
+            {
+                var stats = CelestialCategoryManager.Instance.GetScanningStats(body, mapType);
+                _dataOrbitalSurvey.SetScanningStats(body, stats.category, stats.altitudes);
+            }
+            
             // check if debugging scanning FOV needs to be applied or removed
             if (DebugUI.Instance.DebugFovEnabled != _isDebugCustomFovEnabled)
             {

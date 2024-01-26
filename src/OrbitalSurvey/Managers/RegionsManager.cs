@@ -43,7 +43,7 @@ public class RegionsManager
             {
                 { 0, new RegionColor { RegionId = "KerbinGrasslands", Color = new Color32(101, 168, 102, 255) } }, 
                 { 5, new RegionColor { RegionId = "KerbinHighlands", Color = new Color32(26, 82, 28, 255) } },
-                { 3, new RegionColor { RegionId = "KerbinMountains", Color = new Color32(75, 44, 7, 255) } },
+                { 3, new RegionColor { RegionId = "KerbinMountain", Color = new Color32(75, 44, 7, 255) } },
                 { 4, new RegionColor { RegionId = "KerbinDesert", Color = new Color32(225, 191, 146, 255) } },
                 { 2, new RegionColor { RegionId = "KerbinIce", Color = new Color32(255, 255, 255, 255) } },
                 { 1, new RegionColor { RegionId = "KerbinWater", Color = new Color32(65, 117, 162, 255) } },

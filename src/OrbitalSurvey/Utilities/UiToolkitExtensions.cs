@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace OrbitalSurvey.Utilities;
 
 /// <summary>
-/// Taken from Science Arhive: https://github.com/Kerbalight/ScienceArkive/blob/main/src/ScienceArkive/API/Extensions/UIToolkitExtensions.cs#L19
+/// Taken from Science Arkive: https://github.com/Kerbalight/ScienceArkive/blob/main/src/ScienceArkive/API/Extensions/UIToolkitExtensions.cs#L19
 /// </summary>
 public static class UIToolkitExtensions
 {

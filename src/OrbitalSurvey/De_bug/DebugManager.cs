@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using KSP.Game;
 using KSP.Game.Science;
 using KSP.Rendering.Planets;
+using KSP.Sim.Definitions;
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
@@ -571,6 +572,28 @@ namespace OrbitalSurvey.Debug
             File.WriteAllBytes(path, bytes);
             
             _LOGGER.LogDebug($"PQSScienceOverlay: overlay texture exported");
+        }
+
+        public List<SimulationObjectModel> Waypoints = new();
+
+        public void CreateWaypoint(string name, string bodyName, double latitude, double longitude, double altitudeFromRadius = 0)
+        {
+            var spaceSimulation = GameManager.Instance.Game.SpaceSimulation;
+            var celestialBodies = GameManager.Instance.Game.UniverseModel.GetAllCelestialBodies();
+            var body = celestialBodies.Find(c => c.Name == bodyName);
+            if (body == null)
+                return;
+
+            if (altitudeFromRadius == 0)
+            {
+                altitudeFromRadius = body.SurfaceProvider.GetTerrainAltitudeFromCenter(latitude, longitude) - body.radius; 
+            }
+
+            var waypointComponentDefinition = new WaypointComponentDefinition() { Name = name };
+            var waypoint = spaceSimulation.CreateWaypointSimObject(
+                waypointComponentDefinition, body, latitude, longitude, altitudeFromRadius);
+
+            Waypoints.Add(waypoint);
         }
     }
 }

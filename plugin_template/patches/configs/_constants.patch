@@ -1,74 +1,130 @@
 @use 'builtin:config';
 
 // EARLY
-@create-config "orbital-survey-constants", "visual-early-field-of-view": 10;
-@create-config "orbital-survey-constants", "visual-early-min-alt": 100000;
-@create-config "orbital-survey-constants", "visual-early-ideal-alt": 500000;
-@create-config "orbital-survey-constants", "visual-early-max-alt": 1000000;
+@create-config "orbital-survey-constants", "visual-early-field-of-view": 5;
+@create-config "orbital-survey-constants", "visual-early-min-alt": 500000;
+@create-config "orbital-survey-constants", "visual-early-ideal-alt": 800000;
+@create-config "orbital-survey-constants", "visual-early-max-alt": 1100000;
 @create-config "orbital-survey-constants", "visual-early-ec-consumption": 1;
 
-@create-config "orbital-survey-constants", "biome-early-field-of-view": 5;
-@create-config "orbital-survey-constants", "biome-early-min-alt": 300000;
-@create-config "orbital-survey-constants", "biome-early-ideal-alt": 750000;
-@create-config "orbital-survey-constants", "biome-early-max-alt": 900000;
+@create-config "orbital-survey-constants", "biome-early-field-of-view": 3;
+@create-config "orbital-survey-constants", "biome-early-min-alt": 700000;
+@create-config "orbital-survey-constants", "biome-early-ideal-alt": 1000000;
+@create-config "orbital-survey-constants", "biome-early-max-alt": 1300000;
 @create-config "orbital-survey-constants", "biome-early-ec-consumption": 2;
 
 // MID
-@create-config "orbital-survey-constants", "visual-mid-field-of-view": 11;
+@create-config "orbital-survey-constants", "visual-mid-field-of-view": 6;
 @create-config "orbital-survey-constants", "visual-mid-min-alt": 100000;
 @create-config "orbital-survey-constants", "visual-mid-ideal-alt": 500000;
 @create-config "orbital-survey-constants", "visual-mid-max-alt": 1000000;
 @create-config "orbital-survey-constants", "visual-mid-ec-consumption": 2;
 
-@create-config "orbital-survey-constants", "biome-mid-field-of-view": 6;
+@create-config "orbital-survey-constants", "biome-mid-field-of-view": 4;
 @create-config "orbital-survey-constants", "biome-mid-min-alt": 300000;
 @create-config "orbital-survey-constants", "biome-mid-ideal-alt": 750000;
 @create-config "orbital-survey-constants", "biome-mid-max-alt": 900000;
 @create-config "orbital-survey-constants", "biome-mid-ec-consumption": 3;
 
 // LATE
-@create-config "orbital-survey-constants", "visual-late-field-of-view": 12;
+@create-config "orbital-survey-constants", "visual-late-field-of-view": 7;
 @create-config "orbital-survey-constants", "visual-late-min-alt": 100000;
 @create-config "orbital-survey-constants", "visual-late-ideal-alt": 500000;
 @create-config "orbital-survey-constants", "visual-late-max-alt": 1000000;
 @create-config "orbital-survey-constants", "visual-late-ec-consumption": 3;
 
-@create-config "orbital-survey-constants", "biome-late-field-of-view": 7;
+@create-config "orbital-survey-constants", "biome-late-field-of-view": 5;
 @create-config "orbital-survey-constants", "biome-late-min-alt": 300000;
 @create-config "orbital-survey-constants", "biome-late-ideal-alt": 750000;
 @create-config "orbital-survey-constants", "biome-late-max-alt": 900000;
 @create-config "orbital-survey-constants", "biome-late-ec-consumption": 4;
 
-// GLOBAL VARIABLES
-$VISUAL-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-early-field-of-view");
-$VISUAL-EARLY-MIN-ALT: get-config("orbital-survey-constants", "visual-early-min-alt");
-$VISUAL-EARLY-IDEAL-ALT: get-config("orbital-survey-constants", "visual-early-ideal-alt");
-$VISUAL-EARLY-MAX-ALT: get-config("orbital-survey-constants", "visual-early-max-alt");
-$VISUAL-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-early-ec-consumption");
-$BIOME-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-early-field-of-view");
-$BIOME-EARLY-MIN-ALT: get-config("orbital-survey-constants", "biome-early-min-alt");
-$BIOME-EARLY-IDEAL-ALT: get-config("orbital-survey-constants", "biome-early-ideal-alt");
-$BIOME-EARLY-MAX-ALT: get-config("orbital-survey-constants", "biome-early-max-alt");
-$BIOME-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-early-ec-consumption");
+@create-config "orbital-survey-definitions", "celestial-category__maximum-radius": {
+    Small: 150000,
+    Medium: 350000,
+    Large: 10000000,
+    // Giant: 100000000, // not used
+    // Colossal: 1000000000, // not used
+    // Supermassive: 10000000000 // not used
+};
 
-$VISUAL-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-mid-field-of-view");
-$VISUAL-MID-MIN-ALT: get-config("orbital-survey-constants", "visual-mid-min-alt");
-$VISUAL-MID-IDEAL-ALT: get-config("orbital-survey-constants", "visual-mid-ideal-alt");
-$VISUAL-MID-MAX-ALT: get-config("orbital-survey-constants", "visual-mid-max-alt");
-$VISUAL-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-mid-ec-consumption");
-$BIOME-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-mid-field-of-view");
-$BIOME-MID-MIN-ALT: get-config("orbital-survey-constants", "biome-mid-min-alt");
-$BIOME-MID-IDEAL-ALT: get-config("orbital-survey-constants", "biome-mid-ideal-alt");
-$BIOME-MID-MAX-ALT: get-config("orbital-survey-constants", "biome-mid-max-alt");
-$BIOME-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-mid-ec-consumption");
+@create-config "orbital-survey-definitions", "celestial-category__localization-string": {
+    Small: "PartModules/OrbitalSurvey/BodyCategory/Small",
+    Medium: "PartModules/OrbitalSurvey/BodyCategory/Medium",
+    Large: "PartModules/OrbitalSurvey/BodyCategory/Large",
+};
 
-$VISUAL-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-late-field-of-view");
-$VISUAL-LATE-MIN-ALT: get-config("orbital-survey-constants", "visual-late-min-alt");
-$VISUAL-LATE-IDEAL-ALT: get-config("orbital-survey-constants", "visual-late-ideal-alt");
-$VISUAL-LATE-MAX-ALT: get-config("orbital-survey-constants", "visual-late-max-alt");
-$VISUAL-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-late-ec-consumption");
-$BIOME-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-late-field-of-view");
-$BIOME-LATE-MIN-ALT: get-config("orbital-survey-constants", "biome-late-min-alt");
-$BIOME-LATE-IDEAL-ALT: get-config("orbital-survey-constants", "biome-late-ideal-alt");
-$BIOME-LATE-MAX-ALT: get-config("orbital-survey-constants", "biome-late-max-alt");
-$BIOME-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-late-ec-consumption");
+@create-config "orbital-survey-definitions", "celestial-category__scanning-altitudes": {
+    Small: {
+        Visual: {
+            MinAltitude: 60000,
+            IdealAltitude: 170000,
+            MaxAltitude: 220000
+        },
+        Biome: {
+            MinAltitude: 60000,
+            IdealAltitude: 220000,
+            MaxAltitude : 300000
+        }        
+    },
+    Medium: {
+        Visual: {
+            MinAltitude: 100000,
+            IdealAltitude: 300000,
+            MaxAltitude: 500000
+        },
+        Biome: {
+            MinAltitude: 300000,
+            IdealAltitude: 500000,
+            MaxAltitude : 700000
+        }
+    },
+    Large: {
+        Visual: {
+            MinAltitude: 500000,
+            IdealAltitude: 800000,
+            MaxAltitude: 1100000
+        },
+        Biome: {
+            MinAltitude: 1000000,
+            IdealAltitude: 1500000,
+            MaxAltitude : 2000000
+        }
+    },    
+    //Giant: {
+    //    Visual: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude: 0
+    //    },
+    //    Biome: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude : 0
+    //    }
+    //},
+    //Colossal: {
+    //    Visual: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude: 0
+    //    },
+    //    Biome: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude : 0
+    //    }
+    //},
+    //Supermassive: {
+    //    Visual: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude: 0
+    //    },
+    //    Biome: {
+    //        MinAltitude: 0,
+    //        IdealAltitude: 0,
+    //        MaxAltitude : 0
+    //    }
+    //}
+};

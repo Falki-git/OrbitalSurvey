@@ -30,7 +30,7 @@ namespace OrbitalSurvey.Debug
         public string UT;
         private List<string> _bodyNames = new();
         private int _bodyIndex;
-
+        
         private bool _showAnalyticsScanningSection;
         //private bool _showSavePersistenceSection;
         private bool _showOverlaySection = false;
@@ -40,7 +40,8 @@ namespace OrbitalSurvey.Debug
         private bool _showMap3dSection = false;
         private bool _showResourceConsumption = false;
         private bool _showPamOverridesSection = false;
-        private bool _showScienceRegionsSection = true;
+        private bool _showScienceRegionsSection = false;
+        private bool _showWaypointSection = true;
         
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
@@ -78,6 +79,15 @@ namespace OrbitalSurvey.Debug
         public bool DebugFovEnabled;
         public bool DebugTriggerExperiment;
         public bool DebugTriggerScienceReport;
+        
+        // waypoints
+        private string _waypointBody;
+        private List<string> _waypointBodyNames = new();
+        private int _waypointBodyIndex;
+        private string _waypointName = "Waypoint Test";
+        private string _waypointLatitude = "0";
+        private string _waypointLongitude = "0";
+        private string _waypointAltitudeFromRadius = "0";
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -103,12 +113,16 @@ namespace OrbitalSurvey.Debug
             _narrowButton = new GUIStyle(Skins.ConsoleSkin.button) { fixedWidth = 20 };
         }
 
-        public void InitilizeControls()
+        public void InitializeControls()
         {
             _bodyNames = Utility.GetAllCelestialBodyNames();
             _body = "Kerbin";
             _bodyIndex = _bodyNames.IndexOf(_body);
             _textureName = "_MainTex";
+            
+            _waypointBodyNames = Utility.GetAllCelestialBodyNames();
+            _waypointBody = "Kerbin";
+            _waypointBodyIndex = _waypointBodyNames.IndexOf(_waypointBody);
         }
 
         public void OnGUI()
@@ -822,6 +836,70 @@ namespace OrbitalSurvey.Debug
             
             #endregion
 
+            #region WaypointSection
+            
+            if (GUILayout.Button(_showWaypointSection ? "Hide Waypoint Section" : "Show Waypoint Section", _showWaypointSection ? _toggledSectionButton : _normalSectionButton))
+                _showWaypointSection = !_showWaypointSection;
+
+            if (_showWaypointSection)
+            {
+                GUILayout.Label("--");
+                
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Body:", _labelStyle);
+                    if (GUILayout.Button("<", _narrowButton) && _waypointBodyIndex > 0)
+                        _waypointBody = _waypointBodyNames[--_waypointBodyIndex];
+                    _waypointBody = GUILayout.TextField(_waypointBody);
+                    if (GUILayout.Button(">", _narrowButton) && _waypointBodyIndex < _waypointBodyNames.Count-1)
+                        _waypointBody = _waypointBodyNames[++_waypointBodyIndex];
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Name:", _labelStyle);
+                    _waypointName = GUILayout.TextField(_waypointName);
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Latitude:", _labelStyle);
+                    _waypointLatitude = GUILayout.TextField(_waypointLatitude);
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Longitude:", _labelStyle);
+                    _waypointLongitude = GUILayout.TextField(_waypointLongitude);
+                }
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("AltFromRadius:", _labelStyle);
+                    _waypointAltitudeFromRadius = GUILayout.TextField(_waypointAltitudeFromRadius);
+                }
+                GUILayout.EndHorizontal();
+                
+                if (GUILayout.Button("CreateWaypoint"))
+                {
+                    var lat = double.Parse(_waypointLatitude);
+                    var lon = double.Parse(_waypointLongitude);
+                    var alt = double.Parse(_waypointAltitudeFromRadius);
+                    
+                    DebugManager.Instance.CreateWaypoint(
+                        name: _waypointName,
+                        bodyName: _waypointBody,
+                        latitude: lat,
+                        longitude: lon,
+                        altitudeFromRadius: alt
+                        );
+                }
+                
+                GUILayout.Label("--");
+            }
+            
+            #endregion
+            
             GUI.DragWindow(new Rect(0, 0, 10000, 10000));
         }
     }

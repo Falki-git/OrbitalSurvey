@@ -4,7 +4,9 @@ using KSP.Game;
 using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.Sim.ResourceSystem;
+using KSP.UI.Binding;
 using Newtonsoft.Json;
+using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using UnityEngine;
 using Logger = BepInEx.Logging.Logger;
@@ -28,7 +30,8 @@ public class Data_OrbitalSurvey : ModuleData
     [PAMDisplayControl(SortIndex = 2)]
     public ModuleProperty<bool> EnabledToggle = new ModuleProperty<bool>(false);
     
-    [LocalizedField("PartModules/OrbitalSurvey/Mode")] [PAMDisplayControl(SortIndex = 3)]
+    [LocalizedField("PartModules/OrbitalSurvey/Mode")]
+    [PAMDisplayControl(SortIndex = 3)]
     public ModuleProperty<string> Mode = new ModuleProperty<string>("");
     
     [LocalizedField("PartModules/OrbitalSurvey/State")]
@@ -41,9 +44,17 @@ public class Data_OrbitalSurvey : ModuleData
     public ModuleProperty<float> PercentComplete = new (0f, true, val => $"{val:P0}");
     
     [LocalizedField("PartModules/OrbitalSurvey/ScanningFOV")]
-    [PAMDisplayControl(SortIndex = 7)]
+    [PAMDisplayControl(SortIndex = 6)]
     [JsonIgnore]
     public ModuleProperty<float> ScanningFieldOfView = new (0, true, val => $"{val:N0}°");
+    
+    [LocalizedField("PartModules/OrbitalSurvey/BodyCategory")]
+    [PAMDisplayControl(SortIndex = 7)]
+    public ModuleProperty<string> BodyCategory = new ("");
+    
+    [LocalizedField("PartModules/OrbitalSurvey/BodyCategory/Preview")]
+    [PAMDisplayControl(SortIndex = 7)]
+    public ModuleProperty<string> BodyCategoryOabDropdown = new ("");
     
     [LocalizedField("PartModules/OrbitalSurvey/MinAltitude")]
     [PAMDisplayControl(SortIndex = 8)]
@@ -68,10 +79,6 @@ public class Data_OrbitalSurvey : ModuleData
     // Set through Patch Manager
     [KSPDefinition] public string ModeValue;
     [KSPDefinition] public float ScanningFieldOfViewValue;
-    [KSPDefinition] public float MinimumAltitudeValue;
-    [KSPDefinition] public float IdealAltitudeValue;
-    [KSPDefinition] public float MaximumAltitudeValue;
-
     
     private Status _statusValue;
     public Status StatusValue
@@ -97,7 +104,7 @@ public class Data_OrbitalSurvey : ModuleData
         }
     }
 
-    public ScanningStats ScanningStats;
+    public ScanningStats ScanningStats { get; set; } = new();
 
     public override void OnPartBehaviourModuleInit()
     {
@@ -107,26 +114,57 @@ public class Data_OrbitalSurvey : ModuleData
         // So, we use the "*Value" meta values to set the properties 
         Mode.SetValue(new LocalizedString(ModeValue));
         ScanningFieldOfView.SetValue(ScanningFieldOfViewValue);
-        MinimumAltitude.SetValue(MinimumAltitudeValue);
-        IdealAltitude.SetValue(IdealAltitudeValue);
-        MaximumAltitude.SetValue(MaximumAltitudeValue);
-        
-        InitializeScanningStats();
-    }
 
+        SetBodyCategoryOabDropdownItems();
+    }
+    
     public void InitializeScanningStats()
     {
-        if (ScanningStats != null)
-            return;
-        
+        ScanningStats.FieldOfView = ScanningFieldOfViewValue;
+    }
+
+    public void SetScanningStats(string body, string category, ScanningAltitudes altitudes)
+    {
         // Setting ScanningStats that will be used by BehaviourModule and PartComponentModule
-        ScanningStats = new ScanningStats
+        ScanningStats.Body = body;
+        ScanningStats.Category = category;
+        ScanningStats.MinAltitude = altitudes.MinAltitude;
+        ScanningStats.IdealAltitude = altitudes.IdealAltitude;
+        ScanningStats.MaxAltitude = altitudes.MaxAltitude;
+
+        BodyCategory.SetValue($"{CelestialCategoryManager.Instance.CategoryLocalization[category]} ({body})");
+        MinimumAltitude.SetValue(altitudes.MinAltitude);
+        IdealAltitude.SetValue(altitudes.IdealAltitude);
+        MaximumAltitude.SetValue(altitudes.MaxAltitude);
+    }
+
+    /// <summary>
+    /// Handles BodyCategory dropdown list value change
+    /// </summary>
+    /// <param name="category"></param>
+    public void SetOabScanningStats(string category)
+    {
+        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[ModeValue];
+        var stats = CelestialCategoryManager.Instance.GetOabScanningStats(category, mapType);
+        SetScanningStats("", category, stats);
+    }
+    
+    /// <summary>
+    /// Initializes the Body Category selector in OAB
+    /// </summary>
+    private void SetBodyCategoryOabDropdownItems()
+    {
+        var bodyCategoryDropdown = new DropdownItemList();
+        foreach (var (key, value) in CelestialCategoryManager.Instance.CategoryLocalization)
         {
-            FieldOfView = ScanningFieldOfViewValue,
-            MinAltitude = MinimumAltitudeValue,
-            IdealAltitude = IdealAltitudeValue,
-            MaxAltitude = MaximumAltitudeValue
-        };
+            bodyCategoryDropdown.Add(key, new DropdownItem() { key = key, text = value });    
+        }
+        SetDropdownData(BodyCategoryOabDropdown, bodyCategoryDropdown);
+
+        // set initial values
+        var initialValue = CelestialCategoryManager.Instance.CategoryLocalization.First();
+        BodyCategoryOabDropdown.SetValue(initialValue.Key);
+        SetOabScanningStats(initialValue.Key);
     }
     
 
@@ -136,33 +174,73 @@ public class Data_OrbitalSurvey : ModuleData
     public override List<OABPartData.PartInfoModuleEntry> GetPartInfoEntries(Type partBehaviourModuleType,
         List<OABPartData.PartInfoModuleEntry> delegateList)
     {
+        // Example:
+        // Scans celestial bodies from orbit
+        // Visual
+        // | Field Of View: 5°
+        // | Small Category (max 150 km radius)
+        // | | Min Altitude: 60 km
+        // | | Ideal Altitude: 170 kn
+        // | | Max Altitude: 220 kn
+        // | Medium Category (max 350 km radius)
+        // | | Min Altitude: 100 km
+        // | | Ideal Altitude: 300 kn
+        // | | Max Altitude: 500 kn
+        // | Large Category (max 10000 km radius)
+        // | | Min Altitude: 500 km
+        // | | Ideal Altitude: 800 kn
+        // | | Max Altitude: 1100 kn
+        // | Electric Charge: 1.000 /s
+        
         if (partBehaviourModuleType == ModuleType)
         {
-            // add module description
+            // module description
             delegateList.Add(new OABPartData.PartInfoModuleEntry("", (_) => LocalizationStrings.OAB_DESCRIPTION["ModuleDescription"]));
             
-            // MapType header
+            // MapType header ("Visual" or "Region")
             var entry = new OABPartData.PartInfoModuleEntry(new LocalizedString(ModeValue),
                 _ =>
                 {
-                    // Subentries
                     var subEntries = new List<OABPartData.PartInfoModuleSubEntry>();
+                    
+                    // Field Of View
                     subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
                         LocalizationStrings.PARTMODULES["ScanningFOV"],
                         $"{ScanningFieldOfViewValue.ToString("N0")}°"
                     ));
-                    subEntries.Add( new OABPartData.PartInfoModuleSubEntry(
-                        LocalizationStrings.PARTMODULES["MinAltitude"],
-                        $"{(MinimumAltitudeValue / 1000).ToString("N0")} km"
-                    ));
-                    subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
-                        LocalizationStrings.PARTMODULES["IdealAltitude"],
-                        $"{(IdealAltitudeValue / 1000).ToString("N0")} km"
-                    ));
-                    subEntries.Add(new OABPartData.PartInfoModuleSubEntry(
-                        LocalizationStrings.PARTMODULES["MaxAltitude"],
-                        $"{(MaximumAltitudeValue / 1000).ToString("N0")} km"
-                    ));
+                    
+                    var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[ModeValue];
+                    var allCategoryAltitudes = CelestialCategoryManager.Instance.GetCategoryAltitudesForGivenMapType(mapType);
+                    
+                    // Categories and Altitudes ("Small Category" -> "Min/Ideal/Max altitudes") 
+                    foreach (var categoryAltitudes in allCategoryAltitudes)
+                    {
+                        // Altitudes ("Min Altitude: 60 km", "Ideal Altitude: 170 kn", "Max Altitude: 220 kn")
+                        var categoryAltitudesSubEntries = new List<OABPartData.PartInfoModuleSubEntry>();
+
+                        var minAltitude = categoryAltitudes.altitudes.MinAltitude;
+                        var idealAltitude = categoryAltitudes.altitudes.IdealAltitude;
+                        var maxAltitude = categoryAltitudes.altitudes.MaxAltitude;
+
+                        categoryAltitudesSubEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["MinAltitude"],
+                            $"{(minAltitude / 1000f).ToString("N0")} km"));
+                        categoryAltitudesSubEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["IdealAltitude"],
+                            $"{(idealAltitude / 1000f).ToString("N0")} km"));
+                        categoryAltitudesSubEntries.Add(new OABPartData.PartInfoModuleSubEntry(
+                            LocalizationStrings.PARTMODULES["MaxAltitude"],
+                            $"{(maxAltitude / 1000f).ToString("N0")} km"));
+
+                        // Category description ("Small Category (max 150 km radius)")
+                        var maxRadius = CelestialCategoryManager.Instance.MaxRadiusDefinition[categoryAltitudes.category] / 1000f;
+                        var categoryDescriptionLocalized = LocalizationStrings.OAB_DESCRIPTION["CategoryDescription"];
+                        var categoryDescription = string.Format(categoryDescriptionLocalized, categoryAltitudes.category, maxRadius.ToString("N0"));
+                        
+                        var categorySubEntry = new OABPartData.PartInfoModuleSubEntry(categoryDescription, categoryAltitudesSubEntries);
+                    
+                        subEntries.Add(categorySubEntry);
+                    }
 
                     if (UseResources)
                     {

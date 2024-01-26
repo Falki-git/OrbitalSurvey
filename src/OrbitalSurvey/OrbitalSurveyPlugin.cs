@@ -77,6 +77,9 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         providers.AddComponent<AssetUtility>();
         providers.AddComponent<VesselManager>();
         
+        // initialize configs
+        CelestialCategoryManager.Instance.InitializeConfigs();
+        
         // register for save/load events 
         SaveManager.Instance.Register();
         

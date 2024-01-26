@@ -70,9 +70,10 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         else if (PartBackingMode == PartBackingModes.OAB)
         {
             UpdateOabPAMVisibility();
+            _dataOrbitalSurvey.BodyCategoryOabDropdown.OnChangedValue += OnBodyCategoryOabChanged;
         }
     }
-    
+
     // This triggers in flight
     public override void OnModuleFixedUpdate(float fixedDeltaTime)
     {
@@ -83,16 +84,7 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         
         PerformDebugChecks();
     }
-
-    // This... also triggers when Flight scene is loaded? (why?)
-    // It triggers when exiting the game also.
-    // It triggers for only active vessel it appears
-    public override void OnShutdown()
-    {
-        _LOGGER.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
-        _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
-    }
-
+    
     private void OnToggleChangedValue(bool newValue)
     {
         _LOGGER.LogDebug($"OnToggleChangedValue triggered. New value is {newValue.ToString()}");
@@ -101,6 +93,16 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         UpdateFlightPAMVisibility(newValue);
 
         _dataOrbitalSurvey.StatusValue = newValue ? Status.Scanning : Status.Disabled;
+
+        SetInitialBodyCategoryValues();
+    }
+
+    private void SetInitialBodyCategoryValues()
+    {
+        var body = ComponentModule.Part.PartOwner.SimulationObject.Vessel.mainBody.Name;
+        var mapType = LocalizationStrings.MODE_TYPE_TO_MAP_TYPE[_dataOrbitalSurvey.ModeValue];
+        var stats = CelestialCategoryManager.Instance.GetScanningStats(body, mapType);
+        _dataOrbitalSurvey.SetScanningStats(body, stats.category, stats.altitudes);
     }
 
     private void OnOpenMapClicked()
@@ -118,6 +120,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.BodyCategory, state);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.BodyCategoryOabDropdown, false);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, state);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, state);
@@ -134,6 +138,8 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Status, false);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.Mode, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.State, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.BodyCategory, false);
+        _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.BodyCategoryOabDropdown, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.ScanningFieldOfView, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.MinimumAltitude, true);
         _dataOrbitalSurvey.SetVisible(_dataOrbitalSurvey.IdealAltitude, true);
@@ -173,23 +179,9 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         module.CreateScienceReports(expDef, 0);
     }
     
-    // This triggers always
-    public override void OnUpdate(float deltaTime)
+    private void OnBodyCategoryOabChanged(string category)
     {
-        //_logger.LogDebug("OnUpdate triggered.");
-    }
-
-    // This triggers in OAB
-    public override void OnModuleOABFixedUpdate(float deltaTime)
-    {
-        //_logger.LogDebug("OnModuleOABFixedUpdate triggered.");
-    }
-    
-    // This triggers when Flight scene is loaded
-    // And it also triggers in OAB when part is added to the assembly? 
-    protected void OnEnable()
-    {
-        //_LOGGER.LogDebug($"OnEnable triggered.");
+        _dataOrbitalSurvey.SetOabScanningStats(category);
     }
     
     private void PerformDebugChecks()
@@ -225,7 +217,36 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         data.SetVisible(data.Location, false);
     }
     
+    // This... also triggers when Flight scene is loaded? (why?)
+    // It triggers when exiting the game also.
+    // It triggers for only active vessel it appears
+    public override void OnShutdown()
+    {
+        _LOGGER.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
+        _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
+        _dataOrbitalSurvey.BodyCategoryOabDropdown.OnChangedValue -= OnBodyCategoryOabChanged;
+    }
+    
     #region NOT USED
+    
+    // This triggers always
+    public override void OnUpdate(float deltaTime)
+    {
+        //_logger.LogDebug("OnUpdate triggered.");
+    }
+    
+    // This triggers in OAB
+    public override void OnModuleOABFixedUpdate(float deltaTime)
+    {
+        //_logger.LogDebug("OnModuleOABFixedUpdate triggered.");
+    }
+    
+    // This triggers when Flight scene is loaded
+    // And it also triggers in OAB when part is added to the assembly? 
+    protected void OnEnable()
+    {
+        //_LOGGER.LogDebug($"OnEnable triggered.");
+    }
     
     // METHODS THAT DON'T TRIGGER
     
