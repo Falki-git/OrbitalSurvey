@@ -1,11 +1,10 @@
 ﻿/*
  * 
  * TODO:
- * n/a
+ * - adding waypoints by clicking on the map
  * 
  *
  * TODO NEAR-TERM:
- * - adding waypoints by clicking on the map
  * - altimetry Map + legend 
  * 
  * 
@@ -89,7 +88,6 @@
  * - revamp of min/ideal/max altitudes to be more dynamic
  *
  * Changelog:
- * - Fixed KerbinMountain region localization
- * - Revamped Min/Ideal/Max altitudes
+ * n/a
  *
  */
