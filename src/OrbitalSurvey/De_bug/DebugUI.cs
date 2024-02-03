@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
+using SpaceWarp.API.Game.Waypoints;
 using SpaceWarp.API.UI;
 using UnityEngine;
 using Utility = OrbitalSurvey.Utilities.Utility;
@@ -88,6 +89,8 @@ namespace OrbitalSurvey.Debug
         private string _waypointLatitude = "0";
         private string _waypointLongitude = "0";
         private string _waypointAltitudeFromRadius = "0";
+        private int _waypointIndex;
+        private string _waypointNameExisting = "n/a";
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -845,6 +848,7 @@ namespace OrbitalSurvey.Debug
             {
                 GUILayout.Label("--");
                 
+                // Create waypoint
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.Label("Body:", _labelStyle);
@@ -887,12 +891,61 @@ namespace OrbitalSurvey.Debug
                     var alt = double.Parse(_waypointAltitudeFromRadius);
                     
                     DebugManager.Instance.CreateWaypoint(
-                        name: _waypointName,
-                        bodyName: _waypointBody,
+                        name: string.IsNullOrEmpty(_waypointName) ? null : _waypointName,
+                        bodyName: string.IsNullOrEmpty(_waypointBody) ? null : _waypointBody,
                         latitude: lat,
                         longitude: lon,
-                        altitudeFromRadius: alt
+                        altitudeFromRadius: alt == 0 ? null : alt
                         );
+
+                    _waypointIndex = DebugManager.Instance.Waypoints.Count - 1;
+                    _waypointNameExisting = DebugManager.Instance.Waypoints[_waypointIndex].Name;
+                }
+                
+                // Modify Waypoint
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Waypoint:", _labelStyle);
+                    if (GUILayout.Button("<", _narrowButton) && DebugManager.Instance.Waypoints.Count > 0 &&_waypointIndex > 0)
+                        _waypointNameExisting = DebugManager.Instance.Waypoints[--_waypointIndex].Name;
+                    GUILayout.Label(_waypointNameExisting, _labelStyle);
+                    if (GUILayout.Button(">", _narrowButton) && _waypointIndex < DebugManager.Instance.Waypoints.Count-1)
+                        _waypointNameExisting = DebugManager.Instance.Waypoints[++_waypointIndex].Name;
+                }
+                GUILayout.EndHorizontal();
+
+                if (GUILayout.Button("MoveWaypoint"))
+                {
+                    var lat = double.Parse(_waypointLatitude);
+                    var lon = double.Parse(_waypointLongitude);
+                    var alt = double.Parse(_waypointAltitudeFromRadius);
+                    
+                    DebugManager.Instance.MoveWaypoint(_waypointIndex, lat, lon, alt == 0 ? null: alt);
+                }
+                
+                if (GUILayout.Button("DeleteWaypoint"))
+                {
+                    DebugManager.Instance.DeleteWaypoint(_waypointIndex--);
+                }
+
+                if (DebugManager.Instance.Waypoints.Count > _waypointIndex)
+                {
+                    var waypoint = DebugManager.Instance.Waypoints[_waypointIndex];
+
+                    if (waypoint.State == WaypointState.Hidden)
+                    {
+                        if (GUILayout.Button("ShowWaypoint"))
+                        {
+                            DebugManager.Instance.ShowHideWaypoint(_waypointIndex, true);
+                        }    
+                    }
+                    else if (waypoint.State == WaypointState.Visible)
+                    {
+                        if (GUILayout.Button("HideWaypoint"))
+                        {
+                            DebugManager.Instance.ShowHideWaypoint(_waypointIndex, false);
+                        }    
+                    }
                 }
                 
                 GUILayout.Label("--");

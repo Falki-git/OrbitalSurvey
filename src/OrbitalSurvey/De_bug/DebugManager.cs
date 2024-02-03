@@ -9,6 +9,7 @@ using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.Assets;
+using SpaceWarp.API.Game.Waypoints;
 using UnityEngine;
 
 namespace OrbitalSurvey.Debug
@@ -574,26 +575,54 @@ namespace OrbitalSurvey.Debug
             _LOGGER.LogDebug($"PQSScienceOverlay: overlay texture exported");
         }
 
-        public List<SimulationObjectModel> Waypoints = new();
+        public List<Waypoint> Waypoints = new();
 
-        public void CreateWaypoint(string name, string bodyName, double latitude, double longitude, double altitudeFromRadius = 0)
+        public void CreateWaypoint(string name, string bodyName, double latitude, double longitude, double? altitudeFromRadius = 0)
         {
             var spaceSimulation = GameManager.Instance.Game.SpaceSimulation;
             var celestialBodies = GameManager.Instance.Game.UniverseModel.GetAllCelestialBodies();
             var body = celestialBodies.Find(c => c.Name == bodyName);
             if (body == null)
                 return;
-
+            
             if (altitudeFromRadius == 0)
             {
                 altitudeFromRadius = body.SurfaceProvider.GetTerrainAltitudeFromCenter(latitude, longitude) - body.radius; 
             }
+            
+            // var waypointComponentDefinition = new WaypointComponentDefinition() { Name = name };
+            // var waypoint = spaceSimulation.CreateWaypointSimObject(
+            //     waypointComponentDefinition, body, latitude, longitude, altitudeFromRadius);
+            //
+            // Waypoints.Add(waypoint);
+            
+            Waypoints.Add(new Waypoint(latitude, longitude, altitudeFromRadius, bodyName, name, WaypointState.Visible));
+        }
 
-            var waypointComponentDefinition = new WaypointComponentDefinition() { Name = name };
-            var waypoint = spaceSimulation.CreateWaypointSimObject(
-                waypointComponentDefinition, body, latitude, longitude, altitudeFromRadius);
+        public void MoveWaypoint(int waypointIndex, double latitude, double longitude, double? altitudeFromRadius = 0)
+        {
+            var waypoint = Waypoints[waypointIndex];
+            waypoint.Move(latitude, longitude, altitudeFromRadius);
+        }
 
-            Waypoints.Add(waypoint);
+        public void DeleteWaypoint(int waypointIndex)
+        {
+            var waypoint = Waypoints[waypointIndex];
+            waypoint.Destroy();
+        }
+        
+        public void ShowHideWaypoint(int waypointIndex, bool state)
+        {
+            var waypoint = Waypoints[waypointIndex];
+
+            if (state)
+            {
+             waypoint.Show();   
+            }
+            else
+            {
+                waypoint.Hide();
+            }
         }
     }
 }
