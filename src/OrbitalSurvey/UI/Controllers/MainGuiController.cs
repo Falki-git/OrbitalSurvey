@@ -31,12 +31,13 @@ public class MainGuiController : MonoBehaviour
     private VisualElement _upperSidebar;
     private VisualElement _lowerSidebar;
     private SideToggleControl _overlayToggle;
-    private SideToggleControl _vesselToggle;
+    private SideToggleControl _markerNameToggle;
     private SideToggleControl _geoCoordinatesToggle;
     private VisualElement _legendContainer;
     private VesselController _vesselController;
     private ResizeController _resizeController;
     private ZoomAndPanController _zoomAndPanController;
+    private WaypointController _waypointController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
     private Coroutine _hideNotification;
@@ -63,14 +64,17 @@ public class MainGuiController : MonoBehaviour
 
     public void OnEnable()
     {
-        // create vessel controller (for markers and additional info)
+        // create vessel controller (markers and additional info)
         _vesselController = gameObject.AddComponent<VesselController>();
 
-        // create resize controller for resizing the map canvas
+        // create resize controller (resizing the map canvas)
         _resizeController = gameObject.AddComponent<ResizeController>();
         
-        // create zoom controller for zooming and panning
+        // create zoom controller (zooming and panning)
         _zoomAndPanController = gameObject.AddComponent<ZoomAndPanController>();
+
+        // create waypoint controller (waypoint create/remove)
+        _waypointController = gameObject.AddComponent<WaypointController>();
         
         MainGui = GetComponent<UIDocument>();
         _root = MainGui.rootVisualElement;
@@ -91,16 +95,16 @@ public class MainGuiController : MonoBehaviour
         _lowerSidebar = _root.Q<VisualElement>("side-bar__lower");
         _overlayToggle = new SideToggleControl() { TextValue = "OVL" };
         _overlayToggle.RegisterCallback<ClickEvent>(OnOverlayToggleClicked);
-        _vesselToggle = new SideToggleControl() { TextValue = "VES" };
-        _vesselToggle.SetEnabled(true);
-        _vesselToggle.SwitchToggleState(SceneController.Instance.IsVesselNamesVisible, false);
-        _vesselToggle.RegisterCallback<ClickEvent>(OnVesselToggleClicked);
+        _markerNameToggle = new SideToggleControl() { TextValue = "NAM" };
+        _markerNameToggle.SetEnabled(true);
+        _markerNameToggle.SwitchToggleState(SceneController.Instance.IsMarkerNamesVisible, false);
+        _markerNameToggle.RegisterCallback<ClickEvent>(OnMarkerNameToggleClicked);
         _geoCoordinatesToggle = new SideToggleControl() { TextValue = "GEO" };
         _geoCoordinatesToggle.SetEnabled(true);
         _geoCoordinatesToggle.SwitchToggleState(SceneController.Instance.IsGeoCoordinatesVisible, false);
         _geoCoordinatesToggle.RegisterCallback<ClickEvent>(OnGeoCoordinatesToggleClicked);
         _upperSidebar.Add(_overlayToggle);
-        _lowerSidebar.Add(_vesselToggle);
+        _lowerSidebar.Add(_markerNameToggle);
         _lowerSidebar.Add(_geoCoordinatesToggle);
         
         // footer controls
@@ -163,14 +167,30 @@ public class MainGuiController : MonoBehaviour
         ShowNotification(notificationText);
     }
     
-    private void OnVesselToggleClicked(ClickEvent evt)
+    private void OnMarkerNameToggleClicked(ClickEvent evt)
     {
+        SceneController.Instance.IsMarkerNamesVisible = !SceneController.Instance.IsMarkerNamesVisible;
         _vesselController.ToggleVesselNames();
+        _waypointController.ToggleWaypointNames();
+        
+        // send notification
+        var notificationText = SceneController.Instance.IsMarkerNamesVisible ?
+            LocalizationStrings.NOTIFICATIONS[Notification.MarkerNamesOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.MarkerNamesOff];
+        ShowNotification(notificationText);
     }
 
     private void OnGeoCoordinatesToggleClicked(ClickEvent evt)
     {
+        SceneController.Instance.IsGeoCoordinatesVisible = !SceneController.Instance.IsGeoCoordinatesVisible;
         _vesselController.ToggleGeoCoordinates();
+        _waypointController.ToggleGeoCoordinates();
+        
+        // send notification
+        var notificationText = SceneController.Instance.IsGeoCoordinatesVisible ?
+            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOn] :
+            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
+        ShowNotification(notificationText);
     }
 
     private string GetLocalizedValueForMapType(MapType mapType)
@@ -275,6 +295,7 @@ public class MainGuiController : MonoBehaviour
         UpdatePercentageComplete(_selectedMap.PercentDiscovered);
 
         _vesselController.RebuildVesselMarkers(body);
+        _waypointController.RebuildWaypointMarkers(body);
 
         SceneController.Instance.SelectedBody = body;
     }
@@ -378,7 +399,10 @@ public class MainGuiController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
-        _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
+        if (_selectedMap != null)
+        {
+            _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+            _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
+        }
     }
 }

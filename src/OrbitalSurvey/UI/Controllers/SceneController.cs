@@ -27,8 +27,10 @@ public class SceneController
     public MapType? SelectedMapType;
     public Vector3? WindowPosition;
     
-    public bool IsVesselNamesVisible;
+    public bool IsMarkerNamesVisible;
     public bool IsGeoCoordinatesVisible;
+    
+    public List<WaypointObject> Waypoints { get; set; } = new();
     
     private bool _showMainGui;
     public bool ShowMainGui

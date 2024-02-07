@@ -52,7 +52,7 @@ public class ZoomAndPanController: MonoBehaviour
         _mainGuiController = GetComponent<MainGuiController>();
         _root = GetComponent<UIDocument>().rootVisualElement[0];
         _mapContainer = _root.Q<VisualElement>("map");
-        _mapContainer.StopMouseEventsPropagation();
+        _mapContainer.StopMouseEventsToGameInputPropagation();
         
         _zoomControls = _root.Q<VisualElement>("zoom-controls");
         _zoomFactorLabel = _root.Q<Label>("zoom-factor"); 

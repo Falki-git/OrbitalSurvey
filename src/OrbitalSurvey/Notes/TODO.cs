@@ -2,6 +2,9 @@
  * 
  * TODO:
  * - adding waypoints by clicking on the map
+        - save/load persist
+* - coordinates and region names on mouseover
+        
  * 
  *
  * TODO NEAR-TERM:
@@ -23,7 +26,7 @@
  * - see if Slope map can be generated
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
- * - scanning parts by -StanWildin
+ * - scanning parts
  * - register planted flags?
  *
  * BUG FIXES OR IMPROVEMENTS NEEDED:
