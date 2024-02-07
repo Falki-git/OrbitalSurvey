@@ -54,4 +54,12 @@ public static class UiUtility
 
         return (latitude, longitude);
     }
+    
+    public static Vector2 GetPositionPercentageFromGeographicCoordinates(double latitude, double longitude)
+    {
+        var x = (float)(longitude + 180f) / 360f;
+        var y = (float)(latitude + 90f) / 360f;
+
+        return new Vector2(x, y);
+    }
 }
