@@ -1,6 +1,8 @@
 ﻿using BepInEx.Logging;
+using KSP.Game;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI;
+using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
 using SpaceWarp.API.SaveGameManager;
 
@@ -67,6 +69,12 @@ public class SaveManager
             
             _LOGGER.LogDebug($"{celestialData.Key} prepared for saving.");
         }
+        
+        dataToSave.Waypoints.Clear();
+        foreach (var waypointModel in SceneController.Instance.Waypoints)
+        {
+            dataToSave.Waypoints.Add(waypointModel.Waypoint.Serialize());
+        }
     }
 
     public void OnLoad(SaveDataAdapter dataToLoad)
@@ -83,8 +91,9 @@ public class SaveManager
         LoadData();
     }
 
-    public void LoadData()
+    public async Task LoadData()
     {
+        // mapping data
         foreach (var celestialData in Core.Instance.CelestialDataDictionary)
         {
             if (!bufferedLoadData.Bodies.ContainsKey(celestialData.Key))
@@ -128,7 +137,41 @@ public class SaveManager
                 }
             }
         }
+        _LOGGER.LogInfo("Mapping data loaded.");
 
+        // waypoints
+        if (bufferedLoadData.Waypoints.Count > 0)
+        {
+            _LOGGER.LogDebug($"Found {bufferedLoadData.Waypoints.Count} waypoints to load.");
+        
+            // wait until all celestial bodies are loaded into UniverseModel
+            await WaitUntilAllWaypointBodiesAreLoaded();
+        
+            SceneController.Instance.Waypoints.Clear();
+            foreach (var serializedWaypoint in bufferedLoadData.Waypoints)
+            {
+                var waypointModel = new WaypointModel();
+                waypointModel.Waypoint = serializedWaypoint.Deserialize();
+                waypointModel.Body = waypointModel.Waypoint.BodyName;
+                waypointModel.MapPositionPercentage = UiUtility.GetPositionPercentageFromGeographicCoordinates(
+                    waypointModel.Waypoint.Latitude, waypointModel.Waypoint.Longitude);
+            
+                var control = new MapMarkerControl(
+                    isNameVisible: false, isGeoCoordinatesVisible: false,
+                    MapMarkerControl.MarkerType.Waypoint, waypointModel.Waypoint.WaypointColor)
+                {
+                    NameValue = waypointModel.Waypoint.Name,
+                    LatitudeValue = waypointModel.Waypoint.Latitude,
+                    LongitudeValue = waypointModel.Waypoint.Longitude
+                };
+            
+                waypointModel.Marker = control;
+                SceneController.Instance.Waypoints.Add(waypointModel);
+                _LOGGER.LogDebug($"Loaded waypoint '{waypointModel.Waypoint.Name}' on '{waypointModel.Waypoint.BodyName}'.");
+            }
+            _LOGGER.LogInfo("Waypoint data loaded.");
+        }
+        
         SceneController.Instance.WindowPosition = bufferedLoadData.WindowPosition;
         Core.Instance.SessionGuidString = bufferedLoadData.SessionGuidString;
 
@@ -136,5 +179,30 @@ public class SaveManager
         HasBufferedLoadData = false;
         
         VesselManager.Instance.SetLastRefreshTimeToNow();
+    }
+
+    private async Task WaitUntilAllWaypointBodiesAreLoaded()
+    {
+        //select all bodies containing waypoints
+        var waypointBodies = bufferedLoadData.Waypoints.Select(w => w.BodyName).Distinct();
+        
+        // try to find each body in UniverseModel and wait until it's loaded
+        foreach (var waypointBody in waypointBodies)
+        {
+            bool isBodyLoaded = false;
+            while (!isBodyLoaded)
+            {
+                var loadedCelestialBodies = GameManager.Instance.Game.UniverseModel.GetAllCelestialBodies();
+                if (loadedCelestialBodies.Find(loadedBodies => loadedBodies.Name == waypointBody) != null)
+                {
+                    isBodyLoaded = true;
+                }
+                else
+                {
+                    // body isn't loaded yet, try again in 100 ms
+                    await Task.Delay(100);
+                }
+            }
+        }
     }
 }

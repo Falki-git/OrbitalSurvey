@@ -1,10 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * - adding waypoints by clicking on the map
-        - save/load persist
-* - coordinates and region names on mouseover
-        
+ * - coordinates and region names on mouseover        
  * 
  *
  * TODO NEAR-TERM:
@@ -89,6 +86,7 @@
  * - fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
  * - replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
  * - revamp of min/ideal/max altitudes to be more dynamic
+ * - adding waypoints by clicking on the map, edit, remove
  *
  * Changelog:
  * n/a

@@ -38,7 +38,7 @@ public class WaypointController: MonoBehaviour
     private float _canvasHeight;
     private bool _waypointCanvasInitialized;
     
-    private WaypointObject _selectedWaypointObject;
+    private WaypointModel _selectedWaypointModel;
     
     private Action<float, float> _windowResizedHandler;
     private Action<float> _zoomFactorChangeHandler;
@@ -264,7 +264,7 @@ public class WaypointController: MonoBehaviour
     
     private void OnAddWaypointClicked(ClickEvent _)
     {
-        var waypointObject = new WaypointObject
+        var waypointModel = new WaypointModel
         {
             Body = SceneController.Instance.SelectedBody,
             MapPositionPercentage = _waypointToAddPercentPosition
@@ -274,7 +274,7 @@ public class WaypointController: MonoBehaviour
             UiUtility.GetGeographicCoordinatesFromPositionPercent(_waypointToAddPercentPosition.x,
                 1 - _waypointToAddPercentPosition.y);
 
-        waypointObject.Waypoint = new OrbitalSurveyWaypoint(
+        waypointModel.Waypoint = new OrbitalSurveyWaypoint(
             latitude: geographicCoordinates.latitude,
             longitude: geographicCoordinates.longitude,
             altitudeFromRadius: null,
@@ -293,17 +293,17 @@ public class WaypointController: MonoBehaviour
         };
         PositionMarkerOnTheMap(control, _waypointToAddPercentPosition);
         _waypointCanvas.Add(control);
-        waypointObject.Marker = control;
-        SceneController.Instance.Waypoints.Add(waypointObject);
+        waypointModel.Marker = control;
+        SceneController.Instance.Waypoints.Add(waypointModel);
         
         control.RegisterCallback<PointerDownEvent>(OnMarkerPointerDownEvent);
-        control.RegisterCallback<PointerUpEvent>(evt => OnMarkerPointerUpEvent(evt, waypointObject));
+        control.RegisterCallback<PointerUpEvent>(evt => OnMarkerPointerUpEvent(evt, waypointModel));
         
         HideContextCanvas();
         
         _mainGuiController.ShowNotification(LocalizationStrings.NOTIFICATIONS[Notification.WaypointAdded]);
         
-        _LOGGER.LogInfo($"Waypoint '{waypointObject.Waypoint.Name}' created.");
+        _LOGGER.LogInfo($"Waypoint '{waypointModel.Waypoint.Name}' created.");
     }
     
     
@@ -320,11 +320,11 @@ public class WaypointController: MonoBehaviour
     /// <summary>
     /// Starts Edit waypoint
     /// </summary>
-    private void OnMarkerPointerUpEvent(PointerUpEvent evt, WaypointObject waypoint)
+    private void OnMarkerPointerUpEvent(PointerUpEvent evt, WaypointModel waypoint)
     {
         if (evt.button == 1) // Right mouse button
         {
-            _selectedWaypointObject = waypoint;
+            _selectedWaypointModel = waypoint;
             _contextTitle.text = LocalizationStrings.WAYPOINT_CONTEXT_MENU_TITLE_EDIT;
             _waypointName.text = waypoint.Waypoint.Name;
             _waypointToAddColor = waypoint.Waypoint.WaypointColor;
@@ -349,33 +349,33 @@ public class WaypointController: MonoBehaviour
     
     private void OnUpdateWaypointClicked(ClickEvent evt)
     {
-        _selectedWaypointObject.Waypoint.Rename(_waypointName.text);
-        _selectedWaypointObject.Marker.NameValue = _waypointName.text;
-        _selectedWaypointObject.Waypoint.WaypointColor = _waypointToAddColor;
+        _selectedWaypointModel.Waypoint.Rename(_waypointName.text);
+        _selectedWaypointModel.Marker.NameValue = _waypointName.text;
+        _selectedWaypointModel.Waypoint.WaypointColor = _waypointToAddColor;
         switch (_waypointToAddColor)
         {
-            case WaypointColor.Yellow: _selectedWaypointObject.Marker.SetAsYellow(); break;
-            case WaypointColor.Red:  _selectedWaypointObject.Marker.SetAsRed();  break;
-            case WaypointColor.Green: _selectedWaypointObject.Marker.SetAsGreen(); break;
-            case WaypointColor.Blue: _selectedWaypointObject.Marker.SetAsBlue();; break;
-            case WaypointColor.Gray: _selectedWaypointObject.Marker.SetAsGray();; break;
-            default: _selectedWaypointObject.Marker.SetAsYellow(); break;
+            case WaypointColor.Yellow: _selectedWaypointModel.Marker.SetAsYellow(); break;
+            case WaypointColor.Red:  _selectedWaypointModel.Marker.SetAsRed();  break;
+            case WaypointColor.Green: _selectedWaypointModel.Marker.SetAsGreen(); break;
+            case WaypointColor.Blue: _selectedWaypointModel.Marker.SetAsBlue();; break;
+            case WaypointColor.Gray: _selectedWaypointModel.Marker.SetAsGray();; break;
+            default: _selectedWaypointModel.Marker.SetAsYellow(); break;
         }
         
         HideContextCanvas();
-        _selectedWaypointObject = null;
+        _selectedWaypointModel = null;
         
         _mainGuiController.ShowNotification(LocalizationStrings.NOTIFICATIONS[Notification.WaypointUpdated]);
     }
 
     private void OnRemoveWaypointClicked(ClickEvent evt)
     {
-        _selectedWaypointObject.Waypoint.Destroy();
-        _waypointCanvas.Remove(_selectedWaypointObject.Marker);
-        SceneController.Instance.Waypoints.Remove(_selectedWaypointObject);
+        _selectedWaypointModel.Waypoint.Destroy();
+        _waypointCanvas.Remove(_selectedWaypointModel.Marker);
+        SceneController.Instance.Waypoints.Remove(_selectedWaypointModel);
         
         HideContextCanvas();
-        _selectedWaypointObject = null;
+        _selectedWaypointModel = null;
         
         _mainGuiController.ShowNotification(LocalizationStrings.NOTIFICATIONS[Notification.WaypointRemoved]);
     }
@@ -408,7 +408,7 @@ public class WaypointController: MonoBehaviour
         if (_contextMenu.HasContainerLostFocus((VisualElement)evt.relatedTarget))
         {
             HideContextCanvas();
-            _selectedWaypointObject = null;
+            _selectedWaypointModel = null;
         }
     }
 
