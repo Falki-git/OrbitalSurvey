@@ -139,15 +139,16 @@ public class SaveManager
         }
         _LOGGER.LogInfo("Mapping data loaded.");
 
+        
         // waypoints
+        SceneController.Instance.Waypoints.Clear();
         if (bufferedLoadData.Waypoints.Count > 0)
         {
             _LOGGER.LogDebug($"Found {bufferedLoadData.Waypoints.Count} waypoints to load.");
         
             // wait until all celestial bodies are loaded into UniverseModel
             await WaitUntilAllWaypointBodiesAreLoaded();
-        
-            SceneController.Instance.Waypoints.Clear();
+            
             foreach (var serializedWaypoint in bufferedLoadData.Waypoints)
             {
                 var waypointModel = new WaypointModel();
