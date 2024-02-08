@@ -5,7 +5,8 @@
  * 
  *
  * TODO NEAR-TERM:
- * - altimetry Map + legend 
+ * - altimetry Map + legend
+ * - LAT/LON grid toggle - requested by Schneider21
  * 
  * 
  * TODO LONG-TERM: 
@@ -17,8 +18,8 @@
  *      - one discoverable at a time
  *      - false positives
  *      - wide area not centered at the discoverable
- *       - high EC consumption
- *       - far in the tech tree
+ *      - high EC consumption
+ *      - far in the tech tree
  * - support for custom planet packs (packs will register their maps)
  * - see if Slope map can be generated
  * - scanning triangle in Map scene when active
