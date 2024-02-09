@@ -17,10 +17,6 @@ public class MouseOverController: MonoBehaviour
     private VisualElement _mapContainer;
     private VisualElement _mouseOverCanvas;
     private MapMarkerControl _mouseOverControl;
-    
-    private float _canvasWidth;
-    private float _canvasHeight;
-    private bool _mouseOverCanvasInitialized;
 
     private bool _isMouseOverActive;
 
