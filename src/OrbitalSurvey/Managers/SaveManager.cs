@@ -160,7 +160,8 @@ public class SaveManager
                     waypointModel.Waypoint.Latitude, waypointModel.Waypoint.Longitude);
             
                 var control = new MapMarkerControl(
-                    isNameVisible: false, isGeoCoordinatesVisible: false,
+                    isNameVisible: SceneController.Instance.IsMarkerNamesVisible,
+                    isGeoCoordinatesVisible: SceneController.Instance.IsGeoCoordinatesVisible,
                     MapMarkerControl.MarkerType.Waypoint, waypointModel.Waypoint.WaypointColor)
                 {
                     NameValue = waypointModel.Waypoint.Name,
