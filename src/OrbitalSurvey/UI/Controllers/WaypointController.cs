@@ -185,7 +185,7 @@ public class WaypointController: MonoBehaviour
     
     private void OnMapContainerRightClicked(PointerUpEvent evt)
     {
-        if (evt.button == 1) // Right mouse button
+        if (evt.button == 1 && SceneController.Instance.SelectedBody != null) // Right mouse button
         {
             _LOGGER.LogDebug("RightClick detected");
 
