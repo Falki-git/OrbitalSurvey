@@ -63,7 +63,7 @@ public static class UiUtility
         var x = (float)(longitude + 180f) / 360f;
         var y = (float)(latitude + 90f) / 180f;
 
-        return new Vector2(x, y);
+        return new Vector2(x, 1 - y);
     }
 
     public static string GetRegionNameFromGeographicCoordinates(string body, double latitude, double longitude)
