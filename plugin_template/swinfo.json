@@ -5,7 +5,7 @@
     "name": "Orbital Survey",
     "description": "Scan celestial bodies from orbit.",
     "source": "https://github.com/Falki-git/OrbitalSurvey",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "version_check": "https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/master/plugin_template/swinfo.json",
     "ksp2_version": {
         "min": "0.2.0",
@@ -15,7 +15,7 @@
 		{
 			"id": "com.github.x606.spacewarp",
 			"version": {
-				"min": "1.7.0",
+				"min": "1.9.2",
 				"max": "*"
 			}
 		},
