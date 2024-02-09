@@ -18,6 +18,6 @@ public class OrbitalSurveySerializedWaypoint: SerializedWaypoint
     /// Deserializes the waypoint, creating an actual waypoint from it
     /// </summary>
     /// <returns>A newly created waypoint from the serialized waypoint's parameters</returns>
-    public OrbitalSurveyWaypoint Deserialize() => new OrbitalSurveyWaypoint(base.Latitude, base.Longitude, base.Altitude,
+    public new OrbitalSurveyWaypoint Deserialize() => new OrbitalSurveyWaypoint(base.Latitude, base.Longitude, base.Altitude,
         base.BodyName, base.Name, base.State, this.WaypointColor);
 }

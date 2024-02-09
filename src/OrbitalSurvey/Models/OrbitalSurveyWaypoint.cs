@@ -14,7 +14,7 @@ public class OrbitalSurveyWaypoint: Waypoint
 
     public WaypointColor WaypointColor { get; set; }
     
-    public virtual OrbitalSurveySerializedWaypoint Serialize()
+    public new virtual OrbitalSurveySerializedWaypoint Serialize()
     {
         return new OrbitalSurveySerializedWaypoint(this.Name, this.BodyName, this.Latitude, this.Longitude, this.AltitudeFromRadius, this.State, this.WaypointColor);
     }
