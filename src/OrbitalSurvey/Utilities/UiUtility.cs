@@ -1,4 +1,7 @@
-﻿using OrbitalSurvey.UI;
+﻿using KSP.Game;
+using KSP.Game.Science;
+using OrbitalSurvey.Managers;
+using OrbitalSurvey.UI;
 using UnityEngine;
 
 namespace OrbitalSurvey.Utilities;
@@ -58,8 +61,32 @@ public static class UiUtility
     public static Vector2 GetPositionPercentageFromGeographicCoordinates(double latitude, double longitude)
     {
         var x = (float)(longitude + 180f) / 360f;
-        var y = (float)(latitude + 90f) / 360f;
+        var y = (float)(latitude + 90f) / 180f;
 
         return new Vector2(x, y);
+    }
+
+    public static string GetRegionNameFromGeographicCoordinates(string body, double latitude, double longitude)
+    {
+        if (string.IsNullOrEmpty(body))
+            return string.Empty;
+        
+        // get the bakedmap, a texture that holds region color IDs for all pixels 
+        var regionsBakedMap = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider.GetBakedMap(body);
+        if (regionsBakedMap == null)
+            return string.Empty;
+        
+        // get texture coordinates
+        var x = (int)(((longitude + 180f) / 360f) * regionsBakedMap.Width);
+        var y = (int)(((latitude + 90f) / 180f) * regionsBakedMap.Height);
+
+        // grab the colorId for that exact lat/lon coordinate
+        var regionColorId = (int)regionsBakedMap.MapData[y * regionsBakedMap.Width + x];
+
+        // grab the regionId (string) that we've already mapped out
+        var regionId = RegionsManager.Instance.Data[body][regionColorId].RegionId;
+
+        // return the localized name for that regionId
+        return ScienceRegionsHelper.GetRegionDisplayName(regionId);
     }
 }
