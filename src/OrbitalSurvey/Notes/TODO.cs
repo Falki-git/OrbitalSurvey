@@ -1,7 +1,6 @@
 ﻿/*
  * 
  * TODO:
- * - coordinates and region names on mouseover        
  * 
  *
  * TODO NEAR-TERM:
@@ -88,6 +87,7 @@
  * - replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
  * - revamp of min/ideal/max altitudes to be more dynamic
  * - adding waypoints by clicking on the map, edit, remove
+ * - coordinates and region names on mouseover
  *
  * Changelog:
  * n/a

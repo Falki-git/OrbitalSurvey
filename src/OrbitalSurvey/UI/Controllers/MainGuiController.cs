@@ -37,6 +37,7 @@ public class MainGuiController : MonoBehaviour
     private VesselController _vesselController;
     private ResizeController _resizeController;
     private ZoomAndPanController _zoomAndPanController;
+    private MouseOverController _mouseOverController;
     private WaypointController _waypointController;
     private const string _BODY_INITIAL_VALUE = "<body>";
     private const string _MAPTYPE_INITIAL_VALUE = "<map>";
@@ -75,6 +76,9 @@ public class MainGuiController : MonoBehaviour
 
         // create waypoint controller (waypoint create/remove)
         _waypointController = gameObject.AddComponent<WaypointController>();
+        
+        // create mouse-over controller (show geo coordinates and region on mouse-over)
+        _mouseOverController = gameObject.AddComponent<MouseOverController>();
         
         MainGui = GetComponent<UIDocument>();
         _root = MainGui.rootVisualElement;
@@ -172,6 +176,7 @@ public class MainGuiController : MonoBehaviour
         SceneController.Instance.IsMarkerNamesVisible = !SceneController.Instance.IsMarkerNamesVisible;
         _vesselController.ToggleVesselNames();
         _waypointController.ToggleWaypointNames();
+        _mouseOverController.ToggleRegionNames();
         
         // send notification
         var notificationText = SceneController.Instance.IsMarkerNamesVisible ?
@@ -185,6 +190,7 @@ public class MainGuiController : MonoBehaviour
         SceneController.Instance.IsGeoCoordinatesVisible = !SceneController.Instance.IsGeoCoordinatesVisible;
         _vesselController.ToggleGeoCoordinates();
         _waypointController.ToggleGeoCoordinates();
+        _mouseOverController.ToggleGeoCoordinates();
         
         // send notification
         var notificationText = SceneController.Instance.IsGeoCoordinatesVisible ?

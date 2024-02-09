@@ -24,6 +24,8 @@ namespace OrbitalSurvey.UI.Controls
         public const string UssClassName_MarkerBlue = UssClassName_WaypointMarker + "--blue";
         public const string UssClassName_MarkerGray = UssClassName_WaypointMarker + "--gray";
         
+        public const string UssClassName_MouseOverMarker = UssClassName + "__mouse-over-marker";
+        
         public static string UssClassName_Latitude = UssClassName + "__latitude";
         public static string UssClassName_Longitude = UssClassName + "__longitude";
         
@@ -97,6 +99,8 @@ namespace OrbitalSurvey.UI.Controls
                     break;
                 case MarkerType.Waypoint: SetAsWaypoint();
                     break;
+                case MarkerType.MouseOver: SetAsMouseOver();
+                    break;
             }
         }
         
@@ -163,14 +167,26 @@ namespace OrbitalSurvey.UI.Controls
 
         public void SetAsVessel()
         {
-            _markerElement.RemoveFromClassList(UssClassName_WaypointMarker);
             _markerElement.AddToClassList(UssClassName_VesselMarker);
+            _markerElement.RemoveFromClassList(UssClassName_WaypointMarker);
+            _markerElement.RemoveFromClassList(UssClassName_MouseOverMarker);
+            _markerElement.pickingMode = PickingMode.Position;
         }
 
         public void SetAsWaypoint()
         {
             _markerElement.RemoveFromClassList(UssClassName_VesselMarker);
             _markerElement.AddToClassList(UssClassName_WaypointMarker);
+            _markerElement.RemoveFromClassList(UssClassName_MouseOverMarker);
+            _markerElement.pickingMode = PickingMode.Position;
+        }
+
+        public void SetAsMouseOver()
+        {
+            _markerElement.RemoveFromClassList(UssClassName_VesselMarker);
+            _markerElement.RemoveFromClassList(UssClassName_WaypointMarker);
+            _markerElement.AddToClassList(UssClassName_MouseOverMarker);
+            _markerElement.pickingMode = PickingMode.Ignore;
         }
 
         // Vessel classes
@@ -324,7 +340,8 @@ namespace OrbitalSurvey.UI.Controls
         public enum MarkerType
         {
             Vessel = 0,
-            Waypoint = 1
+            Waypoint = 1,
+            MouseOver = 2
         }
     }
 }
