@@ -34,24 +34,24 @@ OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über Maximaler Höhe ⚠</color>,,<color=red>Sopra altitudine max ⚠</color>,,,,,,<color=red>高于最高高度 ⚠</color>
 
 OrbitalSurvey/UI/Complete,Text,,<color=green>Complete!</color>,<color=green>Vollständig!</color>,,<color=green>Completato!</color>,,,,,,<color=green>完成！</color>
-OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Add,Text,,Add waypoint,<german>,,<italian>,,,,,,添加导航点
-OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Edit,Text,,Edit waypoint,<german>,,<italian>,,,,,,编辑导航点
-OrbitalSurvey/UI/Waypoint/DefaultName,Text,,Waypoint,<german>,,<italian>,,,,,,导航点
-OrbitalSurvey/UI/Waypoint/Button/Add,Text,,Add,<german>,,<italian>,,,,,,添加
-OrbitalSurvey/UI/Waypoint/Button/Update,Text,,Update,<german>,,<italian>,,,,,,修改
-OrbitalSurvey/UI/Waypoint/Button/Remove,Text,,Remove,<german>,,<italian>,,,,,,移除
+OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Add,Text,,Add waypoint,<german>,,Aggiungi punto,,,,,,添加导航点
+OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Edit,Text,,Edit waypoint,<german>,,Modifica punto,,,,,,编辑导航点
+OrbitalSurvey/UI/Waypoint/DefaultName,Text,,Waypoint,<german>,,Punto di riferimento,,,,,,导航点
+OrbitalSurvey/UI/Waypoint/Button/Add,Text,,Add,<german>,,Aggiungi,,,,,,添加
+OrbitalSurvey/UI/Waypoint/Button/Update,Text,,Update,<german>,,Aggiorna,,,,,,修改
+OrbitalSurvey/UI/Waypoint/Button/Remove,Text,,Remove,<german>,,Rimuovi,,,,,,移除
 
 OrbitalSurvey/UI/Notification/Overlay/ON,Text,,Overlay: ON,Overlay: An,,Overlay: ON,,,,,,叠加层：显示
 OrbitalSurvey/UI/Notification/Overlay/OFF,Text,,Overlay: OFF,Overlay: Aus,,Overlay: OFF,,,,,,叠加层：隐藏
-OrbitalSurvey/UI/Notification/MarkerNames/ON,Text,,Marker names: ON,<german>: An,,<italian>: ON,,,,,,标记名称：显示
-OrbitalSurvey/UI/Notification/MarkerNames/OFF,Text,,Marker names: OFF,<german>: Aus,,<italian>: OFF,,,,,,标记名称：隐藏
+OrbitalSurvey/UI/Notification/MarkerNames/ON,Text,,Marker names: ON,<german>: An,,Nomi marcatori: ON,,,,,,标记名称：显示
+OrbitalSurvey/UI/Notification/MarkerNames/OFF,Text,,Marker names: OFF,<german>: Aus,,Nomi marcatori: OFF,,,,,,标记名称：隐藏
 OrbitalSurvey/UI/Notification/GeoCoordinates/ON,Text,,Geographic coordinates: ON,Geographische Koordinaten: An,,Coordinate geografiche: ON,,,,,,地理坐标：显示
 OrbitalSurvey/UI/Notification/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF,Geographische Koordinaten: Aus,,Coordinate geografiche: OFF,,,,,,地理坐标：隐藏
 OrbitalSurvey/UI/Notification/VesselTracking/ON,Text,,Active vessel tracking: ON,Aktive Satellitenverfolgung: An,,Segui veicolo attivo: ON,,,,,,追踪当前载具：开
 OrbitalSurvey/UI/Notification/VesselTracking/OFF,Text,,Active vessel tracking: OFF,Aktive Satellitenverfolgung: Aus,,Segui veicolo attivo: OFF,,,,,,追踪当前载具：关
-OrbitalSurvey/UI/Notification/WaypointAdded,Text,,Waypoint added,<german>,,<italian>,,,,,,导航点已添加
-OrbitalSurvey/UI/Notification/WaypointUpdated,Text,,Waypoint updated,<german>,,<italian>,,,,,,导航点已修改
-OrbitalSurvey/UI/Notification/WaypointRemoved,Text,,Waypoint removed,<german>,,<italian>,,,,,,导航点已移除
+OrbitalSurvey/UI/Notification/WaypointAdded,Text,,Waypoint added,<german>,,Punto di riferimento aggiunto,,,,,,导航点已添加
+OrbitalSurvey/UI/Notification/WaypointUpdated,Text,,Waypoint updated,<german>,,Punto di riferimento aggiornato,,,,,,导航点已修改
+OrbitalSurvey/UI/Notification/WaypointRemoved,Text,,Waypoint removed,<german>,,Punto di riferimento rimosso,,,,,,导航点已移除
 
 OrbitalSurvey/OAB/Description,Text,,Scans celestial bodies from orbit,Scannt Himmelskörper aus dem Orbit,,"Scansiona corpi celesti dall'orbita",,,,,,在轨扫描天体
 OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Resourcen Erforderlich,,Risorse Richieste,,,,,,所需资源
