@@ -155,15 +155,18 @@ namespace OrbitalSurvey.UI.Controls
             this.pickingMode = PickingMode.Ignore;
             
             // Forward events to the ZoomController that handles zooming (mousewheel) and panning (down/move/up)
-            
-            
-            RegisterCallback<PointerDownEvent>(ZoomAndPanController.Instance.OnPanStarting);
-            RegisterCallback<PointerMoveEvent>(ZoomAndPanController.Instance.OnPanMoving);
-            RegisterCallback<PointerUpEvent>(ZoomAndPanController.Instance.OnPanEnding);
-            RegisterCallback<WheelEvent>(ZoomAndPanController.Instance.OnMouseScroll);
+            RegisterCallback<PointerDownEvent>(OnPointerDownEvent);
+            RegisterCallback<PointerMoveEvent>(OnPointerMoveEvent);
+            RegisterCallback<PointerUpEvent>(OnPointerUpEvent);
+            RegisterCallback<WheelEvent>(OnWheelEvent);
             
             this.StopMouseEventsToGameInputPropagation();
         }
+
+        private void OnPointerDownEvent(PointerDownEvent evt) => ZoomAndPanController.Instance.OnPanStarting(evt);
+        private void OnPointerMoveEvent(PointerMoveEvent evt) => ZoomAndPanController.Instance.OnPanMoving(evt);
+        private void OnPointerUpEvent(PointerUpEvent evt) => ZoomAndPanController.Instance.OnPanEnding(evt);
+        private void OnWheelEvent(WheelEvent evt) => ZoomAndPanController.Instance.OnMouseScroll(evt);
 
         public void SetAsVessel()
         {
