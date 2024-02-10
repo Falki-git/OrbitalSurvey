@@ -1,7 +1,7 @@
 Key,Type,Desc,English,German,French,Italian,Spanish,Japanese,Korean,Polish,Russian,Chinese (Simplified),Portuguese (Brazil),Chinese (Traditional)
 
 PartModules/OrbitalSurvey/Name,Text,,Orbital Survey,Orbitalvermessung,Analyse orbitale,Rilevamento Orbitale,,,,,,轨道勘测
-PartModules/OrbitalSurvey/Status,Text,,Status,Status,État,Status,,,,,,状态
+PartModules/OrbitalSurvey/Status,Text,,Status,Status,État,Status,,,,,,状况
 PartModules/OrbitalSurvey/Enabled,Text,,Enabled,Aktiviert,Activé,Attivo,,,,,,启用
 PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,Mode,Modalità,,,,,,模式
 PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuell,Visuel,Visuale,,,,,,光学
