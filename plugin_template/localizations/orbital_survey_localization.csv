@@ -7,8 +7,8 @@ PartModules/OrbitalSurvey/Mode,Text,,Mode,Modus,Mode,Modalità,,,,,,模式
 PartModules/OrbitalSurvey/Mode/Visual,Text,,Visual,Visuell,Visuel,Visuale,,,,,,光学
 PartModules/OrbitalSurvey/Mode/Biome,Text,,Region,Region,Région,Regione,,,,,,区域
 PartModules/OrbitalSurvey/State,Text,,State,Status,Statut,Stato,,,,,,状态
-PartModules/OrbitalSurvey/BodyCategory,Text,,Body Category,Himmelskörper-Kategorie,Catégorie de corps,Categoria Corpo,,,,,,天体类型
-PartModules/OrbitalSurvey/BodyCategory/Preview,Text,,Body Category (preview only),Himmelskörper-Kategorie (Vorschau),Catégorie de corps (aperçu seulement),Categoria Corpo (solo anteprima),,,,,,天体类型（仅预览)
+PartModules/OrbitalSurvey/BodyCategory,Text,,Body Category,Himmelskörper-Kategorie,Catégorie de l'objet céleste,Categoria Corpo,,,,,,天体类型
+PartModules/OrbitalSurvey/BodyCategory/Preview,Text,,Body Category (preview only),Himmelskörper-Kategorie (Vorschau),Catégorie de l'objet céleste (aperçu seulement),Categoria Corpo (solo anteprima),,,,,,天体类型（仅预览)
 PartModules/OrbitalSurvey/BodyCategory/Small,Text,,Small,Klein,Petit,Piccolo,,,,,,小
 PartModules/OrbitalSurvey/BodyCategory/Medium,Text,,Medium,Mittel,Moyen,Medio,,,,,,中
 PartModules/OrbitalSurvey/BodyCategory/Large,Text,,Large,Groß,Grand,Grande,,,,,,大
@@ -58,25 +58,25 @@ OrbitalSurvey/OAB/ResourcesRequiredTitle,Text,,Resources Required,Ressourcen erf
 OrbitalSurvey/OAB/ResourcesRequiredEntry,Text,,Electric Charge,Elektrischer Strom,Charge électrique,Carica Elettrica,,,,,,电能
 OrbitalSurvey/OAB/CategoryDescription,Text,,{0} Category (max {1} km radius),{0} Kategorie (max {1} km Radius),Catégorie {0} (rayon max {1} km),Categoria {0} (raggio max {1} km),,,,,,{0}型（最大半径{1}千米)
 
-OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Abbildung von 25%, 50%, 75% und 100% der Körperoberfläche","Cartographier 25 %, 50 %, 75 % et 100 % de la surface du corps","Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
+OrbitalSurvey/Experiments/OabDescription/DisplayRequirements,Text,,"Map 25%, 50%, 75% and 100% of the body's surface","Abbildung von 25%, 50%, 75% und 100% der Körperoberfläche","Cartographier 25 %, 50 %, 75 % et 100 % de la surface de l'objet céleste","Mappa il 25%, 50%, 75% e 100% della superficie del corpo",,,,,,"在探索模式下，当扫描完成度达到25%、50%、75%和100%时，触发科学报告并获得科研点数"
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/VisualMapping,Text,,Visual Mapping,Visuelle Erfassung,Cartographie visuelle,Mappatura visuale,,,,,,光学测绘
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/25,Text,,Visual Mapping 25%,Visuelle Erfassung 25%,Cartographie visuelle 25%,Mappatura visuale 25%,,,,,,光学测绘25%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Sie haben 1/4 der Körperoberfläche gescannt,Vous avez scanné 1/4 de la surface du corps,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Sie haben 1/4 der Körperoberfläche gescannt,Vous avez scanné 1/4 de la surface de l'objet céleste,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/50,Text,,Visual Mapping 50%,Visuelle Erfassung 50%,Cartographie visuelle 50%,Mappatura visuale 50%,,,,,,光学测绘50%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Sie haben 1/2 der Körperoberfläche gescannt,Vous avez scanné 1/2 de la surface du corps,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Sie haben 1/2 der Körperoberfläche gescannt,Vous avez scanné 1/2 de la surface de l'objet céleste,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Erfassung 75%,Cartographie visuelle 75%,Mappatura visuale 75%,,,,,,光学测绘75%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Sie haben 3/4 der Körperoberfläche gescannt,Vous avez scanné 3/4 de la surface du corps,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Sie haben 3/4 der Körperoberfläche gescannt,Vous avez scanné 3/4 de la surface de l'objet céleste,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Erfassung 100%,Cartographie visuelle 100%,Mappatura visuale 100%,,,,,,光学测绘100%
 OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,Le corps est entièrement scanné!,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Erfassung,Cartographie des régions,Mappatura delle regioni,,,,,,区域测绘
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Erfassung 25%,Cartographie des régions 25%,Mappatura delle regioni 25%,,,,,,区域测绘25%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Sie haben 1/4 der Körperoberfläche gescannt,Vous avez scanné 1/4 de la surface du corps,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25,Text,,You scanned 1/4 of the body's surface,Sie haben 1/4 der Körperoberfläche gescannt,Vous avez scanné 1/4 de la surface de l'objet céleste,Hai mappato 1/4 della superficie del corpo,,,,,,您扫描了天体表面的1/4
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/50,Text,,Region Mapping 50%,Region Erfassung 50%,Cartographie des régions 50%,Mappatura delle regioni 50%,,,,,,区域测绘50%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Sie haben 1/2 der Körperoberfläche gescannt,Vous avez scanné 1/2 de la surface du corps,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50,Text,,You scanned 1/2 of the body's surface,Sie haben 1/2 der Körperoberfläche gescannt,Vous avez scanné 1/2 de la surface de l'objet céleste,Hai mappato 1/2 della superficie del corpo,,,,,,您扫描了天体表面的1/2
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/75,Text,,Region Mapping 75%,Region Erfassung 75%,Cartographie des régions 75%,Mappatura delle regioni 75%,,,,,,区域测绘75%
-OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Sie haben 3/4 der Körperoberfläche gescannt,Vous avez scanné 3/4 de la surface du corps,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
+OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Sie haben 3/4 der Körperoberfläche gescannt,Vous avez scanné 3/4 de la surface de l'objet céleste,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Erfassung 100%,Cartographie des régions 100%,Mappatura delle regioni 100%,,,,,,区域测绘100%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,L'objet céleste est entièrement scanné!,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
