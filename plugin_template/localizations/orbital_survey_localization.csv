@@ -28,7 +28,7 @@ OrbitalSurvey/Status/NoPower,Text,,<color=red>No Power ⚠</color>,<color=red>Ke
 OrbitalSurvey/Status/NotDeployed,Text,,<color=red>Not Deployed ⚠</color>,<color=red>Nicht entfaltet ⚠</color>,<color=red>Non déployé ⚠</color>,<color=red>Non Attivato ⚠</color>,,,,,,<color=red>未展开 ⚠</color>
 
 OrbitalSurvey/State/BelowMin,Text,,<color=red>Below min alt ⚠</color>,<color=red>Unter min. Höhe ⚠</color>,<color=red>Au-dessous de l'altitude min ⚠</color>,<color=red>Sotto altitudine minima ⚠</color>,,,,,,<color=red>低于最低高度 ⚠</color>
-OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter ideale Höhe ⚠</color>,<color=yellow>Au-dessus de altitude idéale ⚠</color>,<color=yellow>Sotto altitudine ideale ⚠</color>,,,,,,<color=yellow>低于理想高度 ⚠</color>
+OrbitalSurvey/State/BelowIdeal,Text,,<color=yellow>Below ideal alt ⚠</color>,<color=yellow>Unter ideale Höhe ⚠</color>,<color=yellow>Au-dessus de l'altitude idéale ⚠</color>,<color=yellow>Sotto altitudine ideale ⚠</color>,,,,,,<color=yellow>低于理想高度 ⚠</color>
 OrbitalSurvey/State/Ideal,Text,,<color=green>Ideal alt</color>,<color=green>Ideale Höhe</color>,<color=green>Altitude Idéale</color>,<color=green>Altitudine ideale</color>,,,,,,<color=green>理想高度</color>
 OrbitalSurvey/State/AboveIdeal,Text,,<color=yellow>Above ideal alt ⚠</color>,<color=yellow>Über ideale Höhe ⚠</color>,<color=yellow>Au-dessus de l'altitude idéale ⚠</color>,<color=yellow>Sopra altitudine ideale ⚠</color>,,,,,,<color=yellow>高于理想高度 ⚠</color>
 OrbitalSurvey/State/AboveMax,Text,,<color=red>Above max alt ⚠</color>,<color=red>Über max. Höhe ⚠</color>,<color=red>Au-dessus de l'altitude max ⚠</color>,<color=red>Sopra altitudine max ⚠</color>,,,,,,<color=red>高于最高高度 ⚠</color>
@@ -68,7 +68,7 @@ OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50,Text,,You scanned 
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/75,Text,,Visual Mapping 75%,Visuelle Erfassung 75%,Cartographie visuelle 75%,Mappatura visuale 75%,,,,,,光学测绘75%
 OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75,Text,,You scanned 3/4 of the body's surface,Sie haben 3/4 der Körperoberfläche gescannt,Vous avez scanné 3/4 de la surface de l'objet céleste,Hai mappato 3/4 della superficie del corpo,,,,,,您扫描了天体表面的3/4
 OrbitalSurvey/Experiments/DataReportDisplayName/VisualMapping/100,Text,,Visual Mapping 100%,Visuelle Erfassung 100%,Cartographie visuelle 100%,Mappatura visuale 100%,,,,,,光学测绘100%
-OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,Le corps est entièrement scanné!,Corpo scansionato completamente!,,,,,,天体完全扫描！
+OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,L'objet céleste est entièrement scanné!,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
 OrbitalSurvey/Experiments/OabDescription/DisplayName/BiomeMapping,Text,,Region Mapping,Region Erfassung,Cartographie des régions,Mappatura delle regioni,,,,,,区域测绘
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/25,Text,,Region Mapping 25%,Region Erfassung 25%,Cartographie des régions 25%,Mappatura delle regioni 25%,,,,,,区域测绘25%
