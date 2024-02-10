@@ -1,32 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/OrbitalSurvey/UI/OrbitalSurvey.uss?fileID=7433441132597879392&amp;guid=7ab10ae500eddad4e86b510fff1be17a&amp;type=3#OrbitalSurvey" />
     <ui:VisualElement name="root" class="root main-gui">
-        <ui:VisualElement name="header" class="header">
-            <ui:VisualElement name="title__container" class="title__container">
-                <ui:VisualElement name="icon" class="icon" />
-                <ui:Label tabindex="-1" text="ORBITAL SURVEY" display-tooltip-when-elided="true" name="title-text" class="title-text" />
-            </ui:VisualElement>
-            <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
-                <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body__dropdown" class="body__dropdown" />
-                <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type__dropdown" class="map-type__dropdown" />
-                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="percent-complete" text="69%" class="percent-complete" style="-unity-text-align: upper-center;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="close-button__container" class="close-button__container">
-                <ui:Button name="close-button" class="close-button">
-                    <ui:VisualElement name="close-button__background" class="close-button__background" />
-                </ui:Button>
-            </ui:VisualElement>
+        <ui:VisualElement name="footer" class="footer">
+            <ui:VisualElement name="legend__container" class="legend__container" />
         </ui:VisualElement>
-        <ui:VisualElement name="middle-container" class="middle-container" style="flex-direction: row;">
+        <ui:VisualElement name="middle-container" class="middle-container" style="flex-direction: row-reverse;">
+            <ui:VisualElement name="side-bar" class="side-bar">
+                <ui:VisualElement name="side-bar__upper" class="side-bar__upper" />
+                <ui:VisualElement name="side-bar__lower" class="side-bar__lower" />
+            </ui:VisualElement>
             <ui:VisualElement name="body" class="body">
                 <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
                     <ui:VisualElement name="map__container" class="map__container">
                         <ui:VisualElement name="map" class="map" />
                     </ui:VisualElement>
-                    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; overflow: hidden; position: absolute; height: 100%;">
+                    <ui:VisualElement name="waypoint-canvas__overflow-hidder" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); overflow: hidden; position: absolute; width: 100%; height: 100%;">
+                        <ui:VisualElement name="waypoint-canvas" picking-mode="Ignore" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement picking-mode="Ignore" name="marker-canvas__overflow-hidder" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; overflow: hidden; position: absolute; height: 100%;">
                         <ui:VisualElement name="marker-canvas" picking-mode="Ignore" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); position: absolute; width: 100%; height: 100%;" />
                     </ui:VisualElement>
-                    <ui:Label tabindex="-1" text="Overlay: ON" display-tooltip-when-elided="true" name="notification" class="notification" />
+                    <ui:Label tabindex="-1" text="Overlay: ON" display-tooltip-when-elided="true" name="notification" picking-mode="Ignore" class="notification" />
                     <ui:VisualElement name="zoom-controls" picking-mode="Ignore" class="zoom-controls">
                         <ui:Label tabindex="-1" text="1.0" display-tooltip-when-elided="true" name="zoom-factor" picking-mode="Ignore" class="zoom-controls__factor" />
                         <ui:Button display-tooltip-when-elided="true" name="track-vessel" class="zoom-controls__button" style="padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px;">
@@ -35,15 +29,51 @@
                         <ui:Button text="+" display-tooltip-when-elided="true" name="zoom-in" class="zoom-controls__button" />
                         <ui:Button text="-" display-tooltip-when-elided="true" name="zoom-out" class="zoom-controls__button" />
                     </ui:VisualElement>
+                    <ui:VisualElement name="context-menu-canvas" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.33); width: 100%; height: 100%; display: none; position: absolute;">
+                        <ui:VisualElement name="context-menu" class="context-menu" style="left: 50px; top: 50px;">
+                            <ui:Label tabindex="-1" text="Edit waypoint" display-tooltip-when-elided="true" name="context-title" class="context-menu__title" />
+                            <ui:TextField picking-mode="Ignore" value="way" name="waypoint-name" style="font-size: 10px;" />
+                            <ui:VisualElement name="colors__container" class="colors__container">
+                                <ui:Button display-tooltip-when-elided="true" name="yellow">
+                                    <ui:VisualElement name="background" class="map-marker__waypoint-marker--yellow" />
+                                </ui:Button>
+                                <ui:Button display-tooltip-when-elided="true" name="red">
+                                    <ui:VisualElement name="background" class="map-marker__waypoint-marker--red" />
+                                </ui:Button>
+                                <ui:Button display-tooltip-when-elided="true" name="green">
+                                    <ui:VisualElement name="background" class="map-marker__waypoint-marker--green" />
+                                </ui:Button>
+                                <ui:Button display-tooltip-when-elided="true" name="blue">
+                                    <ui:VisualElement name="background" class="map-marker__waypoint-marker--blue" />
+                                </ui:Button>
+                                <ui:Button display-tooltip-when-elided="true" name="gray">
+                                    <ui:VisualElement name="background" class="map-marker__waypoint-marker--gray" />
+                                </ui:Button>
+                            </ui:VisualElement>
+                            <ui:Button text="Add" display-tooltip-when-elided="true" name="add" class="context-menu__button" style="display: flex;" />
+                            <ui:Button text="Update" display-tooltip-when-elided="true" name="update" class="context-menu__button" style="display: flex;" />
+                            <ui:Button text="Remove" display-tooltip-when-elided="true" name="remove" class="context-menu__button remove" style="display: flex;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="mouse-over-canvas" picking-mode="Ignore" style="position: absolute; width: 100%; height: 100%;" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="side-bar" class="side-bar">
-                <ui:VisualElement name="side-bar__upper" class="side-bar__upper" />
-                <ui:VisualElement name="side-bar__lower" class="side-bar__lower" />
-            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="footer" class="footer">
-            <ui:VisualElement name="legend__container" class="legend__container" />
+        <ui:VisualElement name="header" class="header">
+            <ui:VisualElement name="title__container" class="title__container">
+                <ui:VisualElement name="icon" class="icon" />
+                <ui:Label tabindex="-1" text="ORBITAL SURVEY" display-tooltip-when-elided="true" name="title-text" class="title-text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="header-buttons__container" class="header-buttons__container">
+                <ui:DropdownField index="-1" choices="Kerbin, Mun, Minmus" name="body__dropdown" class="body__dropdown" />
+                <ui:DropdownField index="-1" choices="Visual, Biome" name="map-type__dropdown" class="map-type__dropdown" />
+                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="percent-complete" class="percent-complete" style="-unity-text-align: upper-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="close-button__container" class="close-button__container">
+                <ui:Button name="close-button" class="close-button">
+                    <ui:VisualElement name="close-button__background" class="close-button__background" />
+                </ui:Button>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="resize-handle__container" class="resize-handle__container">
             <ui:VisualElement name="resize-handle" class="resize-handle" style="-unity-background-image-tint-color: rgb(255, 255, 255); left: 13px; top: 13px; max-width: 7px; max-height: 7px;" />
