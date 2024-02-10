@@ -39,9 +39,6 @@ public class CelestialData
     public string DisplayName => Body.DisplayName;
     public double Radius => Body.radius;
     public double AtmosphereDepth => Body.atmosphereDepth;
-
-    public double MinimumScanningAltitude => AtmosphereDepth; // TODO
-    public double MaximumScanningAltitude => Body.sphereOfInfluence; // TODO
     
     public void DoScan(MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning)
     {

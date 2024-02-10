@@ -11,7 +11,7 @@ public class SceneController
     public static SceneController Instance { get; } = new();
     public UIDocument MainGui { get; set; }
 
-    private readonly WindowOptions _windowOptions = new()
+    private readonly WindowOptions _windowOptions = WindowOptions.Default with
     {
         WindowId = "MainGui",
         IsHidingEnabled = true,
@@ -19,15 +19,18 @@ public class SceneController
         {
             IsMovingEnabled = true,
             CheckScreenBounds = true
-        }
+        },
+        DisableGameInputForTextFields = true
     };
         
     public string SelectedBody;
     public MapType? SelectedMapType;
     public Vector3? WindowPosition;
     
-    public bool IsVesselNamesVisible;
+    public bool IsMarkerNamesVisible;
     public bool IsGeoCoordinatesVisible;
+    
+    public List<WaypointModel> Waypoints { get; set; } = new();
     
     private bool _showMainGui;
     public bool ShowMainGui

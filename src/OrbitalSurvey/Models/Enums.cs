@@ -45,12 +45,15 @@ public enum Notification
 {
     OverlayOn,
     OverlayOff,
-    VesselNamesOn,
-    VesselNamesOff,
+    MarkerNamesOn,
+    MarkerNamesOff,
     GeoCoordsOn,
     GeoCoordsOff,
     VesselTrackingOn,
-    VesselTrackingOff
+    VesselTrackingOff,
+    WaypointAdded,
+    WaypointUpdated,
+    WaypointRemoved
 }
 
 public enum MarkerState
@@ -60,4 +63,13 @@ public enum MarkerState
     Error,
     Warning,
     Good
+}
+
+public enum WaypointColor
+{
+    Yellow,
+    Red,
+    Green,
+    Blue,
+    Gray
 }

@@ -1,12 +1,11 @@
 ﻿/*
  * 
  * TODO:
- * n/a
  * 
  *
  * TODO NEAR-TERM:
- * - adding waypoints by clicking on the map
- * - altimetry Map + legend 
+ * - altimetry Map + legend
+ * - LAT/LON grid toggle - requested by Schneider21
  * 
  * 
  * TODO LONG-TERM: 
@@ -18,13 +17,13 @@
  *      - one discoverable at a time
  *      - false positives
  *      - wide area not centered at the discoverable
- *       - high EC consumption
- *       - far in the tech tree
+ *      - high EC consumption
+ *      - far in the tech tree
  * - support for custom planet packs (packs will register their maps)
  * - see if Slope map can be generated
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
- * - scanning parts by -StanWildin
+ * - scanning parts
  * - register planted flags?
  *
  * BUG FIXES OR IMPROVEMENTS NEEDED:
@@ -87,9 +86,10 @@
  * - fixed vessel marking coloring for vessels that have more than one antenna with the same scanning mode
  * - replaced region names with the localized version (e.g. Biggest Crater -> Rayed Crater)
  * - revamp of min/ideal/max altitudes to be more dynamic
+ * - adding waypoints by clicking on the map, edit, remove
+ * - coordinates and region names on mouseover
  *
  * Changelog:
- * - Fixed KerbinMountain region localization
- * - Revamped Min/Ideal/Max altitudes
+ * n/a
  *
  */

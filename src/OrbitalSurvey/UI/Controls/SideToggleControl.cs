@@ -148,7 +148,7 @@ namespace OrbitalSurvey.UI.Controls
         
         public new void SetEnabled(bool state)
         {
-            _LOGGER.LogInfo($"Setting control '{TextValue}' enabled property to 'state'.");
+            _LOGGER.LogInfo($"Setting control '{TextValue}' enabled property to '{state}'.");
             SwitchToggleState(false, false);
             
             IsEnabled = state;

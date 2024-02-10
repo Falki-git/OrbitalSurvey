@@ -57,13 +57,23 @@ public static class LocalizationStrings
     
     public static readonly Dictionary<Notification, LocalizedString> NOTIFICATIONS = new()
     {
-        { Notification.OverlayOn, "OrbitalSurvey/UI/Overlay/ON"},
-        { Notification.OverlayOff, "OrbitalSurvey/UI/Overlay/OFF"},
-        { Notification.VesselNamesOn, "OrbitalSurvey/UI/VesselNames/ON"},
-        { Notification.VesselNamesOff, "OrbitalSurvey/UI/VesselNames/OFF"},
-        { Notification.GeoCoordsOn, "OrbitalSurvey/UI/GeoCoordinates/ON"},
-        { Notification.GeoCoordsOff, "OrbitalSurvey/UI/GeoCoordinates/OFF"},
-        { Notification.VesselTrackingOn, "OrbitalSurvey/UI/VesselTracking/ON"},
-        { Notification.VesselTrackingOff, "OrbitalSurvey/UI/VesselTracking/OFF"},
+        { Notification.OverlayOn, "OrbitalSurvey/UI/Notification/Overlay/ON"},
+        { Notification.OverlayOff, "OrbitalSurvey/UI/Notification/Overlay/OFF"},
+        { Notification.MarkerNamesOn, "OrbitalSurvey/UI/Notification/MarkerNames/ON"},
+        { Notification.MarkerNamesOff, "OrbitalSurvey/UI/Notification/MarkerNames/OFF"},
+        { Notification.GeoCoordsOn, "OrbitalSurvey/UI/Notification/GeoCoordinates/ON"},
+        { Notification.GeoCoordsOff, "OrbitalSurvey/UI/Notification/GeoCoordinates/OFF"},
+        { Notification.VesselTrackingOn, "OrbitalSurvey/UI/Notification/VesselTracking/ON"},
+        { Notification.VesselTrackingOff, "OrbitalSurvey/UI/Notification/VesselTracking/OFF"},
+        { Notification.WaypointAdded, "OrbitalSurvey/UI/Notification/WaypointAdded"},
+        { Notification.WaypointUpdated, "OrbitalSurvey/UI/Notification/WaypointUpdated"},
+        { Notification.WaypointRemoved, "OrbitalSurvey/UI/Notification/WaypointRemoved"},
     };
+    
+    public static readonly LocalizedString WAYPOINT_CONTEXT_MENU_TITLE_ADD = "OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Add";
+    public static readonly LocalizedString WAYPOINT_CONTEXT_MENU_TITLE_EDIT = "OrbitalSurvey/UI/Waypoint/ContextMenuTitle/Edit";
+    public static readonly LocalizedString WAYPOINT_DEFAULT_NAME = "OrbitalSurvey/UI/Waypoint/DefaultName";
+    public static readonly LocalizedString WAYPOINT_BUTTON_ADD = "OrbitalSurvey/UI/Waypoint/Button/Add";
+    public static readonly LocalizedString WAYPOINT_BUTTON_UPDATE = "OrbitalSurvey/UI/Waypoint/Button/Update";
+    public static readonly LocalizedString WAYPOINT_BUTTON_REMOVE = "OrbitalSurvey/UI/Waypoint/Button/Remove";
 }

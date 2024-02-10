@@ -26,7 +26,7 @@ public class VesselController : MonoBehaviour
     private float _canvasHeight;
     private bool _canvasInitialized;
 
-    private List<(VesselManager.VesselStats vessel, VesselMarkerControl control)> _trackedVessels = new();
+    private List<(VesselManager.VesselStats vessel, MapMarkerControl control)> _trackedVessels = new();
     
     private Action<float, float> _windowResizedHandler;
     private Action<float> _zoomFactorChangeHandler;
@@ -72,7 +72,7 @@ public class VesselController : MonoBehaviour
 
         foreach (var vessel in vessels)
         {
-            var control = new VesselMarkerControl(SceneController.Instance.IsVesselNamesVisible,SceneController.Instance.IsGeoCoordinatesVisible)
+            var control = new MapMarkerControl(SceneController.Instance.IsMarkerNamesVisible,SceneController.Instance.IsGeoCoordinatesVisible, MapMarkerControl.MarkerType.Vessel)
             {
                 NameValue = vessel.Name,
                 LatitudeValue = vessel.GeographicCoordinates.Latitude,
@@ -97,7 +97,7 @@ public class VesselController : MonoBehaviour
             (value) => StartCoroutine(Rebuild());
     }
 
-    private void InitializeModuleStyles(VesselMarkerControl control, VesselManager.VesselStats vessel)
+    private void InitializeModuleStyles(MapMarkerControl control, VesselManager.VesselStats vessel)
     {
         var mapType = SceneController.Instance.SelectedMapType;
         if (mapType == null)
@@ -113,12 +113,12 @@ public class VesselController : MonoBehaviour
         OnModuleChanged(control, module, mapType.Value);
     }
 
-    private void OnNameChanged(VesselMarkerControl control, string name)
+    private void OnNameChanged(MapMarkerControl control, string name)
     {
         control.NameValue = name;
     }
     
-    private void OnMapGuiPositionChanged(VesselMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged, bool isActiveVessel)
+    private void OnMapGuiPositionChanged(MapMarkerControl control, (float percentX, float percentY) mapGuiPositionChanged, bool isActiveVessel)
     {
         var scaledCoordinates = GetScaledCoordinates(mapGuiPositionChanged.percentX, 1 - mapGuiPositionChanged.percentY);
         control.style.left = scaledCoordinates.x;
@@ -130,13 +130,13 @@ public class VesselController : MonoBehaviour
         }
     }
     
-    private void OnGeographicCoordinatesChanged(VesselMarkerControl control, (double latitude, double longitude) coords)
+    private void OnGeographicCoordinatesChanged(MapMarkerControl control, (double latitude, double longitude) coords)
     {
         control.LatitudeValue = coords.latitude;
         control.LongitudeValue = coords.longitude;
     }
     
-    private void OnModuleChanged(VesselMarkerControl control, List<VesselManager.ModuleStats> modules, MapType mode)
+    private void OnModuleChanged(MapMarkerControl control, List<VesselManager.ModuleStats> modules, MapType mode)
     {
         if(mode != SceneController.Instance.SelectedMapType)
             return;
@@ -200,34 +200,18 @@ public class VesselController : MonoBehaviour
 
     public void ToggleVesselNames()
     {
-        SceneController.Instance.IsVesselNamesVisible = !SceneController.Instance.IsVesselNamesVisible;
-
         foreach (var vessel in _trackedVessels)
         {
-            vessel.control.SetVesselNameVisibility(SceneController.Instance.IsVesselNamesVisible);
+            vessel.control.SetNameVisibility(SceneController.Instance.IsMarkerNamesVisible);
         }
-
-        // send notification
-        var notificationText = SceneController.Instance.IsVesselNamesVisible ?
-            LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOn] :
-            LocalizationStrings.NOTIFICATIONS[Notification.VesselNamesOff];
-        _mainGuiController.ShowNotification(notificationText);
     }
 
     public void ToggleGeoCoordinates()
     {
-        SceneController.Instance.IsGeoCoordinatesVisible = !SceneController.Instance.IsGeoCoordinatesVisible;
-
         foreach (var vessel in _trackedVessels)
         {
             vessel.control.SetGeoCoordinatesVisibility(SceneController.Instance.IsGeoCoordinatesVisible);
         }
-        
-        // send notification
-        var notificationText = SceneController.Instance.IsGeoCoordinatesVisible ?
-            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOn] :
-            LocalizationStrings.NOTIFICATIONS[Notification.GeoCoordsOff];
-        _mainGuiController.ShowNotification(notificationText);
     }
     
     /// <summary>

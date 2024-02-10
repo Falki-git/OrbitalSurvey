@@ -15,7 +15,7 @@ public static class UIToolkitExtensions
     /// The only place where the Click still doesn't get stopped is in the MapView, neither the Focus or the Orbit mouse events.
     /// </summary>
     /// <param name="element"></param>
-    public static void StopMouseEventsPropagation(this VisualElement element)
+    public static void StopMouseEventsToGameInputPropagation(this VisualElement element)
     {
         element.RegisterCallback<PointerEnterEvent>(OnVisualElementPointerEnter);
         element.RegisterCallback<PointerLeaveEvent>(OnVisualElementPointerLeave);
@@ -55,5 +55,31 @@ public static class UIToolkitExtensions
         Game.Input.VAB.cameraZoom.Enable();
         Game.Input.VAB.mousePrimary.Enable();
         Game.Input.VAB.mouseSecondary.Enable();
+    }
+
+    /// <summary>
+    /// Checks if the visual element that is a container lost focus to an element outside of it
+    /// </summary>
+    public static bool HasContainerLostFocus(this VisualElement container, VisualElement targetOfFocusOutEvent)
+    {
+        if (targetOfFocusOutEvent == null)
+            return true;
+
+        if (targetOfFocusOutEvent == container)
+            return false;
+
+        if (targetOfFocusOutEvent.parent == null)
+            return true;
+            
+        if (targetOfFocusOutEvent.parent == container)
+            return false;
+        
+        if (targetOfFocusOutEvent.parent.parent == null)
+            return true;
+        
+        if (targetOfFocusOutEvent.parent.parent == container)
+            return false;
+
+        return true;
     }
 }

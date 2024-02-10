@@ -46,8 +46,10 @@ public class VesselManager : MonoBehaviour
     public delegate void VesselChangedBodies(VesselStats vessel);
     public event VesselRegistered OnVesselRegistered;
     public event VesselUnRegistered OnVesselUnRegistered;
+#pragma warning disable CS0067 // Event is never used
     public event VisualModuleChanged OnVisualModuleChanged;
     public event BiomeModuleChanged OnBiomeModuleChanged;
+#pragma warning restore CS0067 // Event is never used
     public event VesselChangedBodies OnVesselChangedBody;
     
     private void Start()
