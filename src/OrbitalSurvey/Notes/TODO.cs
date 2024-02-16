@@ -1,7 +1,7 @@
 ﻿/*
  * 
  * TODO:
- * 
+ * - automatically select Body dropdown and MapType dropdown on opening the map from taskbar
  *
  * TODO NEAR-TERM:
  * - altimetry Map + legend
