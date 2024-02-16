@@ -204,21 +204,27 @@ public class OverlayManager
     /// and them zoom back in which recreates the scaled space object and then the texture needs to be applied again.
     /// This is an async delayed task because it takes a while for clouds and atmosphere to be generated. 
     /// </summary>
-    public async Task DrawMap3dOverlayOnMapCelestialBodyAddedMessage(string bodyName)
+    /// <param name="bodyName">Name of celestial body</param>
+    /// <param name="milisecondsDelay">Specifies an async delay to apply the overlay. Defaults at 100 ms. Used when
+    ///     OnMapCelestialBodyAddedMessage is triggered since it takes a bit for clouds and atmosphere to load (needed
+    ///     to correctly apply the overlay)</param>
+    public async Task DrawMap3dOverlayOnMapCelestialBodyAddedMessage(string bodyName, int milisecondsDelay = 100)
     {
-        if (!OverlayActive)
-            return;
-        
         if (!Core.Instance.CelestialDataDictionary.ContainsKey(bodyName))
         {
             _LOGGER.LogError($"Body '{bodyName}' not found in the CelestialDataDictionary.");
             return;
         }
+        
+        if (!OverlayActive &&
+            (!Settings.ShowMapOverlayAlways.Value ||
+             (Settings.ShowMapOverlayAlways.Value && Core.Instance.CelestialDataDictionary[bodyName].Maps[MapType.Visual].IsFullyScanned)))
+            return;
 
-        var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName].Maps[OverlayType].CurrentMap;
+        var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName].Maps[OverlayActive ? OverlayType : MapType.Visual].CurrentMap;
 
         // wait for the Map3d to receive its clouds and atmosphere 
-        await Task.Delay(100);
+        await Task.Delay(milisecondsDelay);
         
         var body = GameObject.Find(OverlayUtility.MAP3D_CELESTIAL_PATH[bodyName]);
         var meshRenderer = body.GetComponent<MeshRenderer>();
@@ -271,6 +277,11 @@ public class OverlayManager
             bodyObj.GetChild("Atmosphere.Outer")?.TryToggleMeshRendererComponent(true);
 
             _textureBackup.Remove(body.Name);
+
+            if (Settings.ShowMapOverlayAlways.Value)
+            {
+                DrawMap3dOverlayOnMapCelestialBodyAddedMessage(body.Name, 0);
+            }
         }
     }
 }
