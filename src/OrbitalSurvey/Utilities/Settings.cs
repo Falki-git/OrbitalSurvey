@@ -10,6 +10,7 @@ public static class Settings
     // "General" section
     public static ConfigEntry<float> TimeBetweenScans;
     public static ConfigEntry<bool> PlayUiSounds;
+    public static ConfigEntry<bool> ShowMapOverlayAlways;
     
     // "Maps" section
     public static ConfigEntry<bool> ShowRegionLegend;
@@ -47,6 +48,14 @@ public static class Settings
             "Play UI sounds",
             true,
             new ConfigDescription("If UI sounds will be played when clicked.")
+        );
+        
+        ShowMapOverlayAlways = Plugin.Config.Bind(
+            "General",
+            "Always show Map view overlay",
+            false,
+            new ConfigDescription("If toggled on Map view overlay texture will always be applied to every body in game.\n\n"
+                + "This effectively makes all bodies \"hidden\" in Map view until you scan them.")
         );
         
         // MAPS

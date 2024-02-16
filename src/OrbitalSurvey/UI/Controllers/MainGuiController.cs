@@ -122,6 +122,12 @@ public class MainGuiController : MonoBehaviour
             {
                 OverlayManager.Instance.DrawOverlay(GetCurrentMapType());
             }
+            else if (Settings.ShowMapOverlayAlways.Value)
+            {
+                // this removes the uncompleted Map overlay on the body if the setting for ShowMapOverlayAlways is turned on
+                // if mapping is complete, we won't show the overlay - you can finally see the original texture in map view
+                OverlayManager.Instance.RemoveMap3dOverlayOnAllLoadedBodies();
+            }
         };
         
         BuildBodyDropdown();
