@@ -1,0 +1,14 @@
+{
+    "name": "OrbitalSurvey.Unity.Runtime",
+    "rootNamespace": "OrbitalSurvey.Unity.Runtime",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
