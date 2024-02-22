@@ -139,17 +139,7 @@ public class MainGuiController : MonoBehaviour
             $"{AssetUtility.OtherAssetsAddresses["StaticBackground"]}");
         _mapContainer.style.backgroundImage = staticBackground;
         
-        // check if a map was previously selected and restore it (window was previously closed and now opened again)
-        if (!string.IsNullOrEmpty(SceneController.Instance.SelectedBody))
-        {
-            _bodyDropdown.value = SceneController.Instance.SelectedBody;
-        }
-        
-        if (SceneController.Instance.SelectedMapType != null)
-        {
-            _mapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
-            OnSelectionChanged(null, false);
-        }
+        SetBodyAndMapTypeDropdownValues();
         
         // if overlay is already active, set the overlay toggle as toggled
         if (OverlayManager.Instance.OverlayActive)
@@ -165,6 +155,28 @@ public class MainGuiController : MonoBehaviour
         
         // save the window position (only for current session) when it moves
         _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+    }
+
+    private void SetBodyAndMapTypeDropdownValues()
+    {
+        // if we're in Flight/Map view then select the active vessel reference body
+        var gameState = GameManager.Instance.Game.GlobalGameState.GetGameState().GameState;
+        if (gameState is GameState.FlightView or GameState.Map3DView)
+        {
+            var activeVessel = GameManager.Instance?.Game?.ViewController?.GetActiveVehicle()?.GetSimVessel();
+            if (activeVessel != null)
+            {
+                SceneController.Instance.SelectedBody = activeVessel.mainBody.Name;
+                _bodyDropdown.value = SceneController.Instance.SelectedBody;
+            }
+        }
+
+        // if MapType wasn't previously selected, select the Visual type
+        SceneController.Instance.SelectedMapType ??= MapType.Visual;
+        
+        _mapTypeDropdown.value = GetLocalizedValueForMapType(SceneController.Instance.SelectedMapType.Value);
+        
+        OnSelectionChanged(null, false);
     }
 
     private void PlayToggleSound(bool state)
