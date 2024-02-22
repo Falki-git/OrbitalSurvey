@@ -82,6 +82,8 @@ public static class UiUtility
 
         // grab the colorId for that exact lat/lon coordinate
         var regionColorId = (int)regionsBakedMap.MapData[y * regionsBakedMap.Width + x];
+        
+        
 
         // grab the regionId (string) that we've already mapped out
         var regionId = RegionsManager.Instance.Data[body][regionColorId].RegionId;

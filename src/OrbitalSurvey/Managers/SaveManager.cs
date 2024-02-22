@@ -158,16 +158,18 @@ public class SaveManager
                 waypointModel.Body = waypointModel.Waypoint.BodyName;
                 waypointModel.MapPositionPercentage = UiUtility.GetPositionPercentageFromGeographicCoordinates(
                     waypointModel.Waypoint.Latitude, waypointModel.Waypoint.Longitude);
-            
+
                 var control = new MapMarkerControl(
+                    name: waypointModel.Waypoint.Name,
+                    latitude: waypointModel.Waypoint.Latitude,
+                    longitude: waypointModel.Waypoint.Longitude,
                     isNameVisible: SceneController.Instance.IsMarkerNamesVisible,
                     isGeoCoordinatesVisible: SceneController.Instance.IsGeoCoordinatesVisible,
-                    MapMarkerControl.MarkerType.Waypoint, waypointModel.Waypoint.WaypointColor)
-                {
-                    NameValue = waypointModel.Waypoint.Name,
-                    LatitudeValue = waypointModel.Waypoint.Latitude,
-                    LongitudeValue = waypointModel.Waypoint.Longitude
-                };
+                    MapMarkerControl.MarkerType.Waypoint);
+                
+                WaypointController.Instance.AddWaypointColor(control, waypointModel.Waypoint.WaypointColor);
+                ZoomAndPanController.Instance.RegisterControlForPanAndZooming(control);
+                control.StopMouseEventsToGameInputPropagation();
             
                 waypointModel.Marker = control;
                 SceneController.Instance.Waypoints.Add(waypointModel);

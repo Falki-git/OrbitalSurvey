@@ -1,31 +1,34 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.5.33530.505
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbitalSurvey", "src\OrbitalSurvey\OrbitalSurvey.csproj", "{33A8408F-AFDD-4946-914C-18947A038A0E}"
+Project("{F503F33F-68FC-4C84-89A5-D48C08B8502D}") = "OrbitalSurvey", "src/OrbitalSurvey/OrbitalSurvey.csproj", "{5EB09D5F-D43C-4BE9-A178-756AA1067610}"
+EndProject
+Project("{F503F33F-68FC-4C84-89A5-D48C08B8502D}") = "OrbitalSurvey.Unity", "src/OrbitalSurvey.Unity/OrbitalSurvey.Unity.csproj", "{181B47A2-51B2-4130-A3AE-00A6B042DCF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 		Deploy|Any CPU = Deploy|Any CPU
 		DeployAndRun|Any CPU = DeployAndRun|Any CPU
-		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.DeployAndRun|Any CPU.ActiveCfg = DeployAndRun|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.DeployAndRun|Any CPU.Build.0 = DeployAndRun|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33A8408F-AFDD-4946-914C-18947A038A0E}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {998D42AE-DF48-461B-8EDE-E632FEF2DC65}
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.DeployAndRun|Any CPU.ActiveCfg = DeployAndRun|Any CPU
+		{5EB09D5F-D43C-4BE9-A178-756AA1067610}.DeployAndRun|Any CPU.Build.0 = DeployAndRun|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.DeployAndRun|Any CPU.ActiveCfg = DeployAndRun|Any CPU
+		{181B47A2-51B2-4130-A3AE-00A6B042DCF6}.DeployAndRun|Any CPU.Build.0 = DeployAndRun|Any CPU
 	EndGlobalSection
 EndGlobal
+
+
