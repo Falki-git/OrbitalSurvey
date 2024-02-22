@@ -23,7 +23,7 @@
                     <ui:Label tabindex="-1" text="Overlay: ON" display-tooltip-when-elided="true" name="notification" picking-mode="Ignore" class="notification" />
                     <ui:VisualElement name="zoom-controls" picking-mode="Ignore" class="zoom-controls">
                         <ui:Label tabindex="-1" text="1.0" display-tooltip-when-elided="true" name="zoom-factor" picking-mode="Ignore" class="zoom-controls__factor" />
-                        <ui:Button display-tooltip-when-elided="true" name="track-vessel" class="zoom-controls__button" style="padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px;">
+                        <ui:Button display-tooltip-when-elided="true" name="track-vessel" class="zoom-controls__button zoom-controls__button--toggled" style="padding-left: 2px; padding-right: 2px; padding-top: 2px; padding-bottom: 2px;">
                             <ui:VisualElement name="track-vessel__icon" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&apos;project://database/Assets/Images/Icons/TrackVessel.png?fileID=2800000&amp;guid=c2b4b032b8fc68148bd632e8d4b328b9&amp;type=3#TrackVessel&apos;);" />
                         </ui:Button>
                         <ui:Button text="+" display-tooltip-when-elided="true" name="zoom-in" class="zoom-controls__button" />

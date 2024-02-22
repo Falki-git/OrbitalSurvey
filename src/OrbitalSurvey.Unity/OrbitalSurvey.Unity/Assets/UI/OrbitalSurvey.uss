@@ -697,11 +697,21 @@
     padding-bottom: 0;
 }
 
-.zoom-controls__button--toggled {
+#track-vessel.toggled {
     border-left-color: var(--border-active-green);
     border-right-color: var(--border-active-green);
     border-top-color: var(--border-active-green);
     border-bottom-color: var(--border-active-green);
+}
+
+#track-vessel.toggled:active {
+    border-left-color: var(--redish);
+    border-right-color: var(--redish);
+    border-top-color: var(--redish);
+    border-bottom-color: var(--redish);
+}
+
+.toggled {
 }
 
 .context-menu {

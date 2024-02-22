@@ -46,7 +46,7 @@ public class ZoomAndPanController: MonoBehaviour
     private bool _isTrackingActiveVessel;
 
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.ZoomController");
-    private const string _TRACK_VESSEL_USS = "zoom-controls__button--toggled"; 
+    private const string _TRACK_VESSEL_USS = "toggled"; 
     
     public void Start()
     {
@@ -322,11 +322,6 @@ public class ZoomAndPanController: MonoBehaviour
     [PublicAPI]
     public void RegisterControlForPanAndZooming(MapMarkerControl control)
     {
-        // control.OnPointerDownEvent += OnPanStarting;
-        // control.OnPointerMoveEvent += OnPanMoving;
-        // control.OnPointerUpEvent += OnPanEnding;
-        // control.OnWheelEvent += OnMouseScroll;
-
         control.RegisterCallback<PointerDownEvent>(OnPanStarting);
         control.RegisterCallback<PointerMoveEvent>(OnPanMoving);
         control.RegisterCallback<PointerUpEvent>(OnPanEnding);
