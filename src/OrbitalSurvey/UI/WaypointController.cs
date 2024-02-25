@@ -94,6 +94,7 @@ public class WaypointController: MonoBehaviour
         StartCoroutine(RegisterForWindowResize());
         StartCoroutine(RegisterForZoomFactorChanged());
         StartCoroutine(RegisterForPanExecuted());
+        InitializeExistingWaypoints();
        
         _LOGGER.LogInfo("Initialized.");
     }
@@ -178,6 +179,43 @@ public class WaypointController: MonoBehaviour
         _panExecutedHandler = (panOffset) => RepositionAllWaypointControls();
         
         ZoomAndPanController.Instance.OnPanExecuted += _panExecutedHandler;
+    }
+
+    public void InitializeExistingWaypoints()
+    {
+        foreach (var waypointModel in SceneController.Instance.Waypoints)
+        {
+            StartCoroutine(CreateMarkerControl(waypointModel));
+        }
+
+        SceneController.Instance.WaypointInitialized = true;
+    }
+
+    private IEnumerator CreateMarkerControl(WaypointModel waypointModel)
+    {
+        waypointModel.Marker = new MapMarkerControl(
+            name: waypointModel.Waypoint.Name,
+            latitude: waypointModel.Waypoint.Latitude,
+            longitude: waypointModel.Waypoint.Longitude,
+            isNameVisible: SceneController.Instance.IsMarkerNamesVisible,
+            isGeoCoordinatesVisible: SceneController.Instance.IsGeoCoordinatesVisible,
+            type: MapMarkerControl.MarkerType.Waypoint);
+                
+        AddWaypointColor(waypointModel.Marker, waypointModel.Waypoint.WaypointColor);
+        waypointModel.Marker.StopMouseEventsToGameInputPropagation();            
+        
+        waypointModel.Marker.RegisterCallback<PointerDownEvent>(OnMarkerPointerDownEvent);
+        waypointModel.Marker.RegisterCallback<PointerUpEvent>(evt => OnMarkerPointerUpEvent(evt, waypointModel));
+        
+        PositionMarkerOnTheMap(waypointModel.Marker, waypointModel.MapPositionPercentage);
+        
+        // wait until ZoomAndPanController is initialized before registering control for Pan and Zoom events
+        while (ZoomAndPanController.Instance == null)
+        {
+            yield return null;
+        }
+            
+        ZoomAndPanController.Instance.RegisterControlForPanAndZooming(waypointModel.Marker);
     }
     
     
@@ -284,25 +322,11 @@ public class WaypointController: MonoBehaviour
             waypointColor: _waypointToAddColor
         );
 
-        var control = new MapMarkerControl(
-            name: _waypointName.text,
-            latitude: geographicCoordinates.latitude,
-            longitude: geographicCoordinates.longitude,
-            SceneController.Instance.IsMarkerNamesVisible,
-            SceneController.Instance.IsGeoCoordinatesVisible, MapMarkerControl.MarkerType.Waypoint);
-        
-        AddWaypointColor(control, _waypointToAddColor);
-        ZoomAndPanController.Instance.RegisterControlForPanAndZooming(control);
-        control.StopMouseEventsToGameInputPropagation();
-        PositionMarkerOnTheMap(control, _waypointToAddPercentPosition);
-        
-        _waypointCanvas.Add(control);
-        waypointModel.Marker = control;
+        StartCoroutine(CreateMarkerControl(waypointModel));
+
+        _waypointCanvas.Add(waypointModel.Marker);
         SceneController.Instance.Waypoints.Add(waypointModel);
-        
-        control.RegisterCallback<PointerDownEvent>(OnMarkerPointerDownEvent);
-        control.RegisterCallback<PointerUpEvent>(evt => OnMarkerPointerUpEvent(evt, waypointModel));
-        
+
         HideContextCanvas();
         
         _mainGuiController.ShowNotification(LocalizationStrings.NOTIFICATIONS[Notification.WaypointAdded]);

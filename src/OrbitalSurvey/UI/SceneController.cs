@@ -31,6 +31,7 @@ public class SceneController
     public bool IsGeoCoordinatesVisible;
     
     public List<WaypointModel> Waypoints { get; set; } = new();
+    public bool WaypointInitialized { get; set; } 
     
     private bool _showMainGui;
     public bool ShowMainGui
