@@ -10,6 +10,8 @@ namespace OrbitalSurvey.UI.Controls
         public const string UssClassName = "map-marker";
         public const string UssClassName_Name = UssClassName + "__name";
         
+        public const string UssClassName_VesselMarkerContainer = UssClassName + "__vessel-marker-container";
+        
         public const string UssClassName_VesselMarker = UssClassName + "__vessel-marker";
         public const string UssClassName_MarkerGoodTint = UssClassName_VesselMarker + "--good";
         public const string UssClassName_MarkerWarningTint = UssClassName_VesselMarker + "--warning";
@@ -29,6 +31,7 @@ namespace OrbitalSurvey.UI.Controls
         public static string UssClassName_Longitude = UssClassName + "__longitude";
         
         private Label _nameLabel;
+        private VisualElement _markerElementContainer;
         private VisualElement _markerElement;
         private Label _latitudeLabel;
         private Label _longitudeLabel;
@@ -95,12 +98,20 @@ namespace OrbitalSurvey.UI.Controls
             _nameLabel.AddToClassList(UssClassName_Name);
             _nameLabel.pickingMode = PickingMode.Ignore;
             hierarchy.Add(_nameLabel);
+
+            _markerElementContainer = new VisualElement()
+            {
+                name = "map-marker_marker-container"
+            };
+            _markerElementContainer.AddToClassList(UssClassName_VesselMarkerContainer);
             
             _markerElement = new VisualElement()
             {
                 name = "map-marker_marker"
             };
-            hierarchy.Add(_markerElement);
+            _markerElement.pickingMode = PickingMode.Ignore;
+            _markerElementContainer.Add(_markerElement);
+            hierarchy.Add(_markerElementContainer);
             
             _latitudeLabel = new Label()
             {
@@ -119,14 +130,14 @@ namespace OrbitalSurvey.UI.Controls
             hierarchy.Add(_longitudeLabel);
 
             // Show/hide name and geo coordinates on hovering
-            _markerElement.RegisterCallback<PointerEnterEvent>(_ =>
+            _markerElementContainer.RegisterCallback<PointerEnterEvent>(_ =>
             {
                 _nameVisibilityState = _nameLabel.visible;
                 _geoCoordinatesVisibilityState = _latitudeLabel.visible;
                 SetNameVisibility(true);
                 SetGeoCoordinatesVisibility(true);
             });
-            _markerElement.RegisterCallback<PointerLeaveEvent>(_ =>
+            _markerElementContainer.RegisterCallback<PointerLeaveEvent>(_ =>
             {
                 SetNameVisibility(_nameVisibilityState);
                 SetGeoCoordinatesVisibility(_geoCoordinatesVisibilityState);
@@ -172,7 +183,7 @@ namespace OrbitalSurvey.UI.Controls
             _markerElement.RemoveFromClassList(UssClassName_VesselMarker);
             _markerElement.RemoveFromClassList(UssClassName_WaypointMarker);
             _markerElement.AddToClassList(UssClassName_MouseOverMarker);
-            _markerElement.pickingMode = PickingMode.Ignore;
+            _markerElementContainer.pickingMode = PickingMode.Ignore;
         }
 
         // Vessel classes

@@ -417,6 +417,14 @@
     text-shadow: -10px 10px 0 rgb(0, 0, 0);
     -unity-font-definition: var(--font-bold);
     color: rgb(255, 255, 255);
+    padding-bottom: 0;
+}
+
+.map-marker__vessel-marker-container {
+    width: 25%;
+    height: 25%;
+    align-items: center;
+    justify-content: center;
 }
 
 .map-marker__vessel-marker {
@@ -487,6 +495,7 @@
     text-shadow: -10px 10px 0 rgb(0, 0, 0);
     -unity-font-definition: var(--font-bold);
     color: rgb(255, 255, 255);
+    padding-top: 0;
 }
 
 .map-marker__longitude {
