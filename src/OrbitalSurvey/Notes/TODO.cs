@@ -1,16 +1,6 @@
 ﻿/*
  * 
  * TODO:
- * - automatically select Body dropdown and MapType dropdown on opening the map from taskbar - requested by rogerawong
- *
- * TODO NEAR-TERM:
- * - altimetry Map + legend
- * - LAT/LON grid toggle - requested by Schneider21
- * 
- * 
- * TODO LONG-TERM: 
- * - next/previous orbit
- * - maybe a setting that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  * - Discoverables Map
  *      - trigger mission (what will trigger the mission?)
  *      - both visual and region mapping must be 100%
@@ -18,13 +8,24 @@
  *      - false positives
  *      - wide area not centered at the discoverable
  *      - high EC consumption
- *      - far in the tech tree
+ *      - far in the tech tree?
+ *      - register discovered parts of the possible area by looking at a certain radius from the vehicle; only if altitude above ground is less than some number
+ * - Fix bug: experiment interrupted (not enough resources) log spam during high - reported by Argon 
+ *
+ * TODO NEAR-TERM:
+ * - altimetry Map + legend
+ * - LAT/LON grid toggle - requested by Schneider21
+ * 
+ * 
+ * TODO LONG-TERM: 
+ * - next/previous orbit 
  * - support for custom planet packs (packs will register their maps)
  * - see if Slope map can be generated
  * - scanning triangle in Map scene when active
  * - revamp map fetching from the game
  * - scanning parts
  * - register planted flags?
+ * - hidden map shown as a pixelated map
  *
  * BUG FIXES OR IMPROVEMENTS NEEDED:
  * - see if I can reproduce scanning data disappearing when returning to KSC
@@ -88,6 +89,8 @@
  * - revamp of min/ideal/max altitudes to be more dynamic
  * - adding waypoints by clicking on the map, edit, remove
  * - coordinates and region names on mouseover
+ * - automatically select Body dropdown and MapType dropdown on opening the map from taskbar - requested by rogerawong
+ * - maybe a setting that continuously keeps the body pixelated/blank/blurry until it's scanned (requested by 123man)
  *
  * Changelog:
  * n/a
