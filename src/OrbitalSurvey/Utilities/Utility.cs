@@ -47,4 +47,18 @@ public static class Utility
     public static List<CelestialBodyComponent> GetAllCelestialBodies() => GameManager.Instance.Game?.UniverseModel?.GetAllCelestialBodies();
 
     public static List<string> GetAllCelestialBodyNames() => GetAllCelestialBodies().Select(body => body.Name).ToList();
+
+    public static List<VesselComponent> GetAllVessels() => GameManager.Instance.Game?.UniverseModel?.GetAllVessels();
+
+    public static List<VesselComponent> GetAllVesselsWithGuids(List<string> vesselGuidsToSearch)
+    {
+        var allVessels = GetAllVessels();
+
+        if (!allVessels.Any())
+        {
+            return new List<VesselComponent>();
+        }
+
+        return allVessels.FindAll(v => vesselGuidsToSearch.Contains(v.Guid));
+    }
 }

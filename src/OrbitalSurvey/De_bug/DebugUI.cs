@@ -42,7 +42,7 @@ namespace OrbitalSurvey.Debug
         private bool _showResourceConsumption = false;
         private bool _showPamOverridesSection = false;
         private bool _showScienceRegionsSection = false;
-        private bool _showWaypointSection = true;
+        private bool _showWaypointSection = false;
         
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
@@ -832,6 +832,11 @@ namespace OrbitalSurvey.Debug
                 if (GUILayout.Button("DownloadTexture"))
                 {
                     DebugManager.Instance.DownloadScienceRegionsTexture();
+                }
+                
+                if (GUILayout.Button("TriggerExperiment"))
+                {
+                    DebugManager.Instance.TriggerExperiment(_body);
                 }
                 
                 GUILayout.Label("--");

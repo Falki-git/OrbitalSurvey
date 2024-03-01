@@ -1,4 +1,7 @@
 ﻿using BepInEx.Logging;
+using KSP.Game;
+using KSP.Game.Science;
+using KSP.Messages;
 using KSP.Modules;
 using KSP.Sim.Definitions;
 using KSP.Sim.impl;
@@ -157,12 +160,37 @@ public class Module_OrbitalSurvey : PartBehaviourModule
         ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
         PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
 
-        var experiment =
-            module.dataScienceExperiment.ExperimentStandings.Find(
-                e => e.ExperimentID.StartsWith("orbital_survey_visual_mapping"));
+        string body = ComponentModule.Part.PartOwner.SimulationObject.Vessel.mainBody.Name;
         
-        experiment.CurrentExperimentState = ExperimentState.RUNNING;
-        experiment.ConditionMet = true;
+        var experimentDefinition =
+            GameManager.Instance.Game.ScienceManager.ScienceExperimentsDataStore.GetExperimentDefinition("orbital_survey_visual_mapping_high_25");
+
+        var celestialScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider
+            ._cbToScienceRegions[body].SituationData.CelestialBodyScalar;
+        var highOrbitScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider.
+            _cbToScienceRegions[body].SituationData.HighOrbitScalar;
+        
+        ResearchReport researchReport = new ResearchReport(
+            experimentID: experimentDefinition.ExperimentID,
+            displayName: experimentDefinition.DataReportDisplayName,
+            module._currentLocation,
+            ScienceReportType.DataType,
+            initialScienceValue: experimentDefinition.DataValue * celestialScalar * highOrbitScalar,
+            flavorText: experimentDefinition.DataFlavorDescriptions[0].LocalizationTag
+            );
+        
+        module._storageComponent.StoreResearchReport(researchReport);
+        
+        ResearchReportAcquiredMessage message;
+        if (GameManager.Instance.Game.Messages.TryCreateMessage(out message))
+        {
+            GameManager.Instance.Game.Messages.Publish(message);
+        }
+
+        NotificationUtility.Instance.NotifyExperimentComplete(
+            module.Part.PartOwner.SimulationObject.Orbit.referenceBody.Name,
+            ExperimentLevel.Quarter
+        );
     }
 
     private void OnCreateScienceReport()

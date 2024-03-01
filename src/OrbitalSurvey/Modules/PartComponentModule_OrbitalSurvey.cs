@@ -22,7 +22,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
     
     private FlowRequestResolutionState _returnedRequestResolutionState;
     private bool _hasOutstandingRequest;
-    private PartComponentModule_ScienceExperiment _moduleScienceExperiment;
+    public PartComponentModule_ScienceExperiment ModuleScienceExperiment;
     public Data_Deployable DataDeployable;
 
     private bool _isDebugCustomFovEnabled;
@@ -46,7 +46,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         
         // get the ScienceExperiment module; to be used for triggering experiments
         Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
-        _moduleScienceExperiment = m as PartComponentModule_ScienceExperiment;
+        ModuleScienceExperiment = m as PartComponentModule_ScienceExperiment;
         
         // try to get Data_Deployable is the part has a Deployable module; scanning is disabled if part is not deployed
         Part.TryGetModule(typeof(PartComponentModule_Deployable), out var m2);
@@ -134,10 +134,10 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             var longitude = vessel.Longitude;
             var latitude = vessel.Latitude;
             
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats, vessel.Guid);
             
             // check is experiment needs to trigger and if so, trigger it
-            Core.Instance.CheckIfExperimentNeedsToTrigger(_moduleScienceExperiment, body, mapType);
+            Core.Instance.CheckIfExperimentNeedsToTrigger(body, mapType);
             
             ResetLastScanTime();
 
@@ -164,7 +164,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
             OrbitUtility.GetOrbitalParametersAtUT(vessel, LastScanTime + retroactiveTimeBetweenScans,
                 out latitude, out longitude, out altitude);
         
-            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningStats, true);
+            Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, scanningStats, vessel.Guid, true);
             LastScanTime += retroactiveTimeBetweenScans;
         }
     }
@@ -179,7 +179,7 @@ public class PartComponentModule_OrbitalSurvey : PartComponentModule
         double latitude, longitude, altitude;
         OrbitUtility.GetOrbitalParametersAtUT(vessel, ut, out latitude, out longitude, out altitude);
         
-        Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats);
+        Core.Instance.DoScan(body, mapType, longitude, latitude, altitude, _dataOrbitalSurvey.ScanningStats, vessel.Guid);
         
         Core.Instance.CelestialDataDictionary[body].Maps[mapType].UpdateCurrentMapAsPerDiscoveredPixels();
     }

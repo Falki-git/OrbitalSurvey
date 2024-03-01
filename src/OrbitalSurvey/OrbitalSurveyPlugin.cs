@@ -13,6 +13,7 @@ using OrbitalSurvey.UI;
 using OrbitalSurvey.Utilities;
 using UitkForKsp2.API;
 using Patches = OrbitalSurvey.Utilities.Patches;
+using KSP.Game;
 
 namespace OrbitalSurvey;
 

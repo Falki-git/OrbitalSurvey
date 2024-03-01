@@ -35,7 +35,7 @@ public class Patches
         var experiment = __instance.dataScienceExperiment.ExperimentStandings.Find(
             e => e.ExperimentID.StartsWith("orbital_survey"));
 
-        if (experiment != null)
+        if (experiment != null || __instance._pamItems == null)
         {
             return false;
         }

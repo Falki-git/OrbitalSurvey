@@ -11,12 +11,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        },
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //},
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -35,12 +35,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -59,12 +59,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -83,12 +83,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 6;
     TransmissionSize: 100;
@@ -110,12 +110,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        },
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //},
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -134,12 +134,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -158,12 +158,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 3;
     TransmissionSize: 100;
@@ -182,12 +182,12 @@
         }
     ];    
     ValidLocations: [
-        {
-            BodyName: "",
-            ScienceSituation: "HighOrbit",
-            RequiresRegion: false,
-            ScienceRegion: ""
-        }
+        //{
+        //    BodyName: "",
+        //    ScienceSituation: "HighOrbit",
+        //    RequiresRegion: false,
+        //    ScienceRegion: ""
+        //}
     ];
     DataValue: 6;
     TransmissionSize: 100;

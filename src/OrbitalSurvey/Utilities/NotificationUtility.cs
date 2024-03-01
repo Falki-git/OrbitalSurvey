@@ -10,7 +10,7 @@ public class NotificationUtility
 
     private readonly NotificationManager _manager = GameManager.Instance.Game.Notifications; 
 
-    public void NotifyExperimentComplete(string vessel, string body, ExperimentLevel level)
+    public void NotifyExperimentComplete(string body, ExperimentLevel level)
     {
         string title;
         string firstLine;
@@ -33,7 +33,7 @@ public class NotificationUtility
             TimeStamp = Utility.UT,
             AlertTitle = new NotificationLineItemData()
             {
-                ObjectParams = new object[]{ vessel, body },
+                ObjectParams = new object[]{ body },
                 LocKey = title
             },
             FirstLine = new NotificationLineItemData()
