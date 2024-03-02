@@ -16,7 +16,7 @@ public class CelestialCategoryManager
     public Dictionary<string, LocalizedString> CategoryLocalization { get; private set; }
 
     public bool IsCelestialBodyCategoryInitialized;
-    private Dictionary<string, string> celestialBodyCategory;
+    internal Dictionary<string, string> CelestialBodyCategory;
 
     private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.CelestialCategoryManager");
 
@@ -105,7 +105,7 @@ public class CelestialCategoryManager
     public void InitializeCelestialBodyCategories()
     {
         var celestialBodies = Utility.GetAllCelestialBodies();
-        celestialBodyCategory = new();
+        CelestialBodyCategory = new();
 
         foreach (var body in celestialBodies)
         {
@@ -144,7 +144,11 @@ public class CelestialCategoryManager
                 }
             }
             
-            celestialBodyCategory.Add(body.Name, bodyCategory);
+            // special case for Kerbol - we'll define it as Small so it doesn't get the Giant category
+            // which would clutter the UI unnecessarily since there are no other Giant bodies 
+            if (body.IsStar) bodyCategory = categoryDefinitions[0].Key;
+            
+            CelestialBodyCategory.Add(body.Name, bodyCategory);
             _LOGGER.LogInfo($"Body '{body.Name}' is assigned to category '{bodyCategory}'.");
         }
 
@@ -171,7 +175,7 @@ public class CelestialCategoryManager
     
     public (string category, ScanningAltitudes altitudes) GetScanningStats(string body, MapType scanningMode)
     {
-        var category = celestialBodyCategory[body];
+        var category = CelestialBodyCategory[body];
         return (category, AltitudesDefinition[category][scanningMode]);
     }
     
@@ -190,7 +194,11 @@ public class CelestialCategoryManager
             {
                 if (mapType == mapTypeTarget)
                 {
-                    toReturn.Add((category, altitudes));
+                    // only return categories that have at least one celestial body attached to it
+                    if (CelestialBodyCategory.ContainsValue(category))
+                    {
+                        toReturn.Add((category, altitudes));    
+                    }
                 }
             }
         }
