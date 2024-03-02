@@ -10,14 +10,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/25"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //},
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -34,14 +27,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/50"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -58,14 +44,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/75"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -82,14 +61,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/VisualMapping/Default/100"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 6;
     TransmissionSize: 100;
 }
@@ -109,14 +81,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/25"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //},
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -133,14 +98,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/50"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -157,14 +115,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 3;
     TransmissionSize: 100;
 }
@@ -181,14 +132,7 @@
             LocalizationTag: "OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100"
         }
     ];    
-    ValidLocations: [
-        //{
-        //    BodyName: "",
-        //    ScienceSituation: "HighOrbit",
-        //    RequiresRegion: false,
-        //    ScienceRegion: ""
-        //}
-    ];
+    ValidLocations: [];
     DataValue: 6;
     TransmissionSize: 100;
 }
