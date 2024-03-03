@@ -1,4 +1,6 @@
-﻿namespace OrbitalSurvey.Utilities;
+﻿using KSP.Sim.impl;
+
+namespace OrbitalSurvey.Utilities;
 
 public static class Extensions
 {
@@ -20,5 +22,17 @@ public static class Extensions
         }
 
         return new string(charList.ToArray());
+    }
+    
+    public static T GetModule<T>(this VesselComponent vessel) where T : PartComponentModule
+    {
+        var modules = vessel.SimulationObject.PartOwner.GetPartModules<T>();
+
+        if (modules != null && modules.Count >= 1)
+        {
+            return modules.First();
+        }
+        
+        return null;
     }
 }

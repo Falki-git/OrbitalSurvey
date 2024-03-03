@@ -155,7 +155,13 @@ public class Data_OrbitalSurvey : ModuleData
     private void SetBodyCategoryOabDropdownItems()
     {
         var bodyCategoryDropdown = new DropdownItemList();
-        foreach (var (key, value) in CelestialCategoryManager.Instance.CategoryLocalization)
+        
+        // grab body categories that exist in the game
+        var existingCategories =
+            CelestialCategoryManager.Instance.CategoryLocalization.Where(kvp =>
+                CelestialCategoryManager.Instance.CelestialBodyCategory.ContainsKey(kvp.Value));
+        
+        foreach (var (key, value) in existingCategories)
         {
             bodyCategoryDropdown.Add(key, new DropdownItem() { key = key, text = value });    
         }
@@ -166,7 +172,6 @@ public class Data_OrbitalSurvey : ModuleData
         BodyCategoryOabDropdown.SetValue(initialValue.Key);
         SetOabScanningStats(initialValue.Key);
     }
-    
 
     /// <summary>
     /// Add OAB module description on all eligible parts

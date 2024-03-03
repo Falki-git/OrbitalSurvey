@@ -96,7 +96,8 @@ public class Core// : MonoBehaviour
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 
-    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning = false)
+    public void DoScan(string body, MapType mapType, double longitude, double latitude, double altitude,
+        ScanningStats scanningStats, string vesselGuid, bool isRetroActiveScanning = false)
     {
         // sometimes, load data can be done before the textures are initialized
         if (!MapsInitialized || !CelestialDataDictionary.ContainsKey(body))
@@ -112,7 +113,7 @@ public class Core// : MonoBehaviour
         
         var celestialData = CelestialDataDictionary[body];
         
-        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningStats, isRetroActiveScanning);
+        celestialData.DoScan(mapType, longitude, latitude, altitude, scanningStats, isRetroActiveScanning, vesselGuid);
     }
 
     public void ClearMap(string body, MapType mapType)
@@ -152,20 +153,16 @@ public class Core// : MonoBehaviour
         OnMapHasDataValueChanged?.Invoke(GetBodiesContainingData());
     }
 
-    public void CheckIfExperimentNeedsToTrigger(PartComponentModule_ScienceExperiment scienceModule, string body, MapType mapType)
+    public void CheckIfExperimentNeedsToTrigger(string body, MapType mapType)
     {
         var celestialData = CelestialDataDictionary[body];
         var experimentLevel = celestialData.CheckIfExperimentNeedsToTrigger(mapType);
 
         if (experimentLevel != ExperimentLevel.None)
         {
-            ScienceManager.Instance.TriggerExperiment(scienceModule, mapType, experimentLevel);
+            ScienceManager.Instance.TriggerExperiment(body, mapType, experimentLevel);
             
-            NotificationUtility.Instance.NotifyExperimentComplete(
-                scienceModule.Part.PartOwner.SimulationObject.Vessel.Name,
-                scienceModule.Part.PartOwner.SimulationObject.Orbit.referenceBody.Name,
-                experimentLevel
-            );
+            NotificationUtility.Instance.NotifyExperimentComplete(body, experimentLevel);
         }
     }
 }

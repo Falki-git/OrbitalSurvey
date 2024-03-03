@@ -29,6 +29,7 @@ public class MapData
     public float PercentDiscovered => (float)DiscoveredPixelsCount / TotalPixelCount;
 
     public ExperimentLevel ExperimentLevel;
+    public List<string> VesselGuidsParticipatingInCurrentExperimentLevel = new();
 
     public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
     public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
@@ -48,7 +49,7 @@ public class MapData
     
     private bool _hasData;
 
-    public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning)
+    public void MarkAsScanned(int x, int y, int scanningRadius, bool isRetroActiveScanning, string vesselGuid)
     {
         // set the radius to at least 1 pixel
         scanningRadius = scanningRadius == 0 ? 1 : scanningRadius;
@@ -121,6 +122,7 @@ public class MapData
         {
             DiscoveredPixelsCount += newlyDiscoveredPixelCount;
             HasData = true;
+            VesselGuidsParticipatingInCurrentExperimentLevel.TryAddUnique(vesselGuid);
             OnDiscoveredPixelCountChanged?.Invoke(PercentDiscovered);
         }
 

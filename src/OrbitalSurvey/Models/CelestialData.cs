@@ -40,7 +40,8 @@ public class CelestialData
     public double Radius => Body.radius;
     public double AtmosphereDepth => Body.atmosphereDepth;
     
-    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats, bool isRetroActiveScanning)
+    public void DoScan(MapType mapType, double longitude, double latitude, double altitude, ScanningStats scanningStats,
+        bool isRetroActiveScanning, string vesselGuid)
     {
         var map = Maps[mapType];
 
@@ -58,7 +59,7 @@ public class CelestialData
         var (textureX, textureY) =
             ScanUtility.GetTextureCoordinatesFromGeographicCoordinates(latitude, longitude);
         
-        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture, isRetroActiveScanning);
+        map.MarkAsScanned(textureX, textureY, (int)scanningRadiusForTexture, isRetroActiveScanning, vesselGuid);
     }
 
     public void ClearMap(MapType mapType)

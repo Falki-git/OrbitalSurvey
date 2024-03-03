@@ -43,7 +43,7 @@
     Small: 150000,
     Medium: 350000,
     Large: 10000000,
-    // Giant: 100000000, // not used
+    Giant: 100000000, // not used in stock game
     // Colossal: 1000000000, // not used
     // Supermassive: 10000000000 // not used
 };
@@ -52,6 +52,7 @@
     Small: "PartModules/OrbitalSurvey/BodyCategory/Small",
     Medium: "PartModules/OrbitalSurvey/BodyCategory/Medium",
     Large: "PartModules/OrbitalSurvey/BodyCategory/Large",
+    Giant: "PartModules/OrbitalSurvey/BodyCategory/Giant",
 };
 
 @create-config "orbital-survey-definitions", "celestial-category__scanning-altitudes": {
@@ -91,18 +92,18 @@
             MaxAltitude : 2000000
         }
     },    
-    //Giant: {
-    //    Visual: {
-    //        MinAltitude: 0,
-    //        IdealAltitude: 0,
-    //        MaxAltitude: 0
-    //    },
-    //    Biome: {
-    //        MinAltitude: 0,
-    //        IdealAltitude: 0,
-    //        MaxAltitude : 0
-    //    }
-    //},
+    Giant: {
+        Visual: {
+            MinAltitude: 5000000,
+            IdealAltitude: 8000000,
+            MaxAltitude: 11000000
+        },
+        Biome: {
+            MinAltitude: 10000000,
+            IdealAltitude: 15000000,
+            MaxAltitude : 20000000
+        }
+    },
     //Colossal: {
     //    Visual: {
     //        MinAltitude: 0,
