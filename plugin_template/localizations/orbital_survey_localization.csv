@@ -12,7 +12,7 @@ PartModules/OrbitalSurvey/BodyCategory/Preview,Text,,Body Category (preview only
 PartModules/OrbitalSurvey/BodyCategory/Small,Text,,Small,Klein,Petit,Piccolo,,,,,,小
 PartModules/OrbitalSurvey/BodyCategory/Medium,Text,,Medium,Mittel,Moyen,Medio,,,,,,中
 PartModules/OrbitalSurvey/BodyCategory/Large,Text,,Large,Groß,Grand,Grande,,,,,,大
-PartModules/OrbitalSurvey/BodyCategory/Giant,Text,,Giant,<german>,<french>,<italian>,,,,,,巨
+PartModules/OrbitalSurvey/BodyCategory/Giant,Text,,Giant,,,,,,,,,巨
 PartModules/OrbitalSurvey/ScanningFOV,Text,,Field Of View,Erfassungsbereich,Champ de vue,Campo Visivo,,,,,,视野
 PartModules/OrbitalSurvey/ScanningFOVDebug,Text,,Field Of View (debug),Erfassungsbereich (debug),Champ de vue (debug),Campo Visivo (debug),,,,,,视野(debug)
 PartModules/OrbitalSurvey/MinAltitude,Text,,Min Altitude,Min. Höhe,Altitude min.,Altitudine Minima,,,,,,最低高度
@@ -81,7 +81,7 @@ OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/75,Text,,You scanned 3
 OrbitalSurvey/Experiments/DataReportDisplayName/BiomeMapping/100,Text,,Region Mapping 100%,Region Erfassung 100%,Cartographie des régions 100%,Mappatura delle regioni 100%,,,,,,区域测绘100%
 OrbitalSurvey/Experiments/DataFlavor/BiomeMapping/Default/100,Text,,Body fully scanned!,Himmelskörper vollständig gescannt!,L'objet céleste est entièrement scanné!,Corpo scansionato completamente!,,,,,,天体完全扫描！
 
-OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Orbital mapping of ""{0}"" has finished!,Raumfahrzeug ""{0}"" auf ""{1}"" hat seine Orbitalvermessung abgeschlossen!,Le vaisseau ""{0}"" sur ""{1}"" a terminé sa cartographie orbitale!,"Il veicolo ""{0}"" su ""{1}"" ha completato la sua mappatura orbitale!",,,,,,已完成对""{0}""的轨道测绘！
+OrbitalSurvey/Experiments/Notification/Complete/Title,Text,,Orbital mapping of ""{0}"" has finished!,,,,,,,,,已完成对""{0}""的轨道测绘！
 OrbitalSurvey/Experiments/Notification/Complete/FirstLine,Text,,Transmit the mapping report to collect science,"Übertragen Sie den Vermessungsbericht, um Wissenschaftspunkte zu sammeln",Transmettre le rapport de cartographie pour collecter des points scientifiques,Trasmetti il rapporto di mappatura per raccogliere dati scientifici,,,,,,传输报告并获得科研点数
-OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Orbital mapping of ""{0}"" has reached a new milestone!,Raumfahrzeug ""{0}"" auf ""{1}"" hat einen Meilenstein in seiner Orbitalvermessung erreicht!,Le vaisseau ""{0}"" sur ""{1}"" a atteint une étape importante dans sa cartographie orbitale!,"Il veicolo ""{0}"" su ""{1}"" ha raggiunto un traguardo nella sua mappatura orbitale!",,,,,,对""{0}""的轨道测绘已达到一个里程碑！
+OrbitalSurvey/Experiments/Notification/Milestone/Title,Text,,Orbital mapping of ""{0}"" has reached a new milestone!,,,,,,,,,对""{0}""的轨道测绘已达到一个里程碑！
 OrbitalSurvey/Experiments/Notification/Milestone/FirstLine,Text,,Transmit the mapping report to collect science,"Übertragen Sie den Vermessungsbericht, um Wissenschaftspunkte zu sammeln",Transmettre le rapport de cartographie pour collecter des points scientifiques,Trasmetti il rapporto di mappatura per raccogliere dati scientifici,,,,,,传输报告并获得科研点数
