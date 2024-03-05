@@ -1,0 +1,10 @@
+Key,Type,Desc,English,German,French,Italian,Chinese (Traditional)
+
+OrbitalSurvey/Granter/Name,Text,,Falcon Industries Inc.
+OrbitalSurvey/Granter/Description,Text,,Startup that quickly rose to fame by producing the first-ever planetary mapping satellite. Before Falcon Industries, it was believed that all planets were simple gray featureless blobs in the night sky.
+
+OrbitalSurvey/Missions/01/Name,Text,,Orbital Survey Mission 1 - Name
+OrbitalSurvey/Missions/01/Description,Text,,Orbital Survey Mission 1 - Description
+OrbitalSurvey/Missions/01/Objective,Text,,Orbital Survey Mission 1 - Objective
+OrbitalSurvey/Missions/01/Brief1,Text,,Orbital Survey Mission 1 - Brief1
+OrbitalSurvey/Missions/01/Debrief1,Text,,Orbital Survey Mission 1 - Debrief1
