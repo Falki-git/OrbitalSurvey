@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using BepInEx.Logging;
 using KSP.Game;
+using KSP.Game.Missions;
 using KSP.Game.Science;
 using KSP.Messages;
 using KSP.Rendering.Planets;
@@ -676,6 +677,46 @@ namespace OrbitalSurvey.Debug
             }
 
             NotificationUtility.Instance.NotifyExperimentComplete(body, ExperimentLevel.Quarter);
+        }
+
+        public void ActivateMission(string missionId = "orbital_survey_01")
+        {
+            var activateMissionAction = new ActivateMissionAction();
+            activateMissionAction.TargetMissionID = missionId;
+            activateMissionAction.Activate();
+        }
+        
+        public void CreateMissionGranter()
+        {
+            var granters = GameManager.Instance.Game.KSP2MissionManager.MissionGranterManager.MissionGranters;
+
+            var granter = new Assets.Scripts.Missions.Definitions.MissionGranter();
+
+            granter.NameKey = "Falki";
+            granter.LogoKey = "Assets/Images/Icons/icon.png"; //"flag_MFG_1Proton.png";
+            granter.LocalizationNameKey = "OrbitalSurvey/Granter/Name";
+            granter.LocalizationDescriptionKey = "OrbitalSurvey/Granter/Description";
+            granters.Add(granter);
+        }
+
+        public void OnMissionTriumphDismissed(MessageCenterMessage obj)
+        {
+            var message = obj as OnMissionTriumphDismissed;
+        }
+
+        public void LoadAsset(string path)
+        {
+            Texture2D x = null;
+            
+            GameManager.Instance.Assets.Load<Texture2D>(
+                path,
+                tex =>
+                {
+                    DebugUI.Instance.Asset = tex;
+                }
+            );
+
+            int i = 0;
         }
     }
 }

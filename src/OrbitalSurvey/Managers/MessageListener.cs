@@ -39,6 +39,7 @@ public class MessageListener
         _LOGGER.LogInfo("Subscribed to GameStateChangedMessage.");
         MessageCenter.PersistentSubscribe<MapCelestialBodyAddedMessage>(OnMapCelestialBodyAddedMessage);
         _LOGGER.LogInfo("Subscribed to MapCelestialBodyAddedMessage.");
+        MessageCenter.PersistentSubscribe<OnMissionTriumphDismissed>(DebugManager.Instance.OnMissionTriumphDismissed);
     }
 
     private void OnGameLoadFinishedMessage(MessageCenterMessage message)

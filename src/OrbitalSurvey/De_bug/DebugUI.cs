@@ -43,6 +43,7 @@ namespace OrbitalSurvey.Debug
         private bool _showPamOverridesSection = false;
         private bool _showScienceRegionsSection = false;
         private bool _showWaypointSection = false;
+        private bool _showMissionSection = true;
         
         private bool _showBiomeMask;
         private Texture2D _biomeTexture;
@@ -91,6 +92,10 @@ namespace OrbitalSurvey.Debug
         private string _waypointAltitudeFromRadius = "0";
         private int _waypointIndex;
         private string _waypointNameExisting = "n/a";
+        
+        // missions
+        private string _assetName = "Assets/Images/Icons/icon.png";
+        public Texture2D Asset;
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -951,6 +956,47 @@ namespace OrbitalSurvey.Debug
                             DebugManager.Instance.ShowHideWaypoint(_waypointIndex, false);
                         }    
                     }
+                }
+                
+                GUILayout.Label("--");
+            }
+            
+            #endregion
+            
+            #region MissionSection
+            
+            if (GUILayout.Button(_showMissionSection ? "Hide Mission Section" : "Show Mission Section", _showMissionSection ? _toggledSectionButton : _normalSectionButton))
+                _showMissionSection = !_showMissionSection;
+
+            if (_showMissionSection)
+            {
+                GUILayout.Label("--");
+                
+                if (GUILayout.Button("Activate Mission"))
+                {
+                    DebugManager.Instance.ActivateMission();
+                }
+                
+                if (GUILayout.Button("Create Mission Granter"))
+                {
+                    DebugManager.Instance.CreateMissionGranter();
+                }
+                
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("Asset:", _labelStyle);
+                    _assetName = GUILayout.TextField(_assetName);
+                    
+                    if (GUILayout.Button("Load Asset"))
+                    {
+                        DebugManager.Instance.LoadAsset(_assetName);
+                    }
+                }
+                GUILayout.EndHorizontal();
+                
+                if (Asset != null)
+                {
+                    GUILayout.Label(Asset, GUILayout.Width(Asset.width), GUILayout.Height(Asset.height));    
                 }
                 
                 GUILayout.Label("--");
