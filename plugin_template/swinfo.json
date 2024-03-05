@@ -1,6 +1,6 @@
 {
   "spec": "2.0",
-  "mod_id": "falki.orbital_survey",
+  "mod_id": "OrbitalSurvey",
   "author": "Falki",
   "name": "Orbital Survey",
   "description": "Scan celestial bodies from orbit.",
