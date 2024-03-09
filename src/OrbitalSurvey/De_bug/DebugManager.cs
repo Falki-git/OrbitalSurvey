@@ -6,6 +6,7 @@ using KSP.Game.Missions.Definitions;
 using KSP.Game.Missions.State;
 using KSP.Game.Science;
 using KSP.Messages;
+using KSP.Messages.PropertyWatchers;
 using KSP.Rendering.Planets;
 using KSP.Sim;
 using KSP.Sim.Definitions;
@@ -764,6 +765,35 @@ namespace OrbitalSurvey.Debug
             var mission = missions.Find(m => m.ID == missionId);
             
             manager.SetMissionState(missionId, MissionState.Complete, null);
+        }
+
+        public void CompleteSpecificMissionStage(string missionId, int stageIndex)
+        {
+            var manager = GameManager.Instance.Game.KSP2MissionManager;
+            var missions = manager.ActiveMissions[0].MissionDatas;
+            var mission = missions.Find(m => m.ID == missionId);
+            
+            MissionStageCompleted missionStageCompleted;
+            if (mission.Game != null && mission.Game.Messages.TryCreateMessage<MissionStageCompleted>(out missionStageCompleted))
+            {
+                missionStageCompleted.MissionData = mission;
+                missionStageCompleted.PlayerGUID = mission.Game.LocalPlayer.PlayerGuidString;
+                missionStageCompleted.AgencyID = mission.Game.SessionManager.GetMyAgencyID(true);
+                missionStageCompleted.StageCompleted = stageIndex;
+                mission.Game.Messages.Publish<MissionStageCompleted>(missionStageCompleted);
+            }
+            
+            int count = mission.missionStages.Count;
+            mission.missionStages[stageIndex].completed = true;
+            OnMissionStageCompleted onMissionStageCompleted;
+            if (mission.Game.Messages.TryCreateMessage<OnMissionStageCompleted>(out onMissionStageCompleted))
+            {
+                onMissionStageCompleted.MissionStage = mission.missionStages[stageIndex];
+                onMissionStageCompleted.MissionData = mission;
+                mission.Game.Messages.Publish<OnMissionStageCompleted>(onMissionStageCompleted);
+            }
+
+            mission.missionStages[stageIndex].Deactivate();
         }
 
         public void AddNewMission()

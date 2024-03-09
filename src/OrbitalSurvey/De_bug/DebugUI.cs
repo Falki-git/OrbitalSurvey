@@ -1,4 +1,6 @@
 ﻿using BepInEx.Logging;
+using KSP.Game;
+using KSP.Game.Missions.Definitions;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using SpaceWarp.API.Game.Waypoints;
@@ -17,11 +19,14 @@ namespace OrbitalSurvey.Debug
 
         private Rect _debugWindowRect = new Rect(1800/*115*/, 54 /*54*/, 350, 350);
         private GUIStyle _labelStyle;
+        private GUIStyle _labelMissionTableStyle;
         private GUIStyle _labelStyleShort;
+        private GUIStyle _narrowLabel;
         private GUIStyle _normalButton;
         private GUIStyle _normalSectionButton;
         private GUIStyle _toggledSectionButton;
         private GUIStyle _narrowButton;
+        private GUIStyle _normalTextfield;
         private readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_UI");
         private string _myCustomTextureFilename = "allblack.png";
         private string _myCustomTextureName = string.Empty;
@@ -99,8 +104,11 @@ namespace OrbitalSurvey.Debug
         // missions
         private string _assetName = "Assets/Images/Icons/icon.png";
         public Texture2D Asset;
-        private bool _showActiveMissions = true;
+        private bool _showActiveMissions = false;
+        private bool _showMissionDetails = true;
         private string _missionId = "orbital_survey_02";
+        private int _missionIndex;
+        private string _stageToActivate = "0";
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -118,12 +126,15 @@ namespace OrbitalSurvey.Debug
         {
             _labelStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 };
             _labelStyleShort = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 10 };
+            _labelMissionTableStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 100 };
+            _narrowLabel = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 20 };
             _normalButton = new GUIStyle(Skins.ConsoleSkin.button);
             _normalSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
             _normalSectionButton.normal.textColor = new Color(120f/255f, 150f/255f, 255f/255f, 1f);
             _toggledSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
             _toggledSectionButton.normal.textColor = Color.gray;
             _narrowButton = new GUIStyle(Skins.ConsoleSkin.button) { fixedWidth = 20 };
+            _normalTextfield = new GUIStyle(Skins.ConsoleSkin.textField) { fixedWidth = 150 };
         }
 
         public void InitializeControls()
@@ -993,6 +1004,11 @@ namespace OrbitalSurvey.Debug
                 }
                 GUILayout.EndHorizontal();
                 
+                if (GUILayout.Button("Get Discoverable Regions"))
+                {
+                    DebugManager.Instance.GetDiscoverableRegions(_missionBody);
+                }
+                
                 GUILayout.BeginHorizontal();
                 {
                     GUILayout.Label("MissionId:", _labelStyle);
@@ -1026,11 +1042,6 @@ namespace OrbitalSurvey.Debug
                     GUILayout.Label(Asset, GUILayout.Width(Asset.width), GUILayout.Height(Asset.height));    
                 }
                 
-                if (GUILayout.Button("Get Discoverable Regions"))
-                {
-                    DebugManager.Instance.GetDiscoverableRegions(_missionBody);
-                }
-                
                 if (GUILayout.Button(_showActiveMissions ? "Hide Active Missions" : "Show Active Missions", _normalButton))
                     _showActiveMissions = !_showActiveMissions;
 
@@ -1062,6 +1073,103 @@ namespace OrbitalSurvey.Debug
                         }    
                     }
                     
+                }
+                
+                if (GUILayout.Button(_showMissionDetails ? "Hide Mission Details" : "Show Mission Details", _normalButton))
+                    _showMissionDetails = !_showMissionDetails;
+
+                if (_showMissionDetails)
+                {
+                    var missions = GameManager.Instance.Game?.KSP2MissionManager?.ActiveMissions[0]?.MissionDatas;
+                    MissionData mission = null;
+                    if (missions != null && missions.Count > _missionIndex)
+                    {
+                        mission = missions[_missionIndex];
+                    }
+                    
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUILayout.Label("MissionId:", _labelStyle);
+                        if (GUILayout.Button("<", _narrowButton) && _missionIndex > 0)
+                            _missionIndex--;
+                        
+                        GUILayout.Label(_missionIndex.ToString(), _narrowLabel);
+
+                        if (GUILayout.Button(">", _narrowButton) && _missionIndex < missions.Count - 1)
+                            _missionIndex++;
+                        
+                        if (mission != null)
+                        {
+                            GUILayout.Label($"Mission.ID: {mission.ID}");
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+                    
+                    if (mission == null)
+                    {
+                        GUILayout.Label("Mission is null)", _labelStyle);
+                    }
+                    else
+                    {
+                        //GUILayout.Label($"Mission.ID: {mission.ID}");
+                        GUILayout.Label($"Mission.name: {mission.name}");
+                        GUILayout.Label($"Stages count: {mission.missionStages.Count}");
+                        GUILayout.Label($"Current stage: {mission.currentStageIndex}");
+                        
+                        GUILayout.BeginHorizontal();
+                        {
+                            GUILayout.Label("Activate stage:", _labelStyle);
+                            _stageToActivate = GUILayout.TextField(_stageToActivate, _normalTextfield);
+                            if (GUILayout.Button("Activate", _normalButton))
+                            {
+                                mission.DeactivateStage(mission.currentStageIndex);
+                                mission.ActivateStage(int.Parse(_stageToActivate));
+                                DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
+                            }
+                        }
+                        GUILayout.EndHorizontal();
+                        
+                        if (GUILayout.Button("CompleteStage"))
+                        {
+                            DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
+                        }
+
+                        if (mission.missionStages != null && mission.missionStages.Count > 0)
+                        {
+                            GUILayout.BeginHorizontal();
+                            {
+                                GUILayout.Label("Index", _labelMissionTableStyle);
+                                GUILayout.Label("StageID", _labelMissionTableStyle);
+                                GUILayout.Label("active", _labelMissionTableStyle);
+                                GUILayout.Label("completed", _labelMissionTableStyle);
+                            }
+                            GUILayout.EndHorizontal();
+                            
+                            int i = 0;
+                            foreach (var stage in mission.missionStages)
+                            {
+                                
+                                GUILayout.BeginHorizontal();
+                                {
+                                    GUILayout.Label(i.ToString(), _labelMissionTableStyle);
+                                    GUILayout.Label($"{stage.StageID}", _labelMissionTableStyle);
+                                    GUILayout.Label($"{stage.active}", _labelMissionTableStyle);
+                                    GUILayout.Label($"{stage.completed}", _labelMissionTableStyle);
+                                    if (GUILayout.Button("Activate"))
+                                    {
+                                        //mission.DeactivateStage(mission.currentStageIndex);
+                                        mission.ActivateStage(i); // we need to do this because the mission dialog cannot be dismissed unless we do it
+                                        //mission.missionStages[i].Activate();
+                                        //DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
+                                        DebugManager.Instance.CompleteSpecificMissionStage(mission.ID, i); // this marks the stage as complete
+                                        mission.missionStages[i].Activate(); // this will trigger the action dialog
+                                    }
+                                }
+                                GUILayout.EndHorizontal();
+                                i++;
+                            }
+                        }
+                    }
                 }
                 
                 GUILayout.Label("--");
