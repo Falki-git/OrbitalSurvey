@@ -2,9 +2,12 @@
 using BepInEx.Logging;
 using KSP.Game;
 using KSP.Game.Missions;
+using KSP.Game.Missions.Definitions;
+using KSP.Game.Missions.State;
 using KSP.Game.Science;
 using KSP.Messages;
 using KSP.Rendering.Planets;
+using KSP.Sim;
 using KSP.Sim.Definitions;
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
@@ -717,6 +720,55 @@ namespace OrbitalSurvey.Debug
             );
 
             int i = 0;
+        }
+
+        public void GetDiscoverableRegions(string bodyName = "Kerbin")
+        {
+            var regionProvider = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider;
+            var cvToScienceRegions = regionProvider._cbToScienceRegions;
+            var regions = cvToScienceRegions[bodyName].Regions;
+
+            var body = Utility.GetAllCelestialBodies().Find(b => b.Name == bodyName);
+            var discoverables = regionProvider._cbToScienceRegionDiscoverables[bodyName].Discoverables;
+            
+            _LOGGER.LogDebug($"{bodyName} discoverables:");
+            foreach (var discoverable in discoverables)
+            {
+                var position = new Position(body.SimulationObject.transform.bodyFrame, discoverable.Position);
+                body.GetLatLonAltFromRadius(position, out double lat, out double lon, out double altFromRadius);
+                
+                _LOGGER.LogDebug($"{discoverable.ScienceRegionId} LAT {lat}, LON {lon}, ALT {altFromRadius}");
+            }
+        }
+
+        public List<MissionData> GetAllActiveMissions()
+        {
+            return GameManager.Instance.Game.KSP2MissionManager?.ActiveMissions[0]?.MissionDatas;
+        }
+        
+        public void CompleteCurrentMissionStage(string missionId)
+        {
+            var manager = GameManager.Instance.Game.KSP2MissionManager;
+            var missions = manager.ActiveMissions[0].MissionDatas;
+            var mission = missions.Find(m => m.ID == missionId); 
+            //mission.OnStageComplete();
+            
+            mission.FireOnStageCompletedMessage();
+            mission.OnStageComplete();
+        }
+        
+        public void CompleteMission(string missionId)
+        {
+            var manager = GameManager.Instance.Game.KSP2MissionManager;
+            var missions = manager.ActiveMissions[0].MissionDatas;
+            var mission = missions.Find(m => m.ID == missionId);
+            
+            manager.SetMissionState(missionId, MissionState.Complete, null);
+        }
+
+        public void AddNewMission()
+        {
+            //SaveLoadMissionUtils.AddOrOverwriteMissionData(base.Game, this._missionDefinitions, missionData);
         }
     }
 }

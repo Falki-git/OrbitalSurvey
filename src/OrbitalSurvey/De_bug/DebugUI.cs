@@ -12,10 +12,10 @@ using Utility = OrbitalSurvey.Utilities.Utility;
 namespace OrbitalSurvey.Debug
 {
     internal class DebugUI
-    {        
+    {
         public bool IsDebugWindowOpen;
 
-        private Rect _debugWindowRect = new Rect(/*1900*/ 115, /*500*/ 54, 350, 350);
+        private Rect _debugWindowRect = new Rect(1800/*115*/, 54 /*54*/, 350, 350);
         private GUIStyle _labelStyle;
         private GUIStyle _labelStyleShort;
         private GUIStyle _normalButton;
@@ -28,9 +28,12 @@ namespace OrbitalSurvey.Debug
         private string _textureName = string.Empty;
         private string _colorName = "red";
         private string _body;
+        private string _missionBody;
         public string UT;
         private List<string> _bodyNames = new();
+        private List<string> _missionBodyNames = new();
         private int _bodyIndex;
+        private int _missionBodyIndex;
         
         private bool _showAnalyticsScanningSection;
         //private bool _showSavePersistenceSection;
@@ -96,6 +99,8 @@ namespace OrbitalSurvey.Debug
         // missions
         private string _assetName = "Assets/Images/Icons/icon.png";
         public Texture2D Asset;
+        private bool _showActiveMissions = true;
+        private string _missionId = "orbital_survey_02";
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -126,11 +131,16 @@ namespace OrbitalSurvey.Debug
             _bodyNames = Utility.GetAllCelestialBodyNames();
             _body = "Kerbin";
             _bodyIndex = _bodyNames.IndexOf(_body);
+            
             _textureName = "_MainTex";
             
             _waypointBodyNames = Utility.GetAllCelestialBodyNames();
             _waypointBody = "Kerbin";
             _waypointBodyIndex = _waypointBodyNames.IndexOf(_waypointBody);
+            
+            _missionBodyNames = Utility.GetAllCelestialBodyNames();
+            _missionBody = "Kerbin";
+            _missionBodyIndex = _missionBodyNames.IndexOf(_missionBody);
         }
 
         public void OnGUI()
@@ -972,10 +982,27 @@ namespace OrbitalSurvey.Debug
             {
                 GUILayout.Label("--");
                 
-                if (GUILayout.Button("Activate Mission"))
+                GUILayout.BeginHorizontal();
                 {
-                    DebugManager.Instance.ActivateMission();
+                    GUILayout.Label("Body:", _labelStyle);
+                    if (GUILayout.Button("<", _narrowButton) && _missionBodyIndex > 0)
+                        _missionBody = _missionBodyNames[--_missionBodyIndex];
+                    _missionBody = GUILayout.TextField(_missionBody);
+                    if (GUILayout.Button(">", _narrowButton) && _missionBodyIndex < _missionBodyNames.Count-1)
+                        _missionBody = _missionBodyNames[++_missionBodyIndex];
                 }
+                GUILayout.EndHorizontal();
+                
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("MissionId:", _labelStyle);
+                    _missionId = GUILayout.TextField(_missionId);
+                    if (GUILayout.Button("Activate Mission"))
+                    {
+                        DebugManager.Instance.ActivateMission(_missionId);
+                    }
+                }
+                GUILayout.EndHorizontal();
                 
                 if (GUILayout.Button("Create Mission Granter"))
                 {
@@ -997,6 +1024,44 @@ namespace OrbitalSurvey.Debug
                 if (Asset != null)
                 {
                     GUILayout.Label(Asset, GUILayout.Width(Asset.width), GUILayout.Height(Asset.height));    
+                }
+                
+                if (GUILayout.Button("Get Discoverable Regions"))
+                {
+                    DebugManager.Instance.GetDiscoverableRegions(_missionBody);
+                }
+                
+                if (GUILayout.Button(_showActiveMissions ? "Hide Active Missions" : "Show Active Missions", _normalButton))
+                    _showActiveMissions = !_showActiveMissions;
+
+                if (_showActiveMissions)
+                {
+                    var missions = DebugManager.Instance.GetAllActiveMissions();
+
+                    if (missions != null)
+                    {
+                        foreach (var mission in missions)
+                        {
+                            GUILayout.BeginHorizontal();
+                            {
+                                GUILayout.Label($"{mission.name}", _labelStyle);
+                                GUILayout.Label($"{mission.currentStageIndex}", _labelStyle);
+                    
+                                if (GUILayout.Button("CompleteStage"))
+                                {
+                                    DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
+                                }
+                            
+                                if (GUILayout.Button("CompleteMission"))
+                                {
+                                    DebugManager.Instance.CompleteMission(mission.ID);
+                                }
+                            
+                            }
+                            GUILayout.EndHorizontal();
+                        }    
+                    }
+                    
                 }
                 
                 GUILayout.Label("--");

@@ -24,7 +24,7 @@ public static class Settings
     public static ConfigEntry<int> TimeBetweenRetroactiveScansLow;
     public static ConfigEntry<Difficulty> Difficulty; // Not used
     
-    public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = false;
+    public const bool WILL_DEBUG_WINDOW_OPEN_ON_GAME_LOAD = true;
     public static readonly List<int> AVAILABLE_RESOLUTIONS = new() { 1024 };
     public static int ActiveResolution = 1024;
     public static int HighResolution = 2048;
