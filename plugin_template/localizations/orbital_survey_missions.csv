@@ -5,6 +5,20 @@ OrbitalSurvey/Granter/Description,Text,,Startup that quickly rose to fame by pro
 
 OrbitalSurvey/Missions/01/Name,Text,,Orbital Survey Mission 1 - Name
 OrbitalSurvey/Missions/01/Description,Text,,Orbital Survey Mission 1 - Description
-OrbitalSurvey/Missions/01/Objective,Text,,Orbital Survey Mission 1 - Objective
 OrbitalSurvey/Missions/01/Brief1,Text,,Orbital Survey Mission 1 - Brief1
 OrbitalSurvey/Missions/01/Debrief1,Text,,Orbital Survey Mission 1 - Debrief1
+
+OrbitalSurvey/Missions/02/Name,Text,,Orbital Survey Mission 2 - Name
+OrbitalSurvey/Missions/02/Description,Text,,Orbital Survey Mission 2 - Description
+OrbitalSurvey/Missions/02/Brief1,Text,,Orbital Survey Mission 2 - Brief1
+OrbitalSurvey/Missions/02/Debrief1,Text,,Orbital Survey Mission 2 - Debrief1
+
+OrbitalSurvey/Missions/01/Objective1,Text,,Find the unusual terrain formation
+OrbitalSurvey/Missions/01/Objective2,Text,,(optional) Explore area A
+OrbitalSurvey/Missions/01/Objective3,Text,,(optional) Explore area B
+OrbitalSurvey/Missions/01/Objective4,Text,,(optional) Explore area C
+
+OrbitalSurvey/Missions/FindDiscoverable/MainObjective,Text,,Find the unusual terrain formation
+OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective1,Text,,(optional) Explore area A
+OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective2,Text,,(optional) Explore area B
+OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective3,Text,,(optional) Explore area C

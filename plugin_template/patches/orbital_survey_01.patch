@@ -1,0 +1,215 @@
+@use "builtin:missions";
+
+@new("orbital_survey_01")
+:missions {
+    "ID": "orbital_survey_01";
+    "MissionGroup": "";
+    "name": "OrbitalSurvey/Missions/01/Name";
+    "description": "OrbitalSurvey/Missions/01/Description";
+    "GameModeFeatureId": "ExplorationMissions";
+    "type": "Secondary";
+    "Owner": "Agency";
+    "state": "Inactive";
+    "missionScript": "";
+    "missionStages": [
+      {
+        "StageID": 0,
+        "name": "Check",
+        "description": "TODO write description",
+        "Objective": "OrbitalSurvey/Missions/01/Objective1",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionDestinationPosition, Assembly-CSharp",
+            "celestialBodyName": "Mun",
+            "cb_Coords": {
+              "x": 100,
+              "y": 100,
+              "z": 4999
+            },
+            "StageEvent": null
+          }
+        ],
+        "branches": [],
+        "scriptableCondition": {
+          "$type": "KSP.Game.Missions.ConditionSet, Assembly-CSharp",
+          "ConditionType": "ConditionSet",
+          "ConditionMode": "AND",
+          "Children": [
+            {
+              "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+              "ConditionType": "PropertyCondition",
+              "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.FlightVehicleDistanceFromPosition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "RequireCurrentValue": true,
+              "valueMet": false,
+              "TestWatchedValue": 5000,
+              "TestWatchedstring": "",
+              "TestWatchedInt": 0,
+              "TestWatchedBool": true,
+              "propOperator": "LESSER",
+              "isInput": false,
+              "Inputstring": ""
+            },
+            {
+              "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+              "ConditionType": "PropertyCondition",
+              "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselHasLandedOnCBPropertyWatcher, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "RequireCurrentValue": true,
+              "valueMet": false,
+              "TestWatchedValue": 0,
+              "TestWatchedstring": "",
+              "TestWatchedInt": 0,
+              "TestWatchedBool": true,
+              "propOperator": "EQUAL",
+              "isInput": true,
+              "Inputstring": "Mun"
+            },
+            {
+              "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+              "ConditionType": "PropertyCondition",
+              "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "RequireCurrentValue": true,
+              "valueMet": false,
+              "TestWatchedValue": 0,
+              "TestWatchedstring": "Mun_Landed_MunHighlands",
+              "TestWatchedInt": 0,
+              "TestWatchedBool": true,
+              "propOperator": "EQUAL",
+              "isInput": false,
+              "Inputstring": ""
+            }
+          ]
+        },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 10,
+        "name": "Check",
+        "description": "TODO write description",
+        "Objective": "OrbitalSurvey/Missions/01/Objective2",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [],
+        "branches": [],
+        "scriptableCondition": {
+          "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+          "ConditionType": "PropertyCondition",
+          "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "RequireCurrentValue": true,
+          "valueMet": false,
+          "TestWatchedValue": 0,
+          "TestWatchedstring": "Mun_Landed_MunLowlands",
+          "TestWatchedInt": 0,
+          "TestWatchedBool": true,
+          "propOperator": "EQUAL",
+          "isInput": false,
+          "Inputstring": ""
+        },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 20,
+        "name": "Check",
+        "description": "TODO write description",
+        "Objective": "OrbitalSurvey/Missions/01/Objective3",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [],
+        "branches": [],
+        "scriptableCondition": {
+          "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+          "ConditionType": "PropertyCondition",
+          "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "RequireCurrentValue": true,
+          "valueMet": false,
+          "TestWatchedValue": 0,
+          "TestWatchedstring": "Mun_Landed_MunCraters",
+          "TestWatchedInt": 0,
+          "TestWatchedBool": true,
+          "propOperator": "EQUAL",
+          "isInput": false,
+          "Inputstring": ""
+        },
+        "completed": false,
+        "active": false
+      }
+    ];
+    "currentStageIndex": 0;
+    "Hidden": false;
+    "MissionGranterKey": "MissionGranterWinterOwl";
+    "TriumphLoopVideoKey": "reward_mission_tier1";
+    "VisibleRewards": true;
+    "pendingCompletionTest": false;
+    "maxStageID": 0;
+    "uiDisplayType": "Default";
+    "ExceptionBranches": [];
+    "PreRequisiteBranches": [];
+    "ContentBranches": [
+      {
+        "ID": "Brief",
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionCharacterDialogAction, Assembly-CSharp",
+            "CharacterNameLocKey": "",
+            "CharacterIconKey": "",
+            "Dialogs": {
+              "Entries": [
+                {
+                  "ShowsInHistory": true,
+                  "DialogEntryType": "Text",
+                  "LocKey": "OrbitalSurvey/Missions/01/Brief1",
+                  "ContentAddressableKey": ""
+                }
+              ]
+            },
+            "EventTypeOnClosed": "",
+            "StageEvent": ""
+          }
+        ]
+      },
+      {
+        "ID": "Debrief",
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionCharacterDialogAction, Assembly-CSharp",
+            "CharacterNameLocKey": "",
+            "CharacterIconKey": "",
+            "Dialogs": {
+              "Entries": [
+                {
+                  "ShowsInHistory": true,
+                  "DialogEntryType": "Text",
+                  "LocKey": "OrbitalSurvey/Missions/01/Brief1",
+                  "ContentAddressableKey": ""
+                }
+              ]
+            },
+            "EventTypeOnClosed": "KSP.Messages.SpawnTriumphWindow, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "StageEvent": "Play_mission_alert_primary_returned_to_missionControl"
+          }
+        ]
+      }
+    ];
+    "MissionSaveAssetKey": "";
+}

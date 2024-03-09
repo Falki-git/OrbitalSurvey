@@ -1,0 +1,396 @@
+@use "builtin:missions";
+
+@new("orbital_survey_02")
+:missions {
+    "ID": "orbital_survey_02";
+    "MissionGroup": "";
+    "name": "OrbitalSurvey/Missions/02/Name";
+    "description": "OrbitalSurvey/Missions/02/Description";
+    "GameModeFeatureId": "ExplorationMissions";
+    "type": "Secondary";
+    "Owner": "Agency";
+    "state": "Inactive";
+    "missionScript": "";
+    "missionStages": [
+      {
+        "StageID": 10,
+        "name": "ExploreAreaA",
+        "description": "Land in Area A that may contain the discoverable (optional)",
+        "Objective": "OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective1",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [
+        //  {
+        //    "$type": "KSP.Game.Missions.MissionAudioAction, Assembly-CSharp",
+        //    "StageEvent": "Play_mission_alert_secondary"
+        //  }
+        ],
+        "branches": [
+        //  {
+        //    "condition": {
+        //    //  "$type": "KSP.Game.Missions.EventCondition, Assembly-CSharp",
+        //    //  "eventObserved": false,
+        //    //  "EventTypeAQN": "KSP.Messages.GoToNextTutorialStep, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //    //  "ConditionType": "EventCondition"
+        //        "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+        //        "ConditionType": "PropertyCondition",
+        //        "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //        "RequireCurrentValue": true,
+        //        "valueMet": false,
+        //        "TestWatchedValue": 0,
+        //        "TestWatchedstring": "Mun_Landed_MunHighlands",
+        //        "TestWatchedInt": 0,
+        //        "TestWatchedBool": true,
+        //        "propOperator": "EQUAL",
+        //        "isInput": false,
+        //        "Inputstring": ""
+        //    },
+        //    "TargetStage": 50,
+        //    "ExceptionBranch": false
+        //  }
+        ],
+        //"scriptableCondition": null,
+          "scriptableCondition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunHighlands",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 20,
+        "name": "ExploreAreaB",
+        "description": "Land in Area B that may contain the discoverable (optional)",
+        "Objective": "OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective2",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [
+        //  {
+        //    "$type": "KSP.Game.Missions.MissionAudioAction, Assembly-CSharp",
+        //    "StageEvent": "Play_mission_alert_secondary"
+        //  }
+        ],
+        "branches": [
+        //  {
+        //    "condition": {
+        //    //  "$type": "KSP.Game.Missions.EventCondition, Assembly-CSharp",
+        //    //  "eventObserved": false,
+        //    //  "EventTypeAQN": "KSP.Messages.GoToNextTutorialStep, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //    //  "ConditionType": "EventCondition"            
+        //        "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+        //        "ConditionType": "PropertyCondition",
+        //        "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //        "RequireCurrentValue": true,
+        //        "valueMet": false,
+        //        "TestWatchedValue": 0,
+        //        "TestWatchedstring": "Mun_Landed_MunMare",
+        //        "TestWatchedInt": 0,
+        //        "TestWatchedBool": true,
+        //        "propOperator": "EQUAL",
+        //        "isInput": false,
+        //        "Inputstring": ""
+        //    },
+        //    "TargetStage": 50,
+        //    "ExceptionBranch": false
+        //  }
+        ],
+        //"scriptableCondition": null,
+          "scriptableCondition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunMare",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 30,
+        "name": "ExploreAreaC",
+        "description": "Land in Area C that may contain the discoverable (optional)",
+        "Objective": "OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective3",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [
+        //  {
+        //    "$type": "KSP.Game.Missions.MissionAudioAction, Assembly-CSharp",
+        //    "StageEvent": "Play_mission_alert_secondary"
+        //
+        //  }
+        ],
+        "branches": [
+        //  {
+        //    "condition": {
+        //    //  "$type": "KSP.Game.Missions.EventCondition, Assembly-CSharp",
+        //    //  "eventObserved": false,
+        //    //  "EventTypeAQN": "KSP.Messages.GoToNextTutorialStep, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //    //  "ConditionType": "EventCondition"
+        //        "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+        //        "ConditionType": "PropertyCondition",
+        //        "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        //        "RequireCurrentValue": true,
+        //        "valueMet": false,
+        //        "TestWatchedValue": 0,
+        //        "TestWatchedstring": "Mun_Landed_MunCraters",
+        //        "TestWatchedInt": 0,
+        //        "TestWatchedBool": true,
+        //        "propOperator": "EQUAL",
+        //        "isInput": false,
+        //        "Inputstring": ""  
+        //    },
+        //    "TargetStage": 50,
+        //    "ExceptionBranch": false
+        //  }
+        ],
+        //"scriptableCondition": null,
+          "scriptableCondition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunCraters",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 50,
+        "name": "Check",
+        "description": "Find the discoverable by landing in its ScienceRegion",
+        "Objective": "OrbitalSurvey/Missions/FindDiscoverable/MainObjective",
+        "DisplayObjective": true,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": []
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [],
+        "branches": [],
+        "scriptableCondition": {
+          "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+          "ConditionType": "PropertyCondition",
+          "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "RequireCurrentValue": true,
+          "valueMet": false,
+          "TestWatchedValue": 0,
+          "TestWatchedstring": "Mun_Landed_MunGiantRock",
+          "TestWatchedInt": 0,
+          "TestWatchedBool": true,
+          "propOperator": "EQUAL",
+          "isInput": false,
+          "Inputstring": ""
+        },
+        "completed": false,
+        "active": false
+      },
+      {
+        "StageID": 60,
+        "name": "Mission Complete",
+        "description": "",
+        "Objective": "",
+        "DisplayObjective": false,
+        "RevealObjectiveOnActivate": false,
+        "MissionRewardType": "None",
+        "RewardAmount": null,
+        "MissionReward": {
+          "MissionRewardDefinitions": [
+            {
+              "MissionRewardType": "SciencePoints",
+              "RewardAmount": 3000,
+              "RewardKey": null
+            }
+          ]
+        },
+        "IgnoreExceptionBranches": false,
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionResolutionAction, Assembly-CSharp",
+            "MissionResolution": "Complete",
+            "summary_PrefabKey": null,
+            "waitForSummaryDismissed": false,
+            "StageEvent": "Play_mission_alert_secondary"
+          }
+        ],
+        "branches": [],
+        "parentMissionID": null,
+        "scriptableCondition": null,
+        "completed": false,
+        "active": false
+      }
+    ];
+    "currentStageIndex": 3;
+    "Hidden": false;
+    "MissionGranterKey": "MissionGranterWinterOwl";
+    "TriumphLoopVideoKey": "reward_mission_tier1";
+    "VisibleRewards": true;
+    "pendingCompletionTest": false;
+    "maxStageID": 70;
+    "uiDisplayType": "Default";
+    "ExceptionBranches": [
+        {
+          "condition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunHighlands",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+          "TargetStage": 10,
+          "ExceptionBranch": true
+        },
+        {
+          "condition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunMare",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+          "TargetStage": 20,
+          "ExceptionBranch": true
+        },
+        {
+          "condition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunCraters",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+          "TargetStage": 30,
+          "ExceptionBranch": true
+        },
+        {
+          "condition": {
+            "$type": "KSP.Game.Missions.PropertyCondition, Assembly-CSharp",
+            "ConditionType": "PropertyCondition",
+            "PropertyTypeAQN": "KSP.Messages.PropertyWatchers.VesselResearchLocation, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "RequireCurrentValue": true,
+            "valueMet": false,
+            "TestWatchedValue": 0,
+            "TestWatchedstring": "Mun_Landed_MunGiantRock",
+            "TestWatchedInt": 0,
+            "TestWatchedBool": true,
+            "propOperator": "EQUAL",
+            "isInput": false,
+            "Inputstring": ""
+          },
+          "TargetStage": 50,
+          "ExceptionBranch": true
+        }
+    ];
+    "PreRequisiteBranches": [];
+    "ContentBranches": [
+      {
+        "ID": "Brief",
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionCharacterDialogAction, Assembly-CSharp",
+            "CharacterNameLocKey": "",
+            "CharacterIconKey": "",
+            "Dialogs": {
+              "Entries": [
+                {
+                  "ShowsInHistory": true,
+                  "DialogEntryType": "Text",
+                  "LocKey": "OrbitalSurvey/Missions/02/Brief1",
+                  "ContentAddressableKey": ""
+                }
+              ]
+            },
+            "EventTypeOnClosed": "",
+            "StageEvent": ""
+          }
+        ]
+      },
+      {
+        "ID": "Debrief",
+        "actions": [
+          {
+            "$type": "KSP.Game.Missions.MissionCharacterDialogAction, Assembly-CSharp",
+            "CharacterNameLocKey": "",
+            "CharacterIconKey": "",
+            "Dialogs": {
+              "Entries": [
+                {
+                  "ShowsInHistory": true,
+                  "DialogEntryType": "Text",
+                  "LocKey": "OrbitalSurvey/Missions/02/Debrief1",
+                  "ContentAddressableKey": ""
+                }
+              ]
+            },
+            "EventTypeOnClosed": "KSP.Messages.SpawnTriumphWindow, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "StageEvent": "Play_mission_alert_primary_returned_to_missionControl"
+          }
+        ]
+      }
+    ];
+    "MissionSaveAssetKey": "";
+}

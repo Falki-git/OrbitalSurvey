@@ -18,10 +18,10 @@
     MissionGroup: "";
     name: "OrbitalSurvey/Missions/01/Name";
     description: "OrbitalSurvey/Missions/01/Description";
-    GameModeFeatureId: ExplorationMissions;
-    type: Secondary;
-    Owner: Agency;
-    state: Inactive;
+    GameModeFeatureId: "ExplorationMissions";
+    type: "Secondary";
+    Owner: "Agency";
+    state: "Inactive";
     * > missionStages {
         +_0 {
             name: Check;
