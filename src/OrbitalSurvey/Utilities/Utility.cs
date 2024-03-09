@@ -46,6 +46,8 @@ public static class Utility
     
     public static List<CelestialBodyComponent> GetAllCelestialBodies() => GameManager.Instance.Game?.UniverseModel?.GetAllCelestialBodies();
 
+    public static CelestialBodyComponent GetCelestialBodyByName(string name) => GameManager.Instance.Game?.UniverseModel?.FindCelestialBodyByName(name);
+
     public static List<string> GetAllCelestialBodyNames() => GetAllCelestialBodies().Select(body => body.Name).ToList();
 
     public static List<VesselComponent> GetAllVessels() => GameManager.Instance.Game?.UniverseModel?.GetAllVessels();
