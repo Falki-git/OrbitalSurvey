@@ -1157,12 +1157,12 @@ namespace OrbitalSurvey.Debug
                                     GUILayout.Label($"{stage.completed}", _labelMissionTableStyle);
                                     if (GUILayout.Button("Activate"))
                                     {
-                                        //mission.DeactivateStage(mission.currentStageIndex);
-                                        mission.ActivateStage(i); // we need to do this because the mission dialog cannot be dismissed unless we do it
+                                        mission.DeactivateStage(mission.currentStageIndex);
+                                        mission.ActivateStage(i);
                                         //mission.missionStages[i].Activate();
-                                        //DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
-                                        DebugManager.Instance.CompleteSpecificMissionStage(mission.ID, i); // this marks the stage as complete
-                                        mission.missionStages[i].Activate(); // this will trigger the action dialog
+                                        DebugManager.Instance.CompleteCurrentMissionStage(mission.ID);
+                                        //DebugManager.Instance.CompleteSpecificMissionStage(mission.ID, i); // this marks the stage as complete
+                                        //mission.missionStages[i].Activate(); // this will trigger the action dialog
                                     }
                                 }
                                 GUILayout.EndHorizontal();
