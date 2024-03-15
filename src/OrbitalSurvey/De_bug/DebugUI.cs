@@ -106,7 +106,8 @@ namespace OrbitalSurvey.Debug
         public Texture2D Asset;
         private bool _showActiveMissions = false;
         private bool _showMissionDetails = true;
-        private string _missionId = "orbital_survey_02";
+        private string _missionId = "orbital_survey_Mun_MunGiantRock";
+        private string _newMissionId = "orbital_survey_03";
         private int _missionIndex;
         private string _stageToActivate = "0";
 
@@ -1037,6 +1038,17 @@ namespace OrbitalSurvey.Debug
                 }
                 GUILayout.EndHorizontal();
                 
+                GUILayout.BeginHorizontal();
+                {
+                    GUILayout.Label("New mission ID:", _labelStyle);
+                    _newMissionId = GUILayout.TextField(_newMissionId);
+                    if (GUILayout.Button("Add new mission"))
+                    {
+                        DebugManager.Instance.AddNewMission(_newMissionId);
+                    }
+                }
+                GUILayout.EndHorizontal();
+                
                 if (Asset != null)
                 {
                     GUILayout.Label(Asset, GUILayout.Width(Asset.width), GUILayout.Height(Asset.height));    
@@ -1072,7 +1084,6 @@ namespace OrbitalSurvey.Debug
                             GUILayout.EndHorizontal();
                         }    
                     }
-                    
                 }
                 
                 if (GUILayout.Button(_showMissionDetails ? "Hide Mission Details" : "Show Mission Details", _normalButton))

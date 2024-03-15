@@ -796,9 +796,17 @@ namespace OrbitalSurvey.Debug
             mission.missionStages[stageIndex].Deactivate();
         }
 
-        public void AddNewMission()
+        public void AddNewMission(string newMissionId, string missionTemplateId = "orbital_survey_02")
         {
-            //SaveLoadMissionUtils.AddOrOverwriteMissionData(base.Game, this._missionDefinitions, missionData);
+            var missionDefinitions = GameManager.Instance.Game.KSP2MissionManager._missionDefinitions; 
+            var missionTemplate = missionDefinitions.Find(m => m.ID == missionTemplateId);
+
+            var newMission = missionTemplate.GetDeepCopy();
+
+            newMission.ID = newMissionId;
+            newMission.name = $"{newMissionId}-name";
+            
+            SaveLoadMissionUtils.AddOrOverwriteMissionData(newMission.Game, missionDefinitions, newMission);
         }
     }
 }
