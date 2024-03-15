@@ -1,7 +1,7 @@
 Key,Type,Desc,English,German,French,Italian,Chinese (Traditional)
 
 OrbitalSurvey/Granter/Name,Text,,Falcon Industries Inc.
-OrbitalSurvey/Granter/Description,Text,,Startup that quickly rose to fame by producing the first-ever planetary mapping satellite. Before Falcon Industries, it was believed that all planets were simple gray featureless blobs in the night sky.
+OrbitalSurvey/Granter/Description,Text,,"Startup that quickly rose to fame by producing the first-ever planetary mapping satellite. Before Falcon Industries, it was believed that all planets were simple gray featureless blobs in the night sky."
 
 OrbitalSurvey/Missions/01/Name,Text,,Orbital Survey Mission 1 - Name
 OrbitalSurvey/Missions/01/Description,Text,,Orbital Survey Mission 1 - Description
@@ -18,7 +18,233 @@ OrbitalSurvey/Missions/01/Objective2,Text,,(optional) Explore area A
 OrbitalSurvey/Missions/01/Objective3,Text,,(optional) Explore area B
 OrbitalSurvey/Missions/01/Objective4,Text,,(optional) Explore area C
 
+
+
 OrbitalSurvey/Missions/FindDiscoverable/MainObjective,Text,,Find the unusual terrain formation
 OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective1,Text,,(optional) Explore area A
 OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective2,Text,,(optional) Explore area B
 OrbitalSurvey/Missions/FindDiscoverable/OptionalObjective3,Text,,(optional) Explore area C
+
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Name,Text,,MohoPrecariousStack Name
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Description,Text,,MohoPrecariousStack Description
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Brief1,Text,,MohoPrecariousStack Brief1
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Brief2,Text,,MohoPrecariousStack Brief2
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Debrief1,Text,,MohoPrecariousStack Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/MohoPrecariousStack/Debrief2,Text,,MohoPrecariousStack Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Name,Text,,EveHeartIsland Name
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Description,Text,,EveHeartIsland Description
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Brief1,Text,,EveHeartIsland Brief1
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Brief2,Text,,EveHeartIsland Brief2
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Debrief1,Text,,EveHeartIsland Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/EveHeartIsland/Debrief2,Text,,EveHeartIsland Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Name,Text,,EvePavement Name
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Description,Text,,EvePavement Description
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Brief1,Text,,EvePavement Brief1
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Brief2,Text,,EvePavement Brief2
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Debrief1,Text,,EvePavement Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/EvePavement/Debrief2,Text,,EvePavement Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Name,Text,,EveGiantRock Name
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Description,Text,,EveGiantRock Description
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Brief1,Text,,EveGiantRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Brief2,Text,,EveGiantRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Debrief1,Text,,EveGiantRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/EveGiantRock/Debrief2,Text,,EveGiantRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Name,Text,,EveTor Name
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Description,Text,,EveTor Description
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Brief1,Text,,EveTor Brief1
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Brief2,Text,,EveTor Brief2
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Debrief1,Text,,EveTor Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/EveTor/Debrief2,Text,,EveTor Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Name,Text,,GillyGiantRock Name
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Description,Text,,GillyGiantRock Description
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Brief1,Text,,GillyGiantRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Brief2,Text,,GillyGiantRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Debrief1,Text,,GillyGiantRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/GillyGiantRock/Debrief2,Text,,GillyGiantRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Name,Text,,GillyPrecariousStack Name
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Description,Text,,GillyPrecariousStack Description
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Brief1,Text,,GillyPrecariousStack Brief1
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Brief2,Text,,GillyPrecariousStack Brief2
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Debrief1,Text,,GillyPrecariousStack Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/GillyPrecariousStack/Debrief2,Text,,GillyPrecariousStack Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Name,Text,,KerbinKerb2Summit Name
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Description,Text,,KerbinKerb2Summit Description
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Brief1,Text,,KerbinKerb2Summit Brief1
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Brief2,Text,,KerbinKerb2Summit Brief2
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Debrief1,Text,,KerbinKerb2Summit Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/KerbinKerb2Summit/Debrief2,Text,,KerbinKerb2Summit Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Name,Text,,KerbinPyramid Name
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Description,Text,,KerbinPyramid Description
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Brief1,Text,,KerbinPyramid Brief1
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Brief2,Text,,KerbinPyramid Brief2
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Debrief1,Text,,KerbinPyramid Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/KerbinPyramid/Debrief2,Text,,KerbinPyramid Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Name,Text,,MunArches Name
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Description,Text,,MunArches Description
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Brief1,Text,,MunArches Brief1
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Brief2,Text,,MunArches Brief2
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Debrief1,Text,,MunArches Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/MunArches/Debrief2,Text,,MunArches Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Name,Text,,MunGiantRock Name
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Description,Text,,MunGiantRock Description
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Brief1,Text,,MunGiantRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Brief2,Text,,MunGiantRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Debrief1,Text,,MunGiantRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/MunGiantRock/Debrief2,Text,,MunGiantRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Name,Text,,MunMunOrBust Name
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Description,Text,,MunMunOrBust Description
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Brief1,Text,,MunMunOrBust Brief1
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Brief2,Text,,MunMunOrBust Brief2
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Debrief1,Text,,MunMunOrBust Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/MunMunOrBust/Debrief2,Text,,MunMunOrBust Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Name,Text,,MinmusBalancingRock Name
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Description,Text,,MinmusBalancingRock Description
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Brief1,Text,,MinmusBalancingRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Brief2,Text,,MinmusBalancingRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Debrief1,Text,,MinmusBalancingRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/MinmusBalancingRock/Debrief2,Text,,MinmusBalancingRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Name,Text,,DunaFace Name
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Description,Text,,DunaFace Description
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Brief1,Text,,DunaFace Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Brief2,Text,,DunaFace Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Debrief1,Text,,DunaFace Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaFace/Debrief2,Text,,DunaFace Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Name,Text,,DunaGiantRock Name
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Description,Text,,DunaGiantRock Description
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Brief1,Text,,DunaGiantRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Brief2,Text,,DunaGiantRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Debrief1,Text,,DunaGiantRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaGiantRock/Debrief2,Text,,DunaGiantRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Name,Text,,DunaMushroomSpire Name
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Description,Text,,DunaMushroomSpire Description
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Brief1,Text,,DunaMushroomSpire Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Brief2,Text,,DunaMushroomSpire Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Debrief1,Text,,DunaMushroomSpire Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaMushroomSpire/Debrief2,Text,,DunaMushroomSpire Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Name,Text,,DunaBrocktonFormation Name
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Description,Text,,DunaBrocktonFormation Description
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Brief1,Text,,DunaBrocktonFormation Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Brief2,Text,,DunaBrocktonFormation Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Debrief1,Text,,DunaBrocktonFormation Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DunaBrocktonFormation/Debrief2,Text,,DunaBrocktonFormation Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Name,Text,,IkeGiantRock Name
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Description,Text,,IkeGiantRock Description
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Brief1,Text,,IkeGiantRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Brief2,Text,,IkeGiantRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Debrief1,Text,,IkeGiantRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantRock/Debrief2,Text,,IkeGiantRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Name,Text,,IkeGiantsCauseway Name
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Description,Text,,IkeGiantsCauseway Description
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Brief1,Text,,IkeGiantsCauseway Brief1
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Brief2,Text,,IkeGiantsCauseway Brief2
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Debrief1,Text,,IkeGiantsCauseway Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/IkeGiantsCauseway/Debrief2,Text,,IkeGiantsCauseway Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Name,Text,,DresDoubleArch Name
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Description,Text,,DresDoubleArch Description
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Brief1,Text,,DresDoubleArch Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Brief2,Text,,DresDoubleArch Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Debrief1,Text,,DresDoubleArch Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DresDoubleArch/Debrief2,Text,,DresDoubleArch Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Name,Text,,DresRamp Name
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Description,Text,,DresRamp Description
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Brief1,Text,,DresRamp Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Brief2,Text,,DresRamp Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Debrief1,Text,,DresRamp Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DresRamp/Debrief2,Text,,DresRamp Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Name,Text,,DresFinRock Name
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Description,Text,,DresFinRock Description
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Brief1,Text,,DresFinRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Brief2,Text,,DresFinRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Debrief1,Text,,DresFinRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/DresFinRock/Debrief2,Text,,DresFinRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Name,Text,,LaytheBallRocks Name
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Description,Text,,LaytheBallRocks Description
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Brief1,Text,,LaytheBallRocks Brief1
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Brief2,Text,,LaytheBallRocks Brief2
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Debrief1,Text,,LaytheBallRocks Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/LaytheBallRocks/Debrief2,Text,,LaytheBallRocks Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Name,Text,,VallPenitente Name
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Description,Text,,VallPenitente Description
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Brief1,Text,,VallPenitente Brief1
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Brief2,Text,,VallPenitente Brief2
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Debrief1,Text,,VallPenitente Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/VallPenitente/Debrief2,Text,,VallPenitente Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Name,Text,,VallBalancingRock Name
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Description,Text,,VallBalancingRock Description
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Brief1,Text,,VallBalancingRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Brief2,Text,,VallBalancingRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Debrief1,Text,,VallBalancingRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/VallBalancingRock/Debrief2,Text,,VallBalancingRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Name,Text,,TyloRampRock Name
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Description,Text,,TyloRampRock Description
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Brief1,Text,,TyloRampRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Brief2,Text,,TyloRampRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Debrief1,Text,,TyloRampRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/TyloRampRock/Debrief2,Text,,TyloRampRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Name,Text,,TyloBalancingRock Name
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Description,Text,,TyloBalancingRock Description
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Brief1,Text,,TyloBalancingRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Brief2,Text,,TyloBalancingRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Debrief1,Text,,TyloBalancingRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/TyloBalancingRock/Debrief2,Text,,TyloBalancingRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Name,Text,,BopBalancingRock Name
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Description,Text,,BopBalancingRock Description
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Brief1,Text,,BopBalancingRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Brief2,Text,,BopBalancingRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Debrief1,Text,,BopBalancingRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/BopBalancingRock/Debrief2,Text,,BopBalancingRock Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Name,Text,,BopSailingStones Name
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Description,Text,,BopSailingStones Description
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Brief1,Text,,BopSailingStones Brief1
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Brief2,Text,,BopSailingStones Brief2
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Debrief1,Text,,BopSailingStones Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/BopSailingStones/Debrief2,Text,,BopSailingStones Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Name,Text,,PolIceTower Name
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Description,Text,,PolIceTower Description
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Brief1,Text,,PolIceTower Brief1
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Brief2,Text,,PolIceTower Brief2
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Debrief1,Text,,PolIceTower Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/PolIceTower/Debrief2,Text,,PolIceTower Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Name,Text,,PolMineralFormation Name
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Description,Text,,PolMineralFormation Description
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Brief1,Text,,PolMineralFormation Brief1
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Brief2,Text,,PolMineralFormation Brief2
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Debrief1,Text,,PolMineralFormation Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/PolMineralFormation/Debrief2,Text,,PolMineralFormation Debrief2
+
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Name,Text,,EelooCaptiveRock Name
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Description,Text,,EelooCaptiveRock Description
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Brief1,Text,,EelooCaptiveRock Brief1
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Brief2,Text,,EelooCaptiveRock Brief2
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Debrief1,Text,,EelooCaptiveRock Debrief1
+OrbitalSurvey/Missions/FindDiscoverable/EelooCaptiveRock/Debrief2,Text,,EelooCaptiveRock Debrief2

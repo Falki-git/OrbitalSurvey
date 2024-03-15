@@ -1,0 +1,99 @@
+@use "builtin:debug";
+@use "builtin:list";
+@use "builtin:dictionary";
+
+//@patch science_region_discoverables;
+
+//$log: debug-log("Cellar beginning");
+//
+//:json science_region_discoverables {
+//
+//    $log: debug-log("Cellar");
+//    $log: debug-log($$BodyName);
+//
+//    * > Discoverables {
+//
+//        $log: debug-log("Inside (bodyname):" + $$BodyName);
+//
+//        $log: debug-log($$ScienceRegionId);
+//
+//    }
+//
+//}
+
+$ignored-discoverables: [
+    MohoGiantRock, MohoMoholeCore, DresEyeOfDres, GillyObliqueImpact, BopCarcass, TyloMonument, MinmusMonument,
+    KerbinCamelRock, KerbinDevilsTower, MunMonument, LaytheFossil, EelooWaveIce, DunaMonument, VallMineralFormation
+];
+
+@function is-ignored($science-region-id) {
+    @each $ignored in $ignored-discoverables {
+        @if $science-region-id == $ignored {
+            @return true;
+        }        
+    }
+
+    @return false;
+}
+
+$bodies-and-regions: {};
+
+:discoverables {
+
+    $body: $$BodyName;
+    $log: debug-log("Cellar: " + $body);
+
+    //$bodies-and-regions:set($body, []);
+    $bodies-and-regions: $value:set($body, []);
+    
+
+    //$regions: [];
+
+    @each $discoverable in $$Discoverables {
+        $region-name: $discoverable["ScienceRegionId"];
+
+        $log: debug-log("Thunder: " + $body);
+        $log: debug-log("ScienceRegionId: " + $region-name);
+
+        @if is-ignored($region-name) {
+            $log: debug-log($region-name + " is ignored!");
+        } @else {
+            $log: debug-log($region-name + " is NOT ignored!");
+        }
+
+        //$bodies-and-regions: $value[$body]:append($discoverable[ScienceRegionId]);
+        //$discs: $discs:append($discoverable);
+        //$bla: +[$discoverable[ScienceRegionId]]; 
+        //$bla: $value:append($discoverable[ScienceRegionId]);
+        //$regions: $value:append($discoverable[ScienceRegionId]);
+
+        $bodies-and-regions: $value:set($body, $value[$body]:append($discoverable[ScienceRegionId]));
+
+        //requiredResources[0]: $value:set(Rate,$value[Rate]*$RATIO);
+    }
+
+    //$bodies-and-regions: $value:set($body, $regions);
+    //$bodies-and-regions[$body]: $regions;
+
+    $log: debug-log($body + " is done");
+
+    //$log: debug-log("Flash(keys): " + $bodies-and-regions:keys());
+    //$log: debug-log("Flash(values): " + $bodies-and-regions:values());
+    //$log: debug-log("Flash(count): " + $bodies-and-regions:count());
+    
+
+    //* > Discoverables {
+    //    $log: debug-log("Thunder: " + $$ScienceRegionId);
+    //    $log: debug-log("Shock: " + $body);
+    //}
+
+
+    /* Let's see what we have so far */
+    @each $k, $v in $bodies-and-regions {
+        $log: debug-log("Spice must flow");
+        $log: debug-log("Key: " + $k);
+        @each $reg in $v {
+            $log: debug-log("Val: " + $reg);
+        }
+    }
+}

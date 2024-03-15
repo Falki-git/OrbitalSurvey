@@ -103,3 +103,40 @@
     }
     MissionSaveAssetKey: "";
 }
+
+
+
+
+//$mission-parameters: {
+//    "MunGiantRock": {
+//        name: $loc-prefix + "MinGiantRock/Name",
+//        description: $loc-prefix + "MinGiantRock/Description",
+//        brief1: $loc-prefix + "MinGiantRock/Brief1",
+//        brief2: $loc-prefix + "MinGiantRock/Brief2",
+//        debrief1: $loc-prefix + "OrbitalSurvey/Missions/FindDiscoverable/MinGiantRock/Debrief1",
+//        debrief2: $loc-prefix + "OrbitalSurvey/Missions/FindDiscoverable/MinGiantRock/Debrief2",
+//    }
+//};
+
+//"Mun_Landed_MunGiantRock", "Mun_Landed_MunArches"
+
+
+// CREATING A MISSION WITH MIXINS/FUNCTIONS - NOT IMPLEMENTED IN PATCH MANAGER YET
+//
+//@mixin create-object($mission-id, $mission-name, $mission-description, $mission-brief1, $mission-brief2, $mission-debrief1, $mission-debrief2, $full-science-region) {
+//    // create mission here
+//}
+//
+//@each $body, $regions in $bodies-and-regions {
+//    @each $region in $regions {
+//        $mission-id: "orbital_survey_" + $body + "_" + $region;
+//        $mission-name: $loc-prefix + $region + "/Name";
+//        $mission-description: $loc-prefix + $region + "/Description";
+//        $mission-brief1: $loc-prefix + $region + "/Brief1";
+//        $mission-brief2: $loc-prefix + $region + "/Brief2";
+//        $mission-debrief1: $loc-prefix + $region + "/Debrief1";
+//        $mission-debrief2: $loc-prefix + $region + "/Debrief2";
+//        $full-science-region: $body + "_Landed_" + $region;
+//        @include create-mission ($mission-id, $mission-name, $mission-description, $mission-brief1, $mission-brief2, $mission-debrief1, $mission-debrief2, $full-science-region)
+//    }
+//}
