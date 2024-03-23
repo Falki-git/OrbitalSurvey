@@ -18,6 +18,8 @@
               - upon landing on the correct location, send a notification that the discoverable is near; "search for it"
           - EASY:
               - upon landing (or just entering the zone?) on the correct location create a waypoint on the discoverable
+ - Add config to always show Region legend
+ 
  TODO NEAR-TERM:
  - altimetry Map + legend
  - LAT/LON grid toggle - requested by Schneider21
