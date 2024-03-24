@@ -19,6 +19,7 @@
           - EASY:
               - upon landing (or just entering the zone?) on the correct location create a waypoint on the discoverable
  - Add config to always show Region legend
+ - Add config for triggering science experiments
  
  TODO NEAR-TERM:
  - altimetry Map + legend
