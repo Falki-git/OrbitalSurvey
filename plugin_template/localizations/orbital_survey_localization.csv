@@ -45,7 +45,7 @@ OrbitalSurvey/UI/Waypoint/Button/Remove,Text,,Remove,Entfernen,Supprimer,Rimuovi
 OrbitalSurvey/UI/Notification/Overlay/ON,Text,,Overlay: ON,Einblendung: Ein,Affichage: Avec,Overlay: ON,,,,,Наложение: Вкл,叠加层：显示
 OrbitalSurvey/UI/Notification/Overlay/OFF,Text,,Overlay: OFF,Einblendung: Aus,Affichage: Aucun,Overlay: OFF,,,,,Наложение: Выкл,叠加层：隐藏
 OrbitalSurvey/UI/Notification/MarkerNames/ON,Text,,Marker names: ON,Markierungsnamen: Ein,Noms des marqueurs: Avec,Nomi marcatori: ON,,,,,Маркеры: Вкл,标记名称：显示
-OrbitalSurvey/UI/Notification/MarkerNames/OFF,Text,,Marker names: OFF,Markierungsnamen: Aus,Noms des marqueurs: Aucun,Nomi marcatori: OFF,,,,,МаркерыЖ Выкл ,标记名称：隐藏
+OrbitalSurvey/UI/Notification/MarkerNames/OFF,Text,,Marker names: OFF,Markierungsnamen: Aus,Noms des marqueurs: Aucun,Nomi marcatori: OFF,,,,,МаркерыЖ: Выкл ,标记名称：隐藏
 OrbitalSurvey/UI/Notification/GeoCoordinates/ON,Text,,Geographic coordinates: ON,Geographische Koordinaten: Ein,Coordonnées géographiques: Avec,Coordinate geografiche: ON,,,,,Координаты: Вкл,地理坐标：显示
 OrbitalSurvey/UI/Notification/GeoCoordinates/OFF,Text,,Geographic coordinates: OFF,Geographische Koordinaten: Aus,Coordonnées géographiques: Aucun,Coordinate geografiche: OFF,,,,,КоординатыЖ Выкл,地理坐标：隐藏
 OrbitalSurvey/UI/Notification/VesselTracking/ON,Text,,Active vessel tracking: ON,Aktive Raumfahrzeugverfolgung: Ein,Suivi vaisseau actif: Avec,Segui veicolo attivo: ON,,,,,Отслеживание текущего устройства: Вкл,追踪当前载具：开
