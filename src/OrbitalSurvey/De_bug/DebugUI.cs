@@ -106,13 +106,14 @@ namespace OrbitalSurvey.Debug
         private string _assetName = "Assets/Images/Icons/icon.png";
         public Texture2D Asset;
         private bool _showActiveMissions = false;
-        private bool _showMissionDetails = true;
+        private bool _showMissionDetails = false;
         private string _missionId = "OrbitalSurvey_Minmus_MinmusBalancingRock"; //"OrbitalSurvey_Mun_MunGiantRock";
         private string _newMissionId = "orbital_survey_03";
         private int _missionIndex;
         private string _stageToActivate = "0";
         private List<string> _missionIds;
         private int _activateMissionIndex = 12;
+        private bool _showMissionObjectivesStats = true;
 
         private static DebugUI _instance;
         internal static DebugUI Instance
@@ -1193,6 +1194,21 @@ namespace OrbitalSurvey.Debug
                             }
                         }
                     }
+                }
+                
+                if (GUILayout.Button(_showMissionObjectivesStats ? "Hide Mission Objectives Section" : "Show Mission Objectives Section", _normalButton))
+                    _showMissionObjectivesStats = !_showMissionObjectivesStats;
+
+                if (_showMissionObjectivesStats)
+                {
+                    GUILayout.BeginHorizontal();
+                    {
+                        
+                        GUILayout.Label($"Dist1: {ObjectiveChecker.Instance.DebugDistance[0].ToString("N5")}");
+                        GUILayout.Label($"Dist2: {ObjectiveChecker.Instance.DebugDistance[1].ToString("N5")}");
+                        GUILayout.Label($"Dist3: {ObjectiveChecker.Instance.DebugDistance[2].ToString("N5")}");
+                    }
+                    GUILayout.EndHorizontal();
                 }
                 
                 GUILayout.Label("--");

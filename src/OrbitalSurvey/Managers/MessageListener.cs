@@ -59,7 +59,7 @@ public class MessageListener : ManagerBase<MessageListener>
         
         // initialize missions
         MissionManager.Instance.Initialize();
-        // TODO load mission data ??? or we'll load them SaveManager?
+        // TODO load mission data ??? or we'll load them via SaveManager?
     }
     
     private void OnGameStateChangedMessage(MessageCenterMessage obj)

@@ -71,6 +71,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         );
         
         Settings.Initialize();
+        int i = 0;
 
         MessageListener.Instance.SubscribeToMessages();
         
@@ -81,6 +82,7 @@ public class OrbitalSurveyPlugin : BaseSpaceWarpPlugin
         providers.transform.parent = this.transform;
         providers.AddComponent<AssetUtility>();
         providers.AddComponent<VesselManager>();
+        providers.AddComponent<ObjectiveChecker>();
         
         // initialize configs
         CelestialCategoryManager.Instance.InitializeConfigs();

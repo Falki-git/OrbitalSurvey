@@ -32,6 +32,7 @@ public static class Settings
     public const float MIN_ANGULAR_DISTANCE_FOR_MISSION_AREAS = 50f;
     public const float MIN_MAX_LATITUDE_FOR_MISSION_AREAS = 70f;
     public const float MIN_MAX_LONGITUDE_FOR_MISSION_AREAS = 160f;
+    public const float MISSION_AREA_RADIUS = 50000f;
     
     public static void Initialize()
     {
