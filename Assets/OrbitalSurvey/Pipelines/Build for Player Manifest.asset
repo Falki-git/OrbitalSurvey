@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8464593721680719997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ea0a28af7349aa972a4bcb474b48d7, type: 3}
+  m_Name: AddressablesGroupDatum
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - D:\SteamLibrary\steamapps\common\Kerbal Space Program 2 Redux/mods/__Testing/OrbitalSurvey/addressables
+  mod: {fileID: 11400000, guid: 603958188aa57b7419174695036dc863, type: 2}
+  targetFolder: D:\SteamLibrary\steamapps\common\Kerbal Space Program 2 Redux/mods/__Testing/OrbitalSurvey/addressables
+--- !u!114 &-7671156742040104801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22bb7fd1d3b56a48bc52f8e407901d6, type: 3}
+  m_Name: OrbitalSurvey - Editor
+  m_EditorClassIdentifier: 
+  StagingPaths: []
+  Author: nobody
+  Name: 
+  Description: A sample mod for KSP2
+  Version: 0.1.0
+  Dependencies: []
+--- !u!114 &-4963120151348671822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a089732392b94873b7dffb12543079c3, type: 3}
+  m_Name: TextAssets
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - D:\SteamLibrary\steamapps\common\Kerbal Space Program 2 Redux/mods/__Testing/OrbitalSurvey
+  possibleFolders:
+  - Assets\OrbitalSurvey
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e563561e08b6a3642a487177f5cfbb37, type: 3}
+  m_Name: Build for Player Manifest
+  m_EditorClassIdentifier: 
+  Data:
+  - {fileID: 957267449766261596}
+  - {fileID: -4963120151348671822}
+  - {fileID: -8464593721680719997}
+  - {fileID: 5711818207756320841}
+  identity: {fileID: -7671156742040104801}
+  QuickAccess: 0
+--- !u!114 &957267449766261596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470dbf1cc5834ffc97c653aa1126938c, type: 3}
+  m_Name: CopyFolderDatum
+  m_EditorClassIdentifier: 
+  StagingPaths: []
+  sourcePath: Assets\OrbitalSurvey/Copied
+  destinationPath: D:\SteamLibrary\steamapps\common\Kerbal Space Program 2 Redux/mods/__Testing/OrbitalSurvey
+--- !u!114 &5711818207756320841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
+  m_Name: AssemblyDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - D:\SteamLibrary\steamapps\common\Kerbal Space Program 2 Redux/mods/__Testing/OrbitalSurvey
+  definitions:
+  - {fileID: 5897886265953266890, guid: 59bd27d6b77f9cf48a5ad20a87b14c79, type: 3}

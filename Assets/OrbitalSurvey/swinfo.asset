@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9065a46703c44e8fabd263388eaeb6e7, type: 3}
+  m_Name: swinfo
+  m_EditorClassIdentifier: 
+  id: OrbitalSurvey
+  name: Orbital Survey
+  author: Falki
+  description: Scan celestial bodies from orbit.
+  version: 0.9.5
+  versionCheck: TODO
+  minKsp2Version: 0.2.3
+  maxKsp2Version: '*'
+  source: https://github.com/Falki-git/OrbitalSurvey
+  allGroup: {fileID: 11400000, guid: 806db4a031247434c8397165263e63fc, type: 2}
+  partsGroup: {fileID: 11400000, guid: 7a9e80c0b9c1abb4fa6a60fcdd847f6e, type: 2}
+  missionsGroup: {fileID: 11400000, guid: e03c08ba2162ad64fa67c205df51ff97, type: 2}
+  celestialBodiesGroup: {fileID: 11400000, guid: 379b82f7abc78c741bddf952eb7a3922, type: 2}
+  scienceExperimentGroup: {fileID: 11400000, guid: a21e499f25874f841a9e22624fc365d0, type: 2}
+  techNodeDataGroup: {fileID: 11400000, guid: f5fa485f9ca663448b6c66a4b9850341, type: 2}
+  addressablesProfileId: e06e5f7ce667e1948ab6eb2ec8eb45b8
+  dependencies:
+  - id: SpaceWarp2
+    min: 2.0.0
+    max: '*'
+  incompatibilities: []
