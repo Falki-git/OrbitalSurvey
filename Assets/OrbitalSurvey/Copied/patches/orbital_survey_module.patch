@@ -1,0 +1,150 @@
+@use 'constants';
+@use 'builtin:config';
+
+// GLOBAL VARIABLES
+$VISUAL-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-early-field-of-view");
+$VISUAL-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-early-ec-consumption");
+$BIOME-EARLY-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-early-field-of-view");
+$BIOME-EARLY-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-early-ec-consumption");
+
+$VISUAL-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-mid-field-of-view");
+$VISUAL-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-mid-ec-consumption");
+$BIOME-MID-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-mid-field-of-view");
+$BIOME-MID-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-mid-ec-consumption");
+
+$VISUAL-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "visual-late-field-of-view");
+$VISUAL-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "visual-late-ec-consumption");
+$BIOME-LATE-FIELD-OF-VIEW: get-config("orbital-survey-constants", "biome-late-field-of-view");
+$BIOME-LATE-EC-CONSUMPTION: get-config("orbital-survey-constants", "biome-late-ec-consumption");
+
+:parts #antenna_0v_dish_ra-2 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
+            ScanningFieldOfViewValue: $VISUAL-EARLY-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $VISUAL-EARLY-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_parabolic_dts-m1 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
+            ScanningFieldOfViewValue: $BIOME-EARLY-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $BIOME-EARLY-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_0v_dish_ra-15 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
+            ScanningFieldOfViewValue: $VISUAL-MID-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $VISUAL-MID-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_hg55 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
+            ScanningFieldOfViewValue: $BIOME-MID-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $BIOME-MID-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_ra-100 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Visual";
+            ScanningFieldOfViewValue: $VISUAL-LATE-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $VISUAL-LATE-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
+
+:parts #antenna_1v_dish_88-88 {
+    +Module_OrbitalSurvey {
+        +Data_OrbitalSurvey {
+            ModeValue: "PartModules/OrbitalSurvey/Mode/Biome";
+            ScanningFieldOfViewValue: $BIOME-LATE-FIELD-OF-VIEW;
+            RequiredResource: {
+                Rate: $BIOME-LATE-EC-CONSUMPTION,
+                ResourceName: "ElectricCharge",
+                AcceptanceThreshold: 0.1
+            };
+        }
+    }
+    PAMModuleVisualsOverride +: [
+        {
+            PartComponentModuleName: "PartComponentModule_OrbitalSurvey",
+            ModuleDisplayName: "PartModules/OrbitalSurvey/Name",
+            ShowHeader: true,
+            ShowFooter: true
+        }
+    ];
+}
