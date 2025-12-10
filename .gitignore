@@ -93,6 +93,7 @@ mod_list_hash.txt
 redux.log.old
 redux.log
 Deploy/
+Assets/Mods
 Assets/Mods/__Testing
 Assets/Mods/__Testing.meta
 Packages/packages-lock.json
