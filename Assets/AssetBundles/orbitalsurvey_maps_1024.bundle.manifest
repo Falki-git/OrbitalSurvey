@@ -1,0 +1,56 @@
+ManifestFileVersion: 0
+CRC: 3917716484
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 390cb5e5ab802696535cfe616a83654c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d8df09e698f722ada1caa03d3413830
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/OrbitalSurvey/Images/RegionMaps/minmus_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/minmus_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/moho_region_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/mun_region_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/duna_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/bop_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/vall_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/pol_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/gilly_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/kerbin_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/laythe_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/jool_region_1024.png
+- Assets/OrbitalSurvey/Images/HiddenMaps/kerbin_undiscovered_1024.png
+- Assets/OrbitalSurvey/Images/HiddenMaps/minmus_undiscovered_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/tylo_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/ike_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/jool_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/duna_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/dres_region_1024.png
+- Assets/OrbitalSurvey/Images/HiddenMaps/mun_undiscovered_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/pol_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/moho_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/Other/HiddenMap_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/eeloo_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/laythe_scaled_water_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/bop_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/eve_scaled_mesh_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/laythe_region_1024.png
+- Assets/OrbitalSurvey/Images/Other/AllBlack_4096.png
+- Assets/OrbitalSurvey/Images/RegionMaps/gilly_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/dres_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/eeloo_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/mun_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/ike_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/kerbin_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/tylo_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/vall_region_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/eve_region_1024.png
+Dependencies: []

@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 2793775713
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: orbitalsurvey_ui.bundle
+      Dependencies: {}
+    Info_1:
+      Name: orbitalsurvey_maps_1024.bundle
+      Dependencies: {}
+    Info_2:
+      Name: orbitalsurvey_maps_2048.bundle
+      Dependencies: {}
