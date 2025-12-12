@@ -1,8 +1,9 @@
-﻿namespace OrbitalSurvey.Models;
-
-public class ScanningStats : ScanningAltitudes
+﻿namespace OrbitalSurvey.Models
 {
-    public float FieldOfView;
-    public string Body;
-    public string Category;
+    public class ScanningStats : ScanningAltitudes
+    {
+        public float FieldOfView;
+        public string Body;
+        public string Category;
+    }
 }

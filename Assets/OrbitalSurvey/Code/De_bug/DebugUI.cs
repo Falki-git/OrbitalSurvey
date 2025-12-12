@@ -1,10 +1,11 @@
-﻿using BepInEx.Logging;
+﻿using System.Collections.Generic;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
-using SpaceWarp.API.Game.Waypoints;
-using SpaceWarp.API.UI;
+using SpaceWarp2.Game.API.Waypoints;
+using SpaceWarp2.Game.API.Waypoints;
 using UnityEngine;
 using Utility = OrbitalSurvey.Utilities.Utility;
+using ILogger = ReduxLib.Logging.ILogger;
 #pragma warning disable CS0414 // Field is assigned but its value is never used
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -22,7 +23,7 @@ namespace OrbitalSurvey.Debug
         private GUIStyle _normalSectionButton;
         private GUIStyle _toggledSectionButton;
         private GUIStyle _narrowButton;
-        private readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_UI");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.DEBUG_UI");
         private string _myCustomTextureFilename = "allblack.png";
         private string _myCustomTextureName = string.Empty;
         private string _textureName = string.Empty;
@@ -106,6 +107,7 @@ namespace OrbitalSurvey.Debug
 
         public void InitializeStyles()
         {
+            /* TODO reimplement IMGUI skin from SpaceWarp Legacy https://github.com/KSP2Community/SpaceWarpLegacy
             _labelStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 };
             _labelStyleShort = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 10 };
             _normalButton = new GUIStyle(Skins.ConsoleSkin.button);
@@ -114,6 +116,7 @@ namespace OrbitalSurvey.Debug
             _toggledSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
             _toggledSectionButton.normal.textColor = Color.gray;
             _narrowButton = new GUIStyle(Skins.ConsoleSkin.button) { fixedWidth = 20 };
+            */
         }
 
         public void InitializeControls()
@@ -133,7 +136,9 @@ namespace OrbitalSurvey.Debug
             if (_labelStyle == null)
                 return;
 
+            /* TODO reimplement IMGUI skin from SpaceWarp Legacy https://github.com/KSP2Community/SpaceWarpLegacy
             GUI.skin = Skins.ConsoleSkin;
+            */
 
             if (IsDebugWindowOpen)
             {
@@ -782,7 +787,7 @@ namespace OrbitalSurvey.Debug
                     GUILayout.Label($"OrbitalSurv.: {_isOrbitalSurveyRegistered}");
                     if (GUILayout.Button("Register"))
                     {
-                        SpaceWarp.API.Parts.PartComponentModuleOverride
+                        SpaceWarp2.API.Parts.PartComponentModuleOverride
                             .RegisterModuleForBackgroundResourceProcessing<OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
                         _isOrbitalSurveyRegistered = true;
                     }

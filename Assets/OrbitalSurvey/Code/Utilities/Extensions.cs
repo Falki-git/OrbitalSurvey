@@ -1,38 +1,41 @@
-﻿using KSP.Sim.impl;
+﻿using System.Collections.Generic;
+using System.Linq;
+using KSP.Sim.impl;
 
-namespace OrbitalSurvey.Utilities;
-
-public static class Extensions
+namespace OrbitalSurvey.Utilities
 {
-    public static string AddSpaceBeforeUppercase(this string input)
+    public static class Extensions
     {
-        if (string.IsNullOrEmpty(input))
+        public static string AddSpaceBeforeUppercase(this string input)
         {
-            return input;
-        }
-
-        var charList = new List<char>(input.ToCharArray());
-
-        for (var i = 1; i < charList.Count; i++)
-        {
-            if (char.IsUpper(charList[i]))
+            if (string.IsNullOrEmpty(input))
             {
-                charList.Insert(i++, ' ');
+                return input;
             }
+
+            var charList = new List<char>(input.ToCharArray());
+
+            for (var i = 1; i < charList.Count; i++)
+            {
+                if (char.IsUpper(charList[i]))
+                {
+                    charList.Insert(i++, ' ');
+                }
+            }
+
+            return new string(charList.ToArray());
         }
 
-        return new string(charList.ToArray());
-    }
-    
-    public static T GetModule<T>(this VesselComponent vessel) where T : PartComponentModule
-    {
-        var modules = vessel.SimulationObject.PartOwner.GetPartModules<T>();
-
-        if (modules != null && modules.Count >= 1)
+        public static T GetModule<T>(this VesselComponent vessel) where T : PartComponentModule
         {
-            return modules.First();
+            var modules = vessel.SimulationObject.PartOwner.GetPartModules<T>();
+
+            if (modules != null && modules.Count >= 1)
+            {
+                return modules.First();
+            }
+
+            return null;
         }
-        
-        return null;
     }
 }

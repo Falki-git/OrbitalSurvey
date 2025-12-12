@@ -1,17 +1,20 @@
-﻿using System.Reflection;
-using BepInEx.Logging;
+﻿using System.Collections.Generic;
+using System.Reflection;
+//using DG.Tweening.Plugins.Core.PathCore;
 using KSP.Game;
 using KSP.Game.Science;
 using KSP.Messages;
 using KSP.Rendering.Planets;
-using KSP.Sim.Definitions;
 using KSP.Sim.impl;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
-using SpaceWarp.API.Assets;
-using SpaceWarp.API.Game.Waypoints;
+//using SpaceWarp2.API.Assets;
+using SpaceWarp2.Game.API.Waypoints;
 using UnityEngine;
+using System.IO;
+using System.Linq;
+using Redux.ApiImpls;
 
 namespace OrbitalSurvey.Debug
 {
@@ -23,7 +26,7 @@ namespace OrbitalSurvey.Debug
         public Texture2D BiomeMask;
         public Texture SavedTexture;
         private Texture _textureBackup;
-        private static readonly ManualLogSource _LOGGER = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.DEBUG_Manager");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.DEBUG_Manager");
 
         private static DebugManager _instance;
         internal static DebugManager Instance
@@ -122,7 +125,7 @@ namespace OrbitalSurvey.Debug
             var pqsRenderer = celes.GetComponent<PQSRenderer>();
 
             pqsRenderer.DrawPQSOverlays(pqsRenderer.SourceCamera);
-            _LOGGER.LogDebug("DrawCustomOverlays executed");
+            Logger.LogDebug("DrawCustomOverlays executed");
         }
 
         public void LoadMyCustomAssetTexture()
@@ -224,7 +227,11 @@ namespace OrbitalSurvey.Debug
 
         public void LoadCustomAssetTexture(string filenameWithExtension)
         {
-            MyCustomTexture = AssetManager.GetAsset<Texture2D>($"{OrbitalSurveyPlugin.Instance.SpaceWarpMetadata.ModID}/images/{filenameWithExtension}");
+            //MyCustomTexture = AssetManager.GetAsset<Texture2D>($"{OrbitalSurveyPlugin.Instance.SpaceWarpMetadata.ModID}/images/{filenameWithExtension}");
+            var path = Path.Combine(AssetUtility.Instance.ImagesPath, filenameWithExtension);
+            var bytes = File.ReadAllBytes(path);
+            MyCustomTexture = new Texture2D(2, 2);
+            MyCustomTexture.LoadImage(bytes);
         }
 
         public void LoadTextureFromDisk(string textureFilename)
@@ -550,9 +557,9 @@ namespace OrbitalSurvey.Debug
             var scienceRegionsProvider = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider;
             
             _pqsScienceOverlay.SetCelestialBody(pqs);
-            _LOGGER.LogDebug($"PQSScienceOverlay: PQS set to {mapBody}");
+            Logger.LogDebug($"PQSScienceOverlay: PQS set to {mapBody}");
             _pqsScienceOverlay.SetScienceRegionsDataProvider(scienceRegionsProvider);
-            _LOGGER.LogDebug($"PQSScienceOverlay: ScienceRegionsData Provider set");
+            Logger.LogDebug($"PQSScienceOverlay: ScienceRegionsData Provider set");
 
             RegionBody = mapBody;
         }
@@ -560,11 +567,11 @@ namespace OrbitalSurvey.Debug
         public void DownloadScienceRegionsTexture()
         {
             _pqsScienceOverlay.Update();
-            _LOGGER.LogDebug($"PQSScienceOverlay: updated");
+            Logger.LogDebug($"PQSScienceOverlay: updated");
             
             if (_pqsScienceOverlay._overlayTexture == null)
             {
-                _LOGGER.LogDebug($"PQSScienceOverlay: overlay texture is null");
+                Logger.LogDebug($"PQSScienceOverlay: overlay texture is null");
                 return;
             }
             
@@ -573,10 +580,10 @@ namespace OrbitalSurvey.Debug
             path = Path.Combine(path, "ExportedScienceRegionsMap.png");
             File.WriteAllBytes(path, bytes);
             
-            _LOGGER.LogDebug($"PQSScienceOverlay: overlay texture exported");
+            Logger.LogDebug($"PQSScienceOverlay: overlay texture exported");
         }
 
-        public List<Waypoint> Waypoints = new();
+        public List<ReduxWaypoint> Waypoints = new();
 
         public void CreateWaypoint(string name, string bodyName, double latitude, double longitude, double? altitudeFromRadius = 0)
         {
@@ -591,13 +598,16 @@ namespace OrbitalSurvey.Debug
                 altitudeFromRadius = body.SurfaceProvider.GetTerrainAltitudeFromCenter(latitude, longitude) - body.radius; 
             }
             
+            // KSP2 implementation
             // var waypointComponentDefinition = new WaypointComponentDefinition() { Name = name };
             // var waypoint = spaceSimulation.CreateWaypointSimObject(
             //     waypointComponentDefinition, body, latitude, longitude, altitudeFromRadius);
             //
             // Waypoints.Add(waypoint);
             
-            Waypoints.Add(new Waypoint(latitude, longitude, altitudeFromRadius, bodyName, name, WaypointState.Visible));
+            // Redux tweak
+            // Waypoints.Add(new IWaypoint(latitude, longitude, altitudeFromRadius, bodyName, name, WaypointState.Visible));
+            Waypoints.Add(new ReduxWaypoint(latitude, longitude, altitudeFromRadius, bodyName, name, WaypointState.Visible));
         }
 
         public void MoveWaypoint(int waypointIndex, double latitude, double longitude, double? altitudeFromRadius = 0)

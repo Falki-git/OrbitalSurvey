@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using BepInEx.Logging;
+﻿using System;
+using System.Reflection;
 using HarmonyLib;
 using KSP.Game;
 using KSP.Game.Load;
@@ -7,12 +7,13 @@ using KSP.IO;
 using KSP.Sim;
 using Newtonsoft.Json;
 using OrbitalSurvey.Utilities;
+using ILogger = ReduxLib.Logging.ILogger;
 
 namespace OrbitalSurvey.Debug
 {
     public class SaveLoadPatches
     {
-        private static readonly ManualLogSource _logger = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.SaveLoadPatches");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.SaveLoadPatches");
 
         #region testbed
         /*
@@ -45,7 +46,7 @@ namespace OrbitalSurvey.Debug
         [HarmonyPatch(new Type[] { typeof(string), typeof(LoadGameData) })]
         private static void InjectPluginSaveGameData(string filename, LoadGameData data, SerializeGameDataFlowAction __instance)
         {
-            _logger.LogDebug("SerializeGameDataFlowAction constructor postfix triggered");
+            Logger.LogDebug("SerializeGameDataFlowAction constructor postfix triggered");
 
             if (ModSaves.InternalPluginSaveData.Count == 0)
                 return;
@@ -121,7 +122,7 @@ namespace OrbitalSurvey.Debug
                         var existingData = ModSaves.InternalPluginSaveData.Find(p => p.ModGuid == loadedData.ModGuid);                        
                         if (existingData == null)
                         {
-                            _logger.LogWarning($"Saved data for plugin '{loadedData.ModGuid}' found during a load event, however that plugin isn't registered for save/load events. Skipping load for this plugin.");
+                            Logger.LogWarning($"Saved data for plugin '{loadedData.ModGuid}' found during a load event, however that plugin isn't registered for save/load events. Skipping load for this plugin.");
                             continue;
                         }
 
@@ -147,7 +148,7 @@ namespace OrbitalSurvey.Debug
 
     public class PatchTest
     {
-        private static readonly ManualLogSource _LOGGER = BepInEx.Logging.Logger.CreateLogSource("OrbitalSurvey.PatchTest");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.PatchTest");
 
         [HarmonyPatch(typeof(CampaignLoadMenu), "LoadSelectedFile"), HarmonyPrefix]
         private static bool MyTest(CampaignLoadMenu __instance)

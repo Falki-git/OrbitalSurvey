@@ -1,8 +1,9 @@
-﻿namespace OrbitalSurvey.Models;
-
-public class ScanningAltitudes
+﻿namespace OrbitalSurvey.Models
 {
-    public float MinAltitude;
-    public float IdealAltitude;
-    public float MaxAltitude;
+    public class ScanningAltitudes
+    {
+        public float MinAltitude;
+        public float IdealAltitude;
+        public float MaxAltitude;
+    }
 }

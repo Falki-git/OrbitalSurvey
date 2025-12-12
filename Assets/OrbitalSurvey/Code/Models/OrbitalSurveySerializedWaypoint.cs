@@ -1,23 +1,25 @@
-﻿using SpaceWarp.API.Game.Waypoints;
+﻿using SpaceWarp2.Game.API.Waypoints;
 
-namespace OrbitalSurvey.Models;
-
-public class OrbitalSurveySerializedWaypoint: SerializedWaypoint
+namespace OrbitalSurvey.Models
 {
-    public OrbitalSurveySerializedWaypoint(
-        string name, string bodyName, double latitude, double longitude, double altitude, WaypointState state,
-        WaypointColor waypointColor)
-        : base(name, bodyName, latitude, longitude, altitude, state)
+    public class OrbitalSurveySerializedWaypoint : SerializedWaypoint
     {
-        this.WaypointColor = waypointColor;
-    }
+        public OrbitalSurveySerializedWaypoint(
+            string name, string bodyName, double latitude, double longitude, double altitude, WaypointState state,
+            WaypointColor waypointColor)
+            : base(name, bodyName, latitude, longitude, altitude, state)
+        {
+            this.WaypointColor = waypointColor;
+        }
 
-    public WaypointColor WaypointColor { get; }
-    
-    /// <summary>
-    /// Deserializes the waypoint, creating an actual waypoint from it
-    /// </summary>
-    /// <returns>A newly created waypoint from the serialized waypoint's parameters</returns>
-    public new OrbitalSurveyWaypoint Deserialize() => new OrbitalSurveyWaypoint(base.Latitude, base.Longitude, base.Altitude,
-        base.BodyName, base.Name, base.State, this.WaypointColor);
+        public WaypointColor WaypointColor { get; }
+
+        /// <summary>
+        /// Deserializes the waypoint, creating an actual waypoint from it
+        /// </summary>
+        /// <returns>A newly created waypoint from the serialized waypoint's parameters</returns>
+        public new OrbitalSurveyWaypoint Deserialize() => new OrbitalSurveyWaypoint(base.Latitude, base.Longitude,
+            base.Altitude,
+            base.BodyName, base.Name, base.State, this.WaypointColor);
+    }
 }

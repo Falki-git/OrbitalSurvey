@@ -1,4 +1,6 @@
-﻿using KSP.Sim;
+﻿using System;
+using System.Collections.Generic;
+using KSP.Sim;
 
 namespace OrbitalSurvey.Debug
 {

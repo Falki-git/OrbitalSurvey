@@ -1,47 +1,51 @@
 ﻿using KSP.Game;
 using OrbitalSurvey.Models;
 
-namespace OrbitalSurvey.Utilities;
-
-public class NotificationUtility
+namespace OrbitalSurvey.Utilities
 {
-    private NotificationUtility() { }
-    public static NotificationUtility Instance { get; } = new();
-
-    private readonly NotificationManager _manager = GameManager.Instance.Game.Notifications; 
-
-    public void NotifyExperimentComplete(string body, ExperimentLevel level)
+    public class NotificationUtility
     {
-        string title;
-        string firstLine;
-        
-        if (level == ExperimentLevel.Full)
+        private NotificationUtility()
         {
-            title = "OrbitalSurvey/Experiments/Notification/Complete/Title";
-            firstLine = "OrbitalSurvey/Experiments/Notification/Complete/FirstLine";
         }
-        else
+
+        public static NotificationUtility Instance { get; } = new();
+
+        private readonly NotificationManager _manager = GameManager.Instance.Game.Notifications;
+
+        public void NotifyExperimentComplete(string body, ExperimentLevel level)
         {
-            title = "OrbitalSurvey/Experiments/Notification/Milestone/Title";
-            firstLine = "OrbitalSurvey/Experiments/Notification/Milestone/FirstLine";
-        }
-        
-        var notificationData = new NotificationData()
-        {
-            Importance = NotificationImportance.Low,
-            Tier = NotificationTier.Alert,
-            TimeStamp = Utility.UT,
-            AlertTitle = new NotificationLineItemData()
+            string title;
+            string firstLine;
+
+            if (level == ExperimentLevel.Full)
             {
-                ObjectParams = new object[]{ body },
-                LocKey = title
-            },
-            FirstLine = new NotificationLineItemData()
-            {
-                LocKey = firstLine
+                title = "OrbitalSurvey/Experiments/Notification/Complete/Title";
+                firstLine = "OrbitalSurvey/Experiments/Notification/Complete/FirstLine";
             }
-        };
-        
-        _manager.ProcessNotification(notificationData);
+            else
+            {
+                title = "OrbitalSurvey/Experiments/Notification/Milestone/Title";
+                firstLine = "OrbitalSurvey/Experiments/Notification/Milestone/FirstLine";
+            }
+
+            var notificationData = new NotificationData()
+            {
+                Importance = NotificationImportance.Low,
+                Tier = NotificationTier.Alert,
+                TimeStamp = Utility.UT,
+                AlertTitle = new NotificationLineItemData()
+                {
+                    ObjectParams = new object[] { body },
+                    LocKey = title
+                },
+                FirstLine = new NotificationLineItemData()
+                {
+                    LocKey = firstLine
+                }
+            };
+
+            _manager.ProcessNotification(notificationData);
+        }
     }
 }

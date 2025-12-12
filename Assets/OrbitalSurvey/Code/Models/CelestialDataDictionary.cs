@@ -1,12 +1,15 @@
-﻿namespace OrbitalSurvey.Models;
+﻿using System.Collections.Generic;
 
-public class CelestialDataDictionary : Dictionary<string, CelestialData>
+namespace OrbitalSurvey.Models
 {
-    public new void Add(string body, CelestialData celestialData) => base.Add(body, celestialData);
-
-    public new CelestialData this[string body]
+    public class CelestialDataDictionary : Dictionary<string, CelestialData>
     {
-        get => base[body];
-        set => base[body] = value;
+        public new void Add(string body, CelestialData celestialData) => base.Add(body, celestialData);
+
+        public new CelestialData this[string body]
+        {
+            get => base[body];
+            set => base[body] = value;
+        }
     }
 }

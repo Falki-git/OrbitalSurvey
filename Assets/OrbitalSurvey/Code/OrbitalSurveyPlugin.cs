@@ -22,44 +22,19 @@ namespace OrbitalSurvey
         public const string ToolbarFlightButtonID = "BTN-OrbitalOverlayFlight";
         public const string ToolbarOABButtonID = "BTN-OrbitalOverlayOAB";
         public const string ToolbarKSCButtonID = "BTN-OrbitalOverlayKSC";
-
-        internal AssetBundle Maps1024;
-        internal AssetBundle Maps2048;
-        internal AssetBundle Ui;
-        internal Texture2D AppIcon;
         
+        internal Texture2D AppIcon;
 
         public override void OnPreInitialized()
         {
             Instance = this;
             
             var assetsPath = Path.Combine(SWMetadata.Folder.FullName, "assets");
-            var bundlesPath = Path.Combine(assetsPath, "bundles");
             var imagesPath = Path.Combine(assetsPath, "images");
-            
             var icon = Path.Combine(imagesPath, "icon.png");
             var bytes = File.ReadAllBytes(icon);
             AppIcon = new Texture2D(2, 2);
             AppIcon.LoadImage(bytes);
-
-            Maps1024 = AssetBundle.LoadFromFile(Path.Combine(bundlesPath, "orbitalsurvey_maps_1024"));
-            Maps2048 = AssetBundle.LoadFromFile(Path.Combine(bundlesPath, "orbitalsurvey_maps_2048"));
-            Ui = AssetBundle.LoadFromFile(Path.Combine(bundlesPath, "orbitalsurvey_ui"));
-            
-            foreach (var item in Maps1024.GetAllAssetNames())
-            {
-                SWLogger.LogInfo($"AssetBundle Maps1024 Item: {item}");
-            }
-
-            foreach (var item in Maps2048.GetAllAssetNames())
-            {
-                SWLogger.LogInfo($"AssetBundle Maps2048 Item: {item}");
-            }
-            
-            foreach (var item in Ui.GetAllAssetNames())
-            {
-                SWLogger.LogInfo($"AssetBundle Ui Item: {item}");
-            }
             
             Settings.Initialize();
         }

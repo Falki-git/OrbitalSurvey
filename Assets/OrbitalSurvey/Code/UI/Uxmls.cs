@@ -1,39 +1,42 @@
-﻿using BepInEx.Logging;
-using SpaceWarp.API.Assets;
+﻿using System;
+using OrbitalSurvey.Utilities;
 using UnityEngine.UIElements;
 
-namespace OrbitalSurvey.UI;
-
-public class Uxmls
+namespace OrbitalSurvey.UI
 {
-    public static Uxmls Instance { get; } = new();
-    
-    public VisualTreeAsset MainGui;
-    
-    private const string _MAIN_GUI_PATH = "/orbitalsurvey_ui/ui/orbitalsurvey.uxml";
-    
-    private static readonly ManualLogSource _LOGGER = Logger.CreateLogSource("OrbitalSurvey.Uxmls");
-
-    private Uxmls()
+    public class Uxmls
     {
-        Initialize();
-    }
+        public static Uxmls Instance { get; } = new();
 
-    private void Initialize()
-    {
-        MainGui = LoadAsset($"{_MAIN_GUI_PATH}");
-    }
+        public VisualTreeAsset MainGui;
 
-    private VisualTreeAsset LoadAsset(string path)
-    {
-        try
+        private const string _MAIN_GUI_PATH = "/orbitalsurvey_ui/ui/orbitalsurvey.uxml";
+
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.Uxmls");
+
+        private Uxmls()
         {
-            return AssetManager.GetAsset<VisualTreeAsset>($"{OrbitalSurveyPlugin.ModGuid}{path}");
+            Initialize();
         }
-        catch (Exception ex)
+
+        private void Initialize()
         {
-            _LOGGER.LogError($"Failed to load VisualTreeAsset at path \"{OrbitalSurveyPlugin.ModGuid}{path}\"\n" + ex.Message);
-            return null;
+            MainGui = LoadAsset($"{_MAIN_GUI_PATH}");
+        }
+
+        private VisualTreeAsset LoadAsset(string path)
+        {
+            try
+            {
+                // return AssetManager.GetAsset<VisualTreeAsset>($"{OrbitalSurveyPlugin.ModGuid}{path}");
+                return AssetUtility.Instance.Ui.LoadAsset<VisualTreeAsset>(path);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Failed to load VisualTreeAsset at path \"{OrbitalSurveyPlugin.ModGuid}{path}\"\n" +
+                                ex.Message);
+                return null;
+            }
         }
     }
 }

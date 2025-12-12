@@ -81,5 +81,8 @@
     "Newtonsoft.Json.dll"
   ],
   "autoReferenced": true,
-  "noEngineReferences": false
+  "noEngineReferences": false,
+  "references": [
+    "Unity.InputSystem"
+  ]
 }
