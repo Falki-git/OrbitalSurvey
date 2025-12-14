@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
+using OrbitalSurvey.Utilities;
 using SpaceWarp2.Game.API.Waypoints;
 using SpaceWarp2.Game.API.Waypoints;
 using UnityEngine;
@@ -93,6 +94,8 @@ namespace OrbitalSurvey.Debug
         private int _waypointIndex;
         private string _waypointNameExisting = "n/a";
 
+        private GUISkin ConsoleSkin;
+
         private static DebugUI _instance;
         internal static DebugUI Instance
         {
@@ -107,16 +110,16 @@ namespace OrbitalSurvey.Debug
 
         public void InitializeStyles()
         {
-            /* TODO reimplement IMGUI skin from SpaceWarp Legacy https://github.com/KSP2Community/SpaceWarpLegacy
-            _labelStyle = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 150 };
-            _labelStyleShort = new GUIStyle(Skins.ConsoleSkin.label) { fixedWidth = 10 };
-            _normalButton = new GUIStyle(Skins.ConsoleSkin.button);
-            _normalSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
+            ConsoleSkin = AssetUtility.Instance.GetGUISkin();
+            
+            _labelStyle = new GUIStyle(ConsoleSkin.label) { fixedWidth = 150 };
+            _labelStyleShort = new GUIStyle(ConsoleSkin.label) { fixedWidth = 10 };
+            _normalButton = new GUIStyle(ConsoleSkin.button);
+            _normalSectionButton = new GUIStyle(ConsoleSkin.button);
             _normalSectionButton.normal.textColor = new Color(120f/255f, 150f/255f, 255f/255f, 1f);
-            _toggledSectionButton = new GUIStyle(Skins.ConsoleSkin.button);
+            _toggledSectionButton = new GUIStyle(ConsoleSkin.button);
             _toggledSectionButton.normal.textColor = Color.gray;
-            _narrowButton = new GUIStyle(Skins.ConsoleSkin.button) { fixedWidth = 20 };
-            */
+            _narrowButton = new GUIStyle(ConsoleSkin.button) { fixedWidth = 20 };
         }
 
         public void InitializeControls()
@@ -135,10 +138,6 @@ namespace OrbitalSurvey.Debug
         {
             if (_labelStyle == null)
                 return;
-
-            /* TODO reimplement IMGUI skin from SpaceWarp Legacy https://github.com/KSP2Community/SpaceWarpLegacy
-            GUI.skin = Skins.ConsoleSkin;
-            */
 
             if (IsDebugWindowOpen)
             {

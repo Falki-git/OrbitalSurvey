@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using KSP.Game;
+using OrbitalSurvey.Debug;
 using OrbitalSurvey.Models;
 using UnityEngine;
 using ILogger = ReduxLib.Logging.ILogger;
@@ -15,6 +16,7 @@ namespace OrbitalSurvey.Utilities
         public AssetBundle Maps1024;
         public AssetBundle Maps2048;
         public AssetBundle Ui;
+        public AssetBundle SwConsole;
         
         public string AssetsPath;
         public string BundlesPath;
@@ -26,13 +28,16 @@ namespace OrbitalSurvey.Utilities
         {
             Instance = this;
             
+            Logger.LogInfo("Initializing Assets");
+            
             AssetsPath = Path.Combine(OrbitalSurveyPlugin.Instance.SWMetadata.Folder.FullName, "assets");
-            BundlesPath = Path.Combine(AssetsPath, "bunldes");
+            BundlesPath = Path.Combine(AssetsPath, "bundles");
             ImagesPath = Path.Combine(AssetsPath, "images");
             
-            Maps1024 = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_maps_1024"));
-            Maps2048 = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_maps_2048"));
-            Ui = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_ui"));
+            Maps1024 = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_maps_1024.bundle"));
+            Maps2048 = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_maps_2048.bundle"));
+            Ui = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "orbitalsurvey_ui.bundle"));
+            SwConsole = AssetBundle.LoadFromFile(Path.Combine(BundlesPath, "swconsoleui.bundle"));
             
             foreach (var item in Maps1024.GetAllAssetNames())
             {
@@ -48,6 +53,13 @@ namespace OrbitalSurvey.Utilities
             {
                 Logger.LogInfo($"AssetBundle Ui Item: {item}");
             }
+            
+            foreach (var item in SwConsole.GetAllAssetNames())
+            {
+                Logger.LogInfo($"AssetBundle SwConsole Item: {item}");
+            }
+            
+            DebugUI.Instance.InitializeStyles();
         }
 
         private readonly Dictionary<string, string> _scaledVisualAddressableAddresses = new()
@@ -75,132 +87,133 @@ namespace OrbitalSurvey.Utilities
         {
             {
                 "Moho_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/moho_scaled_d_1024.png"
+                // $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/moho_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/moho_scaled_d_1024.png"
             },
             {
                 "Eve_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/eve_scaled_mesh_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eve_scaled_mesh_d_1024.png"
             },
             {
                 "Gilly_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/gilly_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/gilly_scaled_d_1024.png"
             },
             {
                 "Kerbin_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/kerbin_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/kerbin_scaled_d_1024.png"
             },
             {
                 "Mun_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/mun_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/mun_scaled_d_1024.png"
             },
             {
                 "Minmus_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/minmus_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/minmus_scaled_d_1024.png"
             },
             {
                 "Duna_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/duna_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/duna_scaled_d_1024.png"
             },
             {
                 "Ike_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/ike_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/ike_scaled_d_1024.png"
             },
             {
                 "Dres_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/dres_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/dres_scaled_d_1024.png"
             },
             {
                 "Jool_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/jool_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/jool_scaled_d_1024.png"
             },
             {
                 "Laythe_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/laythe_scaled_water_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/laythe_scaled_water_d_1024.png"
             },
             {
                 "Vall_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/vall_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/vall_scaled_d_1024.png"
             },
             {
                 "Tylo_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/tylo_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/tylo_scaled_d_1024.png"
             },
             {
                 "Bop_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/bop_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/bop_scaled_d_1024.png"
             },
             {
                 "Pol_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/pol_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/pol_scaled_d_1024.png"
             },
             {
                 "Eeloo_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/visualmaps/eeloo_scaled_d_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eeloo_scaled_d_1024.png"
             },
 
             {
                 "Moho_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/moho_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/moho_scaled_d_2048.png"
             },
             {
                 "Eve_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/eve_scaled_mesh_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eve_scaled_mesh_d_2048.png"
             },
             {
                 "Gilly_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/gilly_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/gilly_scaled_d_2048.png"
             },
             {
                 "Kerbin_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/kerbin_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/kerbin_scaled_d_2048.png"
             },
             {
                 "Mun_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/mun_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/mun_scaled_d_2048.png"
             },
             {
                 "Minmus_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/minmus_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/minmus_scaled_d_2048.png"
             },
             {
                 "Duna_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/duna_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/duna_scaled_d_2048.png"
             },
             {
                 "Ike_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/ike_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/ike_scaled_d_2048.png"
             },
             {
                 "Dres_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/dres_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/dres_scaled_d_2048.png"
             },
             {
                 "Jool_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/jool_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/jool_scaled_d_2048.png"
             },
             {
                 "Laythe_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/laythe_scaled_water_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/laythe_scaled_water_d_2048.png"
             },
             {
                 "Vall_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/vall_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/vall_scaled_d_2048.png"
             },
             {
                 "Tylo_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/tylo_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/tylo_scaled_d_2048.png"
             },
             {
                 "Bop_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/bop_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/bop_scaled_d_2048.png"
             },
             {
                 "Pol_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/pol_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/pol_scaled_d_2048.png"
             },
             {
                 "Eeloo_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/visualmaps/eeloo_scaled_d_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eeloo_scaled_d_2048.png"
             }
         };
 
@@ -208,132 +221,132 @@ namespace OrbitalSurvey.Utilities
         {
             {
                 "Moho_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/moho_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/moho_region_1024.png"
             },
             {
                 "Eve_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/eve_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eve_region_1024.png"
             },
             {
                 "Gilly_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/gilly_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/gilly_region_1024.png"
             },
             {
                 "Kerbin_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/kerbin_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/kerbin_region_1024.png"
             },
             {
                 "Mun_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/mun_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/mun_region_1024.png"
             },
             {
                 "Minmus_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/minmus_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/minmus_region_1024.png"
             },
             {
                 "Duna_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/duna_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/duna_region_1024.png"
             },
             {
                 "Ike_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/ike_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/ike_region_1024.png"
             },
             {
                 "Dres_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/dres_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/dres_region_1024.png"
             },
             {
                 "Jool_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/jool_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/jool_region_1024.png"
             },
             {
                 "Laythe_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/laythe_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/laythe_region_1024.png"
             },
             {
                 "Vall_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/vall_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/vall_region_1024.png"
             },
             {
                 "Tylo_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/tylo_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/tylo_region_1024.png"
             },
             {
                 "Bop_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/bop_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/bop_region_1024.png"
             },
             {
                 "Pol_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/pol_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/pol_region_1024.png"
             },
             {
                 "Eeloo_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/regionmaps/eeloo_region_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eeloo_region_1024.png"
             },
 
             {
                 "Moho_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/moho_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/moho_region_2048.png"
             },
             {
                 "Eve_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/eve_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eve_region_2048.png"
             },
             {
                 "Gilly_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/gilly_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/gilly_region_2048.png"
             },
             {
                 "Kerbin_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/kerbin_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/kerbin_region_2048.png"
             },
             {
                 "Mun_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/mun_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/mun_region_2048.png"
             },
             {
                 "Minmus_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/minmus_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/minmus_region_2048.png"
             },
             {
                 "Duna_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/duna_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/duna_region_2048.png"
             },
             {
                 "Ike_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/ike_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/ike_region_2048.png"
             },
             {
                 "Dres_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/dres_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/dres_region_2048.png"
             },
             {
                 "Jool_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/jool_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/jool_region_2048.png"
             },
             {
                 "Laythe_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/laythe_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/laythe_region_2048.png"
             },
             {
                 "Vall_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/vall_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/vall_region_2048.png"
             },
             {
                 "Tylo_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/tylo_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/tylo_region_2048.png"
             },
             {
                 "Bop_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/bop_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/bop_region_2048.png"
             },
             {
                 "Pol_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/pol_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/pol_region_2048.png"
             },
             {
                 "Eeloo_2048",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_2048/images/regionmaps/eeloo_region_2048.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eeloo_region_2048.png"
             },
         };
 
@@ -341,17 +354,18 @@ namespace OrbitalSurvey.Utilities
         {
             {
                 "HiddenMap_1024",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/other/hiddenmap_1024.png"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/other/hiddenmap_1024.png"
             },
             {
-                "AllBlack_4096", $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_maps_1024/images/other/allblack_4096.png"
+                "AllBlack_4096", $"assets/{OrbitalSurveyPlugin.ModGuid}/images/other/allblack_4096.png"
             },
             {
                 "StaticBackground",
-                $"{OrbitalSurveyPlugin.ModGuid}/orbitalsurvey_ui/images/other/static_background.jpeg"
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/other/static_background.jpeg"
             }
         };
 
+        /* Not used any more, I think
         public readonly Dictionary<string, Texture2D> ScaledVisualTextures = new();
 
         public void InitializeVisualTextures()
@@ -359,7 +373,6 @@ namespace OrbitalSurvey.Utilities
             //StartCoroutine(LoadVisualTextures());
         }
 
-        /* Not used any more, I think
         private IEnumerator LoadVisualTextures()
         {
             var assetCallbacks = 0;
@@ -401,7 +414,6 @@ namespace OrbitalSurvey.Utilities
 
         public Texture2D GenerateHiddenMap()
         {
-            // TODO might need fixing
             var source = Maps1024.LoadAsset<Texture2D>
                          (OtherAssetsAddresses[$"HiddenMap_{Settings.ActiveResolution}"]);
             
@@ -442,6 +454,11 @@ namespace OrbitalSurvey.Utilities
                     Logger.LogError($"Unknown AssetType: {type}!");
                     return new Texture2D(2, 2);
             }
+        }
+
+        public GUISkin GetGUISkin()
+        {
+            return SwConsole.LoadAsset<GUISkin>($"assets/swconsoleui/spacewarpconsole.guiskin");
         }
     }
 }

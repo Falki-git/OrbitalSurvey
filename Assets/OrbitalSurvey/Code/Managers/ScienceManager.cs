@@ -107,7 +107,7 @@ namespace OrbitalSurvey.Managers
                 ResearchReport researchReport = new ResearchReport(
                     experimentID: experimentDefinition.ExperimentID,
                     displayName: experimentDefinition.DataReportDisplayName,
-                    scienceModule._currentLocation,
+                    vessel.VesselScienceRegionSituation.ResearchLocation,
                     ScienceReportType.DataType,
                     initialScienceValue: experimentDefinition.DataValue * celestialScalar * highOrbitScalar,
                     flavorText: experimentDefinition.DataFlavorDescriptions[0].LocalizationTag
@@ -119,8 +119,8 @@ namespace OrbitalSurvey.Managers
                 researchReport.Location.SetScienceRegion(null);
                 researchReport.Location.SetScienceSituation(ScienceSitutation.HighOrbit);
                 researchReport.ResearchLocationID = researchReport.Location.ResearchLocationId;
-
-                scienceModule._storageComponent.StoreResearchReport(researchReport);
+                
+                scienceModule.Part.PartOwner.SimulationObject.ScienceStorage.StoreResearchReport(researchReport);
 
                 ResearchReportAcquiredMessage message;
                 if (GameManager.Instance.Game.Messages.TryCreateMessage(out message))

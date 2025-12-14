@@ -67,8 +67,6 @@ namespace OrbitalSurvey
 
             MessageListener.Instance.SubscribeToMessages();
 
-            DebugUI.Instance.InitializeStyles();
-
             // create providers
             var providers = new GameObject("OrbitalSurvey_Providers");
             providers.transform.parent = this.transform;
@@ -86,15 +84,12 @@ namespace OrbitalSurvey
                 .RegisterModuleForBackgroundResourceProcessing<
                     OrbitalSurvey.Modules.PartComponentModule_OrbitalSurvey>();
 
-            // Harmony.CreateAndPatchAll(typeof(Patches));
-            // Harmony.CreateAndPatchAll(typeof(DebugPatches));
-
             CreateHarmonyAndPatchAll();
         }
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.O))
+                if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.O))
                 DebugUI.Instance.IsDebugWindowOpen = !DebugUI.Instance.IsDebugWindowOpen;
         }
 

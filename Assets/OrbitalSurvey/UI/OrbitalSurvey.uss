@@ -177,7 +177,7 @@
 }
 
 .icon {
-    background-image: url('project://database/Assets/Images/Icons/icon.png?fileID=2800000&guid=036152217b3c7a143864a29ac57da013&type=3#icon');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/icon.png?fileID=21300000&guid=abcdfa65c4cf96e47b5af41997eb6a4f&type=3#icon');
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
@@ -211,12 +211,18 @@
 }
 
 .body__dropdown {
-    width: 125px;
+    max-width: 125px;
+    min-width: 125px;
+    max-height: 20px;
+    min-height: 20px;
 }
 
 .map-type__dropdown {
-    width: 125px;
     margin-left: 20px;
+    max-width: 125px;
+    min-width: 125px;
+    max-height: 20px;
+    min-height: 20px;
 }
 
 .unity-popup-field__label {
@@ -305,7 +311,7 @@
 
 .unity-base-popup-field__arrow {
     -unity-background-image-tint-color: var(--background-lightgray-4-translucent);
-    background-image: url('project://database/Assets/Images/Icons/ICO-Dropdown-arrows.png?fileID=2800000&guid=c0a1c4553aa05fd4e945af37495349b9&type=3#ICO-Dropdown-arrows');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/ICO-Dropdown-arrows.png?fileID=21300000&guid=3aebb5090f0c19a4f83fa9a55c1b75a0&type=3#ICO-Dropdown-arrows');
 }
 
 .percent-complete {
@@ -352,7 +358,7 @@
 .close-button__background {
     width: 100%;
     height: 100%;
-    background-image: url('project://database/Assets/Images/Icons/ICO-Close-med.png?fileID=2800000&guid=c6d9f4e8c44779f4abe68b96600b1c25&type=3#ICO-Close-med');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/ICO-Close-med.png?fileID=21300000&guid=b678b5188a872c242a82d85adf8e78db&type=3#ICO-Close-med');
     -unity-background-scale-mode: scale-to-fit;
     -unity-background-image-tint-color: var(--background-lightgray-4);
 }
@@ -428,7 +434,7 @@
 }
 
 .map-marker__vessel-marker {
-    background-image: url('project://database/Assets/Images/Icons/Marker.png?fileID=2800000&guid=9bebd79b7bf6cff47987ea57c8f5e640&type=3#Marker');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/Marker.png?fileID=21300000&guid=ff3a3ff1637ee294fa577de186175fcb&type=3#Marker');
     width: 12px;
     height: 12px;
 }
@@ -452,7 +458,7 @@
 .map-marker__waypoint-marker {
     width: 8px;
     height: 8px;
-    background-image: url('project://database/Assets/Images/Icons/WaypointIcon.png?fileID=2800000&guid=ee204833d90868d43b2040add3f75133&type=3#WaypointIcon');
+    background-image: url('/Icons/WaypointIcon.png');
     margin-left: 2px;
     margin-right: 2px;
     margin-top: 2px;
@@ -646,7 +652,7 @@
 
 .resize-handle {
     flex-grow: 1;
-    background-image: url('project://database/Assets/Images/Icons/ELE-Panel-Handle.png?fileID=2800000&guid=3638f41dd734d4043ac9d962a627a90f&type=3#ELE-Panel-Handle');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/ELE-Panel-Handle.png?fileID=21300000&guid=6ea2f84cdc40ae749a4006887794b1fe&type=3#ELE-Panel-Handle');
     max-height: 8px;
     max-width: 8px;
     left: 10px;
@@ -804,7 +810,7 @@
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
-    background-image: url('project://database/Assets/Images/Icons/WaypointIcon.png?fileID=2800000&guid=ee204833d90868d43b2040add3f75133&type=3#WaypointIcon');
+    background-image: url('project://database/Assets/OrbitalSurvey/UI/Icons/WaypointIcon.png?fileID=21300000&guid=d8058045b719c0441bc1b6dc3a086b46&type=3#WaypointIcon');
     width: 100%;
     height: 100%;
 }
@@ -844,4 +850,11 @@
     border-right-color: var(--redish);
     border-top-color: var(--redish);
     border-bottom-color: var(--redish);
+}
+
+.unity-popup-field__input {
+    max-width: 125px;
+    min-width: 125px;
+    max-height: 20px;
+    min-height: 20px;
 }

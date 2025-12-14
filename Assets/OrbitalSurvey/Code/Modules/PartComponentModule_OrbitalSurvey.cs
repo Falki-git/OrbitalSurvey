@@ -49,6 +49,7 @@ namespace OrbitalSurvey.Modules
             // get the ScienceExperiment module; to be used for triggering experiments
             Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
             ModuleScienceExperiment = m as PartComponentModule_ScienceExperiment;
+            Part.RegisterModuleForUpdates(ModuleScienceExperiment);
 
             // try to get Data_Deployable is the part has a Deployable module; scanning is disabled if part is not deployed
             Part.TryGetModule(typeof(PartComponentModule_Deployable), out var m2);
@@ -69,6 +70,8 @@ namespace OrbitalSurvey.Modules
             LastScanTime = Utility.UT;
 
             RegisterAtVesselManager();
+
+            Part.RegisterModuleForUpdates(this);
         }
 
         /// <summary>
@@ -299,6 +302,8 @@ namespace OrbitalSurvey.Modules
         {
             Logger.LogDebug(
                 $"OnShutdown triggered. Vessel '{Part?.PartOwner?.SimulationObject?.Vessel?.Name ?? "n/a"}' ");
+
+            Part.UnregisterModuleForUpdates(this);
         }
 
         /// <summary>

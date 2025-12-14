@@ -36,6 +36,8 @@ namespace OrbitalSurvey.Models
         public delegate void DiscoveredPixelCountChanged(float percentDiscovered);
 
         public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
+        
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.MapData");
 
         public bool HasData
         {
@@ -138,8 +140,19 @@ namespace OrbitalSurvey.Models
                 {
                     foreach (var pixel in _bufferedDiscoveredPixels)
                     {
-                        CurrentMap.SetPixel(pixel.Item1, pixel.Item2,
-                            ScannedMap.GetPixel(pixel.Item1, pixel.Item2));
+                        Color scannedPixelColor;
+                        
+                        try
+                        {
+                            scannedPixelColor = ScannedMap.GetPixel(pixel.Item1, pixel.Item2);
+                        }
+                        catch (Exception _)
+                        {
+                            Logger.LogError("ScannedMap.GetPixel failed. Texture needs to have Read/Write marked in Unity Editor");
+                            continue;
+                        }
+
+                        CurrentMap.SetPixel(pixel.Item1, pixel.Item2, scannedPixelColor);
                     }
 
                     _bufferedDiscoveredPixels.Clear();

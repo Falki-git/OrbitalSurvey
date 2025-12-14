@@ -10,7 +10,7 @@ namespace OrbitalSurvey.UI
 
         public VisualTreeAsset MainGui;
 
-        private const string _MAIN_GUI_PATH = "/orbitalsurvey_ui/ui/orbitalsurvey.uxml";
+        private const string _MAIN_GUI_PATH = "assets/orbitalsurvey/ui/orbitalsurvey.uxml";
 
         private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.Uxmls");
 

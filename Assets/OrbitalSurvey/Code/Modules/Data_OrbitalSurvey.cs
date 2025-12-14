@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using I2.Loc;
 using KSP.Game;
 using KSP.Sim;
@@ -139,14 +140,22 @@ namespace OrbitalSurvey.Modules
         /// <summary>
         /// Initializes the Body Category selector in OAB
         /// </summary>
-        private void SetBodyCategoryOabDropdownItems()
+        private async Task SetBodyCategoryOabDropdownItems()
         {
             var bodyCategoryDropdown = new DropdownItemList();
-
+            
+            while (!CelestialCategoryManager.Instance.IsCelestialBodyCategoryInitialized)
+            {
+                await Task.Delay(100);
+            }
+            
             // grab body categories that exist in the game
+            // var existingCategories =
+            //     CelestialCategoryManager.Instance.CategoryLocalization.Where(kvp =>
+            //         CelestialCategoryManager.Instance.CelestialBodyCategory.ContainsKey(kvp.Value));
             var existingCategories =
                 CelestialCategoryManager.Instance.CategoryLocalization.Where(kvp =>
-                    CelestialCategoryManager.Instance.CelestialBodyCategory.ContainsKey(kvp.Value));
+                    CelestialCategoryManager.Instance.CelestialBodyCategory.ContainsValue(kvp.Value));
 
             foreach (var (key, value) in existingCategories)
             {
