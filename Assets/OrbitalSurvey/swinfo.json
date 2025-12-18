@@ -1,0 +1,25 @@
+{
+  "spec": "2.0",
+  "mod_id": "OrbitalSurvey",
+  "name": "Orbital Survey",
+  "author": "Falki",
+  "description": "Scan celestial bodies from orbit.",
+  "source": "https://github.com/Falki-git/OrbitalSurvey",
+  "version": "0.9.5",
+  "version_check": "TODO",
+  "ksp2_version": {
+    "min": "0.2.3",
+    "max": "*"
+  },
+  "dependencies": [
+    {
+      "id": "SpaceWarp2",
+      "version": {
+        "min": "2.0.0",
+        "max": "*"
+      }
+    }
+  ],
+  "conflicts": [],
+  "main_assembly": "OrbitalSurvey.dll"
+}
