@@ -30,14 +30,21 @@ namespace OrbitalSurvey.Managers
         {
             Logger.LogInfo("Initialization starting.");
 
-            var configs = PatchManager.Core.CoreModule.CurrentUniverse.Configs;
-            var definitions = configs["orbital-survey-definitions"];
+            try
+            {
+                var configs = PatchManager.Core.CoreModule.CurrentUniverse.Configs;
+                var definitions = configs["orbital-survey-definitions"];
 
-            InitializeCategoryMaxRadiusDefinition(definitions);
-            InitializeAltitudesDefinition(definitions);
-            InitializeCategoryLocalization(definitions);
+                InitializeCategoryMaxRadiusDefinition(definitions);
+                InitializeAltitudesDefinition(definitions);
+                InitializeCategoryLocalization(definitions);
 
-            Logger.LogInfo($"Initialization finished successfully.");
+                Logger.LogInfo($"Initialization finished successfully.");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Exception in CelestialCategoryManager.Initialization\n {ex}");
+            }
         }
 
         private void InitializeCategoryMaxRadiusDefinition(IReadOnlyDictionary<string, DataValue> definitions)
