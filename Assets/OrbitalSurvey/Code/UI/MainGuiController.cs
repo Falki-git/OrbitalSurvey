@@ -153,9 +153,9 @@ namespace OrbitalSurvey.UI
 
             // check if previous window position exists and restore it (window was previously moved then closed)
             if (SceneController.Instance.WindowPosition != null)
-                _root[0].transform.position = SceneController.Instance.WindowPosition.Value;
+                UiUtility.SetDefaultWindowPosition(_root[0], SceneController.Instance.WindowPosition.Value.x, SceneController.Instance.WindowPosition.Value.y);
             else
-                _root[0].transform.position = new Vector3(100, 200);
+                UiUtility.SetDefaultWindowPosition(_root[0], 100, 200);
 
             // save the window position (only for current session) when it moves
             _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
@@ -412,7 +412,7 @@ namespace OrbitalSurvey.UI
 
         private void OnPositionChanged(PointerUpEvent evt)
         {
-            SceneController.Instance.WindowPosition = _root[0].transform.position;
+            SceneController.Instance.WindowPosition = _root[0].worldBound.position;
         }
 
         private void OnCloseButton(ClickEvent evt)

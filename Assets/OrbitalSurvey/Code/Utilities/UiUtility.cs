@@ -3,6 +3,7 @@ using KSP.Game.Science;
 using OrbitalSurvey.Managers;
 using OrbitalSurvey.UI;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace OrbitalSurvey.Utilities
 {
@@ -95,6 +96,22 @@ namespace OrbitalSurvey.Utilities
 
             // return the localized name for that regionId
             return ScienceRegionsHelper.GetRegionDisplayName(regionId);
+        }
+        
+        public static void SetDefaultWindowPosition(VisualElement root, float x, float y)
+        {
+            EventCallback<GeometryChangedEvent> _positionCallBack = null;
+            _positionCallBack = evt =>
+            {
+                if (evt.newRect.width == 0 || evt.newRect.height == 0)
+                    return;
+
+                root.style.left = x;
+                root.style.top = y;
+                
+                root.UnregisterCallback(_positionCallBack);
+            };
+            root.RegisterCallback<GeometryChangedEvent>(_positionCallBack);
         }
     }
 }
