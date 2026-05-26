@@ -44,6 +44,28 @@ MonoBehaviour:
   EstablishDestination: 1
   Source: <GamePath>/KSP2_x64_Data/StreamingAssets/Audio/GeneratedSoundBanks/Windows
   Destination: Assets/StreamingAssets/Audio/GeneratedSoundBanks/Windows
+--- !u!114 &-5777894178515307430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03063c7a6ec04cc4c82c75cf9bcc8db8, type: 3}
+  m_Name: Copy
+  m_EditorClassIdentifier: ThunderKit.Core::ThunderKit.Core.Pipelines.Jobs.Copy
+  Active: 1
+  PerManifest: 0
+  ListType: 0
+  Manifests: []
+  ReplaceDirectory: 1
+  Recursive: 0
+  SourceRequired: 1
+  EstablishDestination: 0
+  Source: <GamePath>/Redux/ksp2.catalog
+  Destination: ksp2.catalog
 --- !u!114 &-4053335996544297743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8465a7e736379e1488e1276bf4c917a0, type: 3}
   m_Name: CreateCatalogBundle
   m_EditorClassIdentifier: 
-  Active: 1
+  Active: 0
   outputAssetBundlePath: Assets/DoNotDistribute/ksp2.catalog
   filters:
   - nameRegex: []
@@ -154,29 +176,7 @@ MonoBehaviour:
   - {fileID: -61196321748870910}
   - {fileID: -1734159886244972023}
   - {fileID: -4053335996544297743}
-  - {fileID: 8040542911433879802}
   - {fileID: -6857069729678816723}
+  - {fileID: -5777894178515307430}
   QuickAccess: 0
   manifest: {fileID: 0}
---- !u!114 &8040542911433879802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03063c7a6ec04cc4c82c75cf9bcc8db8, type: 3}
-  m_Name: Copy
-  m_EditorClassIdentifier: 
-  Active: 1
-  PerManifest: 0
-  ListType: 0
-  Manifests: []
-  ReplaceDirectory: 1
-  Recursive: 0
-  SourceRequired: 1
-  EstablishDestination: 0
-  Source: <GamePath>/KSP2_x64_Data/sharedassets0.assets.resS
-  Destination: sharedassets0.assets.resS

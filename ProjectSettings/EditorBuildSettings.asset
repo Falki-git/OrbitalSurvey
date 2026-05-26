@@ -4,6 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/boot-ksp.unity
+    guid: 6dcfaf2c53351284f9265eb105478e22
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: 5fe764f0167773c4b8bfdeebb8147bef, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 6a571c879d709814a85c1fcda208ad7d, type: 2}

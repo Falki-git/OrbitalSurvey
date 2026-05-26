@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c05aefdad2c778247ab31cf76ea45bf2, type: 3}
   m_Name: AddressableGraphicsSettings
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: ThunderKit.Addressable.Tools::ThunderKit.Addressable.Tools.AddressableGraphicsSettings
   CustomDeferredReflection: 
   CustomDeferredShading: 
   CustomDeferredScreenspaceShadows: 
