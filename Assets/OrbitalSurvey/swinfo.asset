@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9065a46703c44e8fabd263388eaeb6e7, type: 3}
+  m_Name: swinfo
+  m_EditorClassIdentifier: ksp2community.ksp2unitytools.editor::Ksp2UnityTools.Editor.Modding.Mod
+  id: OrbitalSurvey
+  name: OrbitalSurvey
+  author: Falki
+  description: A sample mod for KSP2
+  version: 0.1.0
+  versionCheck: 
+  minKsp2Version: '*'
+  maxKsp2Version: '*'
+  source: 
+  allGroup: {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}
+  partsGroup: {fileID: 11400000, guid: 0e5269790a12a354c8dfe2cc3f209cbf, type: 2}
+  missionsGroup: {fileID: 11400000, guid: 40b3fd3e998f02f4da666c888ead5248, type: 2}
+  celestialBodiesGroup: {fileID: 11400000, guid: 33d4b373c5e1eea46928b93c69090e81, type: 2}
+  scienceExperimentGroup: {fileID: 11400000, guid: 026b33b74382bb8449cb1834822f1b5d, type: 2}
+  techNodeDataGroup: {fileID: 11400000, guid: 4950e1330767d1c4a9c7af60a31ead95, type: 2}
+  addressablesProfileId: baed256c89e30214391b63401589f546
+  dependencies:
+  - id: SpaceWarp2
+    min: 2.0.0
+    max: '*'
+  incompatibilities: []
