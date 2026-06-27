@@ -50,7 +50,7 @@ namespace OrbitalSurvey.Debug
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
             var celes = OverlayUtility.FindObjectByNameRecursively(celestialRoot.transform, body);
             var pqs = celes.GetComponent<PQS>();
-            var scaledMaterial = pqs._scaledMaterial;
+            var scaledMaterial = ReflectionUtility.GetPrivateField<Material>(pqs, "_scaledMaterial");
             var scaledTexture = scaledMaterial.mainTexture;
             var scaledRenderer = pqs.ScaledRenderer;
 
@@ -114,7 +114,7 @@ namespace OrbitalSurvey.Debug
             var celes = OverlayUtility.FindObjectByNameRecursively(celestialRoot.transform, body);
 
             PQSRenderer pqsRenderer = celes.GetComponent<PQSRenderer>();
-            if (pqsRenderer._overlays?.Count > 0)
+            if (ReflectionUtility.GetPrivateField<List<IPQSOverlay>>(pqsRenderer, "_overlays")?.Count > 0)
                 pqsRenderer.RemoveOverlay(MyOverlay);
         }
 
@@ -124,7 +124,7 @@ namespace OrbitalSurvey.Debug
             var celes = OverlayUtility.FindObjectByNameRecursively(celestialRoot.transform, body);
             var pqsRenderer = celes.GetComponent<PQSRenderer>();
 
-            pqsRenderer.DrawPQSOverlays(pqsRenderer.SourceCamera);
+            ReflectionUtility.InvokePrivateMethod(pqsRenderer, "DrawPQSOverlays", pqsRenderer.SourceCamera);
             Logger.LogDebug("DrawCustomOverlays executed");
         }
 
@@ -293,10 +293,11 @@ namespace OrbitalSurvey.Debug
 
             var tex = Utility.ImportTexture(nameOfTextureToLoad);
 
-            SavedTexture = pqsRenderer._oceanMaterial.GetTexture(nameOfMaterialTextureToOverride);
-            
-            pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
-            pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
+            var oceanMaterial = ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanMaterial");
+            SavedTexture = oceanMaterial.GetTexture(nameOfMaterialTextureToOverride);
+
+            ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanSpereMaterial").SetTexture(nameOfMaterialTextureToOverride, tex);
+            oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, tex);
         }
 
         public void RevertOceanSphereMaterial(string body, string nameOfMaterialTextureToOverride)
@@ -310,8 +311,8 @@ namespace OrbitalSurvey.Debug
             var celes = OverlayUtility.FindObjectByNameRecursively(celestialRoot.transform, body);
             var pqsRenderer = celes.GetComponent<PQSRenderer>();
             
-            //pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
-            pqsRenderer._oceanMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
+            //ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanSpereMaterial").SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
+            ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanMaterial").SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
         }
 
         public void BuildBiomeMask(string body, Color? biome0, Color? biome1, Color? biome2, Color? biome3)
@@ -499,7 +500,7 @@ namespace OrbitalSurvey.Debug
             
             PQSRenderer pqsRenderer = celes.GetComponent<PQSRenderer>();
             
-            Texture2D textureToExport = (Texture2D)pqsRenderer._overlays[0].OverlayMaterial.GetTexture(
+            Texture2D textureToExport = (Texture2D)ReflectionUtility.GetPrivateField<List<IPQSOverlay>>(pqsRenderer, "_overlays")[0].OverlayMaterial.GetTexture(
                 string.IsNullOrEmpty(textureNameToExport) ? "_AlbedoScaledTex" : textureNameToExport);
             
             
@@ -566,16 +567,17 @@ namespace OrbitalSurvey.Debug
 
         public void DownloadScienceRegionsTexture()
         {
-            _pqsScienceOverlay.Update();
+            ReflectionUtility.InvokePrivateMethod(_pqsScienceOverlay, "Update");
             Logger.LogDebug($"PQSScienceOverlay: updated");
-            
-            if (_pqsScienceOverlay._overlayTexture == null)
+
+            var overlayTexture = ReflectionUtility.GetPrivateField<Texture2D>(_pqsScienceOverlay, "_overlayTexture");
+            if (overlayTexture == null)
             {
                 Logger.LogDebug($"PQSScienceOverlay: overlay texture is null");
                 return;
             }
-            
-            byte[] bytes = _pqsScienceOverlay._overlayTexture.EncodeToPNG();
+
+            byte[] bytes = overlayTexture.EncodeToPNG();
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             path = Path.Combine(path, "ExportedScienceRegionsMap.png");
             File.WriteAllBytes(path, bytes);
@@ -641,10 +643,10 @@ namespace OrbitalSurvey.Debug
             var experimentDefinition =
                 GameManager.Instance.Game.ScienceManager.ScienceExperimentsDataStore.GetExperimentDefinition("orbital_survey_visual_mapping_high_25");
             
-            var celestialScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider.
-                _cbToScienceRegions[body].SituationData.CelestialBodyScalar;
-            var highOrbitScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider.
-                _cbToScienceRegions[body].SituationData.HighOrbitScalar;
+            var scienceRegionsProvider = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider;
+            var cbToScienceRegions = ReflectionUtility.GetPrivateField<Dictionary<string, CelestialBodyScienceRegionsData>>(scienceRegionsProvider, "_cbToScienceRegions");
+            var celestialScalar = cbToScienceRegions[body].SituationData.CelestialBodyScalar;
+            var highOrbitScalar = cbToScienceRegions[body].SituationData.HighOrbitScalar;
 
 
             foreach (var vessel in VesselManager.Instance.OrbitalSurveyVessels.FindAll(v => v.Body == body))
@@ -655,10 +657,11 @@ namespace OrbitalSurvey.Debug
                 // scienceModule._currentLocation.SetScienceRegion(null);
                 // scienceModule._currentLocation.SetScienceSituation(ScienceSitutation.HighOrbit);
                 
+                var currentLocation = ReflectionUtility.GetPrivateField<ResearchLocation>(scienceModule, "_currentLocation");
                 ResearchReport researchReport = new ResearchReport(
                     experimentID: experimentDefinition.ExperimentID,
                     displayName: experimentDefinition.DataReportDisplayName,
-                    scienceModule._currentLocation, // Fix me - set the location to the passed body
+                    currentLocation, // Fix me - set the location to the passed body
                     ScienceReportType.DataType,
                     initialScienceValue: experimentDefinition.DataValue * celestialScalar * highOrbitScalar,
                     flavorText: experimentDefinition.DataFlavorDescriptions[0].LocalizationTag
@@ -676,7 +679,7 @@ namespace OrbitalSurvey.Debug
 
                 researchReport.ResearchLocationID = researchReport.Location.ResearchLocationId;
             
-                scienceModule._storageComponent.StoreResearchReport(researchReport);
+                ReflectionUtility.GetPrivateField<ScienceStorageComponent>(scienceModule, "_storageComponent").StoreResearchReport(researchReport);
             }            
             
             ResearchReportAcquiredMessage message;
@@ -687,5 +690,6 @@ namespace OrbitalSurvey.Debug
 
             NotificationUtility.Instance.NotifyExperimentComplete(body, ExperimentLevel.Quarter);
         }
+
     }
 }
