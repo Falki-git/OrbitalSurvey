@@ -18,6 +18,22 @@ namespace OrbitalSurvey.Utilities
             throw new MissingFieldException(obj.GetType().FullName, fieldName);
         }
 
+        internal static void SetPrivateField<T>(object obj, string fieldName, T value)
+        {
+            var type = obj.GetType();
+            while (type != null)
+            {
+                var field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+                if (field != null)
+                {
+                    field.SetValue(obj, value);
+                    return;
+                }
+                type = type.BaseType;
+            }
+            throw new MissingFieldException(obj.GetType().FullName, fieldName);
+        }
+
         internal static void InvokePrivateMethod(object obj, string methodName, params object[] args)
         {
             var type = obj.GetType();

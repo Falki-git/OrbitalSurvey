@@ -112,9 +112,10 @@ namespace OrbitalSurvey.Managers
 
             PQSRenderer pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
 
-            if (pqsRenderer._overlays?.Count > 0)
+            var overlays = ReflectionUtility.GetPrivateField<List<IPQSOverlay>>(pqsRenderer, "_overlays");
+            if (overlays?.Count > 0)
             {
-                var overlay = pqsRenderer._overlays.Find(o => o is OrbitalSurveyOverlay);
+                var overlay = overlays.Find(o => o is OrbitalSurveyOverlay);
 
                 if (overlay != null)
                 {
@@ -132,7 +133,8 @@ namespace OrbitalSurvey.Managers
         {
             var pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
 
-            _oceanTextureBackup = pqsRenderer._oceanMaterial?.GetTexture(_BLACK_OCEAN_TEXTURE_NAME);
+            var oceanMaterial = ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanMaterial");
+            _oceanTextureBackup = oceanMaterial?.GetTexture(_BLACK_OCEAN_TEXTURE_NAME);
 
             if (_oceanTextureBackup == null)
             {
@@ -140,8 +142,8 @@ namespace OrbitalSurvey.Managers
                 return;
             }
 
-            pqsRenderer._oceanSpereMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
-            pqsRenderer._oceanMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
+            ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanSpereMaterial").SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
+            oceanMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _allBlack);
         }
 
         private void RevertOceanSphereMaterial()
@@ -151,8 +153,8 @@ namespace OrbitalSurvey.Managers
 
             var pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
 
-            //pqsRenderer._oceanSpereMaterial.SetTexture(nameOfMaterialTextureToOverride, SavedTexture);
-            pqsRenderer._oceanMaterial.SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _oceanTextureBackup);
+            //ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanSpereMaterial").SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _oceanTextureBackup);
+            ReflectionUtility.GetPrivateField<Material>(pqsRenderer, "_oceanMaterial").SetTexture(_BLACK_OCEAN_TEXTURE_NAME, _oceanTextureBackup);
             _oceanTextureBackup = null;
         }
 

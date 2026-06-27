@@ -10,7 +10,14 @@ namespace OrbitalSurvey.Utilities
     {
         public static GameInstance Game = GameManager.Instance.Game;
 
-        private static MapCore _mapCore => GameManager.Instance.Game.Map._core;
+        private static MapCore _mapCore
+        {
+            get
+            {
+                GameManager.Instance.Game.Map.TryGetMapCore(out var mapCore);
+                return mapCore;
+            }
+        }
         private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.OverlayUtility");
 
         public static readonly Dictionary<string, string> MAP3D_CELESTIAL_PATH = new()

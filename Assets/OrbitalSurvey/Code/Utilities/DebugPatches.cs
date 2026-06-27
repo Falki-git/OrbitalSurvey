@@ -15,19 +15,22 @@ namespace OrbitalSurvey.Utilities
         [HarmonyPatch(typeof(PQSScienceOverlay), "Update"), HarmonyPrefix]
         private static bool PQSScienceOverlay_Update(PQSScienceOverlay __instance)
         {
-            if (__instance._scienceRegionsProvider != null && __instance._pqs != null &&
-                __instance._overlayTexture == null)
+            var scienceRegionsProvider = ReflectionUtility.GetPrivateField<ScienceRegionsDataProvider>(__instance, "_scienceRegionsProvider");
+            var pqs = ReflectionUtility.GetPrivateField<PQS>(__instance, "_pqs");
+            var overlayTexture = ReflectionUtility.GetPrivateField<Texture2D>(__instance, "_overlayTexture");
+
+            if (scienceRegionsProvider != null && pqs != null && overlayTexture == null)
             {
-                string bodyName = __instance._pqs.CoreCelestialBodyData.Data.bodyName;
-                CelestialBodyBakedScienceRegionMap bakedMap = __instance._scienceRegionsProvider.GetBakedMap(bodyName);
+                string bodyName = pqs.CoreCelestialBodyData.Data.bodyName;
+                CelestialBodyBakedScienceRegionMap bakedMap = scienceRegionsProvider.GetBakedMap(bodyName);
                 if (bakedMap != null)
                 {
                     Color32[] array = new Color32[bakedMap.Width * bakedMap.Height];
-                    __instance._overlayTexture =
-                        new Texture2D(bakedMap.Width, bakedMap.Height, TextureFormat.RGBA32, false)
-                        {
-                            filterMode = FilterMode.Point
-                        };
+                    var newTexture = new Texture2D(bakedMap.Width, bakedMap.Height, TextureFormat.RGBA32, false)
+                    {
+                        filterMode = FilterMode.Point
+                    };
+                    ReflectionUtility.SetPrivateField(__instance, "_overlayTexture", newTexture);
 
                     string debugBody = DebugManager.Instance.RegionBody;
 
@@ -39,12 +42,12 @@ namespace OrbitalSurvey.Utilities
                         array[i] = debugRegionColor;
                     }
 
-                    __instance._overlayTexture.SetPixelData<Color32>(array, 0, 0);
-                    __instance._overlayTexture.Apply();
-                    //__instance._overlayMaterial.SetTexture(__instance._overlayTextureParameterId, __instance._overlayTexture);
+                    newTexture.SetPixelData<Color32>(array, 0, 0);
+                    newTexture.Apply();
+                    //ReflectionUtility.GetPrivateField<Material>(__instance, "_overlayMaterial").SetTexture(ReflectionUtility.GetPrivateField<int>(__instance, "_overlayTextureParameterId"), newTexture);
                 }
             }
-            //__instance._overlayMaterial.SetFloat(__instance._strengthParameterId, __instance.Strength);
+            //ReflectionUtility.GetPrivateField<Material>(__instance, "_overlayMaterial").SetFloat(ReflectionUtility.GetPrivateField<int>(__instance, "_strengthParameterId"), __instance.Strength);
 
             return false;
         }
@@ -52,10 +55,10 @@ namespace OrbitalSurvey.Utilities
         [HarmonyPatch(typeof(PQSScienceOverlay), "Awake"), HarmonyPostfix]
         private static void PQSScienceOverlay_Awake(PQSScienceOverlay __instance)
         {
-            if (__instance._overlayMaterial == null)
+            if (ReflectionUtility.GetPrivateField<Material>(__instance, "_overlayMaterial") == null)
             {
-                __instance._overlayMaterial =
-                    new Material(Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old"));
+                ReflectionUtility.SetPrivateField(__instance, "_overlayMaterial",
+                    new Material(Shader.Find("KSP2/Environment/CelestialBody/CelestialBody_Local_Old")));
             }
         }
     }

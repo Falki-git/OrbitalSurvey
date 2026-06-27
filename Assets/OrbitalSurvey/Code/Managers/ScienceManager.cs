@@ -76,13 +76,14 @@ namespace OrbitalSurvey.Managers
                 return false;
             }
 
+            var cbToScienceRegions = ReflectionUtility.GetPrivateField<Dictionary<string, CelestialBodyScienceRegionsData>>(
+                GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider, "_cbToScienceRegions");
+
             // we need to manually grab the CelestialBodyScalar
-            var celestialScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider
-                ._cbToScienceRegions[body].SituationData.CelestialBodyScalar;
+            var celestialScalar = cbToScienceRegions[body].SituationData.CelestialBodyScalar;
 
             // we'll use the HighOrbit scalar since the science value is balanced around the vessel being in HighOrbit
-            var highOrbitScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider
-                ._cbToScienceRegions[body].SituationData.HighOrbitScalar;
+            var highOrbitScalar = cbToScienceRegions[body].SituationData.HighOrbitScalar;
 
             // find all vessels that participated in scanning of this body, for this MapType and for this ExperimentLevel
             var vesselGuids = Core.Instance.CelestialDataDictionary[body].Maps[map]
