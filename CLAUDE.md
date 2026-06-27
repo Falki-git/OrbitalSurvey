@@ -2,6 +2,10 @@
 
 Guidance for Claude Code when working in this repository.
 
+## Git rules
+
+- **NEVER commit or push without the user explicitly asking.** Do not commit as part of completing a task; wait for a direct instruction such as "commit", "commit and push", etc.
+
 ## What this project is
 
 This is a **Kerbal Space Program 2 (KSP2) mod project** built on the **KSP2 Redux
