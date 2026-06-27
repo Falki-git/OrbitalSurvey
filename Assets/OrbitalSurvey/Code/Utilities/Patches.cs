@@ -17,8 +17,9 @@ namespace OrbitalSurvey.Utilities
 		[HarmonyPatch(typeof(Module_ScienceExperiment), "InitializePAMItems"), HarmonyPrefix]
 		private static bool RemovePamItemsForExperiments_Initialize(Module_ScienceExperiment __instance)
 		{
+			var dataScienceExperiment = ReflectionUtility.GetPrivateField<Data_ScienceExperiment>(__instance, "dataScienceExperiment");
 			var experiment =
-				__instance.dataScienceExperiment.ExperimentStandings.Find(e =>
+				dataScienceExperiment.ExperimentStandings.Find(e =>
 					e.ExperimentID.StartsWith("orbital_survey"));
 
 			if (experiment != null)
@@ -35,11 +36,12 @@ namespace OrbitalSurvey.Utilities
 		[HarmonyPatch(typeof(Module_ScienceExperiment), "UpdatePAM"), HarmonyPrefix]
 		private static bool RemovePamItemsForExperiments_Update(Module_ScienceExperiment __instance)
 		{
+			var dataScienceExperiment = ReflectionUtility.GetPrivateField<Data_ScienceExperiment>(__instance, "dataScienceExperiment");
 			var experiment =
-				__instance.dataScienceExperiment.ExperimentStandings.Find(e =>
+				dataScienceExperiment.ExperimentStandings.Find(e =>
 					e.ExperimentID.StartsWith("orbital_survey"));
 
-			if (experiment != null || __instance._pamItems == null)
+			if (experiment != null || ReflectionUtility.GetPrivateField<object>(__instance, "_pamItems") == null)
 			{
 				return false;
 			}
@@ -140,62 +142,66 @@ namespace OrbitalSurvey.Utilities
 		[HarmonyPatch(typeof(PartComponentModule_ScienceExperiment), "RefreshLocationsValidity"), HarmonyPrefix]
 		private static bool RefreshLocationsValidity(PartComponentModule_ScienceExperiment __instance)
 		{
-			if (__instance._vesselComponent == null || __instance._vesselComponent.mainBody == null ||
-			    __instance._vesselComponent.VesselScienceRegionSituation.ResearchLocation == null)
+			var vesselComponent = ReflectionUtility.GetPrivateField<VesselComponent>(__instance, "_vesselComponent");
+			if (vesselComponent == null || vesselComponent.mainBody == null ||
+			    vesselComponent.VesselScienceRegionSituation.ResearchLocation == null)
 			{
 				return false;
 			}
 
-			__instance._currentLocation = new ResearchLocation(true, __instance._vesselComponent.mainBody.bodyName,
-				__instance._vesselComponent.VesselScienceRegionSituation.ResearchLocation.ScienceSituation,
-				__instance._vesselComponent.VesselScienceRegionSituation.ResearchLocation.ScienceRegion);
-			int count = __instance.dataScienceExperiment.ExperimentStandings.Count;
+			var dataScienceExperiment = ReflectionUtility.GetPrivateField<Data_ScienceExperiment>(__instance, "dataScienceExperiment");
+			var currentLocation = new ResearchLocation(true, vesselComponent.mainBody.bodyName,
+				vesselComponent.VesselScienceRegionSituation.ResearchLocation.ScienceSituation,
+				vesselComponent.VesselScienceRegionSituation.ResearchLocation.ScienceRegion);
+			ReflectionUtility.SetPrivateField(__instance, "_currentLocation", currentLocation);
+
+			int count = dataScienceExperiment.ExperimentStandings.Count;
 			while (count-- > 0)
 			{
 				ExperimentDefinition experimentDefinition =
-					__instance.dataScienceExperiment.ExperimentStandings[count].ExperimentDefinition;
-				__instance.dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid =
-					experimentDefinition.IsLocationValid(__instance._currentLocation,
-						out __instance.dataScienceExperiment.ExperimentStandings[count].RegionRequired) &&
-					__instance._vesselComponent.VesselScienceRegionSituation.SituationScalar > 0f &&
-					__instance._vesselComponent.VesselScienceRegionSituation.ScienceRegionScalar > 0f;
-				__instance._currentLocation.RequiresRegion =
-					(__instance.dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid
-						? __instance.dataScienceExperiment.ExperimentStandings[count].RegionRequired
-						: __instance._currentLocation.RequiresRegion);
-				if (__instance.dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid)
+					dataScienceExperiment.ExperimentStandings[count].ExperimentDefinition;
+				dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid =
+					experimentDefinition.IsLocationValid(currentLocation,
+						out dataScienceExperiment.ExperimentStandings[count].RegionRequired) &&
+					vesselComponent.VesselScienceRegionSituation.SituationScalar > 0f &&
+					vesselComponent.VesselScienceRegionSituation.ScienceRegionScalar > 0f;
+				currentLocation.RequiresRegion =
+					(dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid
+						? dataScienceExperiment.ExperimentStandings[count].RegionRequired
+						: currentLocation.RequiresRegion);
+				if (dataScienceExperiment.ExperimentStandings[count].CurrentSituationIsValid)
 				{
-					if (__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState ==
+					if (dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState ==
 					    ExperimentState.RUNNING)
 					{
 						__instance.StopExperiment(
-							__instance.dataScienceExperiment.Experiments[count].ExperimentDefinitionID, true, false);
+							dataScienceExperiment.Experiments[count].ExperimentDefinitionID, true, false);
 					}
-					else if (__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState !=
+					else if (dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState !=
 					         ExperimentState.RUNNING &&
-					         __instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState !=
+					         dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState !=
 					         ExperimentState.PAUSED)
 					{
 						__instance.SetExperimentState(count, ExperimentState.READY);
 					}
 				}
-				else if (__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState ==
+				else if (dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState ==
 				         ExperimentState.RUNNING)
 				{
-					__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentContext =
-						ScienceRegionsHelper.GetRegionDisplayName(__instance.dataScienceExperiment
+					dataScienceExperiment.ExperimentStandings[count].CurrentExperimentContext =
+						ScienceRegionsHelper.GetRegionDisplayName(dataScienceExperiment
 							.LastKnownValidSituation.ResearchLocation.ScienceRegion);
-					__instance.StopExperiment(__instance.dataScienceExperiment.ExperimentStandings[count].ExperimentID,
+					__instance.StopExperiment(dataScienceExperiment.ExperimentStandings[count].ExperimentID,
 						false, false);
-					__instance.TrySendStateChangeMessage(count, true);
+					ReflectionUtility.InvokePrivateMethod(__instance, "TrySendStateChangeMessage", count, true);
 				}
 				else
 				{
-					__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState =
+					dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState =
 						ExperimentState.INVALIDLOCATION;
 				}
 
-				switch (__instance.dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState)
+				switch (dataScienceExperiment.ExperimentStandings[count].CurrentExperimentState)
 				{
 					case ExperimentState.NONE:
 					case ExperimentState.LOCATIONCHANGED:
