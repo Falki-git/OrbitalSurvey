@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using I2.Loc;
 using OrbitalSurvey.Models;
-using PatchManager.SassyPatching;
+// using PatchManager.SassyPatching; // PatchManager API changed; SassyPatching/DataValue no longer available
 using UnityEngine;
 using Utility = OrbitalSurvey.Utilities.Utility;
 using ILogger = ReduxLib.Logging.ILogger;
@@ -28,6 +28,14 @@ namespace OrbitalSurvey.Managers
 
         public void InitializeConfigs()
         {
+            // PatchManager API changed; SassyPatching/DataValue no longer available.
+            // Original implementation commented out below — rewrite using the new PatchManager (Lua/C# patches).
+            MaxRadiusDefinition = new Dictionary<string, double>();
+            AltitudesDefinition = new Dictionary<string, Dictionary<MapType, ScanningAltitudes>>();
+            CategoryLocalization = new Dictionary<string, LocalizedString>();
+            Logger.LogWarning("InitializeConfigs: PatchManager config loading not yet reimplemented.");
+
+            /*
             Logger.LogInfo("Initialization starting.");
 
             try
@@ -45,11 +53,12 @@ namespace OrbitalSurvey.Managers
             {
                 Logger.LogError($"Exception in CelestialCategoryManager.Initialization\n {ex}");
             }
+            */
         }
 
+        /*
         private void InitializeCategoryMaxRadiusDefinition(IReadOnlyDictionary<string, DataValue> definitions)
         {
-            // initialize celestial category definitions by radius of the body (e.g. Medium -> maxRadius: 350,000 (m))
             MaxRadiusDefinition = new Dictionary<string, double>();
             var categoryMaxRadiusDefinition = definitions["celestial-category__maximum-radius"].Dictionary;
             foreach (var categoryMaxRadius in categoryMaxRadiusDefinition)
@@ -71,21 +80,16 @@ namespace OrbitalSurvey.Managers
 
         private void InitializeAltitudesDefinition(IReadOnlyDictionary<string, DataValue> definitions)
         {
-            // initialize celestial body mapType altitudes (e.g. Small -> Visual -> MinAltitude, IdealAltitude, MaxAltitude)
             AltitudesDefinition = new Dictionary<string, Dictionary<MapType, ScanningAltitudes>>();
             var categoryScanningAltitudes = definitions["celestial-category__scanning-altitudes"].Dictionary;
             foreach (var categoryAndMapTypes in categoryScanningAltitudes)
             {
-                // categoryAndMapTypes.Key == "Small", "Medium", "Large"
-
                 Logger.LogInfo($"\"{categoryAndMapTypes.Key}\" scanning altitudes are:");
 
                 var mapTypeAndAltitudesDict = new Dictionary<MapType, ScanningAltitudes>();
 
                 foreach (var mapTypeAndAltitudes in categoryAndMapTypes.Value.Dictionary)
                 {
-                    // mapTypeAndAltitudes.Key == "Visual", "Biome"
-
                     var mapType = (MapType)Enum.Parse(typeof(MapType), mapTypeAndAltitudes.Key);
 
                     var altitudes = new ScanningAltitudes
@@ -116,6 +120,25 @@ namespace OrbitalSurvey.Managers
                     "Something is seriously wrong. Patch Manager configs are not properly defined.");
             }
         }
+
+        private void InitializeCategoryLocalization(IReadOnlyDictionary<string, DataValue> definitions)
+        {
+            CategoryLocalization = new Dictionary<string, LocalizedString>();
+            var categoryLocalizations = definitions["celestial-category__localization-string"].Dictionary;
+
+            foreach (var catLoc in categoryLocalizations)
+            {
+                CategoryLocalization.Add(catLoc.Key, new LocalizedString(catLoc.Value.String));
+                Logger.LogInfo($"Localization string for category '{catLoc.Key}' added.");
+            }
+
+            if (CategoryLocalization.Count == 0)
+            {
+                Logger.LogError("Did not find any category localization strings! This must not happen. " +
+                                "Patch Manager configs are not properly defined.");
+            }
+        }
+        */
 
         public void InitializeCelestialBodyCategories()
         {
@@ -169,24 +192,6 @@ namespace OrbitalSurvey.Managers
             }
 
             IsCelestialBodyCategoryInitialized = true;
-        }
-
-        private void InitializeCategoryLocalization(Dictionary<string, DataValue> definitions)
-        {
-            CategoryLocalization = new Dictionary<string, LocalizedString>();
-            var categoryLocalizations = definitions["celestial-category__localization-string"].Dictionary;
-
-            foreach (var catLoc in categoryLocalizations)
-            {
-                CategoryLocalization.Add(catLoc.Key, new LocalizedString(catLoc.Value.String));
-                Logger.LogInfo($"Localization string for category '{catLoc.Key}' added.");
-            }
-
-            if (CategoryLocalization.Count == 0)
-            {
-                Logger.LogError("Did not find any category localization strings! This must not happen. " +
-                                "Patch Manager configs are not properly defined.");
-            }
         }
 
         public (string category, ScanningAltitudes altitudes) GetScanningStats(string body, MapType scanningMode)
