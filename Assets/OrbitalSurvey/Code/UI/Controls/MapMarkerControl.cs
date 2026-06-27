@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 
 namespace OrbitalSurvey.UI.Controls
 {
-    public class MapMarkerControl: VisualElement
+    [UxmlElement]
+    public partial class MapMarkerControl: VisualElement
     {
         public const string UssClassName = "map-marker";
         public const string UssClassName_Name = UssClassName + "__name";
@@ -39,6 +40,7 @@ namespace OrbitalSurvey.UI.Controls
         private bool _nameVisibilityState;
         private bool _geoCoordinatesVisibilityState;
         
+        [UxmlAttribute]
         public string NameValue
         {
             get => _nameLabel.text;
@@ -51,12 +53,14 @@ namespace OrbitalSurvey.UI.Controls
             set => _markerElement.style.backgroundImage = value;
         }
         
+        [UxmlAttribute]
         public double LatitudeValue
         {
             //get => LatitudeLabel.text;
             set => _latitudeLabel.text = $"LAT: {value:F3}°";
         }
         
+        [UxmlAttribute]
         public double LongitudeValue
         {
             //get => LongitudeLabel.text;
@@ -282,56 +286,6 @@ namespace OrbitalSurvey.UI.Controls
         {
             _latitudeLabel.visible = isVisible;
             _longitudeLabel.visible = isVisible;
-        }
-        
-        public new class UxmlFactory : UxmlFactory<MapMarkerControl, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-            UxmlStringAttributeDescription _name = new ()
-                { name = "MarkerName", defaultValue = "Fly-Safe-1" };
-            UxmlDoubleAttributeDescription _latitude = new ()
-                { name = "Latitude", defaultValue = 45.813053 };
-            UxmlDoubleAttributeDescription _longitude = new ()
-                { name = "Latitude", defaultValue = 15.977301 };
-            UxmlBoolAttributeDescription _isWaypoint = new()
-                { name = "IsWaypoint", defaultValue = false };
-            UxmlBoolAttributeDescription _isYellow = new()
-                { name = "IsYellow", defaultValue = false };
-            UxmlBoolAttributeDescription _isRed = new()
-                { name = "IsRed", defaultValue = false };
-            UxmlBoolAttributeDescription _isGreen = new()
-                { name = "IsGreen", defaultValue = false };
-            UxmlBoolAttributeDescription _isBlue = new()
-                { name = "IsBlue", defaultValue = false };
-            UxmlBoolAttributeDescription _isGray = new()
-                { name = "IsGray", defaultValue = false };
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-
-                if (ve is MapMarkerControl control)
-                {
-                    control.NameValue = _name.GetValueFromBag(bag, cc);
-                    control.LatitudeValue = _latitude.GetValueFromBag(bag, cc);
-                    control.LongitudeValue = _longitude.GetValueFromBag(bag, cc);
-
-                    if (_isWaypoint.GetValueFromBag(bag, cc))
-                    {
-                        control.SetAsWaypoint();
-                    }
-                    else
-                    {
-                        control.SetAsVessel();
-                    }
-                    
-                    if (_isYellow.GetValueFromBag(bag, cc)) control.SetAsYellow();
-                    if (_isRed.GetValueFromBag(bag, cc)) control.SetAsRed();
-                    if (_isGreen.GetValueFromBag(bag, cc)) control.SetAsGreen();
-                    if (_isBlue.GetValueFromBag(bag, cc)) control.SetAsBlue();
-                    if (_isGray.GetValueFromBag(bag, cc)) control.SetAsGray();
-                }
-            }
         }
         
         public enum MarkerType

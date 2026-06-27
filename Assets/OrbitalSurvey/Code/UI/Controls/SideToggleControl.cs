@@ -2,7 +2,8 @@
 
 namespace OrbitalSurvey.UI.Controls
 {
-    public class SideToggleControl : Button
+    [UxmlElement]
+    public partial class SideToggleControl : Button
     {
         public const string UssClassName = "side-toggle";
         public const string UssClassName_Connector = UssClassName + "__connector";
@@ -25,6 +26,7 @@ namespace OrbitalSurvey.UI.Controls
         private VisualElement _led;
         private Label _text;
 
+        [UxmlAttribute]
         public string TextValue
         {
             get => _text.text;
@@ -156,23 +158,6 @@ namespace OrbitalSurvey.UI.Controls
                 _led.RemoveFromClassList(UssLedChecked);
                 _led.AddToClassList(UssLedDisabled);
                 _text.AddToClassList(UssTextDisabled);                
-            }
-        }
-        
-        public new class UxmlFactory : UxmlFactory<SideToggleControl, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-            UxmlStringAttributeDescription _name = new()
-            { name = "Text", defaultValue = "Toggle" };
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-
-                if (ve is SideToggleControl control)
-                {
-                    control.TextValue = _name.GetValueFromBag(bag, cc);
-                }
             }
         }
     }

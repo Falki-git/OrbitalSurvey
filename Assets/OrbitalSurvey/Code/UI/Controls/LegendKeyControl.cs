@@ -3,7 +3,8 @@ using UnityEngine.UIElements;
 
 namespace OrbitalSurvey.UI.Controls
 {
-    public class LegendKeyControl: VisualElement
+    [UxmlElement]
+    public partial class LegendKeyControl: VisualElement
     {
         public static string UssClassName = "legend-key";
         public static string UssColorClassName = UssClassName + "__color";
@@ -12,12 +13,14 @@ namespace OrbitalSurvey.UI.Controls
         public VisualElement ColorElement;
         public Label TextLabel;
 
+        [UxmlAttribute]
         public Color32 ColorValue
         {
             get => ColorElement.style.backgroundColor.value;
             set => ColorElement.style.backgroundColor = (Color)value;
         }
         
+        [UxmlAttribute]
         public string TextValue
         {
             get => TextLabel.text;
@@ -49,26 +52,5 @@ namespace OrbitalSurvey.UI.Controls
             TextLabel.AddToClassList(UssTextClassName);
             hierarchy.Add(TextLabel);
         }
-        
-        public new class UxmlFactory : UxmlFactory<LegendKeyControl, UxmlTraits> { }
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-            private UxmlColorAttributeDescription _color = new UxmlColorAttributeDescription()
-                { name = "color", defaultValue = Color.black };
-            UxmlStringAttributeDescription _text = new UxmlStringAttributeDescription()
-                { name = "text", defaultValue = "NameOfControl" };
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-
-                if (ve is LegendKeyControl control)
-                {
-                    control.ColorValue = _color.GetValueFromBag(bag, cc);
-                    control.TextValue = _text.GetValueFromBag(bag, cc);
-                }
-            }
-        }
     }
 }
-
