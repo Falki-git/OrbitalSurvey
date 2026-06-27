@@ -3,7 +3,6 @@ using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.Utilities;
 using SpaceWarp2.Game.API.Waypoints;
-using SpaceWarp2.Game.API.Waypoints;
 using UnityEngine;
 using Utility = OrbitalSurvey.Utilities.Utility;
 using ILogger = ReduxLib.Logging.ILogger;
