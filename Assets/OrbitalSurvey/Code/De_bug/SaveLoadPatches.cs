@@ -104,13 +104,15 @@ namespace OrbitalSurvey.Debug
             if (ModSaves.InternalPluginSaveData.Count == 0)
                 return true;
 
-            __instance._game.UI.SetLoadingBarText(__instance.Description);
+            ReflectionUtility.GetPrivateField<GameInstance>(__instance, "_game").UI.SetLoadingBarText(__instance.Description);
+            var filename = ReflectionUtility.GetPrivateField<string>(__instance, "_filename");
+            var data = ReflectionUtility.GetPrivateField<LoadGameData>(__instance, "_data");
             try
             {
                 SpaceWarpSerializedSavedGame serializedSavedGame = new();
-                IOProvider.FromJsonFile<SpaceWarpSerializedSavedGame>(__instance._filename, out serializedSavedGame);
-                __instance._data.SavedGame = serializedSavedGame;
-                __instance._data.DataLength = IOProvider.GetFileSize(__instance._filename);
+                IOProvider.FromJsonFile<SpaceWarpSerializedSavedGame>(filename, out serializedSavedGame);
+                data.SavedGame = serializedSavedGame;
+                data.DataLength = IOProvider.GetFileSize(filename);
 
                 // Perform plugin load data if plugin data is found in the save file
                 if (serializedSavedGame.SerializedPluginSaveData.Count > 0)
