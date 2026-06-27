@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KSP.Game;
 using KSP.Game.Science;
 using KSP.Messages;
@@ -31,17 +32,17 @@ namespace OrbitalSurvey.Modules
         private bool _isDebugTriggerExperimentVisible;
         private bool _isDebugTriggerScienceReportVisible;
 
-        public override void AddDataModules()
+        protected override void AddDataModules()
         {
             base.AddDataModules();
             _dataOrbitalSurvey ??= new Data_OrbitalSurvey();
             DataModules.TryAddUnique(_dataOrbitalSurvey, out _dataOrbitalSurvey);
         }
 
-        public override void OnInitialize()
+        protected override void OnInitialize()
         {
             Logger.LogDebug(
-                $"OnInitialize triggered. Vessel '{_part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'.");
+                $"OnInitialize triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'.");
 
             base.OnInitialize();
 
@@ -78,7 +79,7 @@ namespace OrbitalSurvey.Modules
         }
 
         // This triggers in flight
-        public override void OnModuleFixedUpdate(float fixedDeltaTime)
+        protected override void OnModuleFixedUpdate(float fixedDeltaTime)
         {
             if (!Core.Instance.MapsInitialized || !_dataOrbitalSurvey.EnabledToggle.GetValue())
                 return;
@@ -166,21 +167,21 @@ namespace OrbitalSurvey.Modules
                 GameManager.Instance.Game.ScienceManager.ScienceExperimentsDataStore.GetExperimentDefinition(
                     "orbital_survey_visual_mapping_high_25");
 
-            var celestialScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider
-                ._cbToScienceRegions[body].SituationData.CelestialBodyScalar;
-            var highOrbitScalar = GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider
-                ._cbToScienceRegions[body].SituationData.HighOrbitScalar;
+            var cbToScienceRegions = ReflectionUtility.GetPrivateField<Dictionary<string, CelestialBodyScienceRegionsData>>(
+                GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider, "_cbToScienceRegions");
+            var celestialScalar = cbToScienceRegions[body].SituationData.CelestialBodyScalar;
+            var highOrbitScalar = cbToScienceRegions[body].SituationData.HighOrbitScalar;
 
             ResearchReport researchReport = new ResearchReport(
                 experimentID: experimentDefinition.ExperimentID,
                 displayName: experimentDefinition.DataReportDisplayName,
-                module._currentLocation,
+                ReflectionUtility.GetPrivateField<ResearchLocation>(module, "_currentLocation"),
                 ScienceReportType.DataType,
                 initialScienceValue: experimentDefinition.DataValue * celestialScalar * highOrbitScalar,
                 flavorText: experimentDefinition.DataFlavorDescriptions[0].LocalizationTag
             );
 
-            module._storageComponent.StoreResearchReport(researchReport);
+            module.Part.PartOwner.SimulationObject.ScienceStorage.StoreResearchReport(researchReport);
 
             ResearchReportAcquiredMessage message;
             if (GameManager.Instance.Game.Messages.TryCreateMessage(out message))
@@ -199,13 +200,14 @@ namespace OrbitalSurvey.Modules
             ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
             PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
 
+            var dataScienceExperiment = ReflectionUtility.GetPrivateField<Data_ScienceExperiment>(module, "dataScienceExperiment");
             var experiment =
-                module.dataScienceExperiment.ExperimentStandings.Find(e =>
+                dataScienceExperiment.ExperimentStandings.Find(e =>
                     e.ExperimentID.StartsWith("orbital_survey_visual_mapping"));
 
             var expDef = module.GetExperimentDefinitionByID("orbital_survey_visual_mapping_high_25");
 
-            module.CreateScienceReports(expDef, 0);
+            ReflectionUtility.InvokePrivateMethod(module, "CreateScienceReports", expDef, 0);
         }
 
         private void OnBodyCategoryOabChanged(string category)
@@ -243,14 +245,14 @@ namespace OrbitalSurvey.Modules
             ComponentModule.Part.TryGetModule(typeof(PartComponentModule_ScienceExperiment), out var m);
             PartComponentModule_ScienceExperiment module = m as PartComponentModule_ScienceExperiment;
 
-            var data = module.dataScienceExperiment;
+            var data = ReflectionUtility.GetPrivateField<Data_ScienceExperiment>(module, "dataScienceExperiment");
             data.SetVisible(data.Location, false);
         }
 
         // This... also triggers when Flight scene is loaded? (why?)
         // It triggers when exiting the game also.
         // It triggers for only active vessel it appears
-        public override void OnShutdown()
+        protected override void OnShutdown()
         {
             Logger.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
             _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
@@ -266,7 +268,7 @@ namespace OrbitalSurvey.Modules
         }
 
         // This triggers in OAB
-        public override void OnModuleOABFixedUpdate(float deltaTime)
+        protected override void OnModuleOABFixedUpdate(float deltaTime)
         {
             //_logger.LogDebug("OnModuleOABFixedUpdate triggered.");
         }
@@ -281,13 +283,13 @@ namespace OrbitalSurvey.Modules
         // METHODS THAT DON'T TRIGGER
 
         // -
-        public override void OnModuleUpdate(float deltaTime)
+        protected override void OnModuleUpdate(float deltaTime)
         {
             Logger.LogDebug("OnModuleUpdate triggered.");
         }
 
         // -
-        public override void OnModuleOABUpdate(float deltaTime)
+        protected override void OnModuleOABUpdate(float deltaTime)
         {
             Logger.LogDebug("OnModuleOABUpdate triggered.");
         }

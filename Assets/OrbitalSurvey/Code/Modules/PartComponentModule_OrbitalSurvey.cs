@@ -56,14 +56,10 @@ namespace OrbitalSurvey.Modules
             if (m2 != null)
             {
                 var moduleDeployable = m2 as PartComponentModule_Deployable;
-                foreach (var dataDeployable in moduleDeployable.DataModules?.ValuesList)
+                if (moduleDeployable.DataModules?.TryGetByType<Data_Deployable>(out var deployableData) == true)
                 {
-                    if (dataDeployable is Data_Deployable)
-                    {
-                        DataDeployable = dataDeployable as Data_Deployable;
-                        DataDeployable.toggleExtend.OnChangedValue += (_) => ResetLastScanTime();
-                        break;
-                    }
+                    DataDeployable = deployableData;
+                    DataDeployable.toggleExtend.OnChangedValue += (_) => ResetLastScanTime();
                 }
             }
 
