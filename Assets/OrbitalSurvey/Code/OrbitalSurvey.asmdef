@@ -1,6 +1,9 @@
 {
   "name": "OrbitalSurvey",
   "rootNamespace": "OrbitalSurvey",
+  "references": [
+    "Unity.InputSystem"
+  ],
   "allowUnsafeCode": true,
   "overrideReferences": true,
   "precompiledReferences": [
