@@ -146,7 +146,7 @@ namespace OrbitalSurvey.Models
                         {
                             scannedPixelColor = ScannedMap.GetPixel(pixel.Item1, pixel.Item2);
                         }
-                        catch (Exception _)
+                        catch (Exception)
                         {
                             Logger.LogError("ScannedMap.GetPixel failed. Texture needs to have Read/Write marked in Unity Editor");
                             continue;
