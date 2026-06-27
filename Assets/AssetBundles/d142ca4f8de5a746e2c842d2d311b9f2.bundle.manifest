@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.4.1f1
+CRC: 321993438
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dfeb9306e756d16b1fc44bad09d2431d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1cfddeea06ce0ec573e0d0ec81ebe20e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 42acd6c0c1a003f97dc573d67877c0fd
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/ksp2community.ksp2unitytools/Assets/Plumes/Textures/plume_wide_core_tint_noise.png
+Dependencies: []

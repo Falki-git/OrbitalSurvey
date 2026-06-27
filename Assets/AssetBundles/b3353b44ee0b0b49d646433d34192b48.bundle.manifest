@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.4.1f1
+CRC: 3472450472
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9c6fffd36c8dd17cf78ca7a84a0b62f2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1cfddeea06ce0ec573e0d0ec81ebe20e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 2a2fd7e174885390b76be407aa4329b5
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/ksp2community.ksp2unitytools/Assets/Plumes/Textures/plume_engine_shutdown_flipbook.png
+Dependencies: []

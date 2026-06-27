@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.4.1f1
+CRC: 1414507739
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 400dce4739024765fcf8451c9aa5d1d9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1cfddeea06ce0ec573e0d0ec81ebe20e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: c0aba4736557bf3ba59d9cc1f25e915e
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/ksp2community.ksp2unitytools/Assets/Plumes/Textures/plume_engine_burst_glow_flipbook.png
+Dependencies: []

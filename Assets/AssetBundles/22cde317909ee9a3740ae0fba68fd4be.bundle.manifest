@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.4.1f1
+CRC: 3846585584
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4683a0e1ccd27a3ada05d496a15ffe33
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1cfddeea06ce0ec573e0d0ec81ebe20e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: f0375e298a206e4e93627afeb76d48dd
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/ksp2community.ksp2unitytools/Assets/Plumes/Textures/plume_wide_core_noise.png
+Dependencies: []

@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.4.1f1
+CRC: 683104373
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8d890f96c3d3888ff5bdb72d10bbabaa
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1cfddeea06ce0ec573e0d0ec81ebe20e
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 9d4b874d0a848735e96de25f21ae725f
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Packages/ksp2community.ksp2unitytools/Assets/Plumes/Textures/plume_core_flame_alpha_gradient.png
+Dependencies: []
