@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: eabb05006088d3b4fae4bb0490da1afb
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: orbitalsurvey_ui.bundle
+  assetBundleVariant: 
+  script: {fileID: 12385, guid: 0000000000000000e000000000000000, type: 0}
+  disableValidation: 0
+  unsupportedSelectorAction: 0

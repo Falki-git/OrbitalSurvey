@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: swinfo
   m_EditorClassIdentifier: ksp2community.ksp2unitytools.editor::Ksp2UnityTools.Editor.Modding.Mod
   id: OrbitalSurvey
-  name: OrbitalSurvey
+  name: Orbital Survey
   author: Falki
-  description: A sample mod for KSP2
-  version: 0.1.0
-  versionCheck: 
-  minKsp2Version: '*'
+  description: Scan celestial bodies from orbit.
+  version: 0.9.5
+  versionCheck: https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux/Assets/OrbitalSurvey/swinfo.json
+  minKsp2Version: 0.2.3
   maxKsp2Version: '*'
-  source: 
+  source: https://github.com/Falki-git/OrbitalSurvey
   allGroup: {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}
   partsGroup: {fileID: 11400000, guid: 0e5269790a12a354c8dfe2cc3f209cbf, type: 2}
   missionsGroup: {fileID: 11400000, guid: 40b3fd3e998f02f4da666c888ead5248, type: 2}
