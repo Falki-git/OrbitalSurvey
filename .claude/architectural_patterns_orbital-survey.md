@@ -272,33 +272,20 @@ descriptions (`Data_ScienceExperiment.GetPartInfoEntries`), and a full reimpleme
 
 ---
 
-## 6. What the Unity 6 port still needs
+## 6. Unity 6 port — status
 
-The Orbital Survey source code has been imported into this repo and the PatchManager patches
-have been migrated to Lua. The C# **gameplay logic is current** for the Redux/SpaceWarp2 stack.
-Focus the remaining work on the Unity-version-sensitive surfaces:
+The Orbital Survey source code has been imported, the PatchManager patches have been migrated
+to Lua, and **all Unity 6 editor rebuilds have been completed** (asset bundles, asmdef
+precompiledReferences, shader/overlay APIs, UITK API, Texture2D/Graphics APIs). The mod is
+considered fully ported to Unity 6.
 
-1. **Rebuild the asset bundles under Unity 6.** The four bundles in `Copied/assets/bundles/`
-   (`orbitalsurvey_maps_1024`, `orbitalsurvey_maps_2048`, `orbitalsurvey_ui`, `swconsoleui`)
-   were built with the pre-Unity 6 editor. Unity 6 bundles use a different serialization version
-   and **old bundles may fail to load** (`AssetBundle.LoadFromFile` returns null / type-load
-   errors). Re-export via the ThunderKit pipelines in this repo. Verify
-   `bundle.GetAllAssetNames()` still matches the hardcoded addresses in `AssetUtility` (e.g.
-   `assets/orbitalsurvey/images/visualmaps/kerbin_scaled_d_1024.png`).
-2. **Regenerate `OrbitalSurvey.asmdef precompiledReferences`** against this repo's Unity 6
-   game DLLs in `Packages/KSP2_x64/`. The reference list may differ from the pre-Unity 6 build
-   — reconcile against the `MyTest11` asmdef.
-3. **Shader / material APIs** (`OverlayManager`): confirm `KSP2/Environment/CelestialBody/
-   CelestialBody_Local_Old` still exists in the Unity 6 build and that `_AlbedoScaledTex` /
-   `_ShorelineSDFTexture` property names and the `PQSRenderer._overlays` / `AddOverlay` /
-   `_oceanMaterial` internals are unchanged. These are the highest-risk reach-ins.
-4. **UI Toolkit (UITK) API changes** in Unity 6: `Window.Create` and custom control
-   `UxmlFactory`/`UxmlTraits` registration in `UI/Controls/` may hit renamed members.
-5. **Texture2D / Graphics APIs**: `Texture2D.SetPixel/Apply`, `Graphics.CopyTexture` usage in
-   `MapData`/`ScanUtility` are stable but worth a compile-time check against Unity 6 signatures.
-6. **Deprecated Unity APIs / Input**: `Input.GetKey*` (legacy input) in the debug hotkey may
-   warn; the asmdef already references `Unity.InputSystem`. `OnGUI`/`GUISkin` (IMGUI debug
-   window) remains supported.
+For reference, the surfaces that required attention during the Unity 6 port:
+- Asset bundles (`Copied/assets/bundles/`) rebuilt via ThunderKit pipelines in the Unity 6 editor.
+- `OrbitalSurvey.asmdef precompiledReferences` reconciled against this repo's Unity 6 DLLs.
+- PQS shader (`KSP2/Environment/CelestialBody/CelestialBody_Local_Old`), `_AlbedoScaledTex` /
+  `_ShorelineSDFTexture`, `PQSRenderer._overlays` / `AddOverlay` verified.
+- UITK `Window.Create` and custom control `UxmlFactory`/`UxmlTraits` registration verified.
+- `Texture2D.SetPixel/Apply`, `Graphics.CopyTexture` in `MapData`/`ScanUtility` verified.
 
 Build and deploy via the ThunderKit pipelines (`Build for Editor` / `Build for Player` /
 `Deploy to Zip File`) under `Assets/OrbitalSurvey/Pipelines/`. Pipelines run in the Unity

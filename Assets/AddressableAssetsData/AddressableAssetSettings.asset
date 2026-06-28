@@ -64,17 +64,11 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 0e5269790a12a354c8dfe2cc3f209cbf, type: 2}
   - {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}
-  - {fileID: 11400000, guid: 1f870beeaac1bbe429ca12c254b322c0, type: 2}
-  - {fileID: 11400000, guid: a69d8f1e5f6771445ab8d289d31b5454, type: 2}
   - {fileID: 11400000, guid: 74453775a15955f4bad265e6966067a2, type: 2}
   - {fileID: 11400000, guid: 4950e1330767d1c4a9c7af60a31ead95, type: 2}
   - {fileID: 11400000, guid: 33d4b373c5e1eea46928b93c69090e81, type: 2}
   - {fileID: 11400000, guid: 026b33b74382bb8449cb1834822f1b5d, type: 2}
-  - {fileID: 11400000, guid: 4c28de30fe1d5bd4899b31b910abf041, type: 2}
-  - {fileID: 11400000, guid: f9a36acb1f6826843a521b8fea53b948, type: 2}
   - {fileID: 11400000, guid: 40b3fd3e998f02f4da666c888ead5248, type: 2}
-  - {fileID: 11400000, guid: 3f2072558070543448fb349d221de42f, type: 2}
-  - {fileID: 11400000, guid: aca48c60e03a10f4f804d97da5517934, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -102,20 +96,6 @@ MonoBehaviour:
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: 4ae0cea4b06e6134aaffeef0e9ec8095
         m_Value: '{SpaceWarpPaths.OrbitalSurvey}/addressables/StandaloneWindows64'
-      - m_Id: a40b22c9bfa84b644b4e6303203bdc40
-        m_Value: <undefined>
-      - m_Id: c772a76f64e3c404f815f81ea7212de1
-        m_Value: 'ServerData/[BuildTarget]'
-      - m_Id: cba0b3a3dd41bb8419f44a5148e5a7b5
-        m_Value: Library/com.unity.addressables/aa/Windows/StandaloneWindows64
-    - m_InheritedParent: 
-      m_Id: de96091bd8134dd4cb6e507b47565bfa
-      m_ProfileName: MyTest11
-      m_Values:
-      - m_Id: 1b2aca76682f65042bf29eb2217c7492
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 4ae0cea4b06e6134aaffeef0e9ec8095
-        m_Value: '{SpaceWarpPaths.MyTest11}/addressables/StandaloneWindows64'
       - m_Id: a40b22c9bfa84b644b4e6303203bdc40
         m_Value: <undefined>
       - m_Id: c772a76f64e3c404f815f81ea7212de1
