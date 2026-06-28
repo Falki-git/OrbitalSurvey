@@ -1,16 +1,15 @@
 # Orbital Survey Mod — Architecture Analysis (Redux port)
 
-Analysis of the **up-to-date Redux / SpaceWarp2 port** of the Orbital Survey mod at
-`E:\GitHub\KSP2\OrbitalSurveyRedux_BeforeUnity6\Assets\OrbitalSurvey`. This is the version to
-migrate into `OrbitalSurveyRedux`. It is **already ported from the old SpaceWarp 1.x / BepInEx
-stack to the Redux / SpaceWarp2 stack** — the framework plumbing (mod base, logging, config,
-assets, save, AppBar) is current. The remaining work is **updating it to Unity 6** (the folder
-is literally named `_BeforeUnity6`; the target `OrbitalSurveyRedux` repo is Unity `6000.4.1f1`).
+Analysis of the **Orbital Survey mod** as it lives in this repo at `Assets/OrbitalSurvey/`.
+The mod is **fully migrated** from the old SpaceWarp 1.x / BepInEx stack to the Redux /
+SpaceWarp2 stack and from the pre-Unity 6 project into `OrbitalSurveyRedux`. The remaining
+work is the **Unity 6 surface-level porting** (asset bundles, shader API, UITK API — see §6).
 
 > Mod by **Falki** — `mod_id: OrbitalSurvey`, version `0.9.5`, depends on `SpaceWarp2 >= 2.0.0`,
 > `ksp2_version` min `0.2.3`. Source: https://github.com/Falki-git/OrbitalSurvey
 > Read alongside `architectural_patterns_ksp2.md` (game idioms) and
 > `ksp2_assembly_csharp_reference.md` (where game types live).
+> For PatchManager / Lua patch details, see `.claude/KSP2_Redux_docs/5.1 Patch Manager.md`.
 
 ---
 
@@ -27,12 +26,15 @@ bands scale with body size ("category"), and high time-warp is handled by **retr
 
 ---
 
-## 2. Project shape & toolchain (this Redux port)
+## 2. Project shape & toolchain
 
 - **ThunderKit / SpaceWarp2 layout**: the mod lives under `Assets/OrbitalSurvey/` with:
   - `Code/` — all C# (compiled to `OrbitalSurvey.dll` via the `OrbitalSurvey.asmdef`).
-  - `swinfo.json` (spec **2.0**) — metadata, `main_assembly: OrbitalSurvey.dll`, SpaceWarp2 dep.
-  - `assets/bundles/*.bundle` + `assets/images/` — runtime assets (see §4.5).
+  - `swinfo.asset` — mod metadata (`mod_id: OrbitalSurvey`, `main_assembly: OrbitalSurvey.dll`, SpaceWarp2 dep).
+  - `Copied/assets/bundles/*.bundle` + `Copied/assets/images/` — runtime assets (see §4.5).
+  - `Copied/patches/` — **PatchManager Lua patches** (Redux6 style — see §4.10 and §4.16).
+  - `UI/` — UXML/USS source + icons.
+  - `Pipelines/` — ThunderKit build pipelines (`Build for Editor`, `Build for Player`, `Deploy to Zip File`).
 - **`OrbitalSurvey.asmdef`**: `overrideReferences: true` with an explicit `precompiledReferences`
   list pointing at the KSP2 game DLLs (`Assembly-CSharp.dll`, `SpaceWarp2*.dll`, `ReduxLib.dll`,
   `UitkForKsp2.dll`, `uitkforksp2.controls.Runtime.dll`, `UniTask*.dll`,
@@ -77,10 +79,14 @@ the two — only the framework plumbing above was rewritten.
 5. `MessageListener.Instance.SubscribeToMessages()`.
 6. Create `GameObject("OrbitalSurvey_Providers")` parented to the mod; attach MonoBehaviours
    `AssetUtility` (loads bundles in its `Start()`) and `VesselManager`.
-7. `CelestialCategoryManager.Instance.InitializeConfigs()` — read PatchManager configs.
-8. `SaveManager.Instance.Register()`.
-9. `PartComponentModuleOverride.RegisterModuleForBackgroundResourceProcessing<PartComponentModule_OrbitalSurvey>()`.
-10. `CreateHarmonyAndPatchAll()`.
+7. `SaveManager.Instance.Register()`.
+8. `PartComponentModuleOverride.RegisterModuleForBackgroundResourceProcessing<PartComponentModule_OrbitalSurvey>()`.
+9. `CreateHarmonyAndPatchAll()`.
+
+> **Note:** `CelestialCategoryManager.InitializeConfigs()` is **not** called in `OnInitialized()`.
+> It is deferred to `MessageListener.OnGameLoadFinishedMessage` so that PatchManager has already
+> finished its Lua patch pass and bound all config values before the C# reads them from
+> `SWConfiguration`. `InitializeCelestialBodyCategories()` is also called there.
 
 `Update()` toggles the debug window (Ctrl+Alt+O); `OnGUI()` drives the IMGUI debug window —
 i.e. `KerbalMod` is itself a MonoBehaviour (this is why `KerbalMod` is used over `GeneralMod`).
@@ -177,11 +183,31 @@ crosses a milestone, `TriggerExperiment` builds a `ResearchReport` (pulling
 forces body/situation/region, stores it on every participating vessel's
 `PartComponentModule_ScienceExperiment`, and publishes `ResearchReportAcquiredMessage`.
 
-### 4.10 Config-driven definitions via PatchManager (SassyPatching)
-`CelestialCategoryManager` reads `orbital-survey-definitions` from
-`PatchManager.Core.CoreModule.CurrentUniverse.Configs`: category max-radii, per-category
-per-maptype scanning altitudes, and category localization strings. Bodies are binned into size
-categories by radius at load.
+### 4.10 Config-driven definitions via PatchManager (Lua patches)
+`CelestialCategoryManager` reads the celestial-body category definitions (max-radii,
+per-category per-maptype scanning altitudes, category localization strings) from the mod's
+own **`SWConfiguration` (`IConfigFile`)**, which is populated by the Lua patch
+`Copied/patches/orbital_survey_definitions.lua` at game load via PatchManager's `Config:`
+API:
+```lua
+Config:Integer("orbital-survey-category-max-radius", "Small",  150000, "…")
+Config:String("orbital-survey-category-localization", "Small", "PartModules/…", "…")
+Config:Integer("orbital-survey-category-altitudes", "Small.Visual.Min", 60000, "…")
+```
+The three config sections are `orbital-survey-category-max-radius`,
+`orbital-survey-category-localization`, and `orbital-survey-category-altitudes`. Because these
+values only exist after PatchManager has run, `InitializeConfigs()` is called from
+`MessageListener.OnGameLoadFinishedMessage`, not `OnInitialized()`. Other mods can override
+individual values with `Config:Mod("OrbitalSurvey")` in their own patches. Bodies are binned
+into size categories by radius at game load.
+
+The four active Lua patches (under `Copied/patches/`):
+| File | What it does |
+|------|-------------|
+| `orbital_survey_definitions.lua` | Writes category/altitude config into `SWConfiguration` |
+| `orbital_survey_module.lua` | Adds `Module_OrbitalSurvey` to antenna parts |
+| `orbital_survey_experiments.lua` | Creates the 8 mapping-milestone science experiments |
+| `orbital_survey_add_experiments_to_parts.lua` | Attaches those experiments to the relevant parts |
 
 ### 4.11 Messaging — game `MessageCenter` (`MessageListener`)
 `PersistentSubscribe` to: `GameLoadFinishedMessage` (init maps/categories/debug),
@@ -246,42 +272,37 @@ descriptions (`Data_ScienceExperiment.GetPartInfoEntries`), and a full reimpleme
 
 ---
 
-## 6. What the Unity 6 port needs (the remaining work)
+## 6. What the Unity 6 port still needs
 
-The C# **gameplay logic is current** for the Redux/SpaceWarp2 stack — most of it should compile
-unchanged once it references the Unity 6 game assemblies. Focus the port on the Unity-version-
-sensitive surfaces:
+The Orbital Survey source code has been imported into this repo and the PatchManager patches
+have been migrated to Lua. The C# **gameplay logic is current** for the Redux/SpaceWarp2 stack.
+Focus the remaining work on the Unity-version-sensitive surfaces:
 
-1. **Rebuild the asset bundles under Unity 6.** This is the headline reason for the `_BeforeUnity6`
-   label. `orbitalsurvey_maps_1024/2048`, `orbitalsurvey_ui`, `swconsoleui` were built with the old
-   editor; Unity 6 bundles use a different serialization/compatibility version and **old bundles
-   will fail to load** (`AssetBundle.LoadFromFile` returns null / type-load errors). Re-author and
-   re-export them via the OrbitalSurveyRedux ThunderKit pipelines. Verify `bundle.GetAllAssetNames()`
-   still yields the hardcoded addresses in `AssetUtility` (the address strings, e.g.
-   `assets/orbitalsurvey/images/visualmaps/...`, must match the rebuilt bundle layout).
-2. **Regenerate `OrbitalSurvey.asmdef precompiledReferences`** against this repo's Unity 6 game
-   DLLs in `Packages/KSP2_x64/`. The reference list (e.g. `Unity.InternalAPIEngineBridge.003.dll`,
-   render-pipeline DLLs, `UniTask*`, `UnityMvvmToolkit.*`) may differ in name/availability under the
-   Unity 6 Redux build — reconcile against the target `MyTest11`-style asmdef in this repo.
+1. **Rebuild the asset bundles under Unity 6.** The four bundles in `Copied/assets/bundles/`
+   (`orbitalsurvey_maps_1024`, `orbitalsurvey_maps_2048`, `orbitalsurvey_ui`, `swconsoleui`)
+   were built with the pre-Unity 6 editor. Unity 6 bundles use a different serialization version
+   and **old bundles may fail to load** (`AssetBundle.LoadFromFile` returns null / type-load
+   errors). Re-export via the ThunderKit pipelines in this repo. Verify
+   `bundle.GetAllAssetNames()` still matches the hardcoded addresses in `AssetUtility` (e.g.
+   `assets/orbitalsurvey/images/visualmaps/kerbin_scaled_d_1024.png`).
+2. **Regenerate `OrbitalSurvey.asmdef precompiledReferences`** against this repo's Unity 6
+   game DLLs in `Packages/KSP2_x64/`. The reference list may differ from the pre-Unity 6 build
+   — reconcile against the `MyTest11` asmdef.
 3. **Shader / material APIs** (`OverlayManager`): confirm `KSP2/Environment/CelestialBody/
    CelestialBody_Local_Old` still exists in the Unity 6 build and that `_AlbedoScaledTex` /
    `_ShorelineSDFTexture` property names and the `PQSRenderer._overlays` / `AddOverlay` /
    `_oceanMaterial` internals are unchanged. These are the highest-risk reach-ins.
-4. **UI Toolkit (UITK) API changes** in Unity 6: `UIDocument`/`VisualElement`/`Window.Create`
-   usage in `UI/` and the custom controls in `UI/Controls/` may hit renamed members or changed
-   `UxmlFactory`/`UxmlTraits` registration. UITK markup (UXML/USS) lives in the rebuilt `ui` bundle.
-5. **Texture2D / Graphics APIs**: `Graphics.CopyTexture`, `Texture2D.SetPixel/Apply`,
-   `RenderTexture` usage in `MapData`/`ScanUtility` are stable but worth a compile-time check
-   against Unity 6 signatures.
-6. **Deprecated Unity APIs / Input**: `Input.GetKey*` (legacy input) in the debug hotkey may warn;
-   the asmdef already references `Unity.InputSystem`. `OnGUI`/`GUISkin` (IMGUI debug window) remains
-   supported.
+4. **UI Toolkit (UITK) API changes** in Unity 6: `Window.Create` and custom control
+   `UxmlFactory`/`UxmlTraits` registration in `UI/Controls/` may hit renamed members.
+5. **Texture2D / Graphics APIs**: `Texture2D.SetPixel/Apply`, `Graphics.CopyTexture` usage in
+   `MapData`/`ScanUtility` are stable but worth a compile-time check against Unity 6 signatures.
+6. **Deprecated Unity APIs / Input**: `Input.GetKey*` (legacy input) in the debug hotkey may
+   warn; the asmdef already references `Unity.InputSystem`. `OnGUI`/`GUISkin` (IMGUI debug
+   window) remains supported.
 
-### Integrating into `OrbitalSurveyRedux`
-Drop `Code/`, `swinfo.json`, and `assets/` under this repo's `Assets/Mods/…` (mirroring the
-`MyTest11` sample layout), point the asmdef at this repo's package DLLs, and build/deploy via the
-ThunderKit pipelines (`Build for Editor` / `Build for Player` / `Deploy to Zip File`). See
-`CLAUDE.md` for the build workflow — pipelines run in the Unity editor, not from a terminal.
+Build and deploy via the ThunderKit pipelines (`Build for Editor` / `Build for Player` /
+`Deploy to Zip File`) under `Assets/OrbitalSurvey/Pipelines/`. Pipelines run in the Unity
+editor, not from a terminal — see `CLAUDE.md` for the build workflow.
 
 ---
 
