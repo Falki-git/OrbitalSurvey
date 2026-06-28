@@ -64,6 +64,10 @@ namespace OrbitalSurvey.Managers
 
             if (!CelestialCategoryManager.Instance.IsCelestialBodyCategoryInitialized)
             {
+                // Read category definitions from config first. This runs here (on game load)
+                // rather than in OnInitialized so PatchManager has finished binding the
+                // config values its Lua patches define before we read them.
+                CelestialCategoryManager.Instance.InitializeConfigs();
                 CelestialCategoryManager.Instance.InitializeCelestialBodyCategories();
             }
 

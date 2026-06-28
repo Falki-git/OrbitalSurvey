@@ -73,10 +73,11 @@ namespace OrbitalSurvey
             providers.AddComponent<AssetUtility>();
             providers.AddComponent<VesselManager>();
 
-            // initialize configs
-            CelestialCategoryManager.Instance.InitializeConfigs();
+            // Note: CelestialCategoryManager.InitializeConfigs() is called on game load
+            // (MessageListener.OnGameLoadFinishedMessage), after PatchManager has finished
+            // binding the config values defined by the mod's Lua patches.
 
-            // register for save/load events 
+            // register for save/load events
             SaveManager.Instance.Register();
 
             // register for EC background processing
