@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Scan celestial bodies from orbit.
   version: 0.9.5
   versionCheck: https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux/Assets/OrbitalSurvey/swinfo.json
-  minKsp2Version: 0.2.3
+  minKsp2Version: 0.2.8.3
   maxKsp2Version: '*'
   source: https://github.com/Falki-git/OrbitalSurvey
   allGroup: {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}

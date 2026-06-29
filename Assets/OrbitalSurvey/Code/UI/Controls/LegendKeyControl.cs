@@ -14,10 +14,10 @@ namespace OrbitalSurvey.UI.Controls
         public Label TextLabel;
 
         [UxmlAttribute]
-        public Color32 ColorValue
+        public Color ColorValue
         {
             get => ColorElement.style.backgroundColor.value;
-            set => ColorElement.style.backgroundColor = (Color)value;
+            set => ColorElement.style.backgroundColor = value;
         }
         
         [UxmlAttribute]
@@ -27,7 +27,7 @@ namespace OrbitalSurvey.UI.Controls
             set => TextLabel.text = value;
         }
 
-        public LegendKeyControl(Color32 color, string text) : this()
+        public LegendKeyControl(Color color, string text) : this()
         {
             ColorValue = color;
             TextValue = text;
