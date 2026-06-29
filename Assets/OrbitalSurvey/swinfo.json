@@ -6,7 +6,7 @@
   "description": "Scan celestial bodies from orbit.",
   "source": "https://github.com/Falki-git/OrbitalSurvey",
   "version": "0.9.5",
-  "version_check": "https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux/Assets/OrbitalSurvey/swinfo.json",
+  "version_check": "https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux6-new/Assets/OrbitalSurvey/swinfo.json",
   "ksp2_version": {
     "min": "0.2.8.3",
     "max": "*"

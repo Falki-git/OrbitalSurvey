@@ -17,7 +17,7 @@ MonoBehaviour:
   author: Falki
   description: Scan celestial bodies from orbit.
   version: 0.9.5
-  versionCheck: https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux/Assets/OrbitalSurvey/swinfo.json
+  versionCheck: https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/migration/redux6-new/Assets/OrbitalSurvey/swinfo.json
   minKsp2Version: 0.2.8.3
   maxKsp2Version: '*'
   source: https://github.com/Falki-git/OrbitalSurvey
