@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace OrbitalSurvey.UI
 {
-    public class ScanningConeRenderer : MonoBehaviour
+    public class GroundTrackingRenderer : MonoBehaviour
     {
-        public static ScanningConeRenderer Instance { get; private set; }
+        public static GroundTrackingRenderer Instance { get; private set; }
 
         private bool _isMapViewActive;
         private float _nextDiagLog;
@@ -24,10 +24,10 @@ namespace OrbitalSurvey.UI
 
         private static readonly Color VISUAL_FILL = new Color(0.00f, 0.85f, 0.25f, 0.20f);
         private static readonly Color BIOME_FILL  = new Color(0.30f, 0.70f, 1.00f, 0.20f);
-        private static readonly Color VISUAL_LINE = new Color(0.00f, 0.85f, 0.25f, 1.00f);
-        private static readonly Color BIOME_LINE  = new Color(0.30f, 0.70f, 1.00f, 1.00f);
+        private static readonly Color VISUAL_LINE = new Color(0.00f, 0.85f, 0.25f, 0.70f);
+        private static readonly Color BIOME_LINE  = new Color(0.30f, 0.70f, 1.00f, 0.70f);
 
-        private const float LINE_WIDTH          = 0.012f;
+        private const float LINE_WIDTH_BASE     = 0.012f;
         private const int   PYRAMID_VERT_COUNT = 5;
         private const int   LATERAL_POS_COUNT  = 7;  // c0→apex→c1→apex→c2→apex→c3
         private const int   BASE_POS_COUNT     = 4;  // rectangle: c0,c1,c2,c3 (loop closes c3→c0)
@@ -150,14 +150,14 @@ namespace OrbitalSurvey.UI
                     $"mapScale={spaceProvider.Map3DScaleInv:F0}");
             }
 
+            bool isBiome = IsBiomeScanning(vs);
             if (!_pyramids.TryGetValue(vs, out var pyramid))
             {
-                bool biome = IsBiomeScanning(vs);
-                pyramid    = CreatePyramid(mapRoot, biome ? BIOME_FILL : VISUAL_FILL, biome ? BIOME_LINE : VISUAL_LINE);
+                pyramid       = CreatePyramid(mapRoot, isBiome ? BIOME_FILL : VISUAL_FILL, isBiome ? BIOME_LINE : VISUAL_LINE);
                 _pyramids[vs] = pyramid;
             }
 
-            UpdatePyramidGeometry(pyramid, vesselLocalPos, nadirDir, bodyLocalPos, bodyRadiusLocal, halfWidth);
+            UpdatePyramidGeometry(pyramid, vesselLocalPos, nadirDir, bodyLocalPos, bodyRadiusLocal, halfWidth, isBiome);
         }
 
         private static bool IsBiomeScanning(VesselManager.VesselStats vs)
@@ -188,8 +188,8 @@ namespace OrbitalSurvey.UI
             // Lateral outline: c0→apex→c1→apex→c2→apex→c3
             var lateral           = go.AddComponent<LineRenderer>();
             lateral.positionCount = LATERAL_POS_COUNT;
-            lateral.startWidth    = LINE_WIDTH;
-            lateral.endWidth      = LINE_WIDTH;
+            lateral.startWidth    = LINE_WIDTH_BASE;
+            lateral.endWidth      = LINE_WIDTH_BASE;
             lateral.loop          = false;
             lateral.useWorldSpace = false;
             lateral.material      = CreateOutlineMaterial(lineColor, out var lateralMat);
@@ -204,8 +204,8 @@ namespace OrbitalSurvey.UI
             var baseOutline           = baseGo.AddComponent<LineRenderer>();
             baseOutline.positionCount = BASE_POS_COUNT;
             baseOutline.loop          = true;
-            baseOutline.startWidth    = LINE_WIDTH;
-            baseOutline.endWidth      = LINE_WIDTH;
+            baseOutline.startWidth    = LINE_WIDTH_BASE;
+            baseOutline.endWidth      = LINE_WIDTH_BASE;
             baseOutline.useWorldSpace = false;
             baseOutline.material      = CreateOutlineMaterial(lineColor, out var baseMat);
             baseOutline.startColor    = lineColor;
@@ -229,15 +229,29 @@ namespace OrbitalSurvey.UI
 
         private static void UpdatePyramidGeometry(
             PyramidData p, Vector3 apex,
-            Vector3 nadirDir, Vector3 bodyLocalPos, float bodyRadiusLocal, float halfWidth)
+            Vector3 nadirDir, Vector3 bodyLocalPos, float bodyRadiusLocal, float halfWidth,
+            bool isBiome)
         {
-            // The scan footprint is a square on the planet surface.
-            // MapData.MarkAsScanned uses scanningRadius pixels for the Y (latitude) half-extent
-            // and scanningRadius/2 pixels for the X (longitude) half-extent (before Mercator
-            // correction). When converted back to physical arc-length both directions equal
-            // GetScanRadius/2 meters — so the scan SQUARE has half-side = GetScanRadius/2,
-            // not GetScanRadius. halfWidth = GetScanRadius / Map3DScaleInv, so the scan
-            // square half-side in map-local units is halfWidth / 2.
+            // --- Per-frame visual updates (cheap uniform sets) ---
+            var fillColor = isBiome ? BIOME_FILL  : VISUAL_FILL;
+            var lineColor = isBiome ? BIOME_LINE  : VISUAL_LINE;
+
+            // Pulse fill alpha with a slow sine (0.6–1.0 × base alpha).
+            // Updated via the 1×1 texture pixel because Unlit/Transparent ignores mat.color.
+            float pulse = 0.6f + 0.4f * Mathf.Sin(Time.time * 1.5f);
+            p.FillTexture.SetPixel(0, 0, new Color(fillColor.r, fillColor.g, fillColor.b, fillColor.a * pulse));
+            p.FillTexture.Apply();
+
+            // Refresh line color (handles live mode-change without recreating the pyramid).
+            p.LateralMaterial.color      = lineColor;
+            p.Lateral.startColor         = lineColor;
+            p.Lateral.endColor           = lineColor;
+            p.BaseMaterial.color         = lineColor;
+            p.BaseOutline.startColor     = lineColor;
+            p.BaseOutline.endColor       = lineColor;
+
+            // --- Geometry ---
+            // halfWidth = GetScanRadius in map-local units; scan square half-side = halfWidth/2.
             var halfSide = halfWidth * 0.5f;
 
             // Surface-local east and north directions at the nadir (sub-vessel) point.
@@ -301,6 +315,9 @@ namespace OrbitalSurvey.UI
 
         private static Material CreateFillMaterial(Color fillColor, out Texture2D tex)
         {
+            // 1×1 texture whose pixel holds the fill color. Pulsing updates this pixel each frame;
+            // Unlit/Transparent in KSP2 reads only _MainTex, not _Color, so the texture is the
+            // only reliable way to control transparency.
             tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
             tex.SetPixel(0, 0, fillColor);
             tex.Apply();
