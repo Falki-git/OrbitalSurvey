@@ -19,7 +19,7 @@ namespace OrbitalSurvey.Managers
 
         public List<VesselStats> OrbitalSurveyVessels = new();
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.VesselManager");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(VesselManager).Name}");
 
         public double LastRefreshTime;
 

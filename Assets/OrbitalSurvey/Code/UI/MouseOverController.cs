@@ -18,7 +18,7 @@ namespace OrbitalSurvey.UI
 
         private bool _isMouseOverActive;
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.MouseOverController");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(MouseOverController).Name}");
 
         public void Start()
         {

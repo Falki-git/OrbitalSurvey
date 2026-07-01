@@ -7,7 +7,7 @@ namespace OrbitalSurvey.Utilities
     public static class ScanUtility
     {
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.ScanUtility");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(ScanUtility).Name}");
 
         public static double GetScanRadius(double bodyRadius, double altitude, ScanningStats scanningStats)
         {

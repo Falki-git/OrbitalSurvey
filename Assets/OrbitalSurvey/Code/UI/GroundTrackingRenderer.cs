@@ -34,7 +34,7 @@ namespace OrbitalSurvey.UI
 
         private void Awake()
         {
-            _logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.ScanningConeRenderer");
+            _logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{GetType().Name}");
             _logger.LogInfo("Awake");
             Instance = this;
         }

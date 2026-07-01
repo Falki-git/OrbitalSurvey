@@ -46,7 +46,7 @@ namespace OrbitalSurvey.UI
         private const string UssColorButtonSelected = "color-selected";
 
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.WaypointController");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(WaypointController).Name}");
 
         public void Start()
         {

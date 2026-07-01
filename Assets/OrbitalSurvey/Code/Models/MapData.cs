@@ -37,7 +37,7 @@ namespace OrbitalSurvey.Models
 
         public event DiscoveredPixelCountChanged OnDiscoveredPixelCountChanged;
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.MapData");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(MapData).Name}");
 
         public bool HasData
         {

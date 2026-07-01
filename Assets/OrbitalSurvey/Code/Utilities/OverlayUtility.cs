@@ -18,7 +18,7 @@ namespace OrbitalSurvey.Utilities
                 return mapCore;
             }
         }
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.OverlayUtility");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(OverlayUtility).Name}");
 
         public static readonly Dictionary<string, string> MAP3D_CELESTIAL_PATH = new()
         {

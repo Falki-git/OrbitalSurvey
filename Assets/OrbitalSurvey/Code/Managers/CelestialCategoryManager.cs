@@ -23,7 +23,7 @@ namespace OrbitalSurvey.Managers
         public bool IsCelestialBodyCategoryInitialized;
         internal Dictionary<string, string> CelestialBodyCategory;
 
-        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.CelestialCategoryManager");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(CelestialCategoryManager).Name}");
 
         // Config sections written by the Lua patch orbital_survey_definitions.lua.
         private const string MaxRadiusSection = "orbital-survey-category-max-radius";

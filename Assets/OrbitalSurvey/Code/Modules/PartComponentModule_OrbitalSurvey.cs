@@ -16,7 +16,7 @@ namespace OrbitalSurvey.Modules
         public double LastScanTime;
 
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.PartComponentModule");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(PartComponentModule_OrbitalSurvey).Name}");
 
         private Data_OrbitalSurvey _dataOrbitalSurvey;
         private double _timeSinceLastScan => Utility.UT - LastScanTime;

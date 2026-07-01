@@ -45,7 +45,7 @@ namespace OrbitalSurvey.UI
         private Vector3 _lastMousePosition;
         private bool _isTrackingActiveVessel;
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.ZoomController");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(ZoomAndPanController).Name}");
         private const string _TRACK_VESSEL_USS = "toggled";
 
         public void Start()

@@ -18,7 +18,7 @@ namespace OrbitalSurvey.Modules
     [DisallowMultipleComponent]
     public class Module_OrbitalSurvey : PartBehaviourModule
     {
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.Module");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(Module_OrbitalSurvey).Name}");
 
         public override Type PartComponentModuleType => typeof(PartComponentModule_OrbitalSurvey);
 

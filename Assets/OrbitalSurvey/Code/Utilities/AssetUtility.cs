@@ -22,7 +22,7 @@ namespace OrbitalSurvey.Utilities
         public string BundlesPath;
         public string ImagesPath;
         
-        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.AssetUtility");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(AssetUtility).Name}");
 
         private void Start()
         {

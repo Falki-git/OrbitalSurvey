@@ -21,7 +21,7 @@ namespace OrbitalSurvey.Managers
         public bool MapsInitialized { get; set; }
         public string SessionGuidString;
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.Core");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(Core).Name}");
 
         public void InitializeCelestialData()
         {

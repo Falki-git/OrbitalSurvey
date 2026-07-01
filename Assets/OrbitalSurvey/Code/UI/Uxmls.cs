@@ -12,7 +12,7 @@ namespace OrbitalSurvey.UI
 
         private const string _MAIN_GUI_PATH = "assets/orbitalsurvey/ui/orbitalsurvey.uxml";
 
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.Uxmls");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(Uxmls).Name}");
 
         private Uxmls()
         {

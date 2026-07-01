@@ -48,7 +48,7 @@ namespace OrbitalSurvey.UI
         private Action<Texture2D> _newCurrentMapInstanceHandler;
 
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.MainGuiController");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(MainGuiController).Name}");
 
         /// <summary>
         /// Item1 = localization key (e.g. "PartModules/OrbitalSurvey/Mode/Visual"), Item2 = localization value (e.g. "Visual") 

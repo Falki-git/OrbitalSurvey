@@ -19,7 +19,7 @@ namespace OrbitalSurvey.Managers
 
         public static ScienceManager Instance { get; } = new();
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.ScienceManager");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(ScienceManager).Name}");
 
         public Dictionary<MapType, Dictionary<ExperimentLevel, string>> ExperimentDefinitions = new()
         {

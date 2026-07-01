@@ -23,7 +23,7 @@ namespace OrbitalSurvey.Debug
         private GUIStyle _normalSectionButton;
         private GUIStyle _toggledSectionButton;
         private GUIStyle _narrowButton;
-        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.DEBUG_UI");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(DebugUI).Name}");
         private string _myCustomTextureFilename = "allblack.png";
         private string _myCustomTextureName = string.Empty;
         private string _textureName = string.Empty;

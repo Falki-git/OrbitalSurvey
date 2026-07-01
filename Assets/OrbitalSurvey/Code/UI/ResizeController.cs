@@ -28,7 +28,7 @@ namespace OrbitalSurvey.UI
         private Vector3 _initialMousePosition;
 
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.ResizeController");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(ResizeController).Name}");
 
         public void Start()
         {

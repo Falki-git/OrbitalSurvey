@@ -26,7 +26,7 @@ namespace OrbitalSurvey.Debug
         public Texture2D BiomeMask;
         public Texture SavedTexture;
         private Texture _textureBackup;
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.DEBUG_Manager");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(DebugManager).Name}");
 
         private static DebugManager _instance;
         internal static DebugManager Instance

@@ -13,7 +13,7 @@ namespace OrbitalSurvey.Managers
 {
     public class MessageListener
     {
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.MessageListener");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(MessageListener).Name}");
         private static MessageListener _instance;
         public MessageCenter MessageCenter => GameManager.Instance.Game.Messages;
 

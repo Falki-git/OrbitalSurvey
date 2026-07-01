@@ -22,7 +22,7 @@ namespace OrbitalSurvey.Managers
         public MapType OverlayType { get; set; }
 
         private static readonly ReduxLib.Logging.ILogger Logger =
-            ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.OverlayManager");
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(OverlayManager).Name}");
 
         private const string _OVERLAY_SHADER = "KSP2/Environment/CelestialBody/CelestialBody_Local_Old";
         private const string _OVERLAY_TEXTURE_NAME = "_AlbedoScaledTex";

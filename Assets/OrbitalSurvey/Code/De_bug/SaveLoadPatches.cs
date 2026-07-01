@@ -13,7 +13,7 @@ namespace OrbitalSurvey.Debug
 {
     public class SaveLoadPatches
     {
-        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.SaveLoadPatches");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(SaveLoadPatches).Name}");
 
         #region testbed
         /*
@@ -150,7 +150,7 @@ namespace OrbitalSurvey.Debug
 
     public class PatchTest
     {
-        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.PatchTest");
+        private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(PatchTest).Name}");
 
         [HarmonyPatch(typeof(CampaignLoadMenu), "LoadSelectedFile"), HarmonyPrefix]
         private static bool MyTest(CampaignLoadMenu __instance)

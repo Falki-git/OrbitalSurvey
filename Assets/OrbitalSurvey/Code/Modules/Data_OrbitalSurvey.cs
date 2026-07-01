@@ -20,7 +20,7 @@ namespace OrbitalSurvey.Modules
     public class Data_OrbitalSurvey : ModuleData
     {
         private static readonly ReduxLib.Logging.ILogger
-            Logger = ReduxLib.ReduxLib.GetLogger("Data_OrbitalSurvey.Core");
+            Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(Data_OrbitalSurvey).Name}");
 
         public override Type ModuleType => typeof(Module_OrbitalSurvey);
 

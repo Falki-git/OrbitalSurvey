@@ -22,7 +22,7 @@ namespace OrbitalSurvey.Managers
         public SaveDataAdapter bufferedLoadData;
         public bool HasBufferedLoadData;
         
-        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger("OrbitalSurvey.SaveManager");
+        private static readonly ReduxLib.Logging.ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(SaveManager).Name}");
 
         public void Register()
         {
