@@ -219,7 +219,7 @@ namespace OrbitalSurvey.UI
             // Triangle winding: 0,1,2 / 0,2,3 / 0,3,4 / 0,4,1 covers all four side faces.
             var mf = go.AddComponent<MeshFilter>();
             var mr = go.AddComponent<MeshRenderer>();
-            mr.material          = CreateFillMaterial(fillColor);
+            mr.material          = CreateFillMaterial(fillColor, out var fillMat);
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             mr.receiveShadows    = false;
 
@@ -265,7 +265,7 @@ namespace OrbitalSurvey.UI
                 LateralPositions = new Vector3[LATERAL_POS_COUNT],
                 BaseOutline      = baseOutline,
                 BasePositions    = new Vector3[BASE_POS_COUNT],
-                FillMaterial     = mr.material,
+                FillMaterial     = fillMat,
                 LateralMaterial  = lateralMat,
                 BaseMaterial     = baseMat,
             };
@@ -392,25 +392,29 @@ namespace OrbitalSurvey.UI
         private static void DestroyPyramid(PyramidData p)
         {
             if (p.Go              != null) Destroy(p.Go);
+            if (p.Mesh            != null) Destroy(p.Mesh);
             if (p.FillMaterial    != null) Destroy(p.FillMaterial);
             if (p.LateralMaterial != null) Destroy(p.LateralMaterial);
             if (p.BaseMaterial    != null) Destroy(p.BaseMaterial);
         }
 
         /// <summary>
-        /// Creates the semi-transparent fill material. Sprites/Default is used because it
-        /// respects the _Color property (including alpha), so the pulse is a free per-frame
-        /// color assignment rather than a CPU-to-GPU texture upload.
+        /// Creates the semi-transparent fill material and returns it both as the return value
+        /// (assigned to the MeshRenderer) and via <paramref name="outMat"/> (stored in
+        /// PyramidData for direct color updates). The separate reference avoids going through
+        /// Unity's Renderer.material getter, which creates an instance copy.
+        /// Sprites/Default is used because it respects the _Color property (including alpha),
+        /// so the pulse is a free per-frame color assignment rather than a CPU-to-GPU texture upload.
         /// </summary>
-        private static Material CreateFillMaterial(Color fillColor)
+        private static Material CreateFillMaterial(Color fillColor, out Material outMat)
         {
             var shader = Shader.Find("Sprites/Default") ?? Shader.Find("Unlit/Transparent");
-            var mat    = new Material(shader);
-            mat.color = fillColor;
-            mat.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
-            mat.SetInt("_Cull", 0);
-            mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Overlay;
-            return mat;
+            outMat = new Material(shader);
+            outMat.color = fillColor;
+            outMat.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
+            outMat.SetInt("_Cull", 0);
+            outMat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Overlay;
+            return outMat;
         }
 
         /// <summary>
