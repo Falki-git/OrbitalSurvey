@@ -19,6 +19,8 @@ namespace OrbitalSurvey.UI
         private float _nextGeomLog;
 
         private readonly Dictionary<VesselManager.VesselStats, PyramidData> _pyramids = new();
+        private readonly List<VesselManager.VesselStats> _activeScanners = new();
+        private readonly List<VesselManager.VesselStats> _toRemove = new();
 
         private ReduxLib.Logging.ILogger _logger;
 
@@ -73,17 +75,30 @@ namespace OrbitalSurvey.UI
                         _logger.LogDebug($"[DIAG]   {v.Name}: status={m.DataModule?.StatusValue} mode={m.Mode}");
             }
     
-            var activeScanners = VesselManager.Instance.OrbitalSurveyVessels
-                .Where(v => v.ModuleStats.Any(m => m.DataModule?.StatusValue == Status.Scanning))
-                .ToList();
-
-            foreach (var v in _pyramids.Keys.Except(activeScanners).ToList())
+            _activeScanners.Clear();
+            foreach (var v in VesselManager.Instance.OrbitalSurveyVessels)
             {
-                DestroyPyramid(_pyramids[v]);
-                _pyramids.Remove(v);
+                foreach (var m in v.ModuleStats)
+                {
+                    if (m.DataModule?.StatusValue == Status.Scanning)
+                    {
+                        _activeScanners.Add(v);
+                        break;
+                    }
+                }
             }
 
-            foreach (var vs in activeScanners)
+            _toRemove.Clear();
+            foreach (var key in _pyramids.Keys)
+                if (!_activeScanners.Contains(key))
+                    _toRemove.Add(key);
+            foreach (var key in _toRemove)
+            {
+                DestroyPyramid(_pyramids[key]);
+                _pyramids.Remove(key);
+            }
+
+            foreach (var vs in _activeScanners)
             {
                 try { UpdatePyramid(vs, mapCore, spaceProvider, mapRoot); }
                 catch (Exception ex) { _logger.LogError($"UpdatePyramid exception: {ex}"); }
@@ -174,7 +189,7 @@ namespace OrbitalSurvey.UI
             // Fill mesh — 4 triangular side faces, no base cap
             var mf = go.AddComponent<MeshFilter>();
             var mr = go.AddComponent<MeshRenderer>();
-            mr.material          = CreateFillMaterial(fillColor, out var fillTex);
+            mr.material          = CreateFillMaterial(fillColor);
             mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             mr.receiveShadows    = false;
 
@@ -221,7 +236,6 @@ namespace OrbitalSurvey.UI
                 BaseOutline      = baseOutline,
                 BasePositions    = new Vector3[BASE_POS_COUNT],
                 FillMaterial     = mr.material,
-                FillTexture      = fillTex,
                 LateralMaterial  = lateralMat,
                 BaseMaterial     = baseMat,
             };
@@ -232,23 +246,23 @@ namespace OrbitalSurvey.UI
             Vector3 nadirDir, Vector3 bodyLocalPos, float bodyRadiusLocal, float halfWidth,
             bool isBiome)
         {
-            // --- Per-frame visual updates (cheap uniform sets) ---
+            // --- Per-frame visual updates ---
             var fillColor = isBiome ? BIOME_FILL  : VISUAL_FILL;
             var lineColor = isBiome ? BIOME_LINE  : VISUAL_LINE;
 
-            // Pulse fill alpha with a slow sine (0.6–1.0 × base alpha).
-            // Updated via the 1×1 texture pixel because Unlit/Transparent ignores mat.color.
             float pulse = 0.6f + 0.4f * Mathf.Sin(Time.time * 1.5f);
-            p.FillTexture.SetPixel(0, 0, new Color(fillColor.r, fillColor.g, fillColor.b, fillColor.a * pulse));
-            p.FillTexture.Apply();
+            p.FillMaterial.color = new Color(fillColor.r, fillColor.g, fillColor.b, fillColor.a * pulse);
 
-            // Refresh line color (handles live mode-change without recreating the pyramid).
-            p.LateralMaterial.color      = lineColor;
-            p.Lateral.startColor         = lineColor;
-            p.Lateral.endColor           = lineColor;
-            p.BaseMaterial.color         = lineColor;
-            p.BaseOutline.startColor     = lineColor;
-            p.BaseOutline.endColor       = lineColor;
+            if (isBiome != p.IsBiome)
+            {
+                p.IsBiome                    = isBiome;
+                p.LateralMaterial.color      = lineColor;
+                p.Lateral.startColor         = lineColor;
+                p.Lateral.endColor           = lineColor;
+                p.BaseMaterial.color         = lineColor;
+                p.BaseOutline.startColor     = lineColor;
+                p.BaseOutline.endColor       = lineColor;
+            }
 
             // --- Geometry ---
             // halfWidth = GetScanRadius in map-local units; scan square half-side = halfWidth/2.
@@ -288,7 +302,6 @@ namespace OrbitalSurvey.UI
             p.Vertices[3] = c2;   p.Vertices[4] = c3;
             p.Mesh.vertices = p.Vertices;
             p.Mesh.RecalculateBounds();
-            p.Mesh.RecalculateNormals();
 
             // Lateral edges: c0→apex→c1→apex→c2→apex→c3
             p.LateralPositions[0] = c0;   p.LateralPositions[1] = apex; p.LateralPositions[2] = c1;
@@ -308,23 +321,17 @@ namespace OrbitalSurvey.UI
         {
             if (p.Go              != null) Destroy(p.Go);
             if (p.FillMaterial    != null) Destroy(p.FillMaterial);
-            if (p.FillTexture     != null) Destroy(p.FillTexture);
             if (p.LateralMaterial != null) Destroy(p.LateralMaterial);
             if (p.BaseMaterial    != null) Destroy(p.BaseMaterial);
         }
 
-        private static Material CreateFillMaterial(Color fillColor, out Texture2D tex)
+        private static Material CreateFillMaterial(Color fillColor)
         {
-            // 1×1 texture whose pixel holds the fill color. Pulsing updates this pixel each frame;
-            // Unlit/Transparent in KSP2 reads only _MainTex, not _Color, so the texture is the
-            // only reliable way to control transparency.
-            tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-            tex.SetPixel(0, 0, fillColor);
-            tex.Apply();
-
-            var shader = Shader.Find("Unlit/Transparent") ?? Shader.Find("Sprites/Default");
+            // Sprites/Default respects _Color (mat.color), so alpha can be pulsed cheaply
+            // each frame without a texture upload.
+            var shader = Shader.Find("Sprites/Default") ?? Shader.Find("Unlit/Transparent");
             var mat    = new Material(shader);
-            mat.mainTexture = tex;
+            mat.color = fillColor;
             mat.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
             mat.SetInt("_Cull", 0);
             mat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Overlay;
@@ -351,9 +358,9 @@ namespace OrbitalSurvey.UI
             public LineRenderer BaseOutline;
             public Vector3[]    BasePositions;
             public Material     FillMaterial;
-            public Texture2D    FillTexture;
             public Material     LateralMaterial;
             public Material     BaseMaterial;
+            public bool         IsBiome;
         }
     }
 }
