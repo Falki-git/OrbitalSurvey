@@ -72,6 +72,7 @@ namespace OrbitalSurvey
             providers.transform.parent = this.transform;
             providers.AddComponent<AssetUtility>();
             providers.AddComponent<VesselManager>();
+            providers.AddComponent<ScanningConeRenderer>();
 
             // Note: CelestialCategoryManager.InitializeConfigs() is called on game load
             // (MessageListener.OnGameLoadFinishedMessage), after PatchManager has finished

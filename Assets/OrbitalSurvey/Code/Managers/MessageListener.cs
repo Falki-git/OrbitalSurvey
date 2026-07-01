@@ -78,6 +78,9 @@ namespace OrbitalSurvey.Managers
         private void OnGameStateChangedMessage(MessageCenterMessage obj)
         {
             var msg = obj as GameStateChangedMessage;
+            
+            // Enable/disable scanning cone overlay when entering/leaving Map view
+            ScanningConeRenderer.Instance?.SetMapViewActive(msg.CurrentState == GameState.Map3DView);
 
             // Close GUI and remove overlay on every scene change except Flight <-> Map
             if (msg.PreviousState == GameState.FlightView &&
