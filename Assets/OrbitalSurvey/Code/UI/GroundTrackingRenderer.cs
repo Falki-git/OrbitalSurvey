@@ -35,20 +35,20 @@ namespace OrbitalSurvey.UI
         private void Awake()
         {
             _logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{GetType().Name}");
-            _logger.LogInfo("Awake");
+            _logger.LogDebug("Awake");
             Instance = this;
         }
 
         private void OnDestroy()
         {
-            _logger?.LogInfo("OnDestroy");
+            _logger?.LogDebug("OnDestroy");
             if (Instance == this) Instance = null;
             DestroyAll();
         }
 
         public void SetMapViewActive(bool active)
         {
-            _logger.LogInfo($"SetMapViewActive: {active}");
+            _logger.LogDebug($"SetMapViewActive: {active}");
             _isMapViewActive = active;
             if (!active) DestroyAll();
         }
@@ -67,10 +67,10 @@ namespace OrbitalSurvey.UI
             {
                 _nextDiagLog = Time.time + 5f;
                 var vessels = VesselManager.Instance.OrbitalSurveyVessels;
-                _logger.LogInfo($"[DIAG] vessels={vessels.Count}");
+                _logger.LogDebug($"[DIAG] vessels={vessels.Count}");
                 foreach (var v in vessels)
                     foreach (var m in v.ModuleStats)
-                        _logger.LogInfo($"[DIAG]   {v.Name}: status={m.DataModule?.StatusValue} mode={m.Mode}");
+                        _logger.LogDebug($"[DIAG]   {v.Name}: status={m.DataModule?.StatusValue} mode={m.Mode}");
             }
     
             var activeScanners = VesselManager.Instance.OrbitalSurveyVessels
@@ -137,7 +137,7 @@ namespace OrbitalSurvey.UI
             if (Time.time >= _nextGeomLog)
             {
                 _nextGeomLog = Time.time + 3f;
-                _logger.LogInfo(
+                _logger.LogDebug(
                     $"[GEOM] vesselFound={vesselFound} bodyFound={bodyFound} " +
                     $"vessel={vesselLocalPos:F3} body={bodyLocalPos:F3} " +
                     $"dist={distVesselToCenter:F5} physTotal={physTotalDist:F0}m " +
@@ -165,7 +165,7 @@ namespace OrbitalSurvey.UI
 
         private PyramidData CreatePyramid(Transform mapRoot, Color fillColor, Color lineColor)
         {
-            _logger.LogInfo("CreatePyramid");
+            _logger.LogDebug("CreatePyramid");
 
             var go   = new GameObject("OrbitalSurvey_ScanPyramid");
             go.layer = LayerMask.NameToLayer("Map");
@@ -299,7 +299,7 @@ namespace OrbitalSurvey.UI
 
         private void DestroyAll()
         {
-            _logger?.LogInfo("DestroyAll");
+            _logger?.LogDebug("DestroyAll");
             foreach (var p in _pyramids.Values) DestroyPyramid(p);
             _pyramids.Clear();
         }
