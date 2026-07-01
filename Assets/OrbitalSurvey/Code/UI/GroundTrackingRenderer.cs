@@ -268,17 +268,48 @@ namespace OrbitalSurvey.UI
             // halfWidth = GetScanRadius in map-local units; scan square half-side = halfWidth/2.
             var halfSide = halfWidth * 0.5f;
 
-            // Surface-local east and north directions at the nadir (sub-vessel) point.
-            // "East" = tangent direction of increasing longitude (in the equatorial/orbital plane).
-            // Using Vector3.forward (world Z ≈ orbital north) as the reference:
-            //   east  = Cross(forward, outward)  → in the orbital (x-y) plane for equatorial orbits
-            //   north = Cross(outward,  east)    → toward the planet's north pole
-            // Both lie in the surface tangent plane; together they define the scan rectangle.
-            var outward = nadirDir; // from body centre toward nadir surface point
-            var east = Vector3.Cross(Vector3.forward, outward);
-            if (east.sqrMagnitude < 0.001f) east = Vector3.Cross(Vector3.up, outward);
-            east.Normalize();
-            var north = Vector3.Cross(outward, east); north.Normalize();
+            // Ground-track orientation: derive the along-track direction from how far the
+            // vessel moved in map-local space since the last frame, then project out the
+            // radial component so it lies in the surface tangent plane.
+            // This aligns the scan rectangle with the orbital path rather than a fixed world axis.
+            // Ground-track orientation: recompute the orbital plane normal (r × Δr) at most
+            // every 1 s — vessel map positions don't update more frequently anyway, and
+            // AngularMomentum is constant for a Keplerian orbit. Runs every frame until
+            // the first valid h is found (NextRotationUpdate starts at 0), then throttles.
+            var relPos = apex - bodyLocalPos;
+            if (Time.time >= p.NextRotationUpdate)
+            {
+                if (p.HasPrevPos)
+                {
+                    var dr = relPos - p.PrevRelPos;
+                    var h  = Vector3.Cross(relPos, dr);
+                    if (h.sqrMagnitude > 1e-30f)
+                    {
+                        p.AngularMomentum    = h.normalized;
+                        p.NextRotationUpdate = Time.time + 1f;
+                    }
+                }
+                p.PrevRelPos = relPos;
+                p.HasPrevPos = true;
+            }
+
+            // along/across are derived each frame from the cached AngularMomentum so the
+            // pyramid tracks the correct orientation as the vessel moves between updates.
+            var outward = nadirDir;
+            Vector3 along, across;
+            if (p.AngularMomentum.sqrMagnitude > 1e-20f)
+            {
+                along  = Vector3.Cross(p.AngularMomentum, outward).normalized;
+                across = Vector3.Cross(outward, along).normalized;
+            }
+            else
+            {
+                // Fallback until first successful measurement.
+                across = Vector3.Cross(Vector3.forward, outward);
+                if (across.sqrMagnitude < 0.001f) across = Vector3.Cross(Vector3.up, outward);
+                across.Normalize();
+                along = Vector3.Cross(outward, across).normalized;
+            }
 
             var surfaceCenter = bodyLocalPos + outward * bodyRadiusLocal;
 
@@ -287,10 +318,10 @@ namespace OrbitalSurvey.UI
             var surfaceLift = outward * (bodyRadiusLocal * 0.001f);
 
             // Four corners of the scan square, placed in the surface tangent plane.
-            var c0 = surfaceCenter + ( east + north) * halfSide + surfaceLift;
-            var c1 = surfaceCenter + (-east + north) * halfSide + surfaceLift;
-            var c2 = surfaceCenter + (-east - north) * halfSide + surfaceLift;
-            var c3 = surfaceCenter + ( east - north) * halfSide + surfaceLift;
+            var c0 = surfaceCenter + ( across + along) * halfSide + surfaceLift;
+            var c1 = surfaceCenter + (-across + along) * halfSide + surfaceLift;
+            var c2 = surfaceCenter + (-across - along) * halfSide + surfaceLift;
+            var c3 = surfaceCenter + ( across - along) * halfSide + surfaceLift;
 
             // Base rectangle outline (loop=true closes c3→c0)
             p.BasePositions[0] = c0; p.BasePositions[1] = c1;
@@ -361,6 +392,10 @@ namespace OrbitalSurvey.UI
             public Material     LateralMaterial;
             public Material     BaseMaterial;
             public bool         IsBiome;
+            public Vector3      PrevRelPos;           // vessel pos relative to body centre, map space
+            public bool         HasPrevPos;
+            public Vector3      AngularMomentum;      // orbital plane normal (r × Δr), map space
+            public float        NextRotationUpdate;   // Time.time threshold for next h recompute
         }
     }
 }
