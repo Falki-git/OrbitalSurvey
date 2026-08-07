@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -33,7 +34,7 @@ namespace OrbitalSurvey.UI
         public void Start()
         {
             Instance = this;
-            _root = GetComponent<UIDocument>().rootVisualElement[0];
+            _root = GetComponent<PanelRenderer>().GetWindowRoot();
 
             _resizeHandle = _root.Q("resize-handle__container");
             _resizeHandle.RegisterCallback<PointerDownEvent>(OnResizeHandleMouseDown);

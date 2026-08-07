@@ -2,6 +2,7 @@
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
+using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -24,7 +25,7 @@ namespace OrbitalSurvey.UI
         {
             Instance = this;
 
-            _root = GetComponent<UIDocument>().rootVisualElement[0];
+            _root = GetComponent<PanelRenderer>().GetWindowRoot();
 
             _mapContainer = _root.Q<VisualElement>("map");
             _mouseOverCanvas = _root.Q<VisualElement>("mouse-over-canvas");

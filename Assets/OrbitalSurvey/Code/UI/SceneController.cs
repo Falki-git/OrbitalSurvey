@@ -11,7 +11,7 @@ namespace OrbitalSurvey.UI
     public class SceneController
     {
         public static SceneController Instance { get; } = new();
-        public UIDocument MainGui { get; set; }
+        public PanelRenderer MainGui { get; set; }
 
         public string SelectedBody;
         public MapType? SelectedMapType;
@@ -35,7 +35,7 @@ namespace OrbitalSurvey.UI
             }
         }
 
-        private UIDocument RebuildUi(UIDocument uidocument, bool showWindow, VisualTreeAsset visualTree,
+        private PanelRenderer RebuildUi(PanelRenderer uidocument, bool showWindow, VisualTreeAsset visualTree,
             Type controllerType)
         {
             DestroyObject(uidocument);
@@ -45,14 +45,14 @@ namespace OrbitalSurvey.UI
                 return null;
         }
 
-        public void DestroyObject(UIDocument document)
+        public void DestroyObject(PanelRenderer document)
         {
             if (document != null && document.gameObject != null)
                 document.gameObject.DestroyGameObject();
             GameObject.Destroy(document);
         }
 
-        private UIDocument BuildUi(VisualTreeAsset visualTree, UIDocument uiDocument, Type controllerType)
+        private PanelRenderer BuildUi(VisualTreeAsset visualTree, PanelRenderer uiDocument, Type controllerType)
         {
             var options = WindowOptions.Default;
             options.WindowId = "MainGui";
@@ -69,7 +69,7 @@ namespace OrbitalSurvey.UI
 
             // this can center the window, but we're not using it
             // if (WindowPosition == null)
-            //     uiDocument.rootVisualElement[0].RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.rootVisualElement[0]));
+            //     uiDocument.GetWindowRoot().RegisterCallback<GeometryChangedEvent>((evt) => UiUtility.CenterWindow(evt, uiDocument.GetWindowRoot()));
 
             return uiDocument;
         }

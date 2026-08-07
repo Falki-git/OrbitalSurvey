@@ -5,6 +5,7 @@ using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
+using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,7 +23,7 @@ namespace OrbitalSurvey.UI
 
         public event ActiveVesselMapGuiPositionChanged OnActiveVesselMapGuiPositionChanged;
 
-        public UIDocument MainGui;
+        public PanelRenderer MainGui;
         private MainGuiController _mainGuiController;
         private VisualElement _root;
         private VisualElement _canvas;
@@ -40,9 +41,9 @@ namespace OrbitalSurvey.UI
         public void OnEnable()
         {
             Instance = this;
-            MainGui = GetComponent<UIDocument>();
+            MainGui = GetComponent<PanelRenderer>();
             _mainGuiController = GetComponent<MainGuiController>();
-            _root = MainGui.rootVisualElement;
+            _root = MainGui.GetPanelRoot();
 
             _canvas = _root.Q<VisualElement>("marker-canvas");
             StartCoroutine(GetCanvasSize());

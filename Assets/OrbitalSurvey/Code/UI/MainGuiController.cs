@@ -10,6 +10,7 @@ using OrbitalSurvey.Managers;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
+using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,9 +22,15 @@ namespace OrbitalSurvey.UI
         {
         }
 
-        public UIDocument MainGui;
+        public PanelRenderer MainGui;
 
         private VisualElement _root;
+
+        /// <summary>
+        /// The window element itself (the draggable/positionable root inside the panel root).
+        /// </summary>
+        private VisualElement _windowRoot;
+
         private DropdownField _bodyDropdown;
         private DropdownField _mapTypeDropdown;
         private Label _percentComplete;
@@ -84,8 +91,9 @@ namespace OrbitalSurvey.UI
             // create mouse-over controller (show geo coordinates and region on mouse-over)
             _mouseOverController = gameObject.AddComponent<MouseOverController>();
 
-            MainGui = GetComponent<UIDocument>();
-            _root = MainGui.rootVisualElement;
+            MainGui = GetComponent<PanelRenderer>();
+            _root = MainGui.GetPanelRoot();
+            _windowRoot = MainGui.GetWindowRoot();
 
             // header controls
             _bodyDropdown = _root.Q<DropdownField>("body__dropdown");
@@ -153,12 +161,12 @@ namespace OrbitalSurvey.UI
 
             // check if previous window position exists and restore it (window was previously moved then closed)
             if (SceneController.Instance.WindowPosition != null)
-                UiUtility.SetDefaultWindowPosition(_root[0], SceneController.Instance.WindowPosition.Value.x, SceneController.Instance.WindowPosition.Value.y);
+                UiUtility.SetDefaultWindowPosition(_windowRoot, SceneController.Instance.WindowPosition.Value.x, SceneController.Instance.WindowPosition.Value.y);
             else
-                UiUtility.SetDefaultWindowPosition(_root[0], 100, 200);
+                UiUtility.SetDefaultWindowPosition(_windowRoot, 100, 200);
 
             // save the window position (only for current session) when it moves
-            _root[0].RegisterCallback<PointerUpEvent>(OnPositionChanged);
+            _windowRoot.RegisterCallback<PointerUpEvent>(OnPositionChanged);
         }
 
         private void SetBodyAndMapTypeDropdownValues()
@@ -412,7 +420,7 @@ namespace OrbitalSurvey.UI
 
         private void OnPositionChanged(PointerUpEvent evt)
         {
-            SceneController.Instance.WindowPosition = _root[0].worldBound.position;
+            SceneController.Instance.WindowPosition = _windowRoot.worldBound.position;
         }
 
         private void OnCloseButton(ClickEvent evt)

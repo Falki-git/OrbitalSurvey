@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using OrbitalSurvey.Models;
 using OrbitalSurvey.UI.Controls;
 using OrbitalSurvey.Utilities;
+using UitkForKsp2.API;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -52,7 +53,7 @@ namespace OrbitalSurvey.UI
         {
             Instance = this;
             _mainGuiController = GetComponent<MainGuiController>();
-            _root = GetComponent<UIDocument>().rootVisualElement[0];
+            _root = GetComponent<PanelRenderer>().GetWindowRoot();
             _mapContainer = _root.Q<VisualElement>("map");
             _mapContainer.StopMouseEventsToGameInputPropagation();
 
