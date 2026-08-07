@@ -197,9 +197,9 @@ namespace OrbitalSurvey.Modules
                 if (GameManager.Instance.Game.SessionManager.IsDifficultyOptionEnabled("InfinitePower"))
                 {
                     _dataOrbitalSurvey.HasResourcesToOperate = true;
-                    if (base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestHandle))
+                    if (base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestEntity))
                     {
-                        base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestHandle);
+                        base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestEntity);
                         return;
                     }
                 }
@@ -208,28 +208,28 @@ namespace OrbitalSurvey.Modules
                     if (this._hasOutstandingRequest)
                     {
                         this._returnedRequestResolutionState =
-                            base.resourceFlowRequestBroker.GetRequestState(_dataOrbitalSurvey.RequestHandle);
+                            base.resourceFlowRequestBroker.GetRequestState(_dataOrbitalSurvey.RequestEntity);
                         _dataOrbitalSurvey.HasResourcesToOperate =
                             this._returnedRequestResolutionState.WasLastTickDeliveryAccepted;
                     }
 
                     this._hasOutstandingRequest = false;
                     if (!_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-                        base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestHandle))
+                        base.resourceFlowRequestBroker.IsRequestActive(_dataOrbitalSurvey.RequestEntity))
                     {
-                        base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestHandle);
+                        base.resourceFlowRequestBroker.SetRequestInactive(_dataOrbitalSurvey.RequestEntity);
                         _dataOrbitalSurvey.HasResourcesToOperate = false;
                     }
                     else if (_dataOrbitalSurvey.EnabledToggle.GetValue() &&
-                             base.resourceFlowRequestBroker.IsRequestInactive(_dataOrbitalSurvey.RequestHandle))
+                             base.resourceFlowRequestBroker.IsRequestInactive(_dataOrbitalSurvey.RequestEntity))
                     {
-                        base.resourceFlowRequestBroker.SetRequestActive(_dataOrbitalSurvey.RequestHandle);
+                        base.resourceFlowRequestBroker.SetRequestActive(_dataOrbitalSurvey.RequestEntity);
                     }
 
                     if (_dataOrbitalSurvey.EnabledToggle.GetValue())
                     {
                         _dataOrbitalSurvey.RequestConfig.FlowUnits = (double)_dataOrbitalSurvey.RequiredResource.Rate;
-                        base.resourceFlowRequestBroker.SetCommands(_dataOrbitalSurvey.RequestHandle, 1.0,
+                        base.resourceFlowRequestBroker.SetCommands(_dataOrbitalSurvey.RequestEntity, 1.0,
                             new ResourceFlowRequestCommandConfig[] { _dataOrbitalSurvey.RequestConfig });
                         this._hasOutstandingRequest = true;
                         return;

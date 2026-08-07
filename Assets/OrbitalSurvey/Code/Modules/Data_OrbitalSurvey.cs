@@ -285,10 +285,8 @@ namespace OrbitalSurvey.Modules
                 RequestConfig.FlowResource = resourceIDFromName;
                 RequestConfig.FlowDirection = FlowDirection.FLOW_OUTBOUND;
                 RequestConfig.FlowUnits = 0.0;
-                RequestHandle =
-                    resourceFlowRequestBroker.AllocateOrGetRequest("ModuleOrbitalSurvey",
-                        default(ResourceFlowRequestHandle));
-                resourceFlowRequestBroker.SetCommands(this.RequestHandle, 1.0,
+                RequestEntity = resourceFlowRequestBroker.AllocateOrGetRequest(this.RequestEntity);
+                resourceFlowRequestBroker.SetCommands(this.RequestEntity, 1.0,
                     new ResourceFlowRequestCommandConfig[] { this.RequestConfig });
             }
         }

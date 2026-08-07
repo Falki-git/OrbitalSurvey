@@ -2,7 +2,11 @@
   "name": "OrbitalSurvey",
   "rootNamespace": "OrbitalSurvey",
   "references": [
-    "Unity.InputSystem"
+    "Unity.InputSystem",
+    "Unity.Entities",
+    "Unity.Collections",
+    "Unity.Mathematics",
+    "Unity.Burst"
   ],
   "allowUnsafeCode": true,
   "overrideReferences": true,
