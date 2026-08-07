@@ -16,6 +16,7 @@ MonoBehaviour:
   m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
+  m_ExtractTypeTreeData: 0
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -62,13 +63,7 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
-  - {fileID: 11400000, guid: 0e5269790a12a354c8dfe2cc3f209cbf, type: 2}
-  - {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}
   - {fileID: 11400000, guid: 74453775a15955f4bad265e6966067a2, type: 2}
-  - {fileID: 11400000, guid: 4950e1330767d1c4a9c7af60a31ead95, type: 2}
-  - {fileID: 11400000, guid: 33d4b373c5e1eea46928b93c69090e81, type: 2}
-  - {fileID: 11400000, guid: 026b33b74382bb8449cb1834822f1b5d, type: 2}
-  - {fileID: 11400000, guid: 40b3fd3e998f02f4da666c888ead5248, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -88,20 +83,6 @@ MonoBehaviour:
         m_Value: 'ServerData/[BuildTarget]'
       - m_Id: cba0b3a3dd41bb8419f44a5148e5a7b5
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-    - m_InheritedParent: 
-      m_Id: baed256c89e30214391b63401589f546
-      m_ProfileName: OrbitalSurvey
-      m_Values:
-      - m_Id: 1b2aca76682f65042bf29eb2217c7492
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: 4ae0cea4b06e6134aaffeef0e9ec8095
-        m_Value: '{SpaceWarpPaths.OrbitalSurvey}/addressables/StandaloneWindows64'
-      - m_Id: a40b22c9bfa84b644b4e6303203bdc40
-        m_Value: <undefined>
-      - m_Id: c772a76f64e3c404f815f81ea7212de1
-        m_Value: 'ServerData/[BuildTarget]'
-      - m_Id: cba0b3a3dd41bb8419f44a5148e5a7b5
-        m_Value: Library/com.unity.addressables/aa/Windows/StandaloneWindows64
     m_ProfileEntryNames:
     - m_Id: 1b2aca76682f65042bf29eb2217c7492
       m_Name: BuildTarget
@@ -122,11 +103,6 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - parts_data
-    - celestial_bodies
-    - scienceExperiment
-    - missions
-    - techNodeData
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4676cb50dd890ac4bbbaf6b7662cd451, type: 2}
