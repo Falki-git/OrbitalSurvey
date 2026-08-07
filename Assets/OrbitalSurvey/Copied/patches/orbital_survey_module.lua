@@ -9,21 +9,33 @@
 
 local C = "orbital-survey-constants"
 
+-- These entries are read by the patches below, so they carry PM.InvalidatesOnChange:
+-- changing one makes PatchManager rebuild instead of serving a stale cached patch.
+local function fov(name, default, desc)
+    return Config:Define(C, name):Type(Integer):Default(default):Desc(desc)
+        :Tag(PM.InvalidatesOnChange):Bind().value
+end
+
+local function ec(name, default, desc)
+    return Config:Define(C, name):Type(Double):Default(default):Desc(desc)
+        :Tag(PM.InvalidatesOnChange):Bind().value
+end
+
 -- Field of view (degrees) and EC consumption (units/s) per mode and tier.
-local visualEarlyFov = Config:Integer(C, "visual-early-field-of-view", 5)
-local visualEarlyEc  = Config:Float(C,   "visual-early-ec-consumption", 1.0)
-local biomeEarlyFov  = Config:Integer(C, "biome-early-field-of-view", 3)
-local biomeEarlyEc   = Config:Float(C,   "biome-early-ec-consumption", 2.0)
+local visualEarlyFov = fov("visual-early-field-of-view", 5, "Visual scanner (early) field of view (deg)")
+local visualEarlyEc  = ec("visual-early-ec-consumption", 1.0, "Visual scanner (early) EC consumption (units/s)")
+local biomeEarlyFov  = fov("biome-early-field-of-view", 3, "Biome scanner (early) field of view (deg)")
+local biomeEarlyEc   = ec("biome-early-ec-consumption", 2.0, "Biome scanner (early) EC consumption (units/s)")
 
-local visualMidFov = Config:Integer(C, "visual-mid-field-of-view", 6)
-local visualMidEc  = Config:Float(C,   "visual-mid-ec-consumption", 2.0)
-local biomeMidFov  = Config:Integer(C, "biome-mid-field-of-view", 4)
-local biomeMidEc   = Config:Float(C,   "biome-mid-ec-consumption", 3.0)
+local visualMidFov = fov("visual-mid-field-of-view", 6, "Visual scanner (mid) field of view (deg)")
+local visualMidEc  = ec("visual-mid-ec-consumption", 2.0, "Visual scanner (mid) EC consumption (units/s)")
+local biomeMidFov  = fov("biome-mid-field-of-view", 4, "Biome scanner (mid) field of view (deg)")
+local biomeMidEc   = ec("biome-mid-ec-consumption", 3.0, "Biome scanner (mid) EC consumption (units/s)")
 
-local visualLateFov = Config:Integer(C, "visual-late-field-of-view", 7)
-local visualLateEc  = Config:Float(C,   "visual-late-ec-consumption", 3.0)
-local biomeLateFov  = Config:Integer(C, "biome-late-field-of-view", 5)
-local biomeLateEc   = Config:Float(C,   "biome-late-ec-consumption", 4.0)
+local visualLateFov = fov("visual-late-field-of-view", 7, "Visual scanner (late) field of view (deg)")
+local visualLateEc  = ec("visual-late-ec-consumption", 3.0, "Visual scanner (late) EC consumption (units/s)")
+local biomeLateFov  = fov("biome-late-field-of-view", 5, "Biome scanner (late) field of view (deg)")
+local biomeLateEc   = ec("biome-late-ec-consumption", 4.0, "Biome scanner (late) EC consumption (units/s)")
 
 local VISUAL = "PartModules/OrbitalSurvey/Mode/Visual"
 local BIOME  = "PartModules/OrbitalSurvey/Mode/Biome"
