@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
-UnityVersion: 6000.4.1f1
-CRC: 2848322050
+UnityVersion: 6000.5.0f1
+CRC: 2962717008
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1df38e8ca7da11026c489e63785f6b33
+    Hash: 36d5eb96864a64509c2d17fe7f3ff295
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d7580d9a15e2691f31b8db875acfe477
+    Hash: c6c6c7af78d9861f123e685002578b15
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 4f9ca0f993c83f8a2f4ea4aee7c28ccd
+    Hash: 5a27a505ff678bcf9ee189cb147c8a92
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -24,16 +24,12 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
-- AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.Button/UxmlFactory
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Color
 - AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.Button/UxmlSerializedData
 - AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.DropdownField/UxmlFactory
-- AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.DropdownField/UxmlSerializedData
-- AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.Label/UxmlFactory
 - AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.Label/UxmlSerializedData
 - AssemblyName: UnityEngine.UIElementsModule
@@ -53,13 +49,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.StyleValueHandle
 - AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.TextField/UxmlFactory
-- AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.TextField/UxmlSerializedData
-- AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.UxmlRootElementFactory
-- AssemblyName: UnityEngine.UIElementsModule
-  ClassName: UnityEngine.UIElements.VisualElement/UxmlFactory
 - AssemblyName: UnityEngine.UIElementsModule
   ClassName: UnityEngine.UIElements.VisualElement/UxmlSerializedData
 - AssemblyName: UnityEngine.UIElementsModule
