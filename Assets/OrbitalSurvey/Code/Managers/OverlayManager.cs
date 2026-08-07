@@ -174,9 +174,15 @@ namespace OrbitalSurvey.Managers
                 if (!Core.Instance.CelestialDataDictionary.ContainsKey(body.Name))
                     continue;
 
+                // MAP3D_CELESTIAL_PATH only covers the Kerbol system, so bodies the game adds
+                // later (e.g. Debdeb) are in the CelestialDataDictionary but have no scaled-space
+                // path here. Skip them instead of throwing and aborting the whole overlay.
+                if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(body.Name, out var bodyPath))
+                    continue;
+
                 var overlayTexture = Core.Instance.CelestialDataDictionary[body.Name].Maps[mapType].CurrentMap;
 
-                var bodyObj = GameObject.Find(OverlayUtility.MAP3D_CELESTIAL_PATH[body.Name]);
+                var bodyObj = GameObject.Find(bodyPath);
 
                 if (bodyObj == null)
                     continue;
@@ -226,13 +232,18 @@ namespace OrbitalSurvey.Managers
                      .Maps[MapType.Visual].IsFullyScanned)))
                 return;
 
+            // Bodies outside the Kerbol system have no scaled-space path defined, so there's
+            // nothing to draw the overlay onto.
+            if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(bodyName, out var bodyPath))
+                return;
+
             var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName]
                 .Maps[OverlayActive ? OverlayType : MapType.Visual].CurrentMap;
 
-            // wait for the Map3d to receive its clouds and atmosphere 
+            // wait for the Map3d to receive its clouds and atmosphere
             await Task.Delay(milisecondsDelay);
 
-            var body = GameObject.Find(OverlayUtility.MAP3D_CELESTIAL_PATH[bodyName]);
+            var body = GameObject.Find(bodyPath);
             var meshRenderer = body.GetComponent<MeshRenderer>();
 
             if (!_textureBackup.ContainsKey(bodyName))
@@ -265,7 +276,10 @@ namespace OrbitalSurvey.Managers
                 if (!_textureBackup.ContainsKey(body.Name))
                     continue;
 
-                var bodyObj = GameObject.Find(OverlayUtility.MAP3D_CELESTIAL_PATH[body.Name]);
+                if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(body.Name, out var bodyPath))
+                    continue;
+
+                var bodyObj = GameObject.Find(bodyPath);
 
                 if (bodyObj == null)
                     continue;
