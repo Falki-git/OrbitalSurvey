@@ -28,7 +28,12 @@ namespace OrbitalSurvey
         public override void OnPreInitialized()
         {
             Instance = this;
-            
+
+            // Must happen before any part carrying Module_OrbitalSurvey is loaded, otherwise
+            // the ECS EntityManager rejects the module type when the part builds its entity.
+            EcsTypeRegistration.RegisterModuleTypes();
+
+
             var assetsPath = Path.Combine(SWMetadata.Folder.FullName, "assets");
             var imagesPath = Path.Combine(assetsPath, "images");
             var icon = Path.Combine(imagesPath, "icon.png");

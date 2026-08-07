@@ -255,6 +255,12 @@ namespace OrbitalSurvey.Modules
         protected override void OnShutdown()
         {
             Logger.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
+
+            // The data module is null when the part failed to finish loading, in which case
+            // Unity still destroys the behaviour and calls us. Nothing was subscribed then.
+            if (_dataOrbitalSurvey == null)
+                return;
+
             _dataOrbitalSurvey.EnabledToggle.OnChangedValue -= OnToggleChangedValue;
             _dataOrbitalSurvey.BodyCategoryOabDropdown.OnChangedValue -= OnBodyCategoryOabChanged;
         }
