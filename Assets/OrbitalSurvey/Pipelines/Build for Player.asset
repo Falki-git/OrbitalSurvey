@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: StageAssemblies
   m_EditorClassIdentifier: ThunderKit.Core::ThunderKit.Core.Pipelines.Jobs.StageAssemblies
   Active: 1
-  stageDebugDatabases: 0
-  releaseBuild: 1
+  stageDebugDatabases: 1
+  releaseBuild: 0
   assemblyArtifactPath: <AssemblyStaging>
   buildTarget: 5
 --- !u!114 &-2397784167518391609
