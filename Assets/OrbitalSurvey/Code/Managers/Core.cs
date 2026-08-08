@@ -177,9 +177,10 @@ namespace OrbitalSurvey.Managers
 
             if (experimentLevel != ExperimentLevel.None)
             {
-                ScienceManager.Instance.TriggerExperiment(body, mapType, experimentLevel);
-
-                NotificationUtility.Instance.NotifyExperimentComplete(body, experimentLevel);
+                // Only announce the milestone if an experiment was actually awarded - a body with no
+                // science regions (Beyl) would otherwise pop a "complete" notification for nothing.
+                if (ScienceManager.Instance.TriggerExperiment(body, mapType, experimentLevel))
+                    NotificationUtility.Instance.NotifyExperimentComplete(body, experimentLevel);
             }
         }
     }

@@ -79,11 +79,22 @@ namespace OrbitalSurvey.Managers
             var cbToScienceRegions = ReflectionUtility.GetPrivateField<Dictionary<string, CelestialBodyScienceRegionsData>>(
                 GameManager.Instance.Game.ScienceManager.ScienceRegionsDataProvider, "_cbToScienceRegions");
 
+            // Not every body ships science regions - Beyl has no beyl_science_regions.json in the
+            // game's addressables - and without them there is no SituationData to score the report
+            // with. Scanning and map completion still work; only the experiment is skipped.
+            if (cbToScienceRegions == null || !cbToScienceRegions.TryGetValue(body, out var scienceRegions))
+            {
+                Logger.LogWarning(
+                    $"'{body}' has no science regions data, so no experiment can be awarded for it. " +
+                    $"MapType: {map}, ExperimentLevel: {level}.");
+                return false;
+            }
+
             // we need to manually grab the CelestialBodyScalar
-            var celestialScalar = cbToScienceRegions[body].SituationData.CelestialBodyScalar;
+            var celestialScalar = scienceRegions.SituationData.CelestialBodyScalar;
 
             // we'll use the HighOrbit scalar since the science value is balanced around the vessel being in HighOrbit
-            var highOrbitScalar = cbToScienceRegions[body].SituationData.HighOrbitScalar;
+            var highOrbitScalar = scienceRegions.SituationData.HighOrbitScalar;
 
             // find all vessels that participated in scanning of this body, for this MapType and for this ExperimentLevel
             var vesselGuids = Core.Instance.CelestialDataDictionary[body].Maps[map]

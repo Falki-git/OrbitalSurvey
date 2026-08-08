@@ -160,6 +160,14 @@ namespace OrbitalSurvey.Utilities
                 "Eeloo_1024",
                 $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eeloo_scaled_d_1024.png"
             },
+            {
+                "Drast_1024",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/drast_scaled_d_1024.png"
+            },
+            {
+                "Beyl_1024",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/beyl_scaled_d_1024.png"
+            },
 
             {
                 "Moho_2048",
@@ -224,7 +232,16 @@ namespace OrbitalSurvey.Utilities
             {
                 "Eeloo_2048",
                 $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/eeloo_scaled_d_2048.png"
+            },
+            {
+                "Drast_2048",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/drast_scaled_d_2048.png"
+            },
+            {
+                "Beyl_2048",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/visualmaps/beyl_scaled_d_2048.png"
             }
+            
         };
 
         public readonly Dictionary<string, string> BiomeBundleAssetAddresses = new()
@@ -293,6 +310,14 @@ namespace OrbitalSurvey.Utilities
                 "Eeloo_1024",
                 $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eeloo_region_1024.png"
             },
+            {
+                "Drast_1024",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/drast_region_1024.png"
+            },
+            {
+                "Beyl_1024",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/beyl_region_1024.png"
+            },
 
             {
                 "Moho_2048",
@@ -357,6 +382,14 @@ namespace OrbitalSurvey.Utilities
             {
                 "Eeloo_2048",
                 $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/eeloo_region_2048.png"
+            },
+            {
+                "Drast_2048",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/drast_region_2048.png"
+            },
+            {
+                "Beyl_2048",
+                $"assets/{OrbitalSurveyPlugin.ModGuid}/images/regionmaps/beyl_region_2048.png"
             },
         };
 

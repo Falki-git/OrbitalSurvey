@@ -25,6 +25,9 @@ namespace OrbitalSurvey.Managers
 
         private static readonly ILogger Logger = ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{typeof(CelestialCategoryManager).Name}");
 
+        // The category stars are pinned to. See InitializeCelestialBodyCategories.
+        private const string StarCategory = "Small";
+
         // Config sections written by the Lua patch orbital_survey_definitions.lua.
         private const string MaxRadiusSection = "orbital-survey-category-max-radius";
         private const string LocalizationSection = "orbital-survey-category-localization";
@@ -197,9 +200,16 @@ namespace OrbitalSurvey.Managers
 
                 if (string.IsNullOrEmpty(bodyCategory))
                 {
-                    Logger.LogError($"Unable to assign a category to body '{body.Name}'. " +
-                                    "There is no maximum radius value that is higher than the radius of the body. " +
-                                    $"Body radius is {body.radius} m.");
+                    var message = $"Unable to assign a category to body '{body.Name}'. " +
+                                  "There is no maximum radius value that is higher than the radius of the body. " +
+                                  $"Body radius is {body.radius} m.";
+
+                    // Expected for stars - Kerbol's radius dwarfs even the Giant maximum - and
+                    // corrected by the IsStar special case below, so it isn't worth an error.
+                    if (body.IsStar)
+                        Logger.LogWarning(message);
+                    else
+                        Logger.LogError(message);
 
                     if (MaxRadiusDefinition.Count > 0)
                     {
@@ -214,9 +224,23 @@ namespace OrbitalSurvey.Managers
                     }
                 }
 
-                // special case for Kerbol - we'll define it as Small so it doesn't get the Giant category
-                // which would clutter the UI unnecessarily since there are no other Giant bodies 
-                if (body.IsStar) bodyCategory = categoryDefinitions[0].Key;
+                // Special case for Kerbol - we'll define it as Small so it doesn't get the Giant category
+                // which would clutter the UI unnecessarily since there are no other Giant bodies.
+                // Resolved by name: this used to take categoryDefinitions[0], which follows whichever
+                // category happens to be smallest and so silently moved Kerbol into Micro once the
+                // asteroid-sized tiers were added.
+                if (body.IsStar)
+                {
+                    if (MaxRadiusDefinition.ContainsKey(StarCategory))
+                    {
+                        bodyCategory = StarCategory;
+                    }
+                    else
+                    {
+                        Logger.LogWarning($"Category '{StarCategory}' is not defined, so star '{body.Name}' " +
+                                          $"keeps the category '{bodyCategory}'.");
+                    }
+                }
 
                 CelestialBodyCategory.Add(body.Name, bodyCategory);
                 Logger.LogInfo($"Body '{body.Name}' is assigned to category '{bodyCategory}'.");

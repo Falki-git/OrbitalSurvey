@@ -171,6 +171,24 @@ namespace OrbitalSurvey.Managers
                     { 0, new RegionColor { RegionId = "EelooIceFields", Color = new Color32(149, 227, 243, 255) } },
                 }
             },
+            {
+                "Drast", new Dictionary<int, RegionColor>
+                {
+                    { 1, new RegionColor { RegionId = "Rubble", Color = new Color32(240, 230, 193, 255) } },
+                    { 2, new RegionColor { RegionId = "Crags", Color = new Color32(159, 148, 116, 255) } },
+                    { 3, new RegionColor { RegionId = "RingDeposits", Color = new Color32(82, 76, 58, 255) } },
+                    { 4, new RegionColor { RegionId = "Craters", Color = new Color32(25, 23, 18, 255) } },
+                }
+            },
+            {
+                "Beyl", new Dictionary<int, RegionColor>
+                {
+                    { 1, new RegionColor { RegionId = "x", Color = new Color32(80, 44, 36, 255) } },
+                    { 2, new RegionColor { RegionId = "y", Color = new Color32(93, 82, 72, 255) } },
+                    { 3, new RegionColor { RegionId = "z", Color = new Color32(32, 32, 27, 255) } },
+                    { 4, new RegionColor { RegionId = "i", Color = new Color32(137, 116, 100, 255) } },
+                }
+            },
         };
 
         public struct RegionColor

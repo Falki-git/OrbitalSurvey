@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.5.0f1
-CRC: 2129625407
+CRC: 1348275328
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 90957564ae5dbce87a8a58d36f896922
+    Hash: 9ec2ff625774180e9a61765dbe162636
   TypeTreeHash:
     serializedVersion: 2
     Hash: c2426a7084c48aa838094ab6ad87ea86
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 7063e5d000edb0c08b6128cd6376de2d
+    Hash: 029a9944c4b3d1eeb8bbc7ff9f841ed3
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -27,16 +27,18 @@ Assets:
 - Assets/OrbitalSurvey/Images/VisualMaps/bop_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/bop_region_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/tylo_scaled_d_2048.png
-- Assets/OrbitalSurvey/Images/VisualMaps/jool_scaled_d_2048.png
+- Assets/OrbitalSurvey/Images/VisualMaps/beyl_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/vall_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/ike_scaled_d_2048.png
+- Assets/OrbitalSurvey/Images/VisualMaps/jool_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/gilly_scaled_d_2048.png
-- Assets/OrbitalSurvey/Images/VisualMaps/minmus_scaled_d_2048.png
+- Assets/OrbitalSurvey/Images/VisualMaps/drast_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/laythe_region_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/jool_region_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/laythe_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/dres_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/moho_scaled_d_2048.png
+- Assets/OrbitalSurvey/Images/VisualMaps/minmus_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/eeloo_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/laythe_scaled_water_d_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/kerbin_scaled_d_2048.png
@@ -47,9 +49,11 @@ Assets:
 - Assets/OrbitalSurvey/Images/RegionMaps/vall_region_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/duna_region_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/eeloo_region_2048.png
-- Assets/OrbitalSurvey/Images/RegionMaps/moho_region_2048.png
+- Assets/OrbitalSurvey/Images/RegionMaps/beyl_region_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/ike_region_2048.png
 - Assets/OrbitalSurvey/Images/VisualMaps/mun_scaled_d_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/minmus_region_2048.png
 - Assets/OrbitalSurvey/Images/RegionMaps/eve_region_2048.png
+- Assets/OrbitalSurvey/Images/RegionMaps/moho_region_2048.png
+- Assets/OrbitalSurvey/Images/RegionMaps/drast_region_2048.png
 Dependencies: []

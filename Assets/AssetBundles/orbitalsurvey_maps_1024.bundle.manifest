@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.5.0f1
-CRC: 1080232805
+CRC: 3358708721
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d80c12b7e1236e88cce971f00d6eb247
+    Hash: edd4338746e9611c09375129c594a64f
   TypeTreeHash:
     serializedVersion: 2
     Hash: c2426a7084c48aa838094ab6ad87ea86
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 314c3cfae2c1130e46a9b9884d21301a
+    Hash: f4613a6a9cde8661fdd8007d9bb784e8
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -32,13 +32,15 @@ Assets:
 - Assets/OrbitalSurvey/Images/VisualMaps/dres_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/eve_region_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/duna_region_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/drast_region_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/bop_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/duna_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/eeloo_region_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/pol_region_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/laythe_region_1024.png
-- Assets/OrbitalSurvey/Images/HiddenMaps/minmus_undiscovered_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/drast_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/bop_region_1024.png
+- Assets/OrbitalSurvey/Images/HiddenMaps/minmus_undiscovered_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/tylo_region_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/mun_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/tylo_scaled_d_1024.png
@@ -51,10 +53,12 @@ Assets:
 - Assets/OrbitalSurvey/Images/VisualMaps/gilly_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/ike_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/ike_region_1024.png
+- Assets/OrbitalSurvey/Images/VisualMaps/beyl_scaled_d_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/vall_region_1024.png
-- Assets/OrbitalSurvey/Images/RegionMaps/jool_region_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/minmus_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/beyl_region_1024.png
 - Assets/OrbitalSurvey/Images/RegionMaps/kerbin_region_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/pol_scaled_d_1024.png
+- Assets/OrbitalSurvey/Images/RegionMaps/jool_region_1024.png
 - Assets/OrbitalSurvey/Images/VisualMaps/vall_scaled_d_1024.png
 Dependencies: []
