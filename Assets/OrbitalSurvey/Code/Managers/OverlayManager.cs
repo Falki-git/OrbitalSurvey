@@ -49,6 +49,10 @@ namespace OrbitalSurvey.Managers
         {
             bool isSuccess;
 
+            Logger.LogDebug($"DrawOverlay({mapType}) requested. GameState=" +
+                            $"{Utility.GameState?.GameState.ToString() ?? "null"}, body=" +
+                            $"{(_activeVessel == null ? "no active vessel" : ActiveVesselBody)}.");
+
             isSuccess = DrawFlightOverlay(mapType);
             DrawMap3dOverlayOnAllLoadedBodies(mapType);
 
@@ -72,11 +76,27 @@ namespace OrbitalSurvey.Managers
         private bool DrawFlightOverlay(MapType mapType)
         {
             if (_activeVessel == null)
+            {
+                Logger.LogWarning("There is no active vessel, so the flight overlay can't be applied.");
                 return false;
+            }
 
+            // Also refreshes _celestialBody.
             RemoveFlightOverlay();
 
+            if (_celestialBody == null)
+                return false;
+
             var pqs = _celestialBody.GetComponent<PQS>();
+
+            if (pqs == null)
+            {
+                // The game only builds a PQS for bodies with quadsphere terrain, so a mesh-only
+                // body has no surface material for the overlay to be cloned from.
+                Logger.LogWarning($"'{ActiveVesselBody}' has no PQS, so the flight overlay " +
+                                  "can't be applied to it.");
+                return false;
+            }
 
             var sourceMaterial = pqs.data.materialSettings.surfaceMaterial;
             Material newMaterial = new Material(sourceMaterial);
@@ -91,16 +111,58 @@ namespace OrbitalSurvey.Managers
             newMaterial.SetTexture(_OVERLAY_TEXTURE_NAME, mapTexture);
 
             PQSRenderer pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
+
+            if (pqsRenderer == null)
+            {
+                Logger.LogWarning($"'{ActiveVesselBody}' has no PQSRenderer, so the flight overlay " +
+                                  "can't be applied to it.");
+                return false;
+            }
+
             pqsRenderer.AddOverlay(new OrbitalSurveyOverlay { OverlayMaterial = newMaterial });
             SetOceanSphereMaterialToBlack();
+
+            // The overlay draws through PQSRenderer's command buffer, so a material that silently
+            // came out wrong (missing shader, unset texture) produces no visual and no error.
+            // Report what was actually built so a body that renders nothing can be compared
+            // against one that works.
+            var overlayCount = ReflectionUtility
+                .GetPrivateField<List<IPQSOverlay>>(pqsRenderer, "_overlays")?.Count ?? -1;
+
+            Logger.LogDebug(
+                $"Flight overlay applied to '{ActiveVesselBody}'. " +
+                $"sourceMaterial='{sourceMaterial.name}' sourceShader='{sourceMaterial.shader?.name ?? "null"}' " +
+                $"overlayShader='{newMaterial.shader?.name ?? "NULL - Shader.Find failed"}' " +
+                $"mapTexture={(mapTexture == null ? "null" : $"{mapTexture.width}x{mapTexture.height}")} " +
+                $"pqsOverlayCount={overlayCount} " +
+                $"renderer.enabled={pqsRenderer.enabled} pqsActive={_celestialBody.gameObject.activeInHierarchy}");
 
             return true;
         }
 
         private void RefreshCelestialBody()
         {
+            _celestialBody = null;
+
             var celestialRoot = GameObject.Find("#PhysicsSpace/#Celestial");
+
+            if (celestialRoot == null)
+            {
+                Logger.LogWarning("'#PhysicsSpace/#Celestial' was not found in the scene, " +
+                                  "so the flight overlay can't be applied.");
+                return;
+            }
+
             _celestialBody = OverlayUtility.FindObjectByNameRecursively(celestialRoot.transform, ActiveVesselBody);
+
+            if (_celestialBody == null)
+            {
+                // CelestialBodyBehavior.OnLocalSpaceViewInstantiated only renames the local-space
+                // object to the body name when that body has a PQS. A mesh-only body keeps its
+                // prefab clone name, so there's nothing here to find.
+                Logger.LogWarning($"No object named '{ActiveVesselBody}' was found under " +
+                                  "'#PhysicsSpace/#Celestial', so the flight overlay can't be applied to it.");
+            }
         }
 
         private bool RemoveFlightOverlay()
@@ -110,7 +172,16 @@ namespace OrbitalSurvey.Managers
 
             RefreshCelestialBody();
 
+            if (_celestialBody == null)
+                return false;
+
             PQSRenderer pqsRenderer = _celestialBody.GetComponent<PQSRenderer>();
+
+            if (pqsRenderer == null)
+            {
+                Logger.LogWarning($"'{ActiveVesselBody}' has no PQSRenderer, so there is no flight overlay to remove.");
+                return false;
+            }
 
             var overlays = ReflectionUtility.GetPrivateField<List<IPQSOverlay>>(pqsRenderer, "_overlays");
             if (overlays?.Count > 0)
@@ -169,31 +240,42 @@ namespace OrbitalSurvey.Managers
             if (celestialBodies == null)
                 return;
 
+            var applied = 0;
+            var notFound = new List<string>();
+
             foreach (var body in celestialBodies)
             {
                 if (!Core.Instance.CelestialDataDictionary.ContainsKey(body.Name))
                     continue;
 
-                // MAP3D_CELESTIAL_PATH only covers the Kerbol system, so bodies the game adds
-                // later (e.g. Debdeb) are in the CelestialDataDictionary but have no scaled-space
-                // path here. Skip them instead of throwing and aborting the whole overlay.
-                if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(body.Name, out var bodyPath))
-                    continue;
-
-                var overlayTexture = Core.Instance.CelestialDataDictionary[body.Name].Maps[mapType].CurrentMap;
-
-                var bodyObj = GameObject.Find(bodyPath);
+                // Null whenever this body's scaled space isn't loaded, which is the normal case
+                // for everything that isn't near the map camera.
+                var bodyObj = OverlayUtility.FindMap3dBodyObject(body.Name);
 
                 if (bodyObj == null)
+                {
+                    notFound.Add(body.Name);
                     continue;
+                }
 
                 var meshRenderer = bodyObj.GetComponent<MeshRenderer>();
+
+                if (meshRenderer == null)
+                {
+                    Logger.LogWarning($"The scaled-space object for '{body.Name}' has no MeshRenderer, " +
+                                      "so the Map3d overlay can't be applied to it.");
+                    continue;
+                }
+
+                var overlayTexture = Core.Instance.CelestialDataDictionary[body.Name].Maps[mapType].CurrentMap;
 
                 if (!_textureBackup.ContainsKey(body.Name))
                 {
                     // backup the texture so it can be restored later when the overlay is turned off
                     _textureBackup.Add(body.Name, meshRenderer.material.mainTexture);
                 }
+
+                applied++;
 
                 meshRenderer.material.SetTexture("_MainTex", overlayTexture);
 
@@ -205,6 +287,11 @@ namespace OrbitalSurvey.Managers
                 bodyObj.GetChild("Atmosphere.Inner")?.TryToggleMeshRendererComponent(false);
                 bodyObj.GetChild("Atmosphere.Outer")?.TryToggleMeshRendererComponent(false);
             }
+
+            Logger.LogDebug($"Map3D {mapType} overlay applied to {applied} body/bodies." +
+                            (notFound.Count > 0
+                                ? $" No scaled-space object found for: {string.Join(", ", notFound)}."
+                                : string.Empty));
         }
 
         /// <summary>
@@ -232,19 +319,29 @@ namespace OrbitalSurvey.Managers
                      .Maps[MapType.Visual].IsFullyScanned)))
                 return;
 
-            // Bodies outside the Kerbol system have no scaled-space path defined, so there's
-            // nothing to draw the overlay onto.
-            if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(bodyName, out var bodyPath))
-                return;
-
             var overlayTexture = Core.Instance.CelestialDataDictionary[bodyName]
                 .Maps[OverlayActive ? OverlayType : MapType.Visual].CurrentMap;
 
             // wait for the Map3d to receive its clouds and atmosphere
             await Task.Delay(milisecondsDelay);
 
-            var body = GameObject.Find(bodyPath);
+            var body = OverlayUtility.FindMap3dBodyObject(bodyName);
+
+            if (body == null)
+            {
+                Logger.LogWarning($"The scaled-space object for '{bodyName}' was not found, " +
+                                  "so the Map3d overlay can't be applied to it.");
+                return;
+            }
+
             var meshRenderer = body.GetComponent<MeshRenderer>();
+
+            if (meshRenderer == null)
+            {
+                Logger.LogWarning($"The scaled-space object for '{bodyName}' has no MeshRenderer, " +
+                                  "so the Map3d overlay can't be applied to it.");
+                return;
+            }
 
             if (!_textureBackup.ContainsKey(bodyName))
             {
@@ -276,15 +373,15 @@ namespace OrbitalSurvey.Managers
                 if (!_textureBackup.ContainsKey(body.Name))
                     continue;
 
-                if (!OverlayUtility.MAP3D_CELESTIAL_PATH.TryGetValue(body.Name, out var bodyPath))
-                    continue;
-
-                var bodyObj = GameObject.Find(bodyPath);
+                var bodyObj = OverlayUtility.FindMap3dBodyObject(body.Name);
 
                 if (bodyObj == null)
                     continue;
 
                 var meshRenderer = bodyObj.GetComponent<MeshRenderer>();
+
+                if (meshRenderer == null)
+                    continue;
 
                 meshRenderer.material.SetTexture("_MainTex", _textureBackup[body.Name]);
 

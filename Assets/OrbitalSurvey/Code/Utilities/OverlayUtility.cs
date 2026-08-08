@@ -37,8 +37,40 @@ namespace OrbitalSurvey.Utilities
             { "Tylo", "Map3D(Clone)/Map-Tylo/Celestial.Tylo.Scaled(Clone)" },
             { "Bop", "Map3D(Clone)/Map-Bop/Celestial.Bop.Scaled(Clone)" },
             { "Pol", "Map3D(Clone)/Map-Pol/Celestial.Pol.Scaled(Clone)" },
-            { "Eeloo", "Map3D(Clone)/Map-Eeloo/Celestial.Eeloo.Scaled(Clone)" }
+            { "Eeloo", "Map3D(Clone)/Map-Eeloo/Celestial.Eeloo.Scaled(Clone)" },
+            { "Drast", "Map3D(Clone)/Map-Drast/Celestial.Drast.Scaled(Clone)" }
         };
+
+        private const string _MAP3D_ROOT = "Map3D(Clone)";
+
+        /// <summary>
+        /// Returns the scaled-space object that the Map3d overlay is painted onto, or null when
+        /// that body's scaled space isn't currently loaded (the game only instantiates it for
+        /// bodies near the map camera).
+        /// </summary>
+        /// <remarks>
+        /// Map3DView names the focus item "Map-&lt;body&gt;" and parents the scaled-space instance
+        /// under it, but it never renames that instance - it keeps whatever its prefab root is
+        /// called, so <see cref="MAP3D_CELESTIAL_PATH"/> can't cover bodies added after this mod
+        /// was written. Map3DFocusItem.View3DVisual is exactly the instance Map3DView handed it in
+        /// OnMapScaledSpaceCelestialBodyInstantiated, and it's reset to null when that scaled space
+        /// unloads, so it answers "is it loaded, and which object is it" in one go.
+        ///
+        /// Note it has to be this property and not a search for Map3DSpaceProviderTarget: the focus
+        /// item's own selection widget (view3DSelection) is one of those too, and being higher in
+        /// the hierarchy it wins GetComponentInChildren - giving back a collider with no renderer.
+        /// </remarks>
+        public static GameObject FindMap3dBodyObject(string bodyName)
+        {
+            var focusItem = GameObject.Find($"{_MAP3D_ROOT}/Map-{bodyName}");
+
+            if (focusItem == null || !focusItem.TryGetComponent<Map3DFocusItem>(out var mapFocusItem))
+                return null;
+
+            var scaledSpaceVisual = mapFocusItem.View3DVisual;
+
+            return scaledSpaceVisual == null ? null : scaledSpaceVisual.gameObject;
+        }
 
         // Define a recursive function to search for an object by name
         public static Transform FindObjectByNameRecursively(Transform parent, string name)
