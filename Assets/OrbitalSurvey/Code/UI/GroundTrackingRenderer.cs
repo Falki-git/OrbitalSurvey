@@ -133,18 +133,39 @@ namespace OrbitalSurvey.UI
             Transform mapRoot)
         {
             var vessel = vs.Vessel;
-            var body   = vessel.mainBody;
+
+            // An unloaded or destroyed vessel keeps its VesselStats entry until VesselManager
+            // next prunes it, but its SimulationObject is already gone.
+            if (vessel?.SimulationObject == null)
+                return;
+
+            var body = vessel.mainBody;
+
+            if (body?.SimulationObject == null)
+                return;
+
+            // Map3DView creates this lookup in Configure, which can still be pending even once
+            // the view reports ViewAndCameraInitialized - the game null-checks it for the same
+            // reason. When it's missing, the space provider fallback below covers both lookups.
+            var mapItems = mapCore.map3D.AllMapSelectableItems;
 
             // Prefer map selectable item transforms (Unity-driven, consistent with other
             // map visuals) and fall back to the space provider for items not currently tracked.
+            Map3DFocusItem vesselItem = null;
+            Map3DFocusItem bodyItem = null;
+
+            var vesselFound = mapItems != null &&
+                              mapItems.TryGetValue(vessel.SimulationObject.GlobalId, out vesselItem);
+            var bodyFound = mapItems != null &&
+                            mapItems.TryGetValue(body.SimulationObject.GlobalId, out bodyItem);
+
             Vector3 vesselLocalPos, bodyLocalPos;
-            bool vesselFound = mapCore.map3D.AllMapSelectableItems.TryGetValue(vessel.SimulationObject.GlobalId, out var vesselItem);
+
             if (vesselFound)
                 vesselLocalPos = mapRoot.InverseTransformPoint(vesselItem.transform.position);
             else
                 vesselLocalPos = (Vector3)spaceProvider.TranslateSimPositionToMapPosition(vessel.CenterOfMass);
 
-            bool bodyFound = mapCore.map3D.AllMapSelectableItems.TryGetValue(body.SimulationObject.GlobalId, out var bodyItem);
             if (bodyFound)
                 bodyLocalPos = mapRoot.InverseTransformPoint(bodyItem.transform.position);
             else
