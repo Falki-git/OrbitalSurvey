@@ -5,6 +5,9 @@ namespace OrbitalSurvey.UI.Controls
     [UxmlElement]
     public partial class SideToggleControl : Button
     {
+        private static readonly ReduxLib.Logging.ILogger Logger =
+            ReduxLib.ReduxLib.GetLogger($"OrbitalSurvey|{nameof(SideToggleControl)}");
+
         public const string UssClassName = "side-toggle";
         public const string UssClassName_Connector = UssClassName + "__connector";
         public const string UssClassName_Container = UssClassName + "__container";
@@ -119,8 +122,14 @@ namespace OrbitalSurvey.UI.Controls
         private void OnClickEvent(ClickEvent _)
         {
             if (!IsEnabled)
+            {
+                // The control is built disabled and is only enabled from
+                // MainGuiController.OnSelectionChanged, so a click can land here and do nothing
+                // at all. Say so, otherwise the button looks simply broken.
+                Logger.LogDebug($"'{TextValue}' was clicked while disabled - ignoring.");
                 return;
-            
+            }
+
             SwitchToggleState(!IsToggled);
         }
 
