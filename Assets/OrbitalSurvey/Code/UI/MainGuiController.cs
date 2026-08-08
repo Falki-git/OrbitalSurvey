@@ -324,6 +324,11 @@ namespace OrbitalSurvey.UI
             {
                 // unregister events from the previous MapData
                 _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+
+                // Still attached if the previous map never received any data, since SetMap only
+                // detaches itself once it has actually run.
+                _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
+
                 _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
             }
 
@@ -451,9 +456,20 @@ namespace OrbitalSurvey.UI
 
         private void OnDestroy()
         {
+            // Core and the MapData objects outlive this window, so anything left subscribed here
+            // keeps firing into released UI Toolkit elements after the window is gone. That doesn't
+            // fail quietly - reading a disposed element's computedStyle dereferences freed layout
+            // memory and throws from deep inside UnmanagedDataStore, once per scan tick.
+            Core.Instance.OnMapHasDataValueChanged -= PopulateBodyChoices;
+
             if (_selectedMap != null)
             {
                 _selectedMap.OnDiscoveredPixelCountChanged -= UpdatePercentageComplete;
+
+                // SetMap normally unsubscribes itself on its first call, so it's still attached
+                // whenever the window closes before any data arrives for the selected map.
+                _selectedMap.OnDiscoveredPixelCountChanged -= SetMap;
+
                 _selectedMap.OnNewCurrentInstanceCreated -= _newCurrentMapInstanceHandler;
             }
         }
