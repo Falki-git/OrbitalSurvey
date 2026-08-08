@@ -54,11 +54,21 @@ namespace OrbitalSurvey.Utilities
                 Logger.LogInfo($"AssetBundle Ui Item: {item}");
             }
             
-            foreach (var item in SwConsole.GetAllAssetNames())
+            // swconsoleui.bundle isn't always present. Losing it only costs the debug GUI skin,
+            // but dereferencing it here used to abort Start() before InitializeStyles() ran.
+            if (SwConsole == null)
             {
-                Logger.LogInfo($"AssetBundle SwConsole Item: {item}");
+                Logger.LogWarning("The 'swconsoleui' bundle could not be loaded.");
             }
-            
+            else
+            {
+                foreach (var item in SwConsole.GetAllAssetNames())
+                {
+                    Logger.LogInfo($"AssetBundle SwConsole Item: {item}");
+                }
+            }
+
+
             DebugUI.Instance.InitializeStyles();
         }
 
@@ -458,7 +468,9 @@ namespace OrbitalSurvey.Utilities
 
         public GUISkin GetGUISkin()
         {
-            return SwConsole.LoadAsset<GUISkin>($"assets/swconsoleui/spacewarpconsole.guiskin");
+            return SwConsole == null
+                ? null
+                : SwConsole.LoadAsset<GUISkin>($"assets/swconsoleui/spacewarpconsole.guiskin");
         }
     }
 }

@@ -110,7 +110,12 @@ namespace OrbitalSurvey.Debug
         public void InitializeStyles()
         {
             ConsoleSkin = AssetUtility.Instance.GetGUISkin();
-            
+
+            // Null when the swconsoleui bundle is unavailable. The debug GUI is unusable without
+            // it, but building styles off a null skin would throw and take the caller down too.
+            if (ConsoleSkin == null)
+                return;
+
             _labelStyle = new GUIStyle(ConsoleSkin.label) { fixedWidth = 150 };
             _labelStyleShort = new GUIStyle(ConsoleSkin.label) { fixedWidth = 10 };
             _normalButton = new GUIStyle(ConsoleSkin.button);
