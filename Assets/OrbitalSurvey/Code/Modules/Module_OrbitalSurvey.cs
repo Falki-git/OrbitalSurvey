@@ -254,7 +254,19 @@ namespace OrbitalSurvey.Modules
         // It triggers for only active vessel it appears
         protected override void OnShutdown()
         {
-            Logger.LogDebug($"OnShutdown triggered. Vessel '{part?.partOwner?.SimObjectComponent?.Name ?? "n/a"}'");
+            // partOwner's getter walks back through the part hierarchy and throws once teardown
+            // has begun, so null-conditionals on 'part' don't protect this - only a catch does.
+            string vesselName;
+            try
+            {
+                vesselName = part?.partOwner?.SimObjectComponent?.Name ?? "n/a";
+            }
+            catch (Exception)
+            {
+                vesselName = "n/a";
+            }
+
+            Logger.LogDebug($"OnShutdown triggered. Vessel '{vesselName}'");
 
             // The data module is null when the part failed to finish loading, in which case
             // Unity still destroys the behaviour and calls us. Nothing was subscribed then.
