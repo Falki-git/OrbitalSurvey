@@ -2,9 +2,6 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
-      "Read(//E:/GitHub/KSP2/OrbitalSurveyRedux/**)",
-      "Glob(//E:/GitHub/KSP2/OrbitalSurveyRedux/**)",
-      "Grep(//E:/GitHub/KSP2/OrbitalSurveyRedux/**)",
       "Bash(ilspycmd:*)",
       "Bash(dotnet build:*)",
       "Bash(dotnet --version)",
@@ -27,14 +24,19 @@
       "PowerShell(dotnet build:*)"
     ],
     "deny": [
-      "Read(//E:/GitHub/KSP2/OrbitalSurveyRedux/Packages/KSP2_x64/**)",
-      "Read(//E:/GitHub/KSP2/OrbitalSurveyRedux/Library/**)",
-      "Read(//E:/GitHub/KSP2/OrbitalSurveyRedux/Temp/**)",
-      "Read(//E:/GitHub/KSP2/OrbitalSurveyRedux/Redux/Addressables/**)"
+      "Read(Packages/KSP2_x64/**)",
+      "Read(Library/**)",
+      "Read(Temp/**)",
+      "Read(obj/**)",
+      "Read(pm_cache/**)",
+      "Read(ThunderKit/**)",
+      "Read(Redux/Addressables/**)",
+      "Read(Assets/StreamingAssets/**)"
     ],
     "ask": [
       "Bash(git push:*)",
       "Bash(git commit:*)",
+      "Bash(gh pr create*)",
       "Bash(rm:*)",
       "PowerShell(Remove-Item:*)"
     ]

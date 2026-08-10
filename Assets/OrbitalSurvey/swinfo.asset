@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9065a46703c44e8fabd263388eaeb6e7, type: 3}
-  m_Name: swinfo
+  m_Name: 'Orbital Survey [OrbitalSurvey]'
   m_EditorClassIdentifier: ksp2community.ksp2unitytools.editor::Ksp2UnityTools.Editor.Modding.Mod
   id: OrbitalSurvey
   name: Orbital Survey
   author: Falki
   description: Scan celestial bodies from orbit.
-  version: 0.9.6
+  version: 0.9.7
   versionCheck: https://raw.githubusercontent.com/Falki-git/OrbitalSurvey/refs/heads/redux/master/Assets/OrbitalSurvey/swinfo.json
-  minKsp2Version: 0.2.8.3
+  minKsp2Version: 0.2.9.0
   maxKsp2Version: '*'
   source: https://github.com/Falki-git/OrbitalSurvey/tree/redux/master
   allGroup: {fileID: 11400000, guid: a46c978025f90ee48bdc6d9132e3829a, type: 2}
@@ -27,6 +27,7 @@ MonoBehaviour:
   celestialBodiesGroup: {fileID: 11400000, guid: 33d4b373c5e1eea46928b93c69090e81, type: 2}
   scienceExperimentGroup: {fileID: 11400000, guid: 026b33b74382bb8449cb1834822f1b5d, type: 2}
   techNodeDataGroup: {fileID: 11400000, guid: 4950e1330767d1c4a9c7af60a31ead95, type: 2}
+  resourcesGroup: {fileID: 0}
   addressablesProfileId: baed256c89e30214391b63401589f546
   dependencies:
   - id: SpaceWarp2

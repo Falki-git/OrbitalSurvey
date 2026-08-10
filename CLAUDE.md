@@ -1,13 +1,33 @@
+<<<<<<< Updated upstream
 # CLAUDE.md — OrbitalSurveyRedux
+=======
+<!--
+  MASTER COPY of the per-repo CLAUDE.md stub.
+>>>>>>> Stashed changes
 
-Guidance for Claude Code when working in this repository.
+  Hard-linked into every KSP2 mod repo as <repo>/CLAUDE.md, so an edit here rewrites all of them.
+  Everything this file used to say in prose now lives once in ../.claude/CLAUDE.md (imported
+  below): the branch-model table, how to identify the repo from the working directory, the
+  "- CopyYYYYMMDD" snapshot rule, reading ProjectVersion.txt, and reading mod_specifics.md before
+  feature work. Repeating any of it here would just load the same instruction into context twice.
 
-## Git rules
+  Deliberately generic: it names no repo, mod or branch. That is what lets one file serve every
+  repo, and what keeps the dated snapshot folders correct where a hardcoded name would be wrong.
+  Do not add repo-specific content here — put it in that repo's .claude/mod_specifics.md.
 
+<<<<<<< Updated upstream
 - **NEVER commit or push without the user explicitly asking.** Do not commit as part of completing a task; wait for a direct instruction such as "commit", "commit and push", etc.
+=======
+  This comment block is stripped before the file is injected into context, so it costs nothing.
+>>>>>>> Stashed changes
 
-## What this project is
+  If a repo's copy ever diverges (a git checkout across differing content silently breaks the
+  hard link), re-link it rather than editing in place:
+    New-Item -ItemType HardLink -Path <repo>\CLAUDE.md `
+             -Target E:\GitHub\KSP2\.claude\repo-CLAUDE-stub.md
+-->
 
+<<<<<<< Updated upstream
 This is a **Kerbal Space Program 2 (KSP2) mod project** built on the **KSP2 Redux
 mod template** (a ThunderKit + SpaceWarp2 based Unity project). It hosts the
 **"Orbital Survey"** mod — a mod that lets vessels in orbit scan celestial bodies
@@ -156,3 +176,6 @@ Key patterns in use by this mod:
 ## Suggested next docs / TODOs
 
 - `docs/build_and_deploy.md` — exact ThunderKit pipeline steps once verified with the user.
+=======
+@../.claude/CLAUDE.md
+>>>>>>> Stashed changes
