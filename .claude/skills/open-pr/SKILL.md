@@ -24,10 +24,20 @@ If not provided, infer everything from the branch and its commits.
 ### 1. Determine head and base branches
 
 - `git branch --show-current` — the head branch (the PR source).
+- **Derive the integration branch names — never assume them.** These repos use two schemes:
+  ```bash
+  BRANCHES=$(git branch -a --format='%(refname:short)' | sed 's|^origin/||' | sort -u)
+  if grep -qx 'redux/development' <<<"$BRANCHES"; then
+    DEV=redux/development; RELEASED=redux/master; ARCHIVE=master
+  else
+    DEV=development;       RELEASED=main;         ARCHIVE=pre-redux
+  fi
+  ```
 - Pick the base branch (unless the user named one in `$ARGUMENTS`):
-  - On a **feature/bugfix branch** → base is **`development`**.
-  - On **`development`** → base is **`main`**.
-  - On `main` or `pre-redux` → there is no default target; stop and ask the user what they want.
+  - On a **feature/bugfix branch** → base is **`$DEV`**.
+  - On **`$DEV`** → base is **`$RELEASED`**.
+  - On `$RELEASED` or `$ARCHIVE` → there is no default target; stop and ask the user.
+- Always state which names you derived, so a wrong guess is visible to the user.
 
 ### 2. Check there's something to merge
 
@@ -94,26 +104,26 @@ Print the PR URL that `gh pr create` returns so the user can open it.
 ## After the merge (user-initiated)
 
 The user merges PRs manually and will tell you when a merge has happened — don't merge
-yourself. When the user reports that a **development -> main** PR was merged, fast-forward
-`development` up to `main` so it starts fresh for the next round of work:
+yourself. When the user reports that a **development -> released** PR was merged, fast-forward
+the development branch up to the released branch so it starts fresh for the next round:
 
 ```bash
-git checkout development
+git checkout "$DEV"
 git fetch origin
-git merge --ff-only origin/main
-git push origin development
+git merge --ff-only "origin/$RELEASED"
+git push origin "$DEV"
 ```
 
-- Only do this for a **development -> main** merge — not for feature/bugfix -> development.
-- This user-authorized fast-forward is the sanctioned exception to the "never touch
-  `development` directly" rule: it only moves the branch pointer, it is not a direct commit.
+- Only do this for a **development -> released** merge — not for feature/bugfix -> development.
+- This user-authorized fast-forward is the sanctioned exception to the "never touch the
+  development branch directly" rule: it only moves the pointer, it is not a direct commit.
 - If it can't be done as a clean `--ff-only`, **stop and tell the user** rather than forcing it.
 
 ## What NOT to do
 
 - Do NOT open a PR when HEAD is not ahead of base (see step 2) — stop and ask instead.
 - Do NOT merge the PR — the user merges manually.
-- Do NOT push to or open PRs from `main`/`pre-redux` as the head branch.
+- Do NOT push to or open PRs from the released or archive branch as the head branch.
 - Do NOT use imperative verbs (`Add`/`Fix`) in the bullet list — always past tense
   (`Added`/`Fixed`) so it drops straight into release notes.
 - Do NOT pad the prose description with restatements of the bullets.

@@ -27,12 +27,26 @@ infer the message from the diff.
 
 If there are no changes to commit, inform the user and stop.
 
-### 2. Branch guard (CRITICAL — this repo)
+### 2. Branch guard (CRITICAL)
 
-`main`, `development`, and `pre-redux` are **protected integration branches**. Changes reach
-them **only by merging a feature/bugfix branch** — never by a direct commit.
+**Derive the branch names — never assume them.** These repos use two different naming schemes,
+so a hardcoded list silently fails to protect the repos using the other one:
 
-- If the current branch is `main`, `development`, or `pre-redux`, **do NOT commit there.**
+```bash
+BRANCHES=$(git branch -a --format='%(refname:short)' | sed 's|^origin/||' | sort -u)
+if grep -qx 'redux/development' <<<"$BRANCHES"; then
+  DEV=redux/development; RELEASED=redux/master; ARCHIVE=master
+else
+  DEV=development;       RELEASED=main;         ARCHIVE=pre-redux
+fi
+echo "released=$RELEASED  development=$DEV  archive=$ARCHIVE"
+```
+
+`$RELEASED`, `$DEV` and `$ARCHIVE` are **protected**. Changes reach them **only by merging a
+feature/bugfix branch** — never by a direct commit. The archive holds the frozen pre-Redux
+(SpaceWarp-1.x) codebase and takes no new work at all.
+
+- If the current branch is `$RELEASED`, `$DEV`, or `$ARCHIVE`, **do NOT commit there.**
   Automatically create a new feature/bugfix branch cut from the current branch and commit on
   it — **do not ask the user first.** Derive a short, descriptive branch name from the change
   (`feature/<short-name>` for new work, `bugfix/<short-name>` for a fix), e.g.
@@ -84,10 +98,11 @@ Run `git status` and `git log --oneline -1` after the commit to confirm it succe
 
 ## What NOT to do
 
-- Do NOT commit directly on `main`, `development`, or `pre-redux` — auto-create a
-  feature/bugfix branch first (see the branch guard)
-- Do NOT push to remote unless the user explicitly asks (opening a PR against `development`
-  is a separate, user-initiated step; the user merges manually)
+- Do NOT commit directly on the released, development, or archive branch — auto-create a
+  feature/bugfix branch first (see the branch guard). Derive their names; do not assume
+  `main`/`development` — most of these repos use `redux/master`/`redux/development`.
+- Do NOT push to remote unless the user explicitly asks (opening a PR against the development
+  branch is a separate, user-initiated step; the user merges manually)
 - Do NOT amend existing commits unless the user explicitly asks
 - Do NOT use `--no-verify` or skip hooks
 - Do NOT stage secrets, credentials, or generated/build artifacts
@@ -96,6 +111,6 @@ Run `git status` and `git log --oneline -1` after the commit to confirm it succe
 
 ## Verification
 
-- Current branch is a feature/bugfix branch, not `main`/`development`/`pre-redux`
+- Current branch is a feature/bugfix branch, not the derived released/development/archive branch
 - `git status` shows a clean working tree (or only intentionally unstaged files remain)
 - `git log --oneline -1` shows the new commit with the expected message
